@@ -8,13 +8,26 @@
 
 ## The NorthStar Program
 
-NorthStar is a three-part immigration data intelligence platform:
+NorthStar is a three-part immigration data intelligence platform. The codenames follow a **celestial navigation** metaphor — the same way sailors once used the sky to cross oceans, NorthStar helps immigrants navigate the complex U.S. immigration system.
 
 | Codename | Role | Repository |
 |----------|------|------------|
-| **Horizon** | Data collection — scans the horizon and gathers raw immigration filings, bulletins, and statistics | `fetch-immigration-data` |
-| **Meridian** | Modeling & analytics — the reference framework that curates, measures, and models ← **THIS REPO** | `immigration-model-builder` |
-| **Compass** | User experience — the instrument that guides users with personalized immigration insights | `immigration-insights-app` |
+| **Horizon** | Data collection | `fetch-immigration-data` |
+| **Meridian** | Modeling & analytics ← **THIS REPO** | `immigration-model-builder` |
+| **Compass** | User experience | `immigration-insights-app` |
+
+### Why these names?
+
+**Horizon** — *"Scan the horizon before you set sail."*
+A navigator's first task is to survey the horizon — what's visible, what's approaching, what's changed. Horizon does exactly that: it continuously scans authoritative government sources (DOL, DOS, USCIS, DHS, BLS) and collects every filing, bulletin, and statistic into a raw data archive. Just as the horizon is the boundary between the known and the unknown, this project bridges the gap between scattered public data and structured, accessible information.
+
+**Meridian** — *"The reference line from which all measurements are taken."*
+In navigation, a meridian is the fixed reference framework — the line of longitude from which positions, distances, and directions are calculated. Meridian is the analytical backbone of NorthStar: it takes raw material from Horizon and establishes the canonical facts, dimensions, features, and models that everything else is measured against. Without a reliable meridian, no navigation is possible; without this project, no trustworthy insights can be delivered.
+
+**Compass** — *"Point the way forward."*
+A compass translates the navigator's reference framework into actionable direction — "go this way." Compass is the user-facing application that takes Meridian's curated models and transforms them into personalized guidance: When will my priority date become current? Is my employer immigration-friendly? How does my salary compare? It turns data into decisions, giving every immigrant a clear bearing on their journey.
+
+> **Together:** Horizon gathers what's out there → Meridian makes sense of it → Compass points the way.
 
 ## Purpose
 
