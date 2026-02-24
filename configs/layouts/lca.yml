@@ -1,0 +1,140 @@
+---
+# LCA (H-1B) header alias registry.
+# Two eras: iCERT (FY2008-2019) and FLAG (FY2020+).
+
+# Determine era from fiscal year
+era_boundary: 2020   # FY2020+ → flag; FY2008-2019 → icert
+
+# ─── Column aliases ─────────────────────────────────────
+# Each canonical field maps to a list of known headers across eras.
+# Loader tries each alias in order (case-insensitive).
+
+aliases:
+  case_number:
+    icert: ["CASE_NO", "CASE_NUMBER", "LCA_CASE_NUMBER"]
+    flag:  ["CASE_NUMBER"]
+
+  case_status:
+    icert: ["APPROVAL_STATUS", "STATUS", "CASE_STATUS"]
+    flag:  ["CASE_STATUS"]
+
+  visa_class:
+    icert: ["PROGRAM", "VISA_CLASS", "PROGRAM_DESIGNATION"]
+    flag:  ["VISA_CLASS"]
+
+  received_date:
+    icert: ["SUBMITTED_DATE", "CASE_SUBMITTED", "LCA_CASE_SUBMIT"]
+    flag:  ["RECEIVED_DATE"]
+
+  decision_date:
+    icert: ["DOL_DECISION_DATE", "DECISION_DATE"]
+    flag:  ["DECISION_DATE"]
+
+  employer_name:
+    icert: ["NAME", "EMPLOYER_NAME", "LCA_CASE_EMPLOYER_NAME"]
+    flag:  ["EMPLOYER_NAME"]
+
+  soc_code:
+    icert: ["JOB_CODE", "SOC_CODE", "LCA_CASE_SOC_CODE"]
+    flag:  ["SOC_CODE"]
+
+  soc_title:
+    icert: ["OCCUPATIONAL_TITLE", "SOC_NAME", "LCA_CASE_SOC_NAME"]
+    flag:  ["SOC_TITLE"]
+
+  job_title:
+    icert: ["JOB_TITLE"]
+    flag:  ["JOB_TITLE"]
+
+  is_fulltime:
+    icert: ["PART_TIME_1", "FULL_TIME_POSITION"]
+    flag:  ["FULL_TIME_POSITION"]
+
+  wage_rate_from:
+    icert: ["WAGE_RATE_1", "WAGE_RATE_OF_PAY"]
+    flag:  ["WAGE_RATE_OF_PAY_FROM"]
+
+  wage_rate_to:
+    icert: ["MAX_RATE_1", "WAGE_RATE_OF_PAY_TO"]
+    flag:  ["WAGE_RATE_OF_PAY_TO"]
+
+  wage_unit:
+    icert: ["RATE_PER_1", "WAGE_UNIT_OF_PAY"]
+    flag:  ["WAGE_UNIT_OF_PAY"]
+
+  prevailing_wage:
+    icert: ["PREVAILING_WAGE_1", "PREVAILING_WAGE"]
+    flag:  ["PREVAILING_WAGE"]
+
+  pw_unit:
+    icert: ["WAGE_SOURCE_1", "PW_UNIT_OF_PAY"]
+    flag:  ["PW_UNIT_OF_PAY"]
+
+  worksite_city:
+    icert: ["CITY_1", "WORKSITE_CITY"]
+    flag:  ["WORKSITE_CITY"]
+
+  worksite_state:
+    icert: ["STATE_1", "WORKSITE_STATE"]
+    flag:  ["WORKSITE_STATE"]
+
+  worksite_postal:
+    icert: ["POSTAL_CODE", "WORKSITE_POSTAL_CODE"]
+    flag:  ["WORKSITE_POSTAL_CODE"]
+
+  naics_code:
+    icert: ["NAIC_CODE", "NAICS_CODE"]
+    flag:  ["NAICS_CODE"]
+
+  total_workers:
+    icert: ["NBR_IMMIGRANTS", "TOTAL WORKERS", "TOTAL_WORKERS"]
+    flag:  ["TOTAL_WORKER_POSITIONS"]
+
+# ─── File-discovery rules ───────────────────────────────
+file_discovery:
+  # Base directory under data_root
+  base_dir: "LCA"
+  # Primary FY directories
+  fy_pattern: "FY*"
+  # Only ingest main disclosure files; exclude supplemental
+  include_patterns:
+    - "*Disclosure*"
+    - "H-1B*"
+    - "LCA_FY*"
+    - "Icert*"
+  exclude_patterns:
+    - "*Appendix*"
+    - "*Worksite*"
+    - "*worksites*"
+    - "PERM_*"
+  # Dedupe: prefer files in LCA/FYXXXX/ over LCA/H1B/FYXXXX/ (identical copies)
+  dedupe_prefer: "LCA/{fy}/"
+
+# ─── Status normalisation ──────────────────────────────
+status_map:
+  "CERTIFIED": "CERTIFIED"
+  "CERTIFIED - FULL": "CERTIFIED"
+  "CERTIFIED-FULL": "CERTIFIED"
+  "CERTIFIED - PARTIAL": "CERTIFIED"
+  "CERTIFIED-PARTIAL": "CERTIFIED"
+  "CERTIFIED - WITHDRAWN": "CERTIFIED-WITHDRAWN"
+  "CERTIFIED-WITHDRAWN": "CERTIFIED-WITHDRAWN"
+  "DENIED": "DENIED"
+  "DENIED - FULL": "DENIED"
+  "DENIED-FULL": "DENIED"
+  "WITHDRAWN": "WITHDRAWN"
+  "INVALIDATED": "WITHDRAWN"
+  "REJECTED": "DENIED"
+
+# ─── Fulltime normalisation ────────────────────────────
+# iCERT PART_TIME_1 is inverted (1 = part-time); FLAG FULL_TIME_POSITION is Y/N
+fulltime_map:
+  "Y": true
+  "N": false
+  "1": false    # PART_TIME_1 = 1 → not fulltime
+  "0": true     # PART_TIME_1 = 0 → fulltime
+
+# ─── SOC normalisation ─────────────────────────────────
+# Normalise to 7-char XX-XXXX format (strip trailing .00 or .XX)
+soc_strip_suffix: true
+soc_target_format: "XX-XXXX"

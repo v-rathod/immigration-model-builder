@@ -1,0 +1,226 @@
+# Canonical schemas for curated tables
+
+dim_country:
+  description: "Canonical list of countries/territories for chargeability and joins."
+  fields:
+    - { name: country_name,   type: string,  description: "Official country/territory name (title case)." }
+    - { name: iso2,           type: string,  description: "ISO 3166-1 alpha-2 code (uppercase)." }
+    - { name: iso3,           type: string,  description: "ISO 3166-1 alpha-3 code (uppercase)." }
+    - { name: region,         type: string,  description: "Optional world region grouping (if available in codebook, else null)." }
+    - { name: source_file,    type: string,  description: "Provenance: relative path to the codebook file used." }
+    - { name: ingested_at,    type: datetime,description: "UTC timestamp when this dim was built." }
+  primary_key: [ iso3 ]
+  foreign_keys: []
+  notes: |
+    - Use codebook at downloads/Codebooks/country_codes_iso.csv from Project 1 (local path in configs/paths.yaml).
+    - Enforce uppercase ISO codes; strip whitespace; de-duplicate on iso3.
+    - Keep any non-standard or legacy names to maximize left-join coverage from raw sources.
+
+fact_cutoffs:
+  description: "Monthly Visa Bulletin cut-off dates by employment category and chargeability."
+  fields:
+    - { name: bulletin_year,     type: int,      description: "Calendar year of the Visa Bulletin (e.g., 2026)." }
+    - { name: bulletin_month,    type: int,      description: "Month number (1–12) of the Visa Bulletin." }
+    - { name: chart,             type: string,   description: "FAD=Final Action Dates, DFF=Dates for Filing." }
+    - { name: category,          type: string,   description: "Canonical EB category/subcategory label (e.g., EB2, EB3, EB3-Other if used)." }
+    - { name: country,           type: string,   description: "Chargeability area (use canonical country name or 'All Chargeability Areas')." }
+    - { name: cutoff_date,       type: date,     description: "Cut-off date (YYYY-MM-DD) if present; null if Current/Unavailable." }
+    - { name: status_flag,       type: string,   description: "C=current, U=unavailable, D=date-present; helpers for display." }
+    - { name: source_file,       type: string,   description: "Relative path to the PDF that provided the row." }
+    - { name: page_ref,          type: string,   description: "Best-effort page or section reference extracted." }
+    - { name: ingested_at,       type: datetime, description: "UTC timestamp when the row was created." }
+  primary_key: [ bulletin_year, bulletin_month, chart, category, country ]
+  foreign_keys:
+    - { field: country,  ref: dim_country.iso3, note: "Join via dim_country; at load time map country to ISO3 if possible." }
+  notes: |
+    - Extract both charts (Final Action Dates and Dates for Filing).
+    - Normalize country names to dim_country if possible (fallback: raw label).
+    - Map 'Current' → status_flag=C and cutoff_date=null; 'Unavailable' → U and cutoff_date=null; a real date → D.
+    - Keep 'All Chargeability Areas Except Those Listed' as a canonical bucket if present.
+
+dim_soc:
+  description: "SOC 2018 normalized occupation dimension used for joins across PERM/LCA/OEWS."
+  fields:
+    - { name: soc_code,           type: string,   description: "SOC 2018 detailed code (e.g., '15-1252'). 2-digit major + '-' + 4-digit detailed." }
+    - { name: soc_title,          type: string,   description: "Official SOC 2018 occupation title." }
+    - { name: soc_version,        type: string,   description: "SOC version string, fixed '2018' for canonical target." }
+    - { name: soc_major_group,    type: string,   description: "Major group (2 digits, e.g., '15')." }
+    - { name: soc_minor_group,    type: string,   description: "Minor group (4 digits, e.g., '15-12'). No hyphen is OK internally; keep consistent formatting." }
+    - { name: soc_broad_group,    type: string,   description: "Broad group (5 digits, e.g., '15-125')." }
+    - { name: from_version,       type: string,   description: "Source SOC version if crosswalked (e.g., '2010'); null if native 2018." }
+    - { name: from_code,          type: string,   description: "Source SOC code if crosswalked; null if native 2018." }
+    - { name: mapping_confidence, type: string,   description: "One of {'deterministic','one-to-many','manual-review'} for crosswalk provenance." }
+    - { name: is_aggregated,      type: boolean,  description: "True if multiple older SOCs collapsed into one SOC 2018 code." }
+    - { name: source_file,        type: string,   description: "Provenance: relative path(s) used to build this row (CSV or OEWS source)." }
+    - { name: ingested_at,        type: datetime, description: "UTC timestamp when built." }
+  primary_key: [ soc_code ]
+  foreign_keys: []
+  notes: |
+    - Canonical target is SOC 2018. All raw SOCs (PERM/LCA) should be mapped to 2018 via crosswalk.
+    - Populate title and hierarchy from the best available source (crosswalk file and/or OEWS all-data).
+    - Keep graceful fallbacks if titles or group breakdowns are missing; log and continue.
+
+dim_area:
+  description: "OEWS geographic areas (national, state, metropolitan, nonmetropolitan) used to join wage percentiles and normalize PERM/LCA worksites."
+  fields:
+    - { name: area_code,     type: string,   description: "OEWS area code as string (keep leading zeros if present)." }
+    - { name: area_title,    type: string,   description: "Official OEWS area title (e.g., 'Akron, OH', 'Alabama nonmetropolitan area', 'Alabama', 'United States')." }
+    - { name: area_type,     type: string,   description: "One of {'NATIONAL','STATE','MSA','NONMSA','TERRITORY'} derived from patterns." }
+    - { name: state_abbr,    type: string,   description: "2-letter state/territory abbreviation when derivable; null for NATIONAL/MSA crossing states." }
+    - { name: state_fips,    type: string,   description: "2-digit state FIPS when derivable; null otherwise." }
+    - { name: cbsa_code,     type: string,   description: "CBSA code for MSAs if derivable; null for state/nonmetropolitan/national." }
+    - { name: metro_status,  type: string,   description: "One of {'METRO','NONMETRO','NA'} as convenience flag." }
+    - { name: ref_year,      type: int,      description: "Reference year this area snapshot was taken from (e.g., 2024)." }
+    - { name: source_file,   type: string,   description: "Relative path(s) to OEWS all-data file(s) used to build this row." }
+    - { name: ingested_at,   type: datetime, description: "UTC timestamp when built." }
+  primary_key: [ area_code ]
+  foreign_keys: []
+  notes: |
+    - Prefer latest OEWS year (e.g., 2024) for canonical titles; backfill from prior (2023) only if needed.
+    - 'nonmetropolitan' → NONMSA; titles with comma and state abbreviation typically → MSA.
+    - National area is 'United States' (or similar title in OEWS) → NATIONAL.
+    - State rows (e.g., 'Alabama') → STATE; derive state_fips and state_abbr where possible via an internal mapping (configs/layouts/area.yml).
+    - Some MSAs span multiple states; state_abbr may be null in such cases.
+
+dim_visa_class:
+  description: "Canonical employment-based visa families and subcategories used across DOS, USCIS, PERM/LCA joins."
+  fields:
+    - { name: family_code,   type: string,   description: "EB1..EB5 family code." }
+    - { name: family_name,   type: string,   description: "Human-friendly family label (e.g., 'Employment-Based First Preference')." }
+    - { name: sub_code,      type: string,   description: "Optional subclass (e.g., E11, E12, E21, NIW, E31, EW3); null if not applicable." }
+    - { name: sub_name,      type: string,   description: "Subclass label (e.g., 'Extraordinary Ability', 'NIW'); null if not applicable." }
+    - { name: is_employment, type: boolean,  description: "True for EB families; future-proof for family-based if needed." }
+    - { name: is_grouped,    type: boolean,  description: "True if sub_code maps into a grouped family metric (e.g., EB3 includes EW3 at family rollups)." }
+    - { name: notes,         type: string,   description: "Any mapping notes (e.g., grouping EW3 into EB3-other)." }
+    - { name: source_file,   type: string,   description: "Provenance: downloads/Codebooks/eb_subcategory_codes.csv." }
+    - { name: ingested_at,   type: datetime, description: "UTC timestamp when built." }
+  primary_key: [ family_code, sub_code ]
+  foreign_keys: []
+  notes: |
+    - Populate from downloads/Codebooks/eb_subcategory_codes.csv.
+    - Ensure every row has a family_code EB1..EB5; sub_code may be null for family-only rows.
+    - Mark is_grouped=true for subcategories that roll up into family KPIs.
+
+dim_employer:
+  description: "Canonical employer identities for joins across PERM/LCA/H1B facts and employer-level features."
+  fields:
+    - { name: employer_id,   type: string,   description: "SHA1 hash of normalized employer name; stable PK." }
+    - { name: employer_name, type: string,   description: "Canonical display name (title-cased, normalized)." }
+    - { name: aliases,       type: string,   description: "JSON array of raw name variants seen in source data." }
+    - { name: domain,        type: string,   description: "Optional company domain for future enrichment; null for now." }
+    - { name: source_files,  type: string,   description: "CSV list of source files where employer was observed." }
+    - { name: ingested_at,   type: datetime, description: "UTC timestamp when built." }
+  primary_key: [ employer_id ]
+  foreign_keys: []
+  notes: |
+    - Normalization pipeline: lowercase → strip punctuation & legal suffixes → collapse whitespace → title case for display.
+    - employer_id = sha1(normalized_name) ensures stable joins even if aliases evolve.
+    - aliases field stores JSON array of all raw variants to track drift.
+    - Start with PERM data for employer pool; expand to LCA/H1B later.
+
+fact_perm:
+  description: "PERM labor certification applications with outcomes, employer, occupation, and worksite dimensions."
+  fields:
+    - { name: case_number,        type: string,   description: "Unique PERM case number (PK)." }
+    - { name: case_status,        type: string,   description: "CERTIFIED, DENIED, WITHDRAWN, etc." }
+    - { name: received_date,      type: date,     description: "Date case received by DOL." }
+    - { name: decision_date,      type: date,     description: "Date of final decision; null if pending." }
+    - { name: employer_id,        type: string,   description: "FK to dim_employer." }
+    - { name: soc_code,           type: string,   description: "FK to dim_soc (normalized to SOC 2018)." }
+    - { name: area_code,          type: string,   description: "FK to dim_area (primary worksite BLS area)." }
+    - { name: employer_country,   type: string,   description: "FK to dim_country (employer headquarters country)." }
+    - { name: job_title,          type: string,   description: "Job title from application." }
+    - { name: wage_offer_from,    type: float,    description: "Minimum wage offered." }
+    - { name: wage_offer_to,      type: float,    description: "Maximum wage offered; may equal wage_from." }
+    - { name: wage_offer_unit,    type: string,   description: "Wage unit: yr, bi, mo, wk, hr." }
+    - { name: worksite_city,      type: string,   description: "Primary worksite city." }
+    - { name: worksite_state,     type: string,   description: "Primary worksite state abbreviation." }
+    - { name: worksite_postal,    type: string,   description: "Primary worksite postal code." }
+    - { name: is_fulltime,        type: boolean,  description: "Full-time position flag." }
+    - { name: fiscal_year,        type: int,      description: "Fiscal year derived from received_date (Oct 1 - Sep 30)." }
+    - { name: source_file,        type: string,   description: "Relative path to source PERM Excel file." }
+    - { name: ingested_at,        type: datetime, description: "UTC timestamp when built." }
+  primary_key: [ case_number, fiscal_year ]
+  foreign_keys:
+    - { field: employer_id,      ref: dim_employer.employer_id,  note: "Normalized employer join." }
+    - { field: soc_code,         ref: dim_soc.soc_code,          note: "Normalized SOC 2018 join." }
+    - { field: area_code,        ref: dim_area.area_code,        note: "BLS area join for wage benchmarks." }
+    - { field: employer_country, ref: dim_country.iso3,          note: "Employer country for chargeability." }
+  notes: |
+    - Sample 50k rows per FY to manage processing time; expand sampling later if needed.
+    - Normalize employer names via dim_employer pipeline to generate employer_id.
+    - Map PWD_SOC_CODE to SOC 2018 via dim_soc; log unmapped codes.
+    - Map PRIMARY_WORKSITE_BLS_AREA to area_code via dim_area.
+    - Convert all wage_offer values to annual equivalent when wage_offer_unit != 'yr' for downstream comparisons.
+    - Derive FY from received_date (Oct 1 - Sep 30 fiscal year).
+
+fact_oews:
+  description: "OEWS wage percentiles by occupation and area for salary benchmarking."
+  fields:
+    - { name: area_code,      type: string,   description: "FK to dim_area (BLS area code)." }
+    - { name: soc_code,       type: string,   description: "FK to dim_soc (SOC 2018 code)." }
+    - { name: ref_year,       type: int,      description: "OEWS reference year (e.g., 2023)." }
+    - { name: tot_emp,        type: int,      description: "Total employment estimate." }
+    - { name: h_mean,         type: float,    description: "Mean hourly wage." }
+    - { name: a_mean,         type: float,    description: "Mean annual wage." }
+    - { name: h_median,       type: float,    description: "Median hourly wage (50th percentile)." }
+    - { name: a_median,       type: float,    description: "Median annual wage (50th percentile)." }
+    - { name: h_pct10,        type: float,    description: "10th percentile hourly wage." }
+    - { name: h_pct25,        type: float,    description: "25th percentile hourly wage." }
+    - { name: h_pct75,        type: float,    description: "75th percentile hourly wage." }
+    - { name: h_pct90,        type: float,    description: "90th percentile hourly wage." }
+    - { name: a_pct10,        type: float,    description: "10th percentile annual wage." }
+    - { name: a_pct25,        type: float,    description: "25th percentile annual wage." }
+    - { name: a_pct75,        type: float,    description: "75th percentile annual wage." }
+    - { name: a_pct90,        type: float,    description: "90th percentile annual wage." }
+    - { name: source_file,    type: string,   description: "Relative path to source OEWS file." }
+    - { name: ingested_at,    type: datetime, description: "UTC timestamp when built." }
+  primary_key: [ area_code, soc_code, ref_year ]
+  foreign_keys:
+    - { field: area_code, ref: dim_area.area_code, note: "Join to area dimension for geographic context." }
+    - { field: soc_code,  ref: dim_soc.soc_code,   note: "Join to SOC dimension for occupation titles." }
+  notes: |
+    - Use most recent OEWS year available (e.g., 2023).
+    - Filter to detailed SOC codes only (exclude major/minor group rollups).
+    - Parse wages as float; handle special values like '#' (suppressed) or '*' (estimate not released).
+    - OEWS area_code should match dim_area.area_code for clean joins.
+    - Sample rows if OEWS file is too large (>1M rows); prioritize national/state/major metro areas.
+
+fact_lca:
+  description: "LCA (H-1B) labor condition applications with employer, occupation, wage, and worksite dimensions."
+  fields:
+    - { name: case_number,        type: string,   description: "LCA case number (e.g., I-200-12345-000000)." }
+    - { name: case_status,        type: string,   description: "CERTIFIED, DENIED, WITHDRAWN, CERTIFIED-WITHDRAWN, etc." }
+    - { name: visa_class,         type: string,   description: "Visa class (H-1B, H-1B1, E-3, etc.)." }
+    - { name: received_date,      type: date,     description: "Date case received by DOL." }
+    - { name: decision_date,      type: date,     description: "Date of final decision; null if pending." }
+    - { name: employer_id,        type: string,   description: "FK to dim_employer (SHA1 of normalized name)." }
+    - { name: employer_name_raw,  type: string,   description: "Raw employer name from source for provenance." }
+    - { name: soc_code,           type: string,   description: "FK to dim_soc (normalized to SOC-2018 7-char)." }
+    - { name: soc_title,          type: string,   description: "SOC occupation title from source." }
+    - { name: job_title,          type: string,   description: "Job title from application." }
+    - { name: is_fulltime,        type: boolean,  description: "Full-time position flag (Y/N → bool)." }
+    - { name: wage_rate_from,     type: float,    description: "Offered wage lower bound." }
+    - { name: wage_rate_to,       type: float,    description: "Offered wage upper bound; may equal wage_rate_from." }
+    - { name: wage_unit,          type: string,   description: "Wage unit: Year, Hour, Week, Bi-Weekly, Month." }
+    - { name: prevailing_wage,    type: float,    description: "Prevailing wage determination." }
+    - { name: pw_unit,            type: string,   description: "PW unit of pay." }
+    - { name: worksite_city,      type: string,   description: "Primary worksite city." }
+    - { name: worksite_state,     type: string,   description: "Primary worksite state abbreviation." }
+    - { name: worksite_postal,    type: string,   description: "Primary worksite postal code." }
+    - { name: naics_code,         type: string,   description: "NAICS industry code." }
+    - { name: fiscal_year,        type: int,      description: "DOL fiscal year from directory path (FYXXXX)." }
+    - { name: source_file,        type: string,   description: "Relative path to source LCA file." }
+    - { name: ingested_at,        type: datetime, description: "UTC timestamp when built." }
+  primary_key: []
+  foreign_keys:
+    - { field: employer_id, ref: dim_employer.employer_id, note: "Normalized employer join." }
+    - { field: soc_code,    ref: dim_soc.soc_code,        note: "Normalized SOC 2018 join." }
+  notes: |
+    - Two header eras: iCERT (FY2008-2019) and FLAG (FY2020+) with different column names.
+    - Use configs/layouts/lca.yml alias registry to resolve headers per era.
+    - Exclude supplemental files (Appendix_A, Worksites) from main disclosure ingestion.
+    - Deduplicate between LCA/FYXXXX/ and LCA/H1B/FYXXXX/ mirror directories by filename.
+    - Normalize SOC codes to 7-char format (XX-XXXX) for dim_soc join.
+    - Partition output by fiscal_year for Hive-style directory layout.
+

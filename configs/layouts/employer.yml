@@ -1,0 +1,66 @@
+---
+# Employer name normalization rules for dim_employer
+
+# Legal suffixes to strip during normalization (case-insensitive)
+suffixes:
+  - "inc"
+  - "llc"
+  - "l.l.c."
+  - "ltd"
+  - "co"
+  - "corp"
+  - "corporation"
+  - "company"
+  - "gmbh"
+  - "s.a."
+  - "s.a.s."
+  - "plc"
+  - "pvt"
+  - "llp"
+  - "inc."
+  - "corp."
+  - "limited"
+  - "l.l.p."
+  - "ltd."
+
+# Punctuation characters to strip during normalization
+punctuation_to_strip:
+  - ","
+  - ";"
+  - "."
+  - "&"
+  - "/"
+  - "\\"
+  - "-"
+  - "'"
+  - "\""
+  - "("
+  - ")"
+  - ":"
+
+# Minimum length for normalized name (reject if shorter after normalization)
+min_len: 3
+
+# Header aliases for PERM/LCA files (case-insensitive matching)
+aliases:
+  employer_name:
+    - "employer_name"
+    - "EMPLOYER_NAME"
+    - "EmployerName"
+    - "employer"
+    - "EMPLOYER"
+    - "company_name"
+    - "COMPANY_NAME"
+    - "legal_business_name"
+    - "EMP_BUSINESS_NAME"
+    - "emp_business_name"
+
+notes: |
+  Normalization pipeline:
+  1. Lowercase the raw name
+  2. Strip punctuation (from punctuation_to_strip list)
+  3. Remove legal suffixes (from suffixes list) - case insensitive, word boundary
+  4. Collapse multiple whitespace to single space
+  5. Strip leading/trailing whitespace
+  6. Title case for display (canonical employer_name)
+  7. Generate employer_id = sha1(normalized_lowercase)

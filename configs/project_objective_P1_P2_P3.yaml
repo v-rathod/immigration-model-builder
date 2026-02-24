@@ -1,0 +1,220 @@
+# Project objective for Immigration Model Builder (P1→P2→P3)
+# Last updated: 2026-02-24T16:30:00Z
+program:
+  north_star: >-
+    Build a trustworthy, explainable, and continuously verifiable immigration data & modeling platform.
+  principles:
+    - coverage_gte_95
+    - pk_unique_100
+    - referential_integrity_gte_95
+    - test_passrate_gte_95
+    - no_runtime_heavy_compute
+
+phases:
+  P1:
+    objective: "Foundations \u2014 raw\u2192curated plumbing, deterministic outputs."
+    deliverables:
+      - connectors_loaders
+      - canonical_facts_dims
+      - partitioned_parquet_and_presentations
+      - basic_pk_and_schema_tests
+  P2:
+    objective: "Backbone \u2014 audited, joined, model-ready with strict gates and full downloads coverage."
+    curated_tables:
+      facts:
+        - fact_perm
+        - fact_lca
+        - fact_oews
+        - fact_cutoffs
+        - fact_cutoff_trends
+        - backlog_estimates
+        - category_movement_metrics
+        - worksite_geo_metrics
+        - salary_benchmarks
+        - soc_demand_metrics
+        - processing_times_trends
+        - fact_visa_issuance
+        - fact_visa_applications
+        - fact_niv_issuance
+        - fact_uscis_approvals
+        - fact_dhs_admissions
+        - fact_warn_events
+        - fact_trac_adjudications   # stub
+        - fact_acs_wages           # stub
+      dims:
+        - dim_country
+        - dim_soc
+        - dim_area
+        - dim_visa_class
+        - dim_employer
+        - dim_visa_ceiling
+    models:
+      - employer_friendliness_scores_v1
+      - employer_friendliness_scores_ml_v2_optional
+      - pd_forecasts_seasonal_model
+    quality_gates:
+      coverage: ">=0.95"
+      pk_unique: "=1.00"
+      referential_integrity: ">=0.95"
+      test_passrate: ">=0.95"
+  P3:
+    objective: "Productization & experiences — dashboards & APIs over P1/P2; zero heavy compute at runtime."
+
+    # --- User Use Case: Personalized Experience ---
+    user_inputs:
+      - priority_date
+      - country_of_chargeability
+      - category              # EB2, EB3, etc.
+      - employer_name
+      - job_title
+      - location              # city / state
+      - wage_offered
+      - years_of_experience
+
+    personalized_panels:
+      A_green_card_forecast:
+        - expected_wait_time
+        - retrogression_probability_chart
+        - pd_becomes_current_projection
+      B_employer_insights:
+        - gc_friendliness_score
+        - audit_risk
+        - wage_comparison
+        - denial_trends
+        - layoff_risk_indicator   # WARN overlay
+      C_job_market_insights:
+        - similar_role_sponsorship_locations
+        - best_employers_for_occupation
+        - salary_competitiveness_analysis
+      D_actionable_recommendations:
+        - switch_employer_advice
+        - eb2_vs_eb3_filing_advice
+        - layoff_sponsorship_impact
+        - start_perm_early_advice
+      E_visual_dashboards:
+        - bar_charts_employer_comparisons
+        - line_charts_category_movement
+        - heat_maps_wage_geography
+        - risk_gauges
+        - timeline_projections
+
+    # --- Top 8 Immigration Dashboards ---
+    dashboards:
+      1_visa_bulletin_trends:
+        description: "Historical retrogression, forward movement, seasonality, backlog trajectory"
+        charts:
+          - line_chart_cutoff_dates_by_category_country
+          - heatmap_retrogression_frequency
+          - scatter_months_advanced_per_month
+          - forecast_overlay_future_pd
+        p2_artifacts:
+          existing: [fact_cutoffs]
+          transformations:
+            - cutoff_date_to_numeric_queue_position
+            - monthly_advancement_via_lag
+            - velocity_3m_6m_averages
+            - retrogression_count
+          output: fact_cutoff_trends.parquet
+
+      2_employer_friendliness:
+        description: "Compare employers by sponsorship quality, wage alignment, audit/denial risk"
+        charts:
+          - employer_leaderboard
+          - soc_specific_score_table
+          - wage_competitiveness_bubble_chart
+          - audit_denial_trend_line_5yr
+        p2_artifacts:
+          existing: [employer_features, employer_friendliness_scores]
+          add: monthly_employer_metrics_approval_rate_volume_audit_rate
+          output: employer_monthly_metrics.parquet
+
+      3_eb_category_comparison:
+        description: "EB2 vs EB3 movement, volatility, wait times"
+        charts:
+          - eb2_vs_eb3_movement_lines
+          - pd_wait_time_distribution
+          - category_volatility_bar
+          - category_strength_index
+        p2_artifacts:
+          from: fact_cutoffs
+          metrics: [avg_monthly_advancement, median_advancement, volatility_score, retrogression_events, next_movement_prediction]
+          output: category_movement_metrics.parquet
+
+      4_geographic_sponsorship_heatmaps:
+        description: "Geographic hotspots for sponsorship, filings, wage competitiveness"
+        charts:
+          - state_county_heatmap
+          - city_bubble_map
+          - soc_area_wage_competitiveness_map
+        p2_artifacts:
+          from: [fact_perm, fact_lca]
+          metrics: [filings_count, approvals_count, avg_wage_offer, competitiveness_ratio, distinct_employers]
+          output: worksite_geo_metrics.parquet
+
+      5_wage_competitiveness:
+        description: "Compare offered wage to OEWS percentiles and employer benchmarks"
+        charts:
+          - boxplot_offered_vs_oews
+          - soc_area_percentile_curves
+          - employer_wage_comparison
+          - wage_trend_over_time
+        p2_artifacts:
+          existing: [wage_ratio_med, wage_ratio_p75]
+          need: soc_area_wage_benchmark   # soc_code, area_code, p10-p90, competitiveness_category
+          output: salary_benchmarks.parquet
+
+      6_soc_demand:
+        description: "High-demand SOCs, hiring patterns, wage premiums"
+        charts:
+          - top_sponsoring_socs
+          - soc_backlog_movement
+          - perm_volumes_over_time
+          - soc_wage_curve
+        p2_artifacts:
+          from: [fact_perm, fact_lca]
+          metrics: [filings_count_12m_24m_36m, approval_rate, avg_offered_wage, competitiveness_percentile]
+          output: soc_demand_metrics.parquet
+
+      7_processing_speed:
+        description: "Case processing velocity and center-level trends (PERM, I-140, I-485)"
+        charts:
+          - processing_time_history
+          - backlog_estimates
+          - mom_movement
+        p2_artifacts:
+          output: processing_times_trends.parquet
+
+      8_backlog_visualization:
+        description: "How many people are ahead of me?"
+        charts:
+          - category_backlog_trend
+          - country_backlog_trend
+          - backlog_to_advancement_ratio_years_to_clear
+        p2_artifacts:
+          from: [fact_cutoffs, backlog_estimates]
+          output: backlog_estimates.parquet
+
+    planned_features:
+      - backlog_explorer
+      - visa_demand_monitor
+      - employer_insights_with_warn_overlay
+      - salary_benchmarks_explorer
+      - processing_times_lens
+      - data_contracts_and_readonly_apis
+      - ops_and_qa_center
+    non_goals_initial:
+      - write_time_data_entry
+      - heavy_training_at_request_time
+
+backbone_to_experiences:
+  - p1_p2_are_single_source_of_truth_for_p3
+  - p2_quality_gates_block_bad_builds_before_p3
+  - usage_registry_enables_traceability
+  - presentation_tables_prevent_drift
+
+agent_guidance:
+  defaults:
+    - do_not_lower_thresholds
+    - prefer_fixing_root_causes
+    - use_stubs_with_skip_reasons_when_sources_missing
+    - always_append_report_sections

@@ -1,0 +1,19 @@
+# TODO: Define EB category families and subcategories mapping
+#
+# Example structure:
+#
+# eb_categories:
+#   EB1:
+#     - EB1-A  # Extraordinary ability
+#     - EB1-B  # Outstanding professors/researchers
+#     - EB1-C  # Multinational executives
+#   EB2:
+#     - EB2-ROW      # Rest of world
+#     - EB2-China
+#     - EB2-India
+#     - EB2-NIW      # National Interest Waiver
+#   EB3:
+#     - EB3-ROW
+#     - EB3-China
+#     - EB3-India
+#     - EB3-Other Workers

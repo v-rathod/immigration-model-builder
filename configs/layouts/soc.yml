@@ -1,0 +1,164 @@
+# SOC Layout Registry
+# Purpose: Handle header drift, column aliasing, and SOC hierarchy extraction rules
+
+version: "1.0"
+description: "SOC dimension layout configurations for adaptive parsing"
+
+# Header aliases for column name variations across datasets
+header_aliases:
+  soc_code:
+    - "soc_2018_code"  # Exact from crosswalk file
+    - "soc_code"
+    - "SOC"
+    - "soc"
+    - "SOC_CODE"
+    - "O*NET-SOC Code"
+    - "ONET_SOC_CODE"
+    - "occ_code"
+    - "occupation_code"
+    - "OCC_CODE"
+    - "2018 SOC Code"
+    - "SOC 2018"
+  
+  soc_title:
+    - "soc_2018_title"  # Exact from crosswalk file
+    - "soc_title"
+    - "SOC_TITLE"
+    - "O*NET-SOC Title"
+    - "ONET_SOC_TITLE"
+    - "occupation_title"
+    - "OCC_TITLE"
+    - "occ_title"
+    - "title"
+    - "TITLE"
+    - "2018 SOC Title"
+  
+  soc_2010_code:
+    - "soc_2010_code"  # Exact from crosswalk file
+    - "2010 SOC Code"
+    - "SOC 2010"
+    - "soc_2010"
+    - "from_code"
+  
+  soc_2010_title:
+    - "soc_2010_title"  # Exact from crosswalk file
+    - "2010 SOC Title"
+    - "soc_2010_title"
+
+# SOC code format patterns for validation and extraction
+patterns:
+  # Standard format: XX-XXXX (e.g., 15-1252)
+  standard:
+    regex: "^\\d{2}-\\d{4}$"
+    description: "2-digit major + hyphen + 4-digit detailed"
+  
+  # Alternative: XXXXXX (e.g., 151252)
+  no_hyphen:
+    regex: "^\\d{6}$"
+    description: "6 consecutive digits, insert hyphen after position 2"
+    transform: "insert_hyphen_at_2"
+  
+  # Major group only: XX or XX-0000
+  major_only:
+    regex: "^\\d{2}(-0000)?$"
+    description: "Major group level, pad with -0000 if needed"
+
+# Hierarchy extraction rules from soc_code
+hierarchy_rules:
+  # Extract major group (first 2 digits)
+  major_group:
+    source: "soc_code"
+    pattern: "^(\\d{2})"
+    format: "{match}"  # e.g., "15" from "15-1252"
+  
+  # Extract minor group (XX-XX)
+  minor_group:
+    source: "soc_code"
+    pattern: "^(\\d{2}-\\d{2})"
+    format: "{match}"  # e.g., "15-12" from "15-1252"
+    fallback: "derived_from_major"  # If pattern fails, use major + "-00"
+  
+  # Extract broad group (XX-XXX)
+  broad_group:
+    source: "soc_code"
+    pattern: "^(\\d{2}-\\d{3})"
+    format: "{match}"  # e.g., "15-125" from "15-1252"
+    fallback: "derived_from_minor"  # If pattern fails, use minor + "0"
+
+# Crosswalk mapping confidence levels
+mapping_confidence_rules:
+  deterministic:
+    description: "One-to-one mapping from 2010 to 2018"
+    conditions:
+      - "single source SOC maps to single target SOC"
+      - "no aggregation or splitting"
+  
+  one-to-many:
+    description: "One 2010 SOC splits into multiple 2018 SOCs"
+    conditions:
+      - "source SOC appears in multiple target rows"
+      - "requires disambiguation logic in PERM/LCA"
+  
+  many-to-one:
+    description: "Multiple 2010 SOCs aggregate into one 2018 SOC"
+    conditions:
+      - "is_aggregated = true"
+      - "multiple from_codes consolidated"
+  
+  manual-review:
+    description: "Complex mapping requiring human judgment"
+    conditions:
+      - "crosswalk documentation indicates review needed"
+      - "no clear algorithmic path"
+
+# Data source priority for building dim_soc
+source_priority:
+  - name: "soc_crosswalk_2010_to_2018.csv"
+    location: "Codebooks/soc_crosswalk_2010_to_2018.csv"
+    priority: 1
+    description: "Official crosswalk from 2010 to 2018"
+    provides: ["soc_code", "soc_title", "from_code", "from_version", "mapping_confidence"]
+  
+  - name: "oews_all_data.xlsx"
+    location: "OEWS/*/oews_all_data*.xlsx"
+    priority: 2
+    description: "OEWS data contains SOC 2018 codes and titles"
+    provides: ["soc_code", "soc_title", "soc_version"]
+    note: "Use as fallback/supplement for titles if crosswalk incomplete"
+
+# Validation rules
+validation:
+  required_fields: ["soc_code", "soc_title"]
+  
+  soc_code_constraints:
+    - "must match standard pattern (XX-XXXX)"
+    - "must be unique (primary key)"
+    - "must not be null"
+  
+  soc_title_constraints:
+    - "should not be null (warn if missing)"
+    - "strip leading/trailing whitespace"
+  
+  hierarchy_consistency:
+    - "major_group must be first 2 digits of soc_code"
+    - "minor_group must match first 5 chars of soc_code (XX-XX)"
+    - "broad_group must match first 6 chars of soc_code (XX-XXX)"
+
+# Graceful degradation rules
+degradation_policy:
+  missing_title:
+    action: "use generic format: 'SOC {soc_code} (Title Unknown)'"
+    log_level: "WARNING"
+  
+  missing_hierarchy:
+    action: "derive from soc_code pattern using hierarchy_rules"
+    log_level: "INFO"
+  
+  invalid_code_format:
+    action: "attempt normalization using patterns.no_hyphen transform"
+    log_level: "WARNING"
+    fallback: "skip row and log to resolve_me.md"
+  
+  duplicate_soc_code:
+    action: "keep first occurrence, log duplicates to resolve_me.md"
+    log_level: "ERROR"

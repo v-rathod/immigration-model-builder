@@ -1,0 +1,7 @@
+enabled: false
+embed_model: null
+chunk: null
+sources: []
+notes: |
+  This file reserves the configuration space for a future chat/Q&A system in Project 3.
+  No implementation is required now.
