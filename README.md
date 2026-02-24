@@ -107,7 +107,7 @@ python3 scripts/check_p1_readiness.py          # full readiness report
 python3 scripts/check_p1_readiness.py --fix    # auto-rebuild if changes found
 
 # Tests
-python3 -m pytest tests/ -q                    # 345 passed, 1 skipped, 3 deselected
+python3 -m pytest tests/ -q                    # 371 passed, 1 skipped, 3 deselected
 ```
 
 ## Handling New Horizon Data
@@ -136,14 +136,15 @@ python3 -m pytest tests/ -q
 
 See `scripts/check_p1_readiness.py` output section 3 for which datasets currently have Meridian builders and which are tracked but pending.
 
-## Current State (Milestone 12)
+## Current State (Milestone 13 — P2 Freeze)
 
 - **41 artifacts** — 17.4M total rows across dims, facts, features, model outputs
 - **All 7 P3 features backed** — pd_forecasts, employer scores, geo metrics, salary benchmarks, etc.
 - **PD Forecast v2.1** — full-history anchored, velocity-capped, cross-verified within ±18% of 10-year actual
 - **EFS dual models** — rules-based (70K employers) + ML gradient boosting (956 high-volume)
 - **Incremental builds** — manifest-based change detection for P1 data (1,197 files tracked)
-- **99.7% test pass rate** — 345 passed, 0 failed, 1 skipped, 3 deselected
+- **RAG export (Stage 4)** — 47 text chunks + 149 pre-computed Q&A pairs for Compass chat
+- **99.7% test pass rate** — 371 passed, 0 failed, 1 skipped, 3 deselected
 
 See `PROGRESS.md` for full milestone history.
 
@@ -307,21 +308,99 @@ Enhanced scoring for 956 high-volume employers (≥15 cases in 36 months).
 
 ---
 
+## RAG Export for Compass Chat (Stage 4)
+
+Meridian pre-computes all retrieval-augmented generation (RAG) artifacts so that Compass (P3) can serve an LLM-powered chat interface **without runtime Parquet reads or heavy compute.**
+
+### Architecture
+
+```
+┌─────────────────────────────────────────────────────────┐
+│  Meridian (P2) — Build Time                             │
+│                                                         │
+│  41 Parquet artifacts (17.4M rows)                      │
+│       │                                                 │
+│       ├──→ rag_builder.py    → 47 text chunks (JSON)    │
+│       ├──→ qa_generator.py   → 149 pre-computed Q&A     │
+│       └──→ catalog.json      → artifact registry        │
+│                                                         │
+│  Output: artifacts/rag/ (static JSON — deploy to S3)    │
+└───────────────────────┬─────────────────────────────────┘
+                        │
+                        ▼
+┌─────────────────────────────────────────────────────────┐
+│  Compass (P3) — Runtime                                 │
+│                                                         │
+│  User question                                          │
+│       │                                                 │
+│       ├──→ 1. Check qa_cache.json (exact/fuzzy match)   │
+│       │       → 80% of questions answered without LLM   │
+│       │                                                 │
+│       ├──→ 2. Filter chunks by topic from all_chunks    │
+│       │       → Stuff relevant chunks into LLM prompt   │
+│       │                                                 │
+│       └──→ 3. Call GPT-4o-mini ($0.15/1M tokens)        │
+│               → Return grounded answer with sources     │
+│                                                         │
+│  Estimated LLM cost: ~$0.15/month (100 visitors)        │
+└─────────────────────────────────────────────────────────┘
+```
+
+### RAG Output Files
+
+| File | Description |
+|------|-------------|
+| `artifacts/rag/catalog.json` | Full artifact registry (41 tables) — feeds LLM system prompt |
+| `artifacts/rag/all_chunks.json` | 47 text chunks across 9 topics — the retrieval corpus |
+| `artifacts/rag/chunks/*.json` | Per-topic chunk files for filtered retrieval |
+| `artifacts/rag/qa_cache.json` | 149 pre-computed Q&A pairs — avoids LLM calls entirely |
+| `artifacts/rag/build_summary.json` | Build metadata and chunk counts |
+
+### Topics Covered
+
+| Topic | What it answers | Chunks |
+|-------|----------------|--------|
+| `pd_forecast` | "When will my priority date become current?" | 33 |
+| `employer` | "Is my employer immigration-friendly?" | 3 |
+| `salary` | "Is my salary competitive?" | 1 |
+| `visa_bulletin` | "What are the latest cutoff dates?" | 4 |
+| `geographic` | "Where are most sponsorships filed?" | 1 |
+| `occupation` | "What are the top SOC codes?" | 2 |
+| `processing` | "How long does I-485 processing take?" | 1 |
+| `visa_demand` | "Visa issuance trends?" | 1 |
+| `general` | "What data sources does NorthStar use?" | 1 |
+
+### Budget-Friendly Deployment (Target: $5-8/month)
+
+| Component | AWS Service | Est. Cost |
+|-----------|-------------|-----------|
+| Frontend | S3 + CloudFront (static site) | ~$0.50/mo |
+| API | Lambda + API Gateway | ~$0 (free tier) |
+| RAG data | S3 (static JSON files) | ~$0.02/mo |
+| LLM | OpenAI GPT-4o-mini API | ~$0.15/mo |
+| DNS | Route 53 | ~$0.50/mo |
+| **Total** | | **~$1.17/mo** |
+
+No vector database needed — topic-based filtering + pre-computed Q&A cache handles the workload.
+
+### Running Stage 4
+
+```bash
+# Generate RAG artifacts (after Stage 3)
+python3 -m src.export.rag_builder      # Chunks + catalog
+python3 -m src.export.qa_generator     # Pre-computed Q&A cache
+
+# Or as part of the full pipeline
+bash scripts/build_all.sh              # Includes Stage 4
+```
+
+---
+
 ## Tech Stack
 
 - Python 3.12 (system)
 - pandas ≥2.0, pyarrow ≥12.0, pytest 9.0.2
 - pdfplumber, openpyxl, pydantic, pyyaml
-
-## Future Chat/Q&A Support
-
-Meridian's architecture reserves space for future Q&A capabilities that may be introduced in Compass:
-
-- **`artifacts/qa/`**: Reserved directory for RAG-ready outputs (document summaries, metadata, embeddings)
-- **`configs/qa.yml`**: Configuration placeholder for embedding models, chunking strategies, and source selection
-- **Purpose**: When Compass adds a chat interface, Meridian can optionally generate pre-computed bundles to support retrieval-augmented generation without re-parsing raw data
-
-**Current status**: No implementation required. This scaffolding ensures future Compass chat features can integrate cleanly without architectural changes.
 
 ## License
 

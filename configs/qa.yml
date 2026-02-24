@@ -1,7 +1,55 @@
-enabled: false
-embed_model: null
-chunk: null
-sources: []
-notes: |
-  This file reserves the configuration space for a future chat/Q&A system in Project 3.
-  No implementation is required now.
+enabled: true
+version: "1.0"
+
+# --- RAG Configuration for Compass (P3) ---
+# Pre-computed in Meridian (P2) → consumed by Compass at runtime
+
+output_dir: "artifacts/rag"
+
+# Chunk settings
+chunk:
+  max_tokens: 800          # Target chunk size (~500-800 tokens)
+  sample_rows: 10          # Max rows to include in data samples
+  overlap: 0               # No overlap needed for structured data
+
+# Topic classification
+topics:
+  - pd_forecast            # Priority date forecasts
+  - employer               # EFS scores, employer analytics
+  - salary                 # Wage benchmarks (OEWS)
+  - visa_bulletin           # Visa bulletin history, cutoff dates
+  - geographic             # Worksite geo patterns
+  - occupation             # SOC demand metrics
+  - processing             # USCIS processing times
+  - visa_demand            # Visa issuance/application volumes
+  - general                # Country lookups, DHS data, WARN events
+
+# Q&A cache
+qa_cache:
+  enabled: true
+  path: "artifacts/rag/qa_cache.json"
+  # Pre-computed answers for common questions → avoid LLM calls entirely
+
+# Compass (P3) LLM integration guidance
+llm:
+  recommended_model: "gpt-4o-mini"   # $0.15/1M input, $0.60/1M output
+  estimated_monthly_cost: "$0.15"     # For ~500 queries/month
+  retrieval_strategy: "topic_filter"  # Filter chunks by topic → stuff into prompt
+  max_context_tokens: 4000            # Keep context window small for cost
+  system_prompt_source: "artifacts/rag/catalog.json"
+
+# AWS deployment guidance (for P3)
+deployment:
+  target: "aws"
+  budget: "$5-8/month"
+  architecture:
+    frontend: "S3 + CloudFront (static site)"        # ~$0.50/mo
+    api: "Lambda + API Gateway"                       # ~$0 (free tier)
+    llm: "External API (OpenAI/Anthropic)"            # ~$0.15-1.00/mo
+    data: "S3 (RAG artifacts as static JSON)"         # ~$0.02/mo
+    dns: "Route 53"                                   # ~$0.50/mo
+  notes: |
+    No vector database needed — use topic-based filtering + JSON chunk retrieval.
+    Pre-computed Q&A cache handles ~80% of questions without LLM calls.
+    For semantic search: optional client-side embeddings (transformers.js) or
+    a tiny FAISS index loaded in Lambda (~50MB).

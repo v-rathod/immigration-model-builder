@@ -66,12 +66,21 @@ echo "------------------------------------------------------------"
 python3 -m src.models.run_models --paths "$PATHS_CONFIG"
 echo ""
 
+# Stage 4: RAG Export (pre-compute chunks & Q&A for Compass chat)
+echo "------------------------------------------------------------"
+echo "Stage 4: RAG EXPORT (chunks + Q&A cache for Compass)"
+echo "------------------------------------------------------------"
+python3 -m src.export.rag_builder
+python3 -m src.export.qa_generator
+echo ""
+
 echo "============================================================"
 echo "PIPELINE COMPLETE"
 echo "============================================================"
 echo "Artifacts generated in: ./artifacts/"
 echo "  - tables/    : Curated data and feature tables"
 echo "  - models/    : Trained model artifacts"
+echo "  - rag/       : RAG chunks & Q&A cache for Compass chat"
 echo ""
-echo "Next: Review artifacts and implement parsing logic"
+echo "Next: Review artifacts and deploy to Compass (P3)"
 echo "============================================================"

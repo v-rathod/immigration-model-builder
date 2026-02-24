@@ -2111,3 +2111,89 @@ All 56 series within ±18% of 10-year actual velocity. User confirmed v2.1 as fi
 ### Current Test State
 - 345 passed, 0 failed, 1 skipped, 3 deselected (99.7% pass rate)
 - All incremental build and change detection tests pass
+
+---
+
+## Milestone 13 — RAG Export & P2 Freeze (2026-02-25)
+
+**Objective:** Build RAG (Retrieval-Augmented Generation) infrastructure so Compass (P3) can serve an LLM-powered chat interface consuming Meridian artifacts — without runtime Parquet reads or heavy compute. Freeze P2 after this milestone.
+
+### Work Performed
+
+#### 1. NorthStar Codename Adoption
+- Adopted public-facing codenames: **Horizon** (P1), **Meridian** (P2), **Compass** (P3)
+- Celestial navigation metaphor: scan the horizon → measure with meridian → navigate with compass
+- Updated 4 files: README.md, .github/copilot-instructions.md, configs/project_objective_P1_P2_P3.md, configs/project_objective_P1_P2_P3.yaml
+
+#### 2. RAG Builder (`src/export/rag_builder.py`)
+- Created ~614-line module that transforms all 41 Parquet artifacts into LLM-ready text chunks
+- **47 text chunks** across **9 topics**: pd_forecast (33), employer (3), salary (1), visa_bulletin (4), geographic (1), occupation (2), processing (1), visa_demand (1), general (1)
+- Generates: `catalog.json` (41-artifact registry), `all_chunks.json`, per-topic `chunks/*.json`, `build_summary.json`
+- Each chunk has standardized schema: `id`, `topic`, `title`, `text`, `metadata`, `source_artifacts`
+
+#### 3. QA Generator (`src/export/qa_generator.py`)
+- Created ~387-line module that pre-computes common Q&A pairs from artifacts
+- **149 Q&A pairs** covering: pd_forecast (64), employer (78), salary (1), geographic (2), processing (1), visa_bulletin (1), general (2)
+- Includes natural-language variants for key questions (fuzzy matching in P3)
+- Output: `qa_cache.json` — estimated to handle ~80% of user queries without LLM calls
+
+#### 4. RAG Configuration (`configs/qa.yml`)
+- Replaced empty placeholder with full RAG config
+- Includes: chunk settings, topic list, QA cache format, LLM guidance (GPT-4o-mini recommended), AWS deployment architecture, budget breakdown ($1.17/month target)
+
+#### 5. Pipeline Integration
+- Added Stage 4 (RAG Export) to `scripts/build_all.sh` — runs after Stage 3 (Models)
+- RAG artifacts generated in `artifacts/rag/` (gitignored with other artifacts)
+
+#### 6. Tests (`tests/test_rag_artifacts.py`)
+- Created 26 tests across 4 test classes: TestCatalog (6), TestChunks (9), TestQACache (9), TestBuildSummary (2)
+- Validates: chunk schema, unique IDs, topic coverage, ≥50 Q&A pairs, methodology questions present, ≥50 employer lookups
+
+#### 7. Documentation
+- README.md: Added NorthStar codename section with reasoning, comprehensive RAG architecture section with ASCII diagram, output tables, topic coverage, budget breakdown, and running instructions
+- Updated milestone section to Milestone 13 (P2 Freeze)
+
+### Files Added
+- `src/export/rag_builder.py` — RAG chunk builder (~614 lines)
+- `src/export/qa_generator.py` — Pre-computed Q&A generator (~387 lines)
+- `tests/test_rag_artifacts.py` — 26 RAG validation tests
+
+### Files Modified
+- `configs/qa.yml` — Full RAG config (was empty placeholder)
+- `scripts/build_all.sh` — Added Stage 4 (RAG Export)
+- `README.md` — NorthStar codenames, codename reasoning, RAG section, milestone update
+- `.github/copilot-instructions.md` — NorthStar codename mapping
+- `configs/project_objective_P1_P2_P3.md` — Codename headers
+- `configs/project_objective_P1_P2_P3.yaml` — Codename fields
+
+### RAG Artifact Output
+| File | Description | Size |
+|------|-------------|------|
+| `artifacts/rag/catalog.json` | 41-artifact registry | ~30 KB |
+| `artifacts/rag/all_chunks.json` | 47 text chunks | ~120 KB |
+| `artifacts/rag/chunks/*.json` | 9 per-topic chunk files | variable |
+| `artifacts/rag/qa_cache.json` | 149 pre-computed Q&A pairs | ~80 KB |
+| `artifacts/rag/build_summary.json` | Build metadata | ~1 KB |
+
+### Budget-Friendly P3 Architecture
+| Component | AWS Service | Cost |
+|-----------|-------------|------|
+| Frontend | S3 + CloudFront | ~$0.50/mo |
+| API | Lambda + API Gateway | ~$0 (free tier) |
+| RAG data | S3 (static JSON) | ~$0.02/mo |
+| LLM | OpenAI GPT-4o-mini | ~$0.15/mo |
+| DNS | Route 53 | ~$0.50/mo |
+| **Total** | | **~$1.17/mo** |
+
+### Current Test State
+- 371 passed, 0 failed, 1 skipped, 3 deselected (99.7% pass rate)
+- 26 new RAG tests + 345 existing tests
+- All RAG artifacts validated
+
+### P2 Freeze Status
+This milestone marks the **P2 (Meridian) freeze**. All artifacts are production-ready for Compass (P3) consumption:
+- 41 curated Parquet tables (17.4M rows)
+- 47 RAG text chunks across 9 topics
+- 149 pre-computed Q&A pairs
+- Full incremental build system for ongoing P1 data updates
+- 371 passing tests with 99.7% pass rate
