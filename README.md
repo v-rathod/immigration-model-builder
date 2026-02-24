@@ -1,41 +1,57 @@
-# Immigration Model Builder
+# NorthStar · Meridian
+
+> **Immigration Model Builder** — the analytical backbone of the NorthStar program
 
 > **📋 For AI Assistants**: 
 > - Read [`.github/copilot-instructions.md`](.github/copilot-instructions.md) first — it's the authoritative context file (auto-loaded by Copilot)
-> - Review [`PROGRESS.md`](PROGRESS.md) for chronological work history (Milestones 1–10)
+> - Review [`PROGRESS.md`](PROGRESS.md) for chronological work history (Milestones 1–12)
+
+## The NorthStar Program
+
+NorthStar is a three-part immigration data intelligence platform:
+
+| Codename | Role | Repository |
+|----------|------|------------|
+| **Horizon** | Data collection — scans the horizon and gathers raw immigration filings, bulletins, and statistics | `fetch-immigration-data` |
+| **Meridian** | Modeling & analytics — the reference framework that curates, measures, and models ← **THIS REPO** | `immigration-model-builder` |
+| **Compass** | User experience — the instrument that guides users with personalized immigration insights | `immigration-insights-app` |
 
 ## Purpose
 
-This project processes raw immigration data from Project 1 and produces curated tables, feature sets, and lightweight predictive models for consumption by Project 3 (the public web app).
+**Meridian** transforms raw data collected by **Horizon** into curated tables, feature sets, and lightweight predictive models for consumption by **Compass** (the public web app).
 
 **Key outputs:**
 - Canonical fact and dimension tables (Visa Bulletin history, PERM/LCA records, OEWS wages)
 - Engineered features (employer friendliness, salary benchmarks)
 - Model artifacts (priority-date forecasts, retrogression risk scores)
-- Packaged exports ready for Project 3
+- Packaged exports ready for Compass
 
-## Project Relationship
+## Architecture
 
 ```
-Project 1 (fetch-immigration-data)
-   |
-   | Downloads raw data to:
-   | /Users/vrathod1/dev/NorthStar/fetch-immigration-data/downloads
-   v
-Project 2 (immigration-model-builder) ← THIS REPO
-   |
-   | Parses, normalizes, features, models
-   | Writes artifacts to: ./artifacts/
-   v
-Project 3 (immigration-insights-app)
-   |
-   | Loads pre-trained models and tables
-   | Serves public-facing insights
+┌─────────────────────────────────────────────────────────────┐
+│                    NorthStar Program                        │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│   ★ Horizon  (fetch-immigration-data)                       │
+│   │  Scans & collects raw data: PDFs, Excel, CSV            │
+│   │  /Users/vrathod1/dev/NorthStar/fetch-immigration-data   │
+│   │                                                         │
+│   ▼                                                         │
+│   ★ Meridian (immigration-model-builder) ← THIS REPO       │
+│   │  Curates, engineers features, trains models              │
+│   │  Writes artifacts to: ./artifacts/                      │
+│   │                                                         │
+│   ▼                                                         │
+│   ★ Compass  (immigration-insights-app)                     │
+│      Guides users with personalized immigration insights    │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
 ```
 
 ## Local Data Path
 
-**Input:** `/Users/vrathod1/dev/NorthStar/fetch-immigration-data/downloads`
+**Input (from Horizon):** `/Users/vrathod1/dev/NorthStar/fetch-immigration-data/downloads`
 
 This directory contains:
 - Visa Bulletin PDFs
@@ -81,9 +97,9 @@ python3 scripts/check_p1_readiness.py --fix    # auto-rebuild if changes found
 python3 -m pytest tests/ -q                    # 345 passed, 1 skipped, 3 deselected
 ```
 
-## Handling New P1 Data
+## Handling New Horizon Data
 
-When Project 1 fetches new files or adds a new data source, run this workflow:
+When Horizon fetches new files or adds a new data source, run this workflow:
 
 ```bash
 # Step 1: Check what changed
@@ -96,7 +112,7 @@ bash scripts/build_incremental.sh --execute
 python3 -m pytest tests/ -q
 ```
 
-**If P1 adds a completely new data source** (new directory in downloads/):
+**If Horizon adds a completely new data source** (new directory in downloads/):
 
 1. Add a `DATASET_PATTERNS` entry in [src/incremental/change_detector.py](src/incremental/change_detector.py)
 2. Create a curate script: `scripts/build_fact_<name>.py`
@@ -105,7 +121,7 @@ python3 -m pytest tests/ -q
 5. Add validation tests in `tests/`
 6. Re-init manifest: `bash scripts/build_incremental.sh --init`
 
-See `scripts/check_p1_readiness.py` output section 3 for which datasets currently have P2 builders and which are tracked but pending.
+See `scripts/check_p1_readiness.py` output section 3 for which datasets currently have Meridian builders and which are tracked but pending.
 
 ## Current State (Milestone 12)
 
@@ -128,7 +144,7 @@ See `PROGRESS.md` for full milestone history.
 
 | Artifact | Rows | Cols | Data Source(s) | P3 Usage |
 |----------|-----:|-----:|----------------|----------|
-| dim_employer.parquet | 227,076 | 6 | DOL PERM Excel FY2005–FY2024 (patched from all 20 FY partitions) | Employer lookup, EFS dashboard, search |
+| dim_employer.parquet | 227,076 | 6 | DOL PERM Excel FY2005–FY2024 (patched from all 20 FY partitions) | Compass: Employer lookup, EFS dashboard, search |
 | dim_soc.parquet | 1,396 | 12 | BLS OEWS 2023 all-data; SOC 2010→2018 crosswalk CSV | SOC occupation lookup, demand dashboard |
 | dim_country.parquet | 249 | 6 | Hardcoded ISO 3166-1 (249 countries) | Country lookup, visa bulletin filter |
 | dim_area.parquet | 587 | 10 | BLS OEWS all-data (2024 w/ 2023 fallback) | Geography lookup, worksite dashboard |
@@ -182,10 +198,10 @@ See `PROGRESS.md` for full milestone history.
 
 | Artifact | Rows | Cols | Data Source(s) | P3 Usage |
 |----------|-----:|-----:|----------------|----------|
-| employer_friendliness_scores.parquet | 70,206 | 22 | ← employer_features | **Panel D**: EFS dashboard, employer search, tier labels |
+| employer_friendliness_scores.parquet | 70,206 | 22 | ← employer_features | **Compass Panel D**: EFS dashboard, employer search, tier labels |
 | employer_friendliness_scores_ml.parquet | 956 | 8 | ← fact_perm_unique_case/, employer_friendliness_scores | ML EFS for top employers, enhanced accuracy |
-| pd_forecasts.parquet | 1,344 | 10 | ← fact_cutoff_trends | **Panel A**: PD forecast — the #1 P3 feature |
-| pd_forecast_model.json | 56 series | — | ← fact_cutoff_trends | Model parameters & metadata for P3 display |
+| pd_forecasts.parquet | 1,344 | 10 | ← fact_cutoff_trends | **Compass Panel A**: PD forecast — the #1 feature |
+| pd_forecast_model.json | 56 series | — | ← fact_cutoff_trends | Model parameters & metadata for Compass display |
 
 ### Model Stubs (3 tables · 0 rows)
 
@@ -197,9 +213,9 @@ See `PROGRESS.md` for full milestone history.
 
 ---
 
-### Raw Data Source Summary
+### Raw Data Source Summary (Horizon → Meridian)
 
-| P1 Source Directory | File Types | Count | P2 Artifacts Fed |
+| Horizon Source Directory | File Types | Count | Meridian Artifacts Fed |
 |---------------------|-----------|------:|------------------|
 | `PERM/PERM/FY*/` | Excel | 20 | fact_perm → dim_employer, employer_features, EFS, soc_demand, worksite_geo, backlog |
 | `Visa_Bulletin/` | PDF | ~180 | fact_cutoffs → cutoff_trends → pd_forecasts, category_movement, backlog |
@@ -216,16 +232,16 @@ See `PROGRESS.md` for full milestone history.
 | `Codebooks/` | CSV | 2 | dim_soc (crosswalk), dim_visa_class |
 | *(hardcoded)* | Python | — | dim_country (ISO 3166-1) |
 
-### Data Lineage Flow
+### Data Lineage Flow (Horizon → Meridian → Compass)
 
 ```
-P1 Raw Downloads (PDFs, Excel, CSV)
+★ Horizon — Raw Downloads (PDFs, Excel, CSV)
   │
-  ├──→ Stage 1: Curate      → 6 dims + 15 facts + 2 stubs
+  ├──→ ★ Meridian Stage 1: Curate      → 6 dims + 15 facts + 2 stubs
   │       │
   │       └──→ Stage 1b: Patch dim_employer (from fact_perm)
   │
-  ├──→ Stage 2: Features     → 11 feature tables (1M+ rows)
+  ├──→ ★ Meridian Stage 2: Features     → 11 feature tables (1M+ rows)
   │       │
   │       ├── employer_features (PERM + OEWS)
   │       ├── salary_benchmarks (OEWS)
@@ -236,10 +252,13 @@ P1 Raw Downloads (PDFs, Excel, CSV)
   │       ├── backlog_estimates (visa bulletin + PERM)
   │       └── processing_times_trends (USCIS I-485)
   │
-  └──→ Stage 3: Models       → 3 model outputs + 1 JSON + 3 stubs
-          ├── pd_forecasts          (Panel A — #1 P3 feature)
-          ├── EFS rules-based       (Panel D — 70K employers)
+  └──→ ★ Meridian Stage 3: Models       → 3 model outputs + 1 JSON + 3 stubs
+          ├── pd_forecasts          (Compass Panel A — #1 feature)
+          ├── EFS rules-based       (Compass Panel D — 70K employers)
           └── EFS ML-based          (956 high-volume employers)
+                                              │
+                                              ▼
+                                    ★ Compass — User-Facing App
 ```
 
 ---
@@ -283,13 +302,13 @@ Enhanced scoring for 956 high-volume employers (≥15 cases in 36 months).
 
 ## Future Chat/Q&A Support
 
-Project 2 architecture reserves space for future Q&A capabilities that may be introduced in Project 3:
+Meridian's architecture reserves space for future Q&A capabilities that may be introduced in Compass:
 
 - **`artifacts/qa/`**: Reserved directory for RAG-ready outputs (document summaries, metadata, embeddings)
 - **`configs/qa.yml`**: Configuration placeholder for embedding models, chunking strategies, and source selection
-- **Purpose**: When Project 3 adds a chat interface, Project 2 can optionally generate pre-computed bundles to support retrieval-augmented generation without re-parsing raw data
+- **Purpose**: When Compass adds a chat interface, Meridian can optionally generate pre-computed bundles to support retrieval-augmented generation without re-parsing raw data
 
-**Current status**: No implementation required. This scaffolding ensures future chat features can integrate cleanly without architectural changes.
+**Current status**: No implementation required. This scaffolding ensures future Compass chat features can integrate cleanly without architectural changes.
 
 ## License
 

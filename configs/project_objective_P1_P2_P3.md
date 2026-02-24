@@ -1,7 +1,16 @@
-# Immigration Model Builder — Program Objectives (P1 → P2 → P3)
-_Last updated: 2026-02-24T16:30:00Z_
+# NorthStar Program — Objectives (Horizon → Meridian → Compass)
+_Last updated: 2026-02-24T22:00:00Z_
 
-This document codifies the end‑to‑end objectives across **P1 (foundations)**, **P2 (current project)**, and **P3 (productization & experiences)**.
+This document codifies the end‑to‑end objectives across the **NorthStar** program's three projects.
+
+> **Codenames**: Horizon (P1) → Meridian (P2) → Compass (P3)
+>
+> | Codename | Internal | Repository | Role |
+> |----------|----------|------------|------|
+> | **Horizon** | P1 | fetch-immigration-data | Data collection — scans the horizon |
+> | **Meridian** | P2 | immigration-model-builder | Analytics backbone — curates, measures, models |
+> | **Compass** | P3 | immigration-insights-app | User experience — guides with insights |
+
 Agents should read this before every session to understand **what we are building and why**.
 
 ---
@@ -9,10 +18,10 @@ Agents should read this before every session to understand **what we are buildin
 Build a trustworthy, explainable, and continuously verifiable immigration data & modeling platform that:
 - Ingests **all authoritative sources** (PERM, LCA, OEWS, Visa Bulletin, DOS/USCIS/DHS publications, etc.).
 - Produces **auditable facts/dims**, **derived metrics**, and **employer/market models** with **≥95%** QA gates.
-- Exposes **P3 user experiences** (dashboards, APIs) that sit on top of the curated P1/P2 backbone.
+- Exposes **Compass user experiences** (dashboards, APIs) that sit on top of the curated Horizon/Meridian backbone.
 
 ---
-## P1 — Foundations (Data plumbing & minimal viability)
+## Horizon (P1) — Foundations (Data plumbing & minimal viability)
 **Objective:** Make the raw → curated path reliable, typed, and replayable.
 
 **Key Deliverables**
@@ -26,7 +35,7 @@ Build a trustworthy, explainable, and continuously verifiable immigration data &
 - Reproducible builds with deterministic outputs.
 
 ---
-## P2 — Backbone (Current project)
+## Meridian (P2) — Backbone (Current project)
 **Objective:** Elevate from "ingested" to **audited, joined, and model‑ready** with strict quality gates and coverage of all downloaded datasets.
 
 **Curated & Validated (examples)**
@@ -49,8 +58,8 @@ Build a trustworthy, explainable, and continuously verifiable immigration data &
 - **Commentary & logs** (transcript/logs/bundle) under `artifacts/metrics/`.
 
 ---
-## P3 — Productization & Experiences (Future)
-**Objective:** Ship robust user experiences & APIs that sit directly on P1/P2 artifacts, with zero heavy compute at runtime.
+## Compass (P3) — Productization & Experiences (Future)
+**Objective:** Ship robust user experiences & APIs that sit directly on Horizon/Meridian artifacts, with zero heavy compute at runtime.
 
 ### User Use Case — Personalized Experience
 A user enters personal details:
@@ -227,9 +236,9 @@ The app then provides **five personalized panels**:
 - Heavy model training at request‑time (training is offline; serving is light).
 
 ---
-## How P1 & P2 power P3 (backbone → experiences)
-- **Curated P1/P2** are the **single source of truth** that P3 charts/APIs/models read—no ad‑hoc runtime transforms.
-- **P2 gates** ensure reliability: any dataset <95% coverage/RI/tests fails *before* reaching users.
+## How Horizon & Meridian power Compass (backbone → experiences)
+- **Curated Horizon/Meridian data** is the **single source of truth** that Compass charts/APIs/models read—no ad‑hoc runtime transforms.
+- **Meridian quality gates** ensure reliability: any dataset <95% coverage/RI/tests fails *before* reaching users.
 - **Usage Registry** ties features/models back to sources for traceability.
 - **Presentation tables & snapshots** prevent drift and ensure consistent UI performance.
 

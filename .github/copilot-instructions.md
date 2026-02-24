@@ -1,5 +1,14 @@
 # Immigration Model Builder — Copilot Context
 
+> **NorthStar Program Codenames** (public-facing names for documentation):
+> | Internal | Codename | Repository | Role |
+> |----------|----------|------------|------|
+> | P1 | **Horizon** | fetch-immigration-data | Data collection — scans the horizon |
+> | P2 | **Meridian** | immigration-model-builder (THIS REPO) | Analytics backbone — curates, measures, models |
+> | P3 | **Compass** | immigration-insights-app | User experience — guides with insights |
+>
+> Use P1/P2/P3 in internal code and comments. Use Horizon/Meridian/Compass in public docs (README, reports).
+
 > **START OF EVERY SESSION**:
 > 1. Run `python scripts/print_objective_banner.py` to load the Program Objective (P1→P2→P3 scope, quality gates, and agent guidance).
 > 2. Read `PROGRESS.md` and `artifacts/metrics/FINAL_SINGLE_REPORT.md` to understand where we left off.
@@ -14,13 +23,13 @@
 
 ## Project Overview
 
-Parquet-based immigration data pipeline that transforms raw DOL/DOS/USCIS/BLS data into curated dimension & fact tables, engineered features, and ML model artifacts for a downstream public-facing web app (Project 3).
+Parquet-based immigration data pipeline (**NorthStar Meridian**) that transforms raw DOL/DOS/USCIS/BLS data into curated dimension & fact tables, engineered features, and ML model artifacts for a downstream public-facing web app (Compass).
 
-**3-project architecture:**
+**3-project architecture (NorthStar program):**
 ```
-Project 1 (fetch-immigration-data)  →  raw downloads (PDFs, Excel, CSV)
-Project 2 (immigration-model-builder)  →  THIS REPO: curate → features → models
-Project 3 (immigration-insights-app)  →  public web app consuming P2 artifacts
+Horizon  (P1: fetch-immigration-data)   →  raw downloads (PDFs, Excel, CSV)
+Meridian (P2: immigration-model-builder)  →  THIS REPO: curate → features → models
+Compass  (P3: immigration-insights-app)   →  public web app consuming Meridian artifacts
 ```
 
 ---
@@ -38,7 +47,7 @@ Project 3 (immigration-insights-app)  →  public web app consuming P2 artifacts
 | What | Path |
 |------|------|
 | Project root | `/Users/vrathod1/dev/NorthStar/immigration-model-builder` |
-| Raw downloads (Project 1) | `/Users/vrathod1/dev/NorthStar/fetch-immigration-data/downloads` |
+| Raw downloads (Horizon / P1) | `/Users/vrathod1/dev/NorthStar/fetch-immigration-data/downloads` |
 | Curated tables | `artifacts/tables/` (~40 parquet files/dirs) |
 | Model artifacts | `artifacts/models/` |
 | Metrics & reports | `artifacts/metrics/` |
@@ -116,22 +125,22 @@ python3 scripts/check_p1_readiness.py --fix    # auto-rebuild if changes found
 
 ---
 
-## Handling New P1 Data or New Data Sources
+## Handling New Horizon (P1) Data or New Data Sources
 
-**After any P1 fetch/update, run this workflow:**
+**After any Horizon fetch/update, run this workflow:**
 ```bash
 python3 scripts/check_p1_readiness.py       # 1. Check what changed
 bash scripts/build_incremental.sh --execute  # 2. Rebuild affected artifacts
 python3 -m pytest tests/ -q                  # 3. Validate
 ```
 
-**If P1 adds a completely new data source** (new directory):
+**If Horizon adds a completely new data source** (new directory):
 1. Add `DATASET_PATTERNS` entry in `src/incremental/change_detector.py`
 2. Create builder script: `scripts/build_fact_<name>.py`
 3. Add `DEPENDENCY_GRAPH` entry mapping dataset → artifacts + rebuild commands
 4. Run builder, add tests, re-init manifest: `bash scripts/build_incremental.sh --init`
 
-**Currently tracked but no P2 builder yet (future work):**
+**Currently tracked but no Meridian builder yet (future work):**
 - `USCIS_H1B_Employer_Hub/` → H1B_EMPLOYER_HUB (14 CSVs, FY2010–FY2023)
 - `USCIS_Processing_Times/` → USCIS_PROC_TIMES (processing time snapshots)
 - `BLS/` → BLS_CES (Current Employment Statistics JSON)
@@ -275,11 +284,11 @@ tests/
 
 8. **conftest.py activates chat_tap**: The root conftest.py imports `src.utils.chat_tap` for commentary capture. This is non-blocking (wrapped in try/except).
 
-9. **Incremental builds use file manifests**: `artifacts/metrics/p1_manifest.json` stores fingerprints (size + mtime) for 1,196 P1 files across 18 datasets. Run `bash scripts/build_incremental.sh --init` to reset. New datasets need their directory pattern added to `DATASET_PATTERNS` and dependencies registered in `DEPENDENCY_GRAPH` in `src/incremental/change_detector.py`. The `classify_dataset()` function uses longest-match-wins to avoid collisions (e.g. `DOL_Record_Layouts/LCA/` matches DOL_RECORD_LAYOUTS, not LCA).
+9. **Incremental builds use file manifests**: `artifacts/metrics/p1_manifest.json` stores fingerprints (size + mtime) for 1,196 Horizon (P1) files across 18 datasets. Run `bash scripts/build_incremental.sh --init` to reset. New datasets need their directory pattern added to `DATASET_PATTERNS` and dependencies registered in `DEPENDENCY_GRAPH` in `src/incremental/change_detector.py`. The `classify_dataset()` function uses longest-match-wins to avoid collisions (e.g. `DOL_Record_Layouts/LCA/` matches DOL_RECORD_LAYOUTS, not LCA).
 
-10. **P1 readiness check before pipeline runs**: Always run `python3 scripts/check_p1_readiness.py` after any P1 fetch/update. It reports: (a) all P1 files classified by dataset, (b) any UNKNOWN files needing DATASET_PATTERNS entries, (c) which datasets have P2 builders vs which are future work, (d) change detection vs saved manifest. Use `--fix` to auto-rebuild.
+10. **Horizon readiness check before pipeline runs**: Always run `python3 scripts/check_p1_readiness.py` after any Horizon fetch/update. It reports: (a) all Horizon files classified by dataset, (b) any UNKNOWN files needing DATASET_PATTERNS entries, (c) which datasets have Meridian builders vs which are future work, (d) change detection vs saved manifest. Use `--fix` to auto-rebuild.
 
-11. **4 P1 datasets tracked but have no P2 builder yet**: H1B_EMPLOYER_HUB (14 CSVs), USCIS_PROC_TIMES (2 files), BLS_CES (4 JSONs), DOL_RECORD_LAYOUTS (15 PDFs, metadata only). These are classified and their changes are detected, but no artifacts are built. When builders are created, add dependency graph entries.
+11. **4 Horizon datasets tracked but have no Meridian builder yet**: H1B_EMPLOYER_HUB (14 CSVs), USCIS_PROC_TIMES (2 files), BLS_CES (4 JSONs), DOL_RECORD_LAYOUTS (15 PDFs, metadata only). These are classified and their changes are detected, but no artifacts are built. When builders are created, add dependency graph entries.
 
 ---
 
@@ -318,7 +327,7 @@ src/
 ├── io/readers.py                          # Config loading, path resolution
 ├── normalize/mappings.py                  # SOC crosswalks, employer normalization
 ├── validate/dq_checks.py                  # Data quality check helpers
-└── export/package_artifacts.py            # Bundle packaging for P3
+└── export/package_artifacts.py            # Bundle packaging for Compass (P3)
 ```
 
 ### Key Scripts (scripts/)
