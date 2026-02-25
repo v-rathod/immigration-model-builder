@@ -1,11 +1,18 @@
 """
 Test coverage expectations: Assert minimum file coverage thresholds.
 """
+import os
 import subprocess
 import sys
 import json
 from pathlib import Path
 import pytest
+
+def _safe_env():
+    """Return env dict with CHAT_TAP_DISABLED=1 to prevent subprocess hang."""
+    env = os.environ.copy()
+    env["CHAT_TAP_DISABLED"] = "1"
+    return env
 
 
 def run_coverage_audit():
@@ -32,7 +39,9 @@ def run_coverage_audit():
             "--json", str(json_report)
         ],
         capture_output=True,
-        text=True
+        text=True,
+        timeout=120,
+        env=_safe_env(),
     )
     
     # Check if JSON report was created

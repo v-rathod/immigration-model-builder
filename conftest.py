@@ -15,25 +15,30 @@ if str(_ROOT) not in sys.path:
     sys.path.insert(0, str(_ROOT))
 
 # ── Activate commentary capture ───────────────────────────────────────────────
-try:
-    from src.utils import chat_tap as _tap
+import os as _os
 
-    _tap._ensure_session()
-    _tap.intercept_chat(
-        "system",
-        f"pytest session started  args={sys.argv}",
-        task="pytest",
-        level="INFO",
-    )
-except Exception as _e:
-    # Never block tests because of tap failures
-    pass
+if _os.environ.get("CHAT_TAP_DISABLED", "0") != "1":
+    try:
+        from src.utils import chat_tap as _tap
+
+        _tap._ensure_session()
+        _tap.intercept_chat(
+            "system",
+            f"pytest session started  args={sys.argv}",
+            task="pytest",
+            level="INFO",
+        )
+    except Exception as _e:
+        # Never block tests because of tap failures
+        pass
 
 
 # ── Pytest hooks ─────────────────────────────────────────────────────────────
 def pytest_runtest_logreport(report):
     """Log each test result to the tap."""
     if report.when != "call":
+        return
+    if _os.environ.get("CHAT_TAP_DISABLED", "0") == "1":
         return
     try:
         from src.utils import chat_tap as _tap  # noqa: F401
@@ -58,6 +63,8 @@ def pytest_runtest_logreport(report):
 
 def pytest_sessionfinish(session, exitstatus):
     """Log final summary and flush any pending state."""
+    if _os.environ.get("CHAT_TAP_DISABLED", "0") == "1":
+        return
     try:
         from src.utils import chat_tap as _tap  # noqa: F401
 

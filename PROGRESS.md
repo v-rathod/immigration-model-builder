@@ -2197,3 +2197,77 @@ This milestone marks the **P2 (Meridian) freeze**. All artifacts are production-
 - 149 pre-computed Q&A pairs
 - Full incremental build system for ongoing P1 data updates
 - 371 passing tests with 99.7% pass rate
+
+---
+
+## Milestone 14 — Quality Assurance Infrastructure (2026-02-25)
+
+### Objective
+Build comprehensive quality assurance infrastructure: golden snapshot regression testing, product-owner data sanity suite, and pytest-cov line coverage measurement.
+
+### Work Performed
+
+#### 1. Golden Snapshot Regression Testing
+- Created `scripts/generate_golden_manifest.py` — scans all 37+ artifacts, records row counts, columns, dtype signatures, sample hashes, and numeric bounds into `artifacts/metrics/golden_manifest.json`
+- Created `tests/test_golden_snapshot.py` — 7 tests in 4 classes:
+  - **TestNoRegressions**: Ensures no artifacts are lost between runs
+  - **TestRowCounts**: Flags >5% drops (fail) and >10% increases (warn)
+  - **TestSchemaStability**: Detects dropped columns, dtype changes (fail), new columns (warn)
+  - **TestNumericRanges**: Catches >10× range explosions in numeric columns
+
+#### 2. Product-Owner Data Sanity Suite
+- Created `tests/test_data_sanity.py` — 47 tests across 12 classes covering business-meaningful assertions:
+  - PD Forecasts (6): EB categories, IND/CHN present, EB2-India most backlogged, ≤24 months per chart+category+country
+  - Employer Scores (6): ≥50K rules-based, ≥500 ML, all scores [0,100], ≥3 tiers, approval ≤100%, mean 15–85
+  - Salary (4): median $20K–$600K, percentile ordering, no negatives, ≥1K records
+  - Geography (3): CA is top state, top-10 includes CA/TX/NY/NJ, ≥40 states
+  - PERM (5): ≥1M records, ≥60% certified, ≥15 FY span, stable YoY volume
+  - Visa Bulletin (3): EB1/EB2/EB3 present, India/China present, ≥10 year span
+  - Dimensions (4): ≥200K employers, ≥800 SOC codes, ≥200 countries, ≥4 visa classes
+  - Processing Times (3): ≥10 records, backlog 0–120 months, approval rate 40–100%
+  - SOC Demand (3): Software dev SOC present, ≥100 SOC codes, no negative filings
+  - Cross-Artifact Consistency (7): EFS ≥95% in dim_employer, forecast cats overlap cutoffs ≥3, salary SOC ≥80% in dim_soc
+  - RAG (3): Catalog ≥30 artifacts, QA cache ≥100 pairs, ≥20 chunks
+
+#### 3. pytest-cov Integration
+- Installed pytest-cov 7.0.0 + coverage 7.13.4
+- Created `.coveragerc` config (source=src/, omits chat_tap/transcript, HTML to `artifacts/metrics/coverage_html`)
+- Line coverage: **11.4%** (3,766 statements, 431 covered) — expected because tests validate output artifacts, not pipeline execution
+- HTML report generated at `artifacts/metrics/coverage_html/index.html`
+
+#### 4. Subprocess Hang Fix
+- Root cause: `chat_tap.py` heartbeat daemon thread prevents subprocess exit in tests that spawn `python -m src.curate.run_curate` etc.
+- Fixed all 7 subprocess.run() calls across 4 test files to include `timeout` and `env={"CHAT_TAP_DISABLED": "1"}`
+- Files fixed: `test_dry_run.py`, `test_smoke.py`, `test_coverage_expectations.py`, `test_paths_check.py`
+- Conftest.py already had CHAT_TAP_DISABLED guards (from prior session)
+
+#### 5. pytest.ini Updates
+- Added `sanity` and `golden` markers for selective test execution
+
+### Files Added
+- `scripts/generate_golden_manifest.py` — Golden manifest generator
+- `tests/test_golden_snapshot.py` — 7 regression detection tests
+- `tests/test_data_sanity.py` — 47 data sanity tests
+- `.coveragerc` — Coverage configuration
+
+### Files Modified
+- `pytest.ini` — Added `sanity` and `golden` markers
+- `requirements.txt` — Added `pytest-cov>=4.0.0`
+- `conftest.py` — CHAT_TAP_DISABLED env var guards
+- `tests/test_dry_run.py` — Added timeout + CHAT_TAP_DISABLED to subprocess calls
+- `tests/test_smoke.py` — Added timeout + CHAT_TAP_DISABLED to subprocess calls
+- `tests/test_coverage_expectations.py` — Added timeout + CHAT_TAP_DISABLED to subprocess calls
+- `tests/test_paths_check.py` — Added timeout + CHAT_TAP_DISABLED to subprocess calls
+- `README.md` — Updated to Milestone 14, added Quality Assurance section
+- `PROGRESS.md` — Added Milestone 14 entry
+
+### Generated Artifacts
+- `artifacts/metrics/golden_manifest.json` — 37 artifacts snapshotted
+- `artifacts/metrics/coverage_html/` — HTML coverage report
+- `artifacts/metrics/all_tests_final.xml` — JUnit XML test output
+
+### Current Test State
+- **425 passed, 0 failed, 1 skipped, 3 deselected** (99.8% pass rate)
+- 54 new tests (7 golden + 47 sanity) + 371 existing
+- Line coverage: 11.4% (inherently low — tests validate artifacts, not pipeline execution)
+- All tests complete in ~8 minutes (includes subprocess-based smoke tests)

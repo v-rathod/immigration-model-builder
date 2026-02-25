@@ -1,10 +1,17 @@
 """
 Test dry-run mode: Verify that --dry-run discovers files without creating outputs.
 """
+import os
 import subprocess
 import sys
 from pathlib import Path
 import pytest
+
+def _safe_env():
+    """Return env dict with CHAT_TAP_DISABLED=1 to prevent subprocess hang."""
+    env = os.environ.copy()
+    env["CHAT_TAP_DISABLED"] = "1"
+    return env
 
 
 def test_dry_run_no_writes(tmpdir):
@@ -30,7 +37,9 @@ artifacts_root: {temp_artifacts}
     result = subprocess.run(
         [sys.executable, "-m", "src.curate.run_curate", "--paths", str(paths_config), "--dry-run"],
         capture_output=True,
-        text=True
+        text=True,
+        timeout=60,
+        env=_safe_env(),
     )
     
     # Check exit code (should succeed)
@@ -64,7 +73,9 @@ def test_dry_run_discovers_files():
     result = subprocess.run(
         [sys.executable, "-m", "src.curate.run_curate", "--paths", str(paths_config), "--dry-run"],
         capture_output=True,
-        text=True
+        text=True,
+        timeout=180,
+        env=_safe_env(),
     )
     
     # Check exit code

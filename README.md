@@ -136,7 +136,7 @@ python3 -m pytest tests/ -q
 
 See `scripts/check_p1_readiness.py` output section 3 for which datasets currently have Meridian builders and which are tracked but pending.
 
-## Current State (Milestone 13 — P2 Freeze)
+## Current State (Milestone 14 — Quality Assurance)
 
 - **41 artifacts** — 17.4M total rows across dims, facts, features, model outputs
 - **All 7 P3 features backed** — pd_forecasts, employer scores, geo metrics, salary benchmarks, etc.
@@ -144,7 +144,8 @@ See `scripts/check_p1_readiness.py` output section 3 for which datasets currentl
 - **EFS dual models** — rules-based (70K employers) + ML gradient boosting (956 high-volume)
 - **Incremental builds** — manifest-based change detection for P1 data (1,197 files tracked)
 - **RAG export (Stage 4)** — 47 text chunks + 149 pre-computed Q&A pairs for Compass chat
-- **99.7% test pass rate** — 371 passed, 0 failed, 1 skipped, 3 deselected
+- **99.8% test pass rate** — 425 passed, 0 failed, 1 skipped, 3 deselected
+- **3-tier QA** — Golden snapshot regression, data sanity suite, pytest-cov line coverage
 
 See `PROGRESS.md` for full milestone history.
 
@@ -393,6 +394,72 @@ python3 -m src.export.qa_generator     # Pre-computed Q&A cache
 # Or as part of the full pipeline
 bash scripts/build_all.sh              # Includes Stage 4
 ```
+
+---
+
+## Quality Assurance
+
+Meridian uses a 3-tier testing strategy: structural validation (425 existing tests), golden snapshot regression, and product-owner data sanity.
+
+### Test Tiers
+
+| Tier | Tests | Purpose | Marker |
+|------|------:|---------|--------|
+| Structural / Schema / PK | 317 | Column names, dtypes, primary keys, referential integrity, value ranges | *(default)* |
+| Golden Snapshot Regression | 7 | Detect row-count drops (>5%), schema drift, numeric range explosions vs saved baseline | `golden` |
+| Data Sanity (Product Owner) | 47 | Business-meaningful assertions a stakeholder would verify | `sanity` |
+| Smoke / Infra | 54 | Imports, dry-run, path validation, coverage audit | *(default)* |
+| **Total** | **425** | | |
+
+### Running Tests
+
+```bash
+# All tests (excludes slow_integration, ~8 min)
+CHAT_TAP_DISABLED=1 python3 -m pytest tests/ -q
+
+# Golden + sanity only (~6 sec)
+python3 -m pytest tests/test_golden_snapshot.py tests/test_data_sanity.py -q
+
+# With coverage report
+CHAT_TAP_DISABLED=1 python3 -m pytest tests/ --cov=src --cov-report=term-missing --cov-config=.coveragerc -q
+
+# Regenerate golden baseline after intentional artifact changes
+python3 scripts/generate_golden_manifest.py
+```
+
+### Golden Snapshot Testing
+
+The golden manifest (`artifacts/metrics/golden_manifest.json`) captures row counts, column schemas, dtype signatures, sample hashes, and numeric bounds for all 37+ artifacts. Tests detect:
+
+- **Artifact loss** — any artifact present in the baseline but missing on disk
+- **Row count regressions** — drops >5% flag a failure; increases >10% warn
+- **Schema drift** — dropped columns fail; new columns warn; dtype changes fail
+- **Numeric range shifts** — min/max expanding >10× from baseline
+
+Regenerate after intentional pipeline changes: `python3 scripts/generate_golden_manifest.py`
+
+### Data Sanity Suite
+
+47 business-meaningful assertions across 12 domains:
+
+| Domain | Tests | Examples |
+|--------|------:|---------|
+| PD Forecasts | 6 | EB categories exist, IND/CHN present, EB2-India is most backlogged, ≤24 months per series |
+| Employer Scores | 6 | ≥50K employers, ≥500 ML-scored, all scores [0,100], ≥3 tiers, mean 15–85 |
+| Salary | 4 | Median $20K–$600K, percentile ordering, no negatives |
+| Geography | 3 | CA is top state, top-10 includes CA/TX/NY/NJ, ≥40 states |
+| PERM | 5 | ≥1M records, ≥60% certified, ≥15 FY span, stable YoY volume |
+| Visa Bulletin | 3 | EB1/EB2/EB3 present, India/China present, ≥10 year span |
+| Dimensions | 4 | ≥200K employers, ≥800 SOC codes, ≥200 countries, ≥4 visa classes |
+| Cross-Artifact | 7 | EFS employers ≥95% in dim_employer, forecast categories overlap cutoffs, salary SOC ≥80% in dim_soc |
+| RAG | 3 | Catalog ≥30 artifacts, QA cache ≥100 pairs, ≥20 chunks |
+
+### Coverage
+
+- **Line coverage: 11.4%** (3,766 statements in `src/`, 431 covered)
+- Coverage is inherently low because tests validate *output artifacts* (Parquet files), not pipeline execution. The pipeline builders run in subprocesses or via `build_all.sh` and are exercised by `slow_integration` tests (20+ min each, auto-skipped).
+- HTML report: `artifacts/metrics/coverage_html/index.html`
+- Config: `.coveragerc`
 
 ---
 

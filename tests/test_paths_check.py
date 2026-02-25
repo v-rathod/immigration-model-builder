@@ -1,10 +1,17 @@
 """Tests for path validation checker."""
 
+import os
 import subprocess
 import sys
 from pathlib import Path
 
 import pytest
+
+def _safe_env():
+    """Return env dict with CHAT_TAP_DISABLED=1 to prevent subprocess hang."""
+    env = os.environ.copy()
+    env["CHAT_TAP_DISABLED"] = "1"
+    return env
 
 
 def test_check_paths_runs_successfully():
@@ -13,7 +20,9 @@ def test_check_paths_runs_successfully():
         [sys.executable, "-m", "src.io.check_paths", "--paths", "configs/paths.yaml"],
         capture_output=True,
         text=True,
-        cwd=Path.cwd()
+        cwd=Path.cwd(),
+        timeout=60,
+        env=_safe_env(),
     )
     
     # Should complete successfully
@@ -47,7 +56,9 @@ def test_check_paths_validates_data_root():
         [sys.executable, "-m", "src.io.check_paths", "--paths", "configs/paths.yaml"],
         capture_output=True,
         text=True,
-        cwd=Path.cwd()
+        cwd=Path.cwd(),
+        timeout=60,
+        env=_safe_env(),
     )
     
     # Should check data_root

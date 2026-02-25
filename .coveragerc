@@ -1,0 +1,25 @@
+[run]
+source = src/
+omit =
+    src/utils/chat_tap.py
+    src/utils/transcript.py
+    src/curate/build_fact_perm_backup.py
+    src/curate/build_fact_perm_v2.py
+    */__pycache__/*
+
+[report]
+exclude_lines =
+    pragma: no cover
+    def __repr__
+    if __name__ == .__main__
+    raise NotImplementedError
+    pass
+    except ImportError
+    except Exception
+
+show_missing = true
+precision = 1
+fail_under = 0
+
+[html]
+directory = artifacts/metrics/coverage_html

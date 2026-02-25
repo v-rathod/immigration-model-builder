@@ -51,7 +51,7 @@ Compass  (P3: immigration-insights-app)   →  public web app consuming Meridian
 | Curated tables | `artifacts/tables/` (~40 parquet files/dirs) |
 | Model artifacts | `artifacts/models/` |
 | Metrics & reports | `artifacts/metrics/` |
-| Tests | `tests/` (349 tests across 15+ files) |
+| Tests | `tests/` (425 tests across 20+ files) |
 | Pipeline config | `configs/paths.yaml` (data_root + artifacts_root) |
 | Schemas | `configs/schemas.yml` |
 | Full pipeline | `scripts/build_all.sh` |
@@ -59,8 +59,9 @@ Compass  (P3: immigration-insights-app)   →  public web app consuming Meridian
 
 ---
 
-## Current State (Milestone 10 — 2026-02-24)
-- **Test pass rate: 99.7%** (345 passed, 0 failed, 1 skipped, 3 deselected)
+## Current State (Milestone 14 — 2026-02-25)
+- **Test pass rate: 99.8%** (425 passed, 0 failed, 1 skipped, 3 deselected)
+- **3-tier QA**: Golden snapshot regression (7 tests), data sanity suite (47 tests), pytest-cov (11.4% line coverage)
 - dim_employer.parquet: 227,076 rows (patched from fact_perm)
 - fact_perm/: ~1.67M rows, 20 FY partitions (FY2005–FY2024)
 - fact_cutoffs/: 13,915 rows, 17 partitions (visa bulletin cutoff dates 2011–2026)

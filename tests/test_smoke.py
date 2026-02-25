@@ -1,11 +1,19 @@
 """Smoke tests to verify the scaffold works."""
 
+import os
 import subprocess
 import sys
 from pathlib import Path
 
 import pytest
 import yaml
+
+
+def _safe_env():
+    """Return env dict with CHAT_TAP_DISABLED=1 to prevent subprocess hang."""
+    env = os.environ.copy()
+    env["CHAT_TAP_DISABLED"] = "1"
+    return env
 
 
 def test_paths_yaml_exists():
@@ -63,7 +71,9 @@ def test_entrypoints_run_noop():
             cmd,
             capture_output=True,
             text=True,
-            cwd=Path.cwd()
+            cwd=Path.cwd(),
+            timeout=300,
+            env=_safe_env(),
         )
 
         assert result.returncode == 0, (
