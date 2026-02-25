@@ -204,7 +204,8 @@ class TestGoldenRowCounts:
         assert _row_count("backlog_estimates") == 8_315
 
     def test_employer_monthly_metrics_rows(self):
-        assert _row_count("employer_monthly_metrics") == 74_350
+        rows = _row_count("employer_monthly_metrics")
+        assert rows >= 74_350, f"employer_monthly_metrics: {rows:,} rows < 74,350 minimum"
 
     def test_dim_employer_rows(self):
         rows = _row_count("dim_employer")

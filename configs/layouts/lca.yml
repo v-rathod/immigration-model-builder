@@ -43,47 +43,53 @@ aliases:
     flag:  ["SOC_TITLE"]
 
   job_title:
-    icert: ["JOB_TITLE"]
+    icert: ["JOB_TITLE", "LCA_CASE_JOB_TITLE"]
     flag:  ["JOB_TITLE"]
 
   is_fulltime:
-    icert: ["PART_TIME_1", "FULL_TIME_POSITION"]
+    icert: ["PART_TIME_1", "FULL_TIME_POSITION", "FULL_TIME_POS"]
     flag:  ["FULL_TIME_POSITION"]
 
   wage_rate_from:
-    icert: ["WAGE_RATE_1", "WAGE_RATE_OF_PAY"]
+    icert: ["WAGE_RATE_1", "WAGE_RATE_OF_PAY", "LCA_CASE_WAGE_RATE_FROM",
+            "WAGE_RATE_OF_PAY_FROM_1", "WAGE_RATE_OF_PAY_FROM"]
     flag:  ["WAGE_RATE_OF_PAY_FROM"]
 
   wage_rate_to:
-    icert: ["MAX_RATE_1", "WAGE_RATE_OF_PAY_TO"]
+    icert: ["MAX_RATE_1", "WAGE_RATE_OF_PAY_TO", "LCA_CASE_WAGE_RATE_TO",
+            "WAGE_RATE_OF_PAY_TO_1"]
     flag:  ["WAGE_RATE_OF_PAY_TO"]
 
   wage_unit:
-    icert: ["RATE_PER_1", "WAGE_UNIT_OF_PAY"]
+    icert: ["RATE_PER_1", "WAGE_UNIT_OF_PAY", "LCA_CASE_WAGE_RATE_UNIT",
+            "WAGE_UNIT_OF_PAY_1"]
     flag:  ["WAGE_UNIT_OF_PAY"]
 
   prevailing_wage:
-    icert: ["PREVAILING_WAGE_1", "PREVAILING_WAGE"]
+    icert: ["PREVAILING_WAGE_1", "PREVAILING_WAGE", "PW_1"]
     flag:  ["PREVAILING_WAGE"]
 
   pw_unit:
-    icert: ["WAGE_SOURCE_1", "PW_UNIT_OF_PAY"]
+    icert: ["WAGE_SOURCE_1", "PW_UNIT_OF_PAY", "PW_UNIT_1", "PW_UNIT_OF_PAY_1"]
     flag:  ["PW_UNIT_OF_PAY"]
 
   worksite_city:
-    icert: ["CITY_1", "WORKSITE_CITY"]
+    icert: ["CITY_1", "WORKSITE_CITY", "WORK_LOCATION_CITY1",
+            "LCA_CASE_WORKLOC1_CITY", "WORKSITE_CITY_1"]
     flag:  ["WORKSITE_CITY"]
 
   worksite_state:
-    icert: ["STATE_1", "WORKSITE_STATE"]
+    icert: ["STATE_1", "WORKSITE_STATE", "WORK_LOCATION_STATE1",
+            "LCA_CASE_WORKLOC1_STATE", "WORKSITE_STATE_1"]
     flag:  ["WORKSITE_STATE"]
 
   worksite_postal:
-    icert: ["POSTAL_CODE", "WORKSITE_POSTAL_CODE"]
+    icert: ["POSTAL_CODE", "WORKSITE_POSTAL_CODE", "LCA_CASE_EMPLOYER_POSTAL_CODE",
+            "WORKSITE_POSTAL_CODE_1", "EMPLOYER_POSTAL_CODE"]
     flag:  ["WORKSITE_POSTAL_CODE"]
 
   naics_code:
-    icert: ["NAIC_CODE", "NAICS_CODE"]
+    icert: ["NAIC_CODE", "NAICS_CODE", "LCA_CASE_NAICS_CODE"]
     flag:  ["NAICS_CODE"]
 
   total_workers:

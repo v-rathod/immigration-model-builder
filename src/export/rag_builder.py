@@ -301,6 +301,92 @@ def _build_salary_chunks(chunks: list) -> None:
                               "salary_summary", "salary", summary,
                               _table_stats(df)))
 
+    # ── Top SOC codes by median salary ────────────────────────────────────
+    if "soc_code" in df.columns and "median" in df.columns:
+        # National-level medians (area_code ~= "1" or aggregate)
+        national = df.copy()
+        if "area_code" in df.columns:
+            nat_mask = df["area_code"].astype(str).isin(["1", "0", "C0000"])
+            if nat_mask.sum() > 50:
+                national = df[nat_mask]
+
+        # Look up SOC titles
+        dim_soc_path = ARTIFACTS_ROOT / "dim_soc.parquet"
+        soc_lookup: dict[str, str] = {}
+        dim_soc = _safe_read(dim_soc_path)
+        if dim_soc is not None:
+            for col in ["soc_title", "title", "occupation_title"]:
+                if col in dim_soc.columns and "soc_code" in dim_soc.columns:
+                    soc_lookup = dict(zip(dim_soc["soc_code"], dim_soc[col]))
+                    break
+
+        top_paid = (
+            national.dropna(subset=["median"])
+            .drop_duplicates(subset=["soc_code"])
+            .nlargest(30, "median")
+        )
+        lines = ["Top 30 Highest-Paying Occupations (national median):"]
+        for _, row in top_paid.iterrows():
+            code = row["soc_code"]
+            title = soc_lookup.get(code, "")
+            med = row["median"]
+            p75 = row.get("p75", "")
+            lines.append(f"  {code} ({title}): median=${med:,.0f}, P75=${p75:,.0f}" if pd.notna(p75) else f"  {code} ({title}): median=${med:,.0f}")
+        chunks.append(_make_chunk("salary_benchmarks.parquet",
+                                  "salary_top30_soc", "salary",
+                                  "\n".join(lines)))
+
+        # Tech / immigration-heavy SOC codes
+        tech_socs = {
+            "15-1252": "Software Developers",
+            "15-1256": "Software Developers & Programmers",
+            "15-1211": "Computer Systems Analysts",
+            "15-1299": "Computer Occupations, All Other",
+            "15-1241": "Computer Network Architects",
+            "15-1244": "Network & Systems Administrators",
+            "15-1232": "Computer User Support",
+            "11-3021": "Computer & IS Managers",
+            "15-2051": "Data Scientists",
+            "17-2061": "Computer Hardware Engineers",
+            "15-1221": "Computer & Info Research Scientists",
+        }
+        tech_rows = national[national["soc_code"].isin(tech_socs.keys())]
+        if len(tech_rows) > 0:
+            lines = ["Salary Benchmarks for Common Immigration-Sponsored Tech Roles:"]
+            for _, row in tech_rows.iterrows():
+                code = row["soc_code"]
+                title = tech_socs.get(code, soc_lookup.get(code, ""))
+                med = row["median"]
+                p10 = row.get("p10", "")
+                p90 = row.get("p90", "")
+                parts = [f"{code} ({title}): median=${med:,.0f}"]
+                if pd.notna(p10):
+                    parts.append(f"P10=${p10:,.0f}")
+                if pd.notna(p90):
+                    parts.append(f"P90=${p90:,.0f}")
+                lines.append("  " + ", ".join(parts))
+            chunks.append(_make_chunk("salary_benchmarks.parquet",
+                                      "salary_tech_socs", "salary",
+                                      "\n".join(lines)))
+
+    # ── Salary range distribution ─────────────────────────────────────────
+    if "median" in df.columns:
+        valid = df["median"].dropna()
+        lines = [
+            "Salary Distribution Across All SOC × Area Combinations:",
+            f"  Total records: {len(valid):,}",
+            f"  Min median salary: ${valid.min():,.0f}",
+            f"  25th percentile: ${valid.quantile(0.25):,.0f}",
+            f"  Overall median: ${valid.median():,.0f}",
+            f"  75th percentile: ${valid.quantile(0.75):,.0f}",
+            f"  Max median salary: ${valid.max():,.0f}",
+            f"  Wage ratio interpretation: ratio ≥1.0 means offered wage ≥ prevailing median.",
+            f"  Employers with wage ratio ≥1.3 (P75+) tend to have higher EFS scores.",
+        ]
+        chunks.append(_make_chunk("salary_benchmarks.parquet",
+                                  "salary_distribution", "salary",
+                                  "\n".join(lines)))
+
 
 def _build_geo_chunks(chunks: list) -> None:
     """Generate chunks for geographic/worksite metrics."""
@@ -327,6 +413,75 @@ def _build_geo_chunks(chunks: list) -> None:
     chunks.append(_make_chunk("worksite_geo_metrics.parquet",
                               "geo_summary", "geographic",
                               "\n".join(summary_lines)))
+
+    # ── Per-state detail chunks ───────────────────────────────────────────
+    if "grain" in df.columns and "state" in df.columns:
+        state_data = df[df["grain"] == "state"].copy()
+        if len(state_data) > 0:
+            agg_cols = {}
+            for col in ["filings_count", "approvals_count", "distinct_employers",
+                        "offered_median", "competitiveness_ratio"]:
+                if col in state_data.columns:
+                    agg_cols[col] = "sum" if col in ("filings_count", "approvals_count") else "mean"
+
+            if agg_cols:
+                by_state = (
+                    state_data.groupby("state")
+                    .agg(agg_cols)
+                    .sort_values("filings_count", ascending=False)
+                )
+                lines = ["State-Level Sponsorship Summary (all datasets):"]
+                for state, row in by_state.head(25).iterrows():
+                    parts = [f"{state}:"]
+                    if "filings_count" in row.index:
+                        parts.append(f"filings={row['filings_count']:,.0f}")
+                    if "approvals_count" in row.index and pd.notna(row["approvals_count"]):
+                        parts.append(f"approvals={row['approvals_count']:,.0f}")
+                    if "distinct_employers" in row.index and pd.notna(row["distinct_employers"]):
+                        parts.append(f"employers={row['distinct_employers']:,.0f}")
+                    if "offered_median" in row.index and pd.notna(row["offered_median"]):
+                        parts.append(f"median_wage=${row['offered_median']:,.0f}")
+                    lines.append("  " + " ".join(parts))
+                chunks.append(_make_chunk("worksite_geo_metrics.parquet",
+                                          "geo_state_detail", "geographic",
+                                          "\n".join(lines)))
+
+    # ── Top cities ────────────────────────────────────────────────────────
+    if "grain" in df.columns and "city" in df.columns:
+        city_data = df[df["grain"] == "city"].copy()
+        if len(city_data) > 0 and "filings_count" in city_data.columns:
+            top_cities = city_data.nlargest(30, "filings_count")
+            lines = ["Top 30 Cities by Immigration Sponsorship Filings:"]
+            for _, row in top_cities.iterrows():
+                city = row["city"] if pd.notna(row.get("city")) else "Unknown"
+                state = row.get("state", "")
+                filings = row["filings_count"]
+                parts = [f"{city}, {state}: {filings:,.0f} filings"]
+                if "offered_median" in row.index and pd.notna(row["offered_median"]):
+                    parts.append(f"median=${row['offered_median']:,.0f}")
+                if "distinct_employers" in row.index and pd.notna(row["distinct_employers"]):
+                    parts.append(f"{row['distinct_employers']:,.0f} employers")
+                lines.append("  " + ", ".join(parts))
+            chunks.append(_make_chunk("worksite_geo_metrics.parquet",
+                                      "geo_top_cities", "geographic",
+                                      "\n".join(lines)))
+
+    # ── Competitiveness by area ───────────────────────────────────────────
+    if "competitiveness_ratio" in df.columns and "grain" in df.columns:
+        area_data = df[df["grain"].isin(["state", "area"])].copy()
+        cr = area_data["competitiveness_ratio"].dropna()
+        if len(cr) > 0:
+            lines = [
+                "Geographic Competitiveness Analysis:",
+                f"  Competitiveness ratio = filings per employer (higher = more competitive).",
+                f"  Overall: mean={cr.mean():.1f}, median={cr.median():.1f}, "
+                f"max={cr.max():.1f}",
+                f"  Areas with ratio >2.0 indicate intense competition for sponsorship.",
+                f"  Areas with ratio <1.0 indicate distributed sponsorship across many employers.",
+            ]
+            chunks.append(_make_chunk("worksite_geo_metrics.parquet",
+                                      "geo_competitiveness", "geographic",
+                                      "\n".join(lines)))
 
 
 def _build_occupation_chunks(chunks: list) -> None:
@@ -393,6 +548,62 @@ def _build_processing_chunks(chunks: list) -> None:
     chunks.append(_make_chunk("processing_times_trends.parquet",
                               "processing_summary", "processing", summary))
 
+    # ── Detailed FY-by-FY table ──────────────────────────────────────────
+    fy_col = next((c for c in df.columns if c.lower().startswith("fiscal_year") or c == "fy"), None)
+    if fy_col is None and "period" in df.columns:
+        fy_col = "period"
+    if fy_col is not None:
+        df_sorted = df.sort_values(fy_col)
+    else:
+        df_sorted = df
+
+    lines = ["USCIS I-485 Processing Performance — Detailed Data:"]
+    key_cols = [c for c in ["approval_rate", "throughput", "backlog_months",
+                            "pending_change", "median_days", "cycle_time_days",
+                            "receipts", "completions"] if c in df.columns]
+    if key_cols:
+        header_parts = [fy_col or "Row"] + key_cols
+        lines.append("  " + " | ".join(header_parts))
+        lines.append("  " + "-" * 60)
+        for _, row in df_sorted.iterrows():
+            fy_label = str(row[fy_col]) if fy_col else str(row.name)
+            vals = [fy_label]
+            for c in key_cols:
+                v = row.get(c)
+                if pd.notna(v):
+                    if isinstance(v, float) and abs(v) < 10:
+                        vals.append(f"{v:.2f}")
+                    else:
+                        vals.append(f"{v:,.0f}" if isinstance(v, (int, float)) else str(v))
+                else:
+                    vals.append("—")
+            lines.append("  " + " | ".join(vals))
+        chunks.append(_make_chunk("processing_times_trends.parquet",
+                                  "processing_fy_table", "processing",
+                                  "\n".join(lines)))
+
+    # ── Trend analysis ───────────────────────────────────────────────────
+    trend_lines = ["I-485 Processing Trend Analysis:"]
+    if "backlog_months" in df.columns:
+        bl = df["backlog_months"].dropna()
+        if len(bl) > 0:
+            trend_lines.append(f"  Backlog months: min={bl.min():.1f}, max={bl.max():.1f}, "
+                               f"latest={bl.iloc[-1]:.1f}")
+    if "approval_rate" in df.columns:
+        ar = df["approval_rate"].dropna()
+        if len(ar) > 0:
+            trend_lines.append(f"  Approval rate: min={ar.min():.1%}, max={ar.max():.1%}, "
+                               f"latest={ar.iloc[-1]:.1%}")
+    if "throughput" in df.columns:
+        tp = df["throughput"].dropna()
+        if len(tp) > 0:
+            trend_lines.append(f"  Throughput: min={tp.min():,.0f}, max={tp.max():,.0f}, "
+                               f"latest={tp.iloc[-1]:,.0f}")
+    if len(trend_lines) > 1:
+        chunks.append(_make_chunk("processing_times_trends.parquet",
+                                  "processing_trends", "processing",
+                                  "\n".join(trend_lines)))
+
 
 def _build_visa_bulletin_chunks(chunks: list) -> None:
     """Generate chunks for visa bulletin history."""
@@ -425,6 +636,54 @@ def _build_visa_bulletin_chunks(chunks: list) -> None:
                               "visa_bulletin_summary", "visa_bulletin",
                               "\n".join(summary_lines)))
 
+    # ── Per-category latest cutoff dates ──────────────────────────────────
+    cat_col = next((c for c in df.columns if c in ("category", "preference_category", "visa_category")), None)
+    country_col = next((c for c in df.columns if c in ("country", "chargeability_area")), None)
+    bd_col = next((c for c in df.columns if c in ("bulletin_date", "bulletin_month")), None)
+    cd_col = next((c for c in df.columns if c in ("cutoff_date",)), None)
+
+    if all(c is not None for c in [cat_col, country_col, bd_col, cd_col]):
+        # Latest cutoff per category × country
+        idx = df.groupby([cat_col, country_col])[bd_col].idxmax()
+        latest_cutoffs = df.loc[idx].sort_values([cat_col, country_col])
+
+        lines = ["Latest Visa Bulletin Cutoff Dates (per EB category × country):"]
+        current_cat = None
+        for _, row in latest_cutoffs.iterrows():
+            cat = row[cat_col]
+            if cat != current_cat:
+                lines.append(f"\n  {cat}:")
+                current_cat = cat
+            ctry = row[country_col]
+            cutoff = str(row[cd_col])[:10] if pd.notna(row[cd_col]) else "Current"
+            bulletin = str(row[bd_col])[:10] if pd.notna(row[bd_col]) else "?"
+            lines.append(f"    {ctry}: cutoff={cutoff} (bulletin {bulletin})")
+
+        chunks.append(_make_chunk("fact_cutoffs_all.parquet",
+                                  "visa_bulletin_latest", "visa_bulletin",
+                                  "\n".join(lines)))
+
+    # ── Retrogression events ─────────────────────────────────────────────
+    chart_col = next((c for c in df.columns if c in ("chart", "chart_type")), None)
+    if all(c is not None for c in [cat_col, country_col, bd_col, cd_col]):
+        df_sorted = df.sort_values([cat_col, country_col, bd_col])
+        df_sorted["_prev_cutoff"] = df_sorted.groupby([cat_col, country_col])[cd_col].shift(1)
+        retro = df_sorted[df_sorted[cd_col] < df_sorted["_prev_cutoff"]].copy()
+
+        if len(retro) > 0:
+            lines = [
+                f"Retrogression Events Detected: {len(retro)} instances",
+                f"Retrogression = cutoff date moves backward (bad for applicants).",
+            ]
+            retro_counts = retro.groupby([cat_col, country_col]).size().nlargest(15)
+            lines.append("\nMost frequent retrogression by category × country:")
+            for (cat, ctry), cnt in retro_counts.items():
+                lines.append(f"  {cat} / {ctry}: {cnt} retrogressions")
+            chunks.append(_make_chunk("fact_cutoffs_all.parquet",
+                                      "visa_bulletin_retrogression", "visa_bulletin",
+                                      "\n".join(lines)))
+        df_sorted.drop(columns=["_prev_cutoff"], inplace=True, errors="ignore")
+
 
 def _build_movement_chunks(chunks: list) -> None:
     """Generate chunks for category movement metrics."""
@@ -445,6 +704,33 @@ def _build_movement_chunks(chunks: list) -> None:
                               "movement_summary", "visa_bulletin", summary,
                               _table_stats(df)))
 
+    # ── Movement detail by category × country ────────────────────────────
+    cat_col = next((c for c in df.columns if c in ("category", "preference_category")), None)
+    country_col = next((c for c in df.columns if c in ("country", "chargeability_area")), None)
+    if cat_col and country_col:
+        movement_cols = [c for c in ["avg_monthly_advance_days", "median_advance_days",
+                                     "volatility", "retrogression_count",
+                                     "retrogression_pct", "longest_freeze_months"]
+                         if c in df.columns]
+        if movement_cols:
+            latest = df.sort_values(movement_cols[0], ascending=False) if movement_cols else df
+            lines = ["Category × Country Movement Analysis Detail:"]
+            for _, row in latest.head(30).iterrows():
+                cat = row.get(cat_col, "?")
+                ctry = row.get(country_col, "?")
+                parts = [f"{cat} / {ctry}:"]
+                for mc in movement_cols:
+                    v = row.get(mc)
+                    if pd.notna(v):
+                        if isinstance(v, float):
+                            parts.append(f"{mc}={v:.1f}")
+                        else:
+                            parts.append(f"{mc}={v}")
+                lines.append("  " + " ".join(parts))
+            chunks.append(_make_chunk("category_movement_metrics.parquet",
+                                      "movement_detail", "visa_bulletin",
+                                      "\n".join(lines)))
+
 
 def _build_backlog_chunks(chunks: list) -> None:
     """Generate chunks for backlog estimates."""
@@ -464,6 +750,32 @@ def _build_backlog_chunks(chunks: list) -> None:
                               "backlog_summary", "pd_forecast", summary,
                               _table_stats(df)))
 
+    # ── Backlog detail by category × country ─────────────────────────────
+    cat_col = next((c for c in df.columns if c in ("category", "preference_category")), None)
+    country_col = next((c for c in df.columns if c in ("country", "chargeability_area")), None)
+    bl_col = next((c for c in df.columns if "backlog" in c.lower() or "pending" in c.lower()
+                   or "queue" in c.lower()), None)
+    if cat_col and country_col and bl_col:
+        latest_year = None
+        yr_col = next((c for c in df.columns if c in ("fiscal_year", "year", "bulletin_year")), None)
+        if yr_col:
+            latest_year = df[yr_col].max()
+            detail = df[df[yr_col] == latest_year].copy()
+        else:
+            detail = df.copy()
+
+        detail_sorted = detail.sort_values(bl_col, ascending=False)
+        lines = [f"Backlog Estimates Detail{' (latest year: ' + str(latest_year) + ')' if latest_year else ''}:"]
+        for _, row in detail_sorted.head(30).iterrows():
+            cat = row.get(cat_col, "?")
+            ctry = row.get(country_col, "?")
+            bl = row.get(bl_col, 0)
+            bl_str = f"{bl:,.0f}" if isinstance(bl, (int, float)) and pd.notna(bl) else str(bl)
+            lines.append(f"  {cat} / {ctry}: {bl_col}={bl_str}")
+        chunks.append(_make_chunk("backlog_estimates.parquet",
+                                  "backlog_detail", "pd_forecast",
+                                  "\n".join(lines)))
+
 
 def _build_visa_demand_chunks(chunks: list) -> None:
     """Generate chunks for visa demand metrics."""
@@ -482,6 +794,42 @@ def _build_visa_demand_chunks(chunks: list) -> None:
     chunks.append(_make_chunk("visa_demand_metrics.parquet",
                               "visa_demand_summary", "visa_demand", summary,
                               _table_stats(df)))
+
+    # ── Top countries by demand ──────────────────────────────────────────
+    country_col = next((c for c in df.columns if c in ("country", "nationality",
+                                                        "chargeability_area",
+                                                        "country_of_birth")), None)
+    count_col = next((c for c in df.columns if c in ("count_issued", "count", "total",
+                                                      "applications", "issuances")), None)
+    if country_col and count_col:
+        by_country = df.groupby(country_col)[count_col].sum().nlargest(25)
+        lines = ["Top 25 Countries by Visa Demand:"]
+        for ctry, cnt in by_country.items():
+            lines.append(f"  {ctry}: {cnt:,.0f}")
+        chunks.append(_make_chunk("visa_demand_metrics.parquet",
+                                  "visa_demand_top_countries", "visa_demand",
+                                  "\n".join(lines)))
+
+    # ── Year-over-year trends ────────────────────────────────────────────
+    fy_col = next((c for c in df.columns if c in ("fiscal_year", "year", "fy")), None)
+    cat_col = next((c for c in df.columns if c in ("category", "visa_category",
+                                                    "visa_class")), None)
+    if fy_col and count_col:
+        by_year = df.groupby(fy_col)[count_col].sum().sort_index()
+        lines = ["Visa Demand Year-over-Year Trends:"]
+        for yr, cnt in by_year.items():
+            lines.append(f"  {yr}: {cnt:,.0f}")
+        if cat_col:
+            lines.append("\nDemand by Category × Year (latest 3 years):")
+            recent_years = sorted(df[fy_col].unique())[-3:]
+            recent = df[df[fy_col].isin(recent_years)]
+            pivot = recent.groupby([cat_col, fy_col])[count_col].sum().unstack(fill_value=0)
+            for cat in pivot.index[:15]:  # cap to 15 categories
+                vals = " | ".join(f"{pivot.loc[cat, y]:,.0f}" for y in pivot.columns)
+                lines.append(f"  {cat}: {vals}")
+        chunks.append(_make_chunk("visa_demand_metrics.parquet",
+                                  "visa_demand_trends", "visa_demand",
+                                  "\n".join(lines)))
 
 
 def _build_dimension_chunks(chunks: list) -> None:
@@ -511,6 +859,76 @@ def _build_dimension_chunks(chunks: list) -> None:
         )
         chunks.append(_make_chunk(fname, f"dim_{fname.replace('.parquet', '')}",
                                   info["topic"], text))
+
+    # ── WARN layoff events ───────────────────────────────────────────────
+    warn_path = ARTIFACTS_ROOT / "fact_warn_events.parquet"
+    warn_df = _safe_read(warn_path)
+    if warn_df is not None and len(warn_df) > 0:
+        lines = [
+            f"WARN Act Layoff Events Summary:",
+            f"Total events: {len(warn_df):,}",
+            f"Columns: {', '.join(warn_df.columns.tolist())}",
+            f"The WARN Act requires 60-day advance notice of mass layoffs.",
+            f"Use: Identify employers with recent layoffs that may affect sponsorship.",
+        ]
+        emp_col = next((c for c in warn_df.columns if c in ("employer_name", "company_name",
+                                                             "company", "employer")), None)
+        workers_col = next((c for c in warn_df.columns if c in ("num_affected", "workers_affected",
+                                                                 "employees_affected", "layoffs")), None)
+        if emp_col:
+            lines.append(f"\nEmployers with WARN events: {warn_df[emp_col].nunique():,}")
+            if workers_col:
+                top = warn_df.nlargest(15, workers_col)
+                lines.append(f"\nTop 15 largest layoff events:")
+                for _, row in top.iterrows():
+                    name = row[emp_col]
+                    affected = row[workers_col]
+                    lines.append(f"  {name}: {affected:,.0f} workers")
+        chunks.append(_make_chunk("fact_warn_events.parquet",
+                                  "warn_events_summary", "general",
+                                  "\n".join(lines)))
+
+    # ── DHS admissions ───────────────────────────────────────────────────
+    dhs_path = ARTIFACTS_ROOT / "fact_dhs_admissions.parquet"
+    dhs_df = _safe_read(dhs_path)
+    if dhs_df is not None and len(dhs_df) > 0:
+        lines = [
+            f"DHS Admissions Summary:",
+            f"Total records: {len(dhs_df):,}",
+            f"Columns: {', '.join(dhs_df.columns.tolist())}",
+            f"Coverage: Historical DHS admission counts (FY1980+)",
+            f"Use: Long-term immigration volume trends.",
+        ]
+        for _, row in dhs_df.iterrows():
+            parts = [str(row.get(c, "")) for c in dhs_df.columns[:4] if pd.notna(row.get(c))]
+            if parts:
+                lines.append(f"  {' | '.join(parts)}")
+        chunks.append(_make_chunk("fact_dhs_admissions.parquet",
+                                  "dhs_admissions_summary", "general",
+                                  "\n".join(lines)))
+
+    # ── Immigration FAQ chunk ────────────────────────────────────────────
+    faq_text = (
+        "Frequently Asked Questions about U.S. Employment-Based Immigration:\n\n"
+        "Q: What is PERM labor certification?\n"
+        "A: PERM (Program Electronic Review Management) is the DOL process where "
+        "employers prove no qualified U.S. workers are available for a position. "
+        "It is the first step in most EB-2 and EB-3 green card processes.\n\n"
+        "Q: What are EB-1, EB-2, and EB-3 categories?\n"
+        "A: Employment-based preference categories: EB-1 (extraordinary ability, "
+        "outstanding professors, multinational managers), EB-2 (advanced degree or "
+        "exceptional ability), EB-3 (skilled workers, professionals, other workers).\n\n"
+        "Q: What is a priority date?\n"
+        "A: The date when your employer files the PERM application (or I-140 petition "
+        "for categories not requiring PERM). It determines your place in the visa queue.\n\n"
+        "Q: What is retrogression?\n"
+        "A: When the visa bulletin cutoff date moves backward, meaning previously current "
+        "applicants can no longer file I-485. Happens when demand exceeds supply.\n\n"
+        "Q: What is the H-1B visa?\n"
+        "A: A nonimmigrant visa for specialty occupation workers. Subject to annual cap "
+        "of 65,000 + 20,000 for U.S. advanced degree holders. Valid for 3 years, extendable."
+    )
+    chunks.append(_make_chunk("general", "immigration_faq", "general", faq_text))
 
 
 # ---------------------------------------------------------------------------

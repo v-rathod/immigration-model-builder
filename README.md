@@ -4,7 +4,7 @@
 
 > **📋 For AI Assistants**: 
 > - Read [`.github/copilot-instructions.md`](.github/copilot-instructions.md) first — it's the authoritative context file (auto-loaded by Copilot)
-> - Review [`PROGRESS.md`](PROGRESS.md) for chronological work history (Milestones 1–12)
+> - Review [`PROGRESS.md`](PROGRESS.md) for chronological work history (Milestones 1–16)
 
 ## The NorthStar Program
 
@@ -107,7 +107,7 @@ python3 scripts/check_p1_readiness.py          # full readiness report
 python3 scripts/check_p1_readiness.py --fix    # auto-rebuild if changes found
 
 # Tests
-python3 -m pytest tests/ -q                    # 371 passed, 1 skipped, 3 deselected
+python3 -m pytest tests/ -q                    # 469 passed, 1 skipped, 3 deselected
 ```
 
 ## Handling New Horizon Data
@@ -136,15 +136,15 @@ python3 -m pytest tests/ -q
 
 See `scripts/check_p1_readiness.py` output section 3 for which datasets currently have Meridian builders and which are tracked but pending.
 
-## Current State (Milestone 14 — Quality Assurance)
+## Current State (Milestone 16 — Data Quality Fix)
 
-- **41 artifacts** — 17.4M total rows across dims, facts, features, model outputs
-- **All 7 P3 features backed** — pd_forecasts, employer scores, geo metrics, salary benchmarks, etc.
+- **41 artifacts** — 17.4M+ total rows across dims, facts, features, model outputs
+- **All 3 CRITICAL data quality findings resolved** — PERM column normalization, LCA aliases, SOC dimension expansion
 - **PD Forecast v2.1** — full-history anchored, velocity-capped, cross-verified within ±18% of 10-year actual
-- **EFS dual models** — rules-based (70K employers) + ML gradient boosting (956 high-volume)
+- **EFS dual models** — rules-based (70K employers) + ML gradient boosting (1,695 high-volume)
 - **Incremental builds** — manifest-based change detection for P1 data (1,197 files tracked)
-- **RAG export (Stage 4)** — 47 text chunks + 149 pre-computed Q&A pairs for Compass chat
-- **99.8% test pass rate** — 425 passed, 0 failed, 1 skipped, 3 deselected
+- **RAG export (Stage 4)** — 63 text chunks + 174 pre-computed Q&A pairs for Compass chat
+- **100% test pass rate** — 469 passed, 0 failed, 1 skipped, 3 deselected
 - **3-tier QA** — Golden snapshot regression, data sanity suite, pytest-cov line coverage
 
 See `PROGRESS.md` for full milestone history.
@@ -153,14 +153,14 @@ See `PROGRESS.md` for full milestone history.
 
 ## Complete Artifact Inventory
 
-> **41 artifacts · 17,404,766 total rows · Generated 2026-02-24**
+> **41 artifacts · 17.4M+ total rows · Generated 2026-02-25**
 
-### Dimension Tables (6 tables · 229,328 rows)
+### Dimension Tables (6 tables · 246,151 rows)
 
 | Artifact | Rows | Cols | Data Source(s) | P3 Usage |
 |----------|-----:|-----:|----------------|----------|
-| dim_employer.parquet | 227,076 | 6 | DOL PERM Excel FY2005–FY2024 (patched from all 20 FY partitions) | Compass: Employer lookup, EFS dashboard, search |
-| dim_soc.parquet | 1,396 | 12 | BLS OEWS 2023 all-data; SOC 2010→2018 crosswalk CSV | SOC occupation lookup, demand dashboard |
+| dim_employer.parquet | 243,694 | 6 | DOL PERM Excel FY2008–FY2026 (patched from all 19 FY partitions) | Compass: Employer lookup, EFS dashboard, search |
+| dim_soc.parquet | 1,801 | 12 | BLS OEWS 2023 all-data; SOC 2010→2018 crosswalk + 405 SOC-2010 legacy codes | SOC occupation lookup, demand dashboard |
 | dim_country.parquet | 249 | 6 | Hardcoded ISO 3166-1 (249 countries) | Country lookup, visa bulletin filter |
 | dim_area.parquet | 587 | 10 | BLS OEWS all-data (2024 w/ 2023 fallback) | Geography lookup, worksite dashboard |
 | dim_visa_class.parquet | 6 | 9 | EB subcategory codebook CSV | Visa category labels for UI |
@@ -170,12 +170,12 @@ See `PROGRESS.md` for full milestone history.
 
 | Artifact | Rows | Cols | Data Source(s) | P3 Usage |
 |----------|-----:|-----:|----------------|----------|
-| fact_perm/ (partitioned) | 1,675,051 | 20 | DOL PERM Excel FY2005–FY2024 (20 files) | EFS input, employer features, approval rates, wage analysis |
+| fact_perm/ (partitioned) | 1,675,051 | 22 | DOL PERM Excel FY2008–FY2026 (21 files, 19 FY partitions); job_title 99.7%, soc_code_raw 98.1%, naics_code 99.7% | EFS input, employer features, approval rates, wage analysis |
 | fact_perm_all.parquet | 1,674,724 | 19 | ← fact_perm/ (flat concatenation) | Quick-query denormalized copy |
-| fact_perm_unique_case/ | 1,671,899 | 20 | ← fact_perm/ (deduped by case_number, latest decision wins) | ML EFS training, case-level analysis (note: ~20% multi-year dupes) |
+| fact_perm_unique_case/ | 1,668,587 | 20 | ← fact_perm/ (deduped by case_number, latest decision wins) | ML EFS training, case-level analysis (note: ~20% multi-year dupes) |
 | fact_cutoffs/ (partitioned) | 13,915 | 10 | DOS Visa Bulletin PDFs (~180 PDFs, 2011–2026) | PD forecast model input, visa bulletin dashboard |
 | fact_cutoffs_all.parquet | 8,315 | 10 | ← fact_cutoffs/ (deduplicated presentation copy) | Cutoff trends, movement analysis |
-| fact_lca/ (partitioned) | 9,558,695 | 23 | DOL H-1B LCA disclosures FY2008–FY2026 (Excel/CSV) | H-1B filing analysis, employer H-1B volume |
+| fact_lca/ (partitioned) | 9,558,695 | 23 | DOL H-1B LCA disclosures FY2008–FY2026 (Excel/CSV); job_title 100%, naics_code 92.9% | H-1B filing analysis, employer H-1B volume |
 | fact_oews/ (partitioned) | 446,432 | 18 | BLS OEWS all-data 2022–2024 | Salary benchmarks, prevailing wage context |
 | fact_oews.parquet | 446,432 | 20 | ← fact_oews/ (flat copy) | Quick-query denormalized copy |
 | fact_niv_issuance.parquet | 501,033 | 6 | DOS NIV Statistics XLS/XLSX (~32 files) | Nonimmigrant visa issuance trends |
@@ -193,28 +193,29 @@ See `PROGRESS.md` for full milestone history.
 | fact_trac_adjudications.parquet | 0 | TRAC FOIA CSVs | Stub — TRAC requires paid subscription |
 | fact_acs_wages.parquet | 0 | Census ACS API + PUMS CSVs | Stub — ACS API returned HTTP 404 |
 
-### Feature Tables (11 tables · 1,040,905 rows)
+### Feature Tables (12 tables · 1,043,287 rows)
 
 | Artifact | Rows | Cols | Data Source(s) | P3 Usage |
 |----------|-----:|-----:|----------------|----------|
-| employer_features.parquet | 70,206 | 25 | ← fact_perm/, dim_employer, fact_oews/, dim_area | EFS model input, employer analytics |
+| employer_features.parquet | 70,401 | 25 | ← fact_perm/, dim_employer, fact_oews/, dim_area | EFS model input, employer analytics |
 | salary_benchmarks.parquet | 224,047 | 7 | ← fact_oews/, dim_area, dim_soc | Salary comparison dashboard, wage context |
-| employer_monthly_metrics.parquet | 74,350 | 10 | ← fact_perm/, dim_employer | Employer trend charts, monthly filing volume |
+| employer_monthly_metrics.parquet | 224,114 | 10 | ← fact_perm/, dim_employer | Employer trend charts, monthly filing volume |
 | employer_risk_features.parquet | 668 | 7 | ← fact_warn_events, dim_employer | Employer risk signals panel |
-| soc_demand_metrics.parquet | 3,968 | 10 | ← fact_perm/, fact_lca/, dim_soc | Occupation demand dashboard, SOC trends |
+| soc_demand_metrics.parquet | 4,241 | 10 | ← fact_perm/, fact_lca/, dim_soc | Occupation demand dashboard, SOC trends |
 | visa_demand_metrics.parquet | 537,735 | 5 | ← fact_visa_issuance, fact_visa_applications, fact_niv_issuance | Visa demand by category × country |
-| worksite_geo_metrics.parquet | 104,951 | 13 | ← fact_perm/, fact_lca/, dim_area, fact_oews/ | Geo distribution dashboard, worksite heatmap |
+| worksite_geo_metrics.parquet | 159,627 | 13 | ← fact_perm/, fact_lca/, dim_area, fact_oews/ | Geo distribution dashboard, worksite heatmap |
 | category_movement_metrics.parquet | 8,315 | 10 | ← fact_cutoff_trends | Visa bulletin movement trends |
 | backlog_estimates.parquet | 8,315 | 8 | ← fact_cutoff_trends, fact_perm/ | Backlog context, wait time estimates |
 | fact_cutoff_trends.parquet | 8,315 | 14 | ← fact_cutoffs_all (or fact_cutoffs/ fallback) | PD forecast input, cutoff movement analysis |
 | processing_times_trends.parquet | 35 | 20 | USCIS I-485 quarterly performance data (FY2014–FY2025) | Processing times dashboard, I-485 trends |
+| **queue_depth_estimates.parquet** | **2,382** | **16** | ← fact_perm/, fact_cutoffs_all, pd_forecasts, dim_visa_ceiling | **Queue position estimator**: "how many ahead of me?" |
 
 ### Model Outputs (3 tables + 1 JSON · 72,506 rows + 56 series)
 
 | Artifact | Rows | Cols | Data Source(s) | P3 Usage |
 |----------|-----:|-----:|----------------|----------|
-| employer_friendliness_scores.parquet | 70,206 | 22 | ← employer_features | **Compass Panel D**: EFS dashboard, employer search, tier labels |
-| employer_friendliness_scores_ml.parquet | 956 | 8 | ← fact_perm_unique_case/, employer_friendliness_scores | ML EFS for top employers, enhanced accuracy |
+| employer_friendliness_scores.parquet | 70,401 | 22 | ← employer_features | **Compass Panel D**: EFS dashboard, employer search, tier labels |
+| employer_friendliness_scores_ml.parquet | 1,695 | 8 | ← fact_perm_unique_case/, employer_friendliness_scores | ML EFS for top employers, enhanced accuracy |
 | pd_forecasts.parquet | 1,344 | 10 | ← fact_cutoff_trends | **Compass Panel A**: PD forecast — the #1 feature |
 | pd_forecast_model.json | 56 series | — | ← fact_cutoff_trends | Model parameters & metadata for Compass display |
 
@@ -232,7 +233,7 @@ See `PROGRESS.md` for full milestone history.
 
 | Horizon Source Directory | File Types | Count | Meridian Artifacts Fed |
 |---------------------|-----------|------:|------------------|
-| `PERM/PERM/FY*/` | Excel | 20 | fact_perm → dim_employer, employer_features, EFS, soc_demand, worksite_geo, backlog |
+| `PERM/PERM/FY*/` | Excel | 21 | fact_perm → dim_employer, employer_features, EFS, soc_demand, worksite_geo, backlog |
 | `Visa_Bulletin/` | PDF | ~180 | fact_cutoffs → cutoff_trends → pd_forecasts, category_movement, backlog |
 | `LCA/FY*/` | Excel/CSV | ~19 | fact_lca → soc_demand, worksite_geo |
 | `BLS_OEWS/{year}/` | Excel/ZIP | 3 | dim_soc, dim_area, fact_oews → salary_benchmarks, employer_features, worksite_geo |
@@ -256,7 +257,7 @@ See `PROGRESS.md` for full milestone history.
   │       │
   │       └──→ Stage 1b: Patch dim_employer (from fact_perm)
   │
-  ├──→ ★ Meridian Stage 2: Features     → 11 feature tables (1M+ rows)
+  ├──→ ★ Meridian Stage 2: Features     → 12 feature tables (1M+ rows)
   │       │
   │       ├── employer_features (PERM + OEWS)
   │       ├── salary_benchmarks (OEWS)
@@ -265,12 +266,13 @@ See `PROGRESS.md` for full milestone history.
   │       ├── visa_demand_metrics (DOS issuance tables)
   │       ├── category_movement_metrics (visa bulletin)
   │       ├── backlog_estimates (visa bulletin + PERM)
-  │       └── processing_times_trends (USCIS I-485)
+  │       ├── processing_times_trends (USCIS I-485)
+  │       └── queue_depth_estimates (PERM + cutoffs + forecasts + ceilings)
   │
   └──→ ★ Meridian Stage 3: Models       → 3 model outputs + 1 JSON + 3 stubs
           ├── pd_forecasts          (Compass Panel A — #1 feature)
           ├── EFS rules-based       (Compass Panel D — 70K employers)
-          └── EFS ML-based          (956 high-volume employers)
+          └── EFS ML-based          (1,695 high-volume employers)
                                               │
                                               ▼
                                     ★ Compass — User-Facing App
@@ -292,7 +294,7 @@ Predicts future visa bulletin cutoff dates for 56 series (EB1–EB5 × CHN/IND/M
 
 ### Employer Friendliness Score (Rules-based)
 
-Scores 70,206 employers on immigration-friendliness (0–100 scale).
+Scores 70,401 employers on immigration-friendliness (0–100 scale).
 
 - **50% Outcome**: Bayesian-shrunk approval rate (prior 0.88, strength 20)
 - **30% Wage**: Linear map of median wage ratio (0.5→0, 1.0→75, 1.3→100)
@@ -301,7 +303,7 @@ Scores 70,206 employers on immigration-friendliness (0–100 scale).
 
 ### Employer Friendliness Score (ML)
 
-Enhanced scoring for 956 high-volume employers (≥15 cases in 36 months).
+Enhanced scoring for 1,695 high-volume employers (≥15 cases in 36 months).
 
 - **Algorithm**: HistGradientBoostingClassifier with isotonic calibration
 - **Features**: wage_level, wage_ratio, soc_major, fy_offset, emp_log_vol, country flags
@@ -321,8 +323,8 @@ Meridian pre-computes all retrieval-augmented generation (RAG) artifacts so that
 │                                                         │
 │  41 Parquet artifacts (17.4M rows)                      │
 │       │                                                 │
-│       ├──→ rag_builder.py    → 47 text chunks (JSON)    │
-│       ├──→ qa_generator.py   → 149 pre-computed Q&A     │
+│       ├──→ rag_builder.py    → 63 text chunks (JSON)    │
+│       ├──→ qa_generator.py   → 174 pre-computed Q&A     │
 │       └──→ catalog.json      → artifact registry        │
 │                                                         │
 │  Output: artifacts/rag/ (static JSON — deploy to S3)    │
@@ -343,7 +345,7 @@ Meridian pre-computes all retrieval-augmented generation (RAG) artifacts so that
 │       └──→ 3. Call GPT-4o-mini ($0.15/1M tokens)        │
 │               → Return grounded answer with sources     │
 │                                                         │
-│  Estimated LLM cost: ~$0.15/month (100 visitors)        │
+│  Estimated LLM cost: ~$0.15/month (100 visitors)       │
 └─────────────────────────────────────────────────────────┘
 ```
 
@@ -352,24 +354,24 @@ Meridian pre-computes all retrieval-augmented generation (RAG) artifacts so that
 | File | Description |
 |------|-------------|
 | `artifacts/rag/catalog.json` | Full artifact registry (41 tables) — feeds LLM system prompt |
-| `artifacts/rag/all_chunks.json` | 47 text chunks across 9 topics — the retrieval corpus |
+| `artifacts/rag/all_chunks.json` | 63 text chunks across 9 topics — the retrieval corpus |
 | `artifacts/rag/chunks/*.json` | Per-topic chunk files for filtered retrieval |
-| `artifacts/rag/qa_cache.json` | 149 pre-computed Q&A pairs — avoids LLM calls entirely |
+| `artifacts/rag/qa_cache.json` | 174 pre-computed Q&A pairs — avoids LLM calls entirely |
 | `artifacts/rag/build_summary.json` | Build metadata and chunk counts |
 
 ### Topics Covered
 
 | Topic | What it answers | Chunks |
 |-------|----------------|--------|
-| `pd_forecast` | "When will my priority date become current?" | 33 |
+| `pd_forecast` | "When will my priority date become current?" | 34 |
 | `employer` | "Is my employer immigration-friendly?" | 3 |
-| `salary` | "Is my salary competitive?" | 1 |
-| `visa_bulletin` | "What are the latest cutoff dates?" | 4 |
-| `geographic` | "Where are most sponsorships filed?" | 1 |
+| `salary` | "Is my salary competitive?" | 4 |
+| `visa_bulletin` | "What are the latest cutoff dates?" | 6 |
+| `geographic` | "Where are most sponsorships filed?" | 4 |
 | `occupation` | "What are the top SOC codes?" | 2 |
-| `processing` | "How long does I-485 processing take?" | 1 |
-| `visa_demand` | "Visa issuance trends?" | 1 |
-| `general` | "What data sources does NorthStar use?" | 1 |
+| `processing` | "How long does I-485 processing take?" | 3 |
+| `visa_demand` | "Visa issuance trends?" | 3 |
+| `general` | "What data sources does NorthStar use?" | 4 |
 
 ### Budget-Friendly Deployment (Target: $5-8/month)
 
@@ -399,23 +401,23 @@ bash scripts/build_all.sh              # Includes Stage 4
 
 ## Quality Assurance
 
-Meridian uses a 3-tier testing strategy: structural validation (425 existing tests), golden snapshot regression, and product-owner data sanity.
+Meridian uses a 3-tier testing strategy: structural validation (449 existing tests), golden snapshot regression, and product-owner data sanity.
 
 ### Test Tiers
 
 | Tier | Tests | Purpose | Marker |
 |------|------:|---------|--------|
-| Structural / Schema / PK | 317 | Column names, dtypes, primary keys, referential integrity, value ranges | *(default)* |
+| Structural / Schema / PK | 341 | Column names, dtypes, primary keys, referential integrity, value ranges | *(default)* |
 | Golden Snapshot Regression | 7 | Detect row-count drops (>5%), schema drift, numeric range explosions vs saved baseline | `golden` |
 | Data Sanity (Product Owner) | 47 | Business-meaningful assertions a stakeholder would verify | `sanity` |
 | Smoke / Infra | 54 | Imports, dry-run, path validation, coverage audit | *(default)* |
-| **Total** | **425** | | |
+| **Total** | **449** | | |
 
 ### Running Tests
 
 ```bash
 # All tests (excludes slow_integration, ~8 min)
-CHAT_TAP_DISABLED=1 python3 -m pytest tests/ -q
+CHAT_TAP_DISABLED=1 python3 -m pytest tests/ -q   # 469 passed, 1 skipped, 3 deselected
 
 # Golden + sanity only (~6 sec)
 python3 -m pytest tests/test_golden_snapshot.py tests/test_data_sanity.py -q
@@ -445,12 +447,12 @@ Regenerate after intentional pipeline changes: `python3 scripts/generate_golden_
 | Domain | Tests | Examples |
 |--------|------:|---------|
 | PD Forecasts | 6 | EB categories exist, IND/CHN present, EB2-India is most backlogged, ≤24 months per series |
-| Employer Scores | 6 | ≥50K employers, ≥500 ML-scored, all scores [0,100], ≥3 tiers, mean 15–85 |
+| Employer Scores | 6 | ≥50K employers, ≥500 ML-scored (1,695 actual), all scores [0,100], ≥3 tiers, mean 15–85 |
 | Salary | 4 | Median $20K–$600K, percentile ordering, no negatives |
 | Geography | 3 | CA is top state, top-10 includes CA/TX/NY/NJ, ≥40 states |
 | PERM | 5 | ≥1M records, ≥60% certified, ≥15 FY span, stable YoY volume |
 | Visa Bulletin | 3 | EB1/EB2/EB3 present, India/China present, ≥10 year span |
-| Dimensions | 4 | ≥200K employers, ≥800 SOC codes, ≥200 countries, ≥4 visa classes |
+| Dimensions | 4 | ≥200K employers (243K actual), ≥800 SOC codes (1,801 actual), ≥200 countries, ≥4 visa classes |
 | Cross-Artifact | 7 | EFS employers ≥95% in dim_employer, forecast categories overlap cutoffs, salary SOC ≥80% in dim_soc |
 | RAG | 3 | Catalog ≥30 artifacts, QA cache ≥100 pairs, ≥20 chunks |
 

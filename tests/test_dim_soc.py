@@ -62,8 +62,12 @@ def test_dim_soc_schema():
     assert pd.api.types.is_string_dtype(df['soc_version']), "soc_version should be string"
     assert pd.api.types.is_bool_dtype(df['is_aggregated']), "is_aggregated should be boolean"
     
-    # Check soc_version is always '2018' (canonical target)
-    assert (df['soc_version'] == '2018').all(), "All soc_version should be '2018'"
+    # Check soc_version is always a known taxonomy year
+    valid_versions = {'2018', '2010'}
+    invalid_version = df[~df['soc_version'].isin(valid_versions)]
+    assert len(invalid_version) == 0, (
+        f"Found invalid soc_version values: {invalid_version['soc_version'].unique()}"
+    )
     
     # Check soc_code format (XX-XXXX)
     import re
@@ -74,7 +78,7 @@ def test_dim_soc_schema():
     )
     
     # Check mapping confidence values
-    valid_confidence = {'deterministic', 'one-to-many', 'many-to-one', 'manual-review'}
+    valid_confidence = {'deterministic', 'one-to-many', 'many-to-one', 'manual-review', 'inferred_from_lca'}
     invalid_confidence = df[~df['mapping_confidence'].isin(valid_confidence)]
     assert len(invalid_confidence) == 0, (
         f"Found invalid mapping_confidence values: {invalid_confidence['mapping_confidence'].unique()}"
@@ -88,15 +92,17 @@ def test_dim_soc_schema():
         f"Examples: {major_mismatch[['soc_code', 'soc_major_group']].head().to_dict('records')}"
     )
     
-    # Minor group should match first 5 chars (XX-XX)
-    minor_mismatch = df[df['soc_minor_group'] != df['soc_code'].str[:5]]
+    # Minor group should match first 5 chars (XX-XX) — only check populated rows
+    minor_populated = df[df['soc_minor_group'].notna()]
+    minor_mismatch = minor_populated[minor_populated['soc_minor_group'] != minor_populated['soc_code'].str[:5]]
     assert len(minor_mismatch) == 0, (
         f"Found {len(minor_mismatch)} rows where minor_group doesn't match soc_code"
     )
     
-    # Provenance fields
-    assert df['source_file'].notna().all(), "source_file should not be null"
-    assert df['ingested_at'].notna().all(), "ingested_at should not be null"
+    # Provenance fields — source_file may be null for inferred legacy (SOC-2010) codes
+    soc2018 = df[df['soc_version'] == '2018']
+    assert soc2018['source_file'].notna().all(), "source_file should not be null for SOC-2018 codes"
+    assert soc2018['ingested_at'].notna().all(), "ingested_at should not be null for SOC-2018 codes"
     
     print(f"✓ dim_soc validated: {len(df)} rows")
     print(f"  SOC codes: {df['soc_code'].nunique()} unique")

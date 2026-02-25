@@ -231,6 +231,86 @@ def _salary_qas(qa_list: list) -> None:
         "salary"
     ))
 
+    # Top paying occupations
+    if "median" in df.columns and "soc_code" in df.columns:
+        top_socs = df.groupby("soc_code")["median"].mean().nlargest(15)
+        dim_soc = _safe_read(ARTIFACTS_ROOT / "dim_soc.parquet")
+        soc_titles = {}
+        if dim_soc is not None:
+            title_col = next((c for c in dim_soc.columns
+                              if c in ("soc_title", "title", "occupation_title")), None)
+            code_col = next((c for c in dim_soc.columns
+                             if c in ("soc_code", "code", "occ_code")), None)
+            if title_col and code_col:
+                soc_titles = dict(zip(dim_soc[code_col], dim_soc[title_col]))
+
+        lines = []
+        for soc, med in top_socs.items():
+            title = soc_titles.get(soc, soc)
+            lines.append(f"  {soc} ({title}): median ${med:,.0f}")
+
+        qa_list.append(_qa(
+            "What are the highest paying occupations for immigrants?",
+            "Top 15 highest-paying occupations (by median prevailing wage):\n" +
+            "\n".join(lines),
+            ["salary_benchmarks.parquet", "dim_soc.parquet"],
+            "salary"
+        ))
+
+    # Tech role wages
+    tech_socs = {
+        "15-1252": "Software Developers",
+        "15-1256": "Software Developers (Apps)",
+        "15-1211": "Computer Systems Analysts",
+        "15-1299": "Computer Occupations, All Other",
+        "15-1221": "Computer & IS Security Analysts",
+        "15-1245": "Database Administrators",
+        "15-2051": "Data Scientists",
+    }
+    if "soc_code" in df.columns and "median" in df.columns:
+        tech_df = df[df["soc_code"].isin(tech_socs.keys())]
+        if len(tech_df) > 0:
+            tech_summary = tech_df.groupby("soc_code")["median"].agg(["mean", "min", "max"])
+            lines = []
+            for soc, row in tech_summary.iterrows():
+                title = tech_socs.get(soc, soc)
+                lines.append(f"  {title} ({soc}): avg=${row['mean']:,.0f}, "
+                             f"range ${row['min']:,.0f}–${row['max']:,.0f}")
+            qa_list.append(_qa(
+                "What is the prevailing wage for software engineers and tech workers?",
+                "Prevailing wages for common immigration-sponsored tech roles:\n" +
+                "\n".join(lines) +
+                "\n\nNote: Wages vary significantly by geographic area. "
+                "Use salary_benchmarks to look up your specific SOC × area.",
+                ["salary_benchmarks.parquet"],
+                "salary"
+            ))
+
+    # What is wage ratio
+    qa_list.append(_qa(
+        "What is wage ratio and why does it matter?",
+        "Wage ratio = offered_wage / prevailing_wage for the same SOC code and area. "
+        "A ratio ≥1.0 means the employer offers at or above the median prevailing wage. "
+        "Higher wage ratios correlate with: (1) higher employer friendliness scores, "
+        "(2) lower audit risk for PERM applications, (3) better chances of approval. "
+        "The DOL considers prevailing wage levels: Level 1 (17th percentile), "
+        "Level 2 (34th), Level 3 (50th), Level 4 (67th).",
+        ["salary_benchmarks.parquet", "employer_features.parquet"],
+        "salary"
+    ))
+
+    # What is prevailing wage
+    qa_list.append(_qa(
+        "What is a prevailing wage determination?",
+        "The prevailing wage is what the DOL determines employers must pay for a position "
+        "in a specific geographic area and for a specific occupation (SOC code). "
+        "It is required for both LCA (H-1B) and PERM (green card) filings. "
+        f"Meridian has {len(df):,} SOC × area wage records from BLS OEWS surveys, "
+        "covering percentiles P10 through P90.",
+        ["salary_benchmarks.parquet", "fact_oews.parquet"],
+        "salary"
+    ))
+
 
 def _geo_qas(qa_list: list) -> None:
     """Generate geographic Q&A pairs."""
@@ -238,16 +318,26 @@ def _geo_qas(qa_list: list) -> None:
     if df is None:
         return
 
-    qa_list.append(_qa(
-        "Which states have the most immigration sponsorship?",
-        f"Meridian tracks {len(df):,} geographic records across state, metro, county, "
-        "and city grains. Top sponsorship states historically include California, "
-        "Texas, New York, New Jersey, Washington, Illinois, and Massachusetts — "
-        "driven by tech hubs, financial centers, and healthcare corridors. "
-        "Use the worksite geographic dashboard for detailed breakdowns by location.",
-        ["worksite_geo_metrics.parquet"],
-        "geographic"
-    ))
+    # State-level data
+    if "grain" in df.columns:
+        states = df[df["grain"] == "state"]
+    else:
+        states = df
+
+    if "state" in df.columns and "filings_count" in df.columns:
+        top_states = states.groupby("state")["filings_count"].sum().nlargest(10)
+        lines = []
+        for st, cnt in top_states.items():
+            lines.append(f"  {st}: {cnt:,.0f} filings")
+        qa_list.append(_qa(
+            "Which states have the most immigration sponsorship?",
+            f"Top 10 states by total immigration sponsorship filings:\n" +
+            "\n".join(lines) +
+            f"\n\nTotal geographic records: {len(df):,} across state, metro, county, "
+            "and city grains.",
+            ["worksite_geo_metrics.parquet"],
+            "geographic"
+        ))
 
     qa_list.append(_qa(
         "Where are most H-1B and green card filings concentrated?",
@@ -256,6 +346,50 @@ def _geo_qas(qa_list: list) -> None:
         "Chicago, Dallas/Houston, Atlanta, and the DC metro area. "
         "The worksite_geo_metrics table covers all grains from state-level "
         "down to individual cities with filing counts and competitiveness ratios.",
+        ["worksite_geo_metrics.parquet"],
+        "geographic"
+    ))
+
+    # Top cities
+    if "grain" in df.columns and "city" in df.columns and "filings_count" in df.columns:
+        cities = df[df["grain"] == "city"].nlargest(10, "filings_count")
+        if len(cities) > 0:
+            lines = []
+            for _, row in cities.iterrows():
+                city = row.get("city", "Unknown")
+                st = row.get("state", "")
+                cnt = row["filings_count"]
+                lines.append(f"  {city}, {st}: {cnt:,.0f} filings")
+            qa_list.append(_qa(
+                "Which cities have the most immigration sponsorship filings?",
+                "Top 10 cities by immigration sponsorship filings:\n" +
+                "\n".join(lines),
+                ["worksite_geo_metrics.parquet"],
+                "geographic"
+            ))
+
+    # Competitiveness
+    if "competitiveness_ratio" in df.columns:
+        cr = df["competitiveness_ratio"].dropna()
+        if len(cr) > 0:
+            qa_list.append(_qa(
+                "What is the competitiveness ratio for immigration sponsorship?",
+                f"The competitiveness ratio measures filings per employer in a geographic area. "
+                f"Higher ratios indicate more intense competition. "
+                f"Overall statistics: mean={cr.mean():.2f}, median={cr.median():.2f}, "
+                f"max={cr.max():.1f}. "
+                f"Areas with ratio >2.0 are highly competitive. "
+                f"Areas with ratio <1.0 have sponsorship distributed across many employers.",
+                ["worksite_geo_metrics.parquet"],
+                "geographic"
+            ))
+
+    qa_list.append(_qa(
+        "Can I work remotely on an H-1B visa?",
+        "H-1B visas are tied to a specific worksite location listed on the LCA. "
+        "If you work remotely from a different location, your employer may need to file "
+        "an amended LCA for the new worksite. The worksite_geo_metrics shows which "
+        "geographic areas have the most sponsorship activity for remote-friendly evaluation.",
         ["worksite_geo_metrics.parquet"],
         "geographic"
     ))
@@ -326,6 +460,302 @@ def _general_qas(qa_list: list) -> None:
         "processing"
     ))
 
+    # WARN Act layoffs
+    warn_df = _safe_read(ARTIFACTS_ROOT / "fact_warn_events.parquet")
+    if warn_df is not None and len(warn_df) > 0:
+        qa_list.append(_qa(
+            "How do layoffs affect immigration sponsorship?",
+            f"Meridian tracks {len(warn_df):,} WARN Act layoff events. "
+            "Mass layoffs can impact your immigration case: (1) H-1B holders have 60 days "
+            "to find a new employer or change status if laid off, (2) PERM applications in "
+            "progress may need to be refiled if the employer does a mass layoff, "
+            "(3) I-140 petitions are portable after 180 days (AC21). "
+            "Check the WARN events data to see if your employer has recent layoff history.",
+            ["fact_warn_events.parquet"],
+            "general"
+        ))
+
+    qa_list.append(_qa(
+        "What is the difference between H-1B and green card?",
+        "H-1B is a temporary nonimmigrant work visa (3 years, extendable to 6). "
+        "A green card (permanent residence) is, well, permanent. The typical path is:\n"
+        "1. H-1B approval → start working\n"
+        "2. Employer files PERM (labor certification) → 6-18 months\n"
+        "3. Employer files I-140 (immigrant petition) → 4-12 months\n"
+        "4. Wait for priority date to become current (varies by category/country)\n"
+        "5. File I-485 (adjustment of status) → 8-24 months\n"
+        "For EB2 India, total wait can be 10+ years due to backlog.",
+        ["pd_forecasts.parquet", "processing_times_trends.parquet"],
+        "general"
+    ))
+
+
+def _processing_qas(qa_list: list) -> None:
+    """Generate USCIS processing time Q&A pairs."""
+    df = _safe_read(ARTIFACTS_ROOT / "processing_times_trends.parquet")
+    if df is None:
+        return
+
+    qa_list.append(_qa(
+        "How long does I-485 processing take?",
+        "Based on Meridian's I-485 processing time trends (FY2014–FY2025), "
+        "processing times have varied significantly. "
+        "During the COVID-19 period (FY2020–2021), backlogs increased substantially. "
+        "Recent trends show improvement in throughput. "
+        "Check the processing_times_trends data for quarterly approval rates, "
+        "backlog months, and throughput numbers.",
+        ["processing_times_trends.parquet"],
+        "processing"
+    ))
+
+    # Actual data-driven QA
+    if "backlog_months" in df.columns:
+        bl = df["backlog_months"].dropna()
+        if len(bl) > 0:
+            qa_list.append(_qa(
+                "What is the current I-485 backlog?",
+                f"Based on the latest processing data, the I-485 backlog has ranged from "
+                f"{bl.min():.1f} to {bl.max():.1f} months over FY2014–FY2025. "
+                f"The most recent data point shows {bl.iloc[-1]:.1f} months. "
+                f"Backlog months = (pending cases) / (monthly completions).",
+                ["processing_times_trends.parquet"],
+                "processing"
+            ))
+
+    if "approval_rate" in df.columns:
+        ar = df["approval_rate"].dropna()
+        if len(ar) > 0:
+            qa_list.append(_qa(
+                "What is the I-485 approval rate?",
+                f"The I-485 approval rate has ranged from {ar.min():.1%} to {ar.max():.1%} "
+                f"over FY2014–FY2025. Latest: {ar.iloc[-1]:.1%}. "
+                "Approval rates reflect both green card and other adjustment filings.",
+                ["processing_times_trends.parquet"],
+                "processing"
+            ))
+
+    qa_list.append(_qa(
+        "How does USCIS process applications?",
+        "USCIS processes employment-based immigration in stages:\n"
+        "1. I-140 (Immigrant Petition): Employer files after PERM approval\n"
+        "2. Priority date becomes current (wait for visa bulletin)\n"
+        "3. I-485 (Adjustment of Status) or Consular Processing\n"
+        "4. EAD/AP cards issued during I-485 pendency\n"
+        "Each stage has its own processing times tracked by USCIS service centers.",
+        ["processing_times_trends.parquet"],
+        "processing"
+    ))
+
+
+def _visa_bulletin_qas(qa_list: list) -> None:
+    """Generate visa bulletin Q&A pairs."""
+    df = _safe_read(ARTIFACTS_ROOT / "fact_cutoffs_all.parquet")
+    if df is None:
+        return
+
+    cat_col = next((c for c in df.columns if c in ("category", "preference_category",
+                                                    "visa_category")), None)
+    country_col = next((c for c in df.columns if c in ("country", "chargeability_area")), None)
+    bd_col = next((c for c in df.columns if c in ("bulletin_date", "bulletin_month")), None)
+    cd_col = next((c for c in df.columns if c in ("cutoff_date",)), None)
+
+    qa_list.append(_qa(
+        "What is the visa bulletin?",
+        f"The Visa Bulletin is published monthly by the U.S. Department of State. "
+        f"It shows cutoff dates for each employment-based (EB) preference category "
+        f"and country of chargeability. Meridian has parsed {len(df):,} cutoff records "
+        f"from ~180 bulletins spanning 2011–2026. If your priority date is before the "
+        f"cutoff date, your visa is 'current' and you can file I-485.",
+        ["fact_cutoffs_all.parquet"],
+        "visa_bulletin"
+    ))
+
+    qa_list.append(_qa(
+        "How often does the visa bulletin update?",
+        "The visa bulletin is published monthly by DOS, usually around the 15th of the "
+        "month for the following month. For example, the March bulletin is published in "
+        "mid-February. Each bulletin has two charts: 'Final Action Dates' (for filing "
+        "I-485) and 'Dates for Filing' (earlier dates, used when USCIS opens filing).",
+        ["fact_cutoffs_all.parquet"],
+        "visa_bulletin"
+    ))
+
+    # Latest cutoffs per category
+    if all(c is not None for c in [cat_col, country_col, bd_col, cd_col]):
+        idx = df.groupby([cat_col, country_col])[bd_col].idxmax()
+        latest = df.loc[idx].sort_values([cat_col, country_col])
+
+        # EB2 India specific
+        eb2_india = latest[
+            (latest[cat_col].astype(str).str.contains("2", na=False)) &
+            (latest[country_col].astype(str).str.contains("IND|India", case=False, na=False))
+        ]
+        if len(eb2_india) > 0:
+            row = eb2_india.iloc[0]
+            cutoff = str(row[cd_col])[:10] if pd.notna(row[cd_col]) else "Current"
+            qa_list.append(_qa(
+                "What is the current EB2 India cutoff date?",
+                f"The latest EB2 India cutoff date is {cutoff} "
+                f"(from bulletin dated {str(row[bd_col])[:10]}). "
+                "EB2 India has one of the longest backlogs due to "
+                "high demand relative to the 7% per-country limit.",
+                ["fact_cutoffs_all.parquet"],
+                "visa_bulletin"
+            ))
+
+        # EB3 India specific
+        eb3_india = latest[
+            (latest[cat_col].astype(str).str.contains("3", na=False)) &
+            (latest[country_col].astype(str).str.contains("IND|India", case=False, na=False))
+        ]
+        if len(eb3_india) > 0:
+            row = eb3_india.iloc[0]
+            cutoff = str(row[cd_col])[:10] if pd.notna(row[cd_col]) else "Current"
+            qa_list.append(_qa(
+                "What is the current EB3 India cutoff date?",
+                f"The latest EB3 India cutoff date is {cutoff} "
+                f"(from bulletin dated {str(row[bd_col])[:10]}). "
+                "EB3 India processing has sometimes been faster than EB2 India "
+                "leading some applicants to consider EB2→EB3 downgrade.",
+                ["fact_cutoffs_all.parquet"],
+                "visa_bulletin"
+            ))
+
+        # EB2 China specific
+        eb2_china = latest[
+            (latest[cat_col].astype(str).str.contains("2", na=False)) &
+            (latest[country_col].astype(str).str.contains("CHN|China", case=False, na=False))
+        ]
+        if len(eb2_china) > 0:
+            row = eb2_china.iloc[0]
+            cutoff = str(row[cd_col])[:10] if pd.notna(row[cd_col]) else "Current"
+            qa_list.append(_qa(
+                "What is the current EB2 China cutoff date?",
+                f"The latest EB2 China cutoff date is {cutoff} "
+                f"(from bulletin dated {str(row[bd_col])[:10]}). "
+                "China is the second most backlogged country after India.",
+                ["fact_cutoffs_all.parquet"],
+                "visa_bulletin"
+            ))
+
+    # Movement metrics
+    mv_df = _safe_read(ARTIFACTS_ROOT / "category_movement_metrics.parquet")
+    if mv_df is not None:
+        qa_list.append(_qa(
+            "Which EB category is moving fastest?",
+            f"Use the category_movement_metrics table ({len(mv_df):,} records) to compare "
+            "monthly advancement rates across EB categories and countries. Key metrics: "
+            "avg_monthly_advance_days (positive = forward movement), volatility, "
+            "retrogression_count. EB1 ROW is typically current. "
+            "EB2/EB3 India and China have the slowest movement.",
+            ["category_movement_metrics.parquet"],
+            "visa_bulletin"
+        ))
+
+
+def _occupation_qas(qa_list: list) -> None:
+    """Generate occupation/SOC-related Q&A pairs."""
+    df = _safe_read(ARTIFACTS_ROOT / "soc_demand_metrics.parquet")
+    if df is None:
+        return
+
+    qa_list.append(_qa(
+        "Which occupations have the most immigration sponsorship?",
+        f"Meridian tracks SOC-level demand across {len(df):,} records (multiple time windows). "
+        "Software developers (15-1252/15-1256), computer systems analysts (15-1211), "
+        "and computer occupations (15-1299) dominate sponsorship filings. "
+        "Healthcare roles (physicians, physical therapists) and financial analysts "
+        "also feature prominently.",
+        ["soc_demand_metrics.parquet", "dim_soc.parquet"],
+        "occupation"
+    ))
+
+    # Top SOCs by filing volume
+    soc_col = next((c for c in df.columns if c in ("soc_code", "occ_code")), None)
+    count_col = next((c for c in df.columns if c in ("filing_count", "total_filings",
+                                                      "demand_count", "n_filings")), None)
+    if soc_col and count_col:
+        top = df.groupby(soc_col)[count_col].sum().nlargest(20)
+        dim_soc = _safe_read(ARTIFACTS_ROOT / "dim_soc.parquet")
+        titles = {}
+        if dim_soc is not None:
+            t_col = next((c for c in dim_soc.columns
+                          if c in ("soc_title", "title", "occupation_title")), None)
+            c_col = next((c for c in dim_soc.columns
+                          if c in ("soc_code", "code", "occ_code")), None)
+            if t_col and c_col:
+                titles = dict(zip(dim_soc[c_col], dim_soc[t_col]))
+
+        lines = []
+        for soc, cnt in top.items():
+            title = titles.get(soc, soc)
+            lines.append(f"  {soc} ({title}): {cnt:,.0f}")
+        qa_list.append(_qa(
+            "What are the top 20 SOC codes by immigration filings?",
+            "Top 20 occupations by sponsorship filing count:\n" +
+            "\n".join(lines),
+            ["soc_demand_metrics.parquet", "dim_soc.parquet"],
+            "occupation"
+        ))
+
+    qa_list.append(_qa(
+        "What is a SOC code?",
+        "SOC (Standard Occupational Classification) is a system used by federal agencies "
+        "to classify workers into occupational categories. The 2018 SOC system has ~867 "
+        "detailed codes (6-digit). Immigration filings (PERM, LCA) require a SOC code. "
+        "Meridian's dim_soc table includes 1,396 codes with crosswalks between "
+        "SOC-2010 and SOC-2018 systems.",
+        ["dim_soc.parquet"],
+        "occupation"
+    ))
+
+
+def _visa_demand_qas(qa_list: list) -> None:
+    """Generate visa demand Q&A pairs."""
+    df = _safe_read(ARTIFACTS_ROOT / "visa_demand_metrics.parquet")
+    if df is None:
+        return
+
+    qa_list.append(_qa(
+        "How many employment-based visas are issued each year?",
+        f"Meridian tracks {len(df):,} visa demand records from DOS immigrant visa "
+        "issuances, applications, and NIV statistics. The annual EB visa allocation "
+        "is approximately 140,000 (plus unused family-based visas that overflow). "
+        "In practice, actual issuances fluctuate due to processing capacity, "
+        "COVID disruptions, and policy changes.",
+        ["visa_demand_metrics.parquet", "dim_visa_ceiling.parquet"],
+        "visa_demand"
+    ))
+
+    country_col = next((c for c in df.columns if c in ("country", "nationality",
+                                                        "chargeability_area")), None)
+    count_col = next((c for c in df.columns if c in ("count_issued", "count", "total",
+                                                      "issuances")), None)
+    if country_col and count_col:
+        top = df.groupby(country_col)[count_col].sum().nlargest(10)
+        lines = []
+        for ctry, cnt in top.items():
+            lines.append(f"  {ctry}: {cnt:,.0f}")
+        qa_list.append(_qa(
+            "Which countries have the highest visa demand?",
+            "Top 10 countries by total visa demand:\n" +
+            "\n".join(lines) +
+            "\n\nIndia and China typically dominate EB visa demand, "
+            "leading to significant backlogs due to the 7% per-country limit.",
+            ["visa_demand_metrics.parquet"],
+            "visa_demand"
+        ))
+
+    qa_list.append(_qa(
+        "What is the 7% per-country limit?",
+        "U.S. immigration law limits any single country to no more than 7% of the "
+        "total EB visas issued annually (~9,800 out of 140,000). This creates massive "
+        "backlogs for high-demand countries like India and China, where applicants may "
+        "wait 10+ years, while applicants from other countries often have current dates.",
+        ["visa_demand_metrics.parquet", "dim_visa_ceiling.parquet"],
+        "visa_demand"
+    ))
+
 
 # ---------------------------------------------------------------------------
 # Main generator
@@ -346,6 +776,10 @@ def generate_qa_cache() -> dict:
     _employer_qas(qa_list)
     _salary_qas(qa_list)
     _geo_qas(qa_list)
+    _processing_qas(qa_list)
+    _visa_bulletin_qas(qa_list)
+    _occupation_qas(qa_list)
+    _visa_demand_qas(qa_list)
     _general_qas(qa_list)
 
     # Deduplicate by question text

@@ -16,6 +16,7 @@ except Exception:
 from src.io.readers import load_paths_config, resolve_artifact_path
 from src.features.employer_features import build_employer_features
 from src.features.salary_benchmarks import build_salary_benchmarks
+from src.features.queue_depth_estimates import build_queue_depth_estimates
 
 
 def main():
@@ -46,6 +47,10 @@ def main():
     print("\n--- Salary Benchmarks ---")
     salary_out = resolve_artifact_path(artifacts_root, "tables", "salary_benchmarks.parquet")
     build_salary_benchmarks(in_tables, salary_out)
+    
+    print("\n--- Queue Depth Estimates ---")
+    queue_out = resolve_artifact_path(artifacts_root, "tables", "queue_depth_estimates.parquet")
+    build_queue_depth_estimates(in_tables, queue_out)
     
     print("\n" + "="*60)
     print("FEATURE ENGINEERING COMPLETE")

@@ -48,10 +48,10 @@ Compass  (P3: immigration-insights-app)   →  public web app consuming Meridian
 |------|------|
 | Project root | `/Users/vrathod1/dev/NorthStar/immigration-model-builder` |
 | Raw downloads (Horizon / P1) | `/Users/vrathod1/dev/NorthStar/fetch-immigration-data/downloads` |
-| Curated tables | `artifacts/tables/` (~40 parquet files/dirs) |
+| Curated tables | `artifacts/tables/` (~41 parquet files/dirs) |
 | Model artifacts | `artifacts/models/` |
 | Metrics & reports | `artifacts/metrics/` |
-| Tests | `tests/` (425 tests across 20+ files) |
+| Tests | `tests/` (449 tests across 20+ files) |
 | Pipeline config | `configs/paths.yaml` (data_root + artifacts_root) |
 | Schemas | `configs/schemas.yml` |
 | Full pipeline | `scripts/build_all.sh` |
@@ -59,18 +59,21 @@ Compass  (P3: immigration-insights-app)   →  public web app consuming Meridian
 
 ---
 
-## Current State (Milestone 14 — 2026-02-25)
-- **Test pass rate: 99.8%** (425 passed, 0 failed, 1 skipped, 3 deselected)
+## Current State (Milestone 16 — 2026-02-25)
+- **Test pass rate: 99.8%** (449 passed, 0 failed, 1 skipped, 3 deselected)
 - **3-tier QA**: Golden snapshot regression (7 tests), data sanity suite (47 tests), pytest-cov (11.4% line coverage)
-- dim_employer.parquet: 227,076 rows (patched from fact_perm)
-- fact_perm/: ~1.67M rows, 20 FY partitions (FY2005–FY2024)
-- fact_cutoffs/: 13,915 rows, 17 partitions (visa bulletin cutoff dates 2011–2026)
-- fact_lca/: ~1M+ rows (has schema merge error on `fiscal_year` int64 vs dict)
-- employer_features.parquet: 70,206 rows, 25 feature columns
-- employer_friendliness_scores_ml.parquet: 956 rows (ML-based EFS)
+- **All 3 CRITICAL data quality findings resolved** (PERM columns, LCA aliases, SOC dimension)
+- dim_employer.parquet: 243,694 rows (patched from fact_perm)
+- dim_soc.parquet: 1,801 codes (1,396 SOC-2018 + 405 SOC-2010 legacy)
+- fact_perm/: 1,675,051 rows, 19 FY partitions (FY2008–FY2026); key columns: job_title 99.7%, soc_code_raw 98.1%, naics_code 99.7%
+- fact_cutoffs/: 13,915 rows, 280 partitions (visa bulletin cutoff dates 2011–2026)
+- fact_lca/: 9,558,695 rows, 19 FY partitions; job_title 100%, naics_code 92.9% (has schema merge error on `fiscal_year` int64 vs dict)
+- employer_features.parquet: 70,401 rows, 25 feature columns
+- employer_friendliness_scores_ml.parquet: 1,695 rows (ML-based EFS)
 - pd_forecasts.parquet: 1,344 rows (56 series × 24 months, exponential-weighted seasonal model)
-- worksite_geo_metrics.parquet: 104,951 rows (4 grains incl. city; competitiveness_ratio 79.7%)
-- soc_demand_metrics.parquet: 3,968 rows (3 windows × 2 datasets)
+- worksite_geo_metrics.parquet: 159,627 rows (4 grains incl. city; competitiveness_ratio 79.7%)
+- soc_demand_metrics.parquet: 4,241 rows (3 windows × 2 datasets)
+- employer_monthly_metrics.parquet: 224,114 rows
 - processing_times_trends.parquet: 35 rows (FY2014–FY2025 quarterly USCIS I-485)
 - 3 integration tests marked `@pytest.mark.slow_integration` (auto-skipped)
 - Known issues documented in "Unable to Fix" section of FINAL_SINGLE_REPORT.md
@@ -154,8 +157,8 @@ python3 -m pytest tests/ -q                  # 3. Validate
 ### Dimension Tables
 | Table | Rows | Notes |
 |-------|------|-------|
-| dim_employer.parquet | 227,076 | Patched from fact_perm (build_dim_employer only produces ~19K) |
-| dim_soc.parquet | 1,396 | SOC-2018 codes + crosswalks |
+| dim_employer.parquet | 243,694 | Patched from fact_perm (build_dim_employer only produces ~19K) |
+| dim_soc.parquet | 1,801 | 1,396 SOC-2018 + 405 SOC-2010 legacy codes |
 | dim_country.parquet | 249 | ISO 3166-1 countries |
 | dim_area.parquet | 587 | BLS area codes for OEWS |
 | dim_visa_class.parquet | 6 | EB visa categories |
@@ -164,13 +167,13 @@ python3 -m pytest tests/ -q                  # 3. Validate
 ### Fact Tables
 | Table | Rows | Notes |
 |-------|------|-------|
-| fact_perm/ (partitioned) | 1,675,051 | 20 FY partitions, PERM labor certifications |
+| fact_perm/ (partitioned) | 1,675,051 | 19 FY partitions, PERM labor certifications; job_title 99.7%, soc_code_raw 98.1%, naics_code 99.7% |
 | fact_perm_all.parquet | 1,674,724 | Flat denormalized copy |
-| fact_perm_unique_case/ | 1,671,899 | NOT truly deduplicated — 20% dupe case_numbers |
-| fact_cutoffs/ (partitioned) | 13,915 | Visa bulletin cutoff dates, 17 year partitions |
+| fact_perm_unique_case/ | 1,668,587 | NOT truly deduplicated — 20% dupe case_numbers |
+| fact_cutoffs/ (partitioned) | 13,915 | Visa bulletin cutoff dates, 280 partitions |
 | fact_cutoffs_all.parquet | 8,315 | Deduplicated presentation copy |
-| fact_lca/ (partitioned) | ~1M+ | H-1B LCA filings; has schema merge error (fiscal_year type mismatch) |
-| fact_oews/ (partitioned) | 446,432 | BLS OEWS wage data, 3 year partitions |
+| fact_lca/ (partitioned) | 9,558,695 | H-1B LCA filings; job_title 100%, naics 92.9%; has schema merge error (fiscal_year type mismatch) |
+| fact_oews/ (partitioned) | 446,432 | BLS OEWS wage data, 2 year partitions |
 | fact_oews.parquet | 446,432 | Flat copy |
 | fact_niv_issuance.parquet | 501,033 | DOS nonimmigrant visa issuances |
 | fact_visa_issuance.parquet | 28,531 | DOS immigrant visa issuances |
@@ -183,13 +186,13 @@ python3 -m pytest tests/ -q                  # 3. Validate
 ### Feature Tables
 | Table | Rows | Notes |
 |-------|------|-------|
-| employer_features.parquet | 70,206 | 25 columns, 36-month rolling window |
+| employer_features.parquet | 70,401 | 25 columns, 36-month rolling window |
 | salary_benchmarks.parquet | 224,047 | SOC × area median & P75 wages |
-| employer_monthly_metrics.parquet | 74,350 | Monthly employer aggregates |
+| employer_monthly_metrics.parquet | 224,114 | Monthly employer aggregates |
 | employer_risk_features.parquet | 668 | Risk signals for high-volume employers |
-| soc_demand_metrics.parquet | 3,968 | SOC-level demand aggregates (3 windows × 2 datasets) |
+| soc_demand_metrics.parquet | 4,241 | SOC-level demand aggregates (3 windows × 2 datasets) |
 | visa_demand_metrics.parquet | 537,735 | Category × country demand metrics |
-| worksite_geo_metrics.parquet | 104,951 | Geographic distribution (4 grains incl. city; CR 79.7%) |
+| worksite_geo_metrics.parquet | 159,627 | Geographic distribution (4 grains incl. city; CR 79.7%) |
 | category_movement_metrics.parquet | 8,315 | Visa bulletin movement trends |
 | backlog_estimates.parquet | 8,315 | Estimated backlogs by cat × country |
 | fact_cutoff_trends.parquet | 8,315 | Cutoff date movement trends |
@@ -198,8 +201,8 @@ python3 -m pytest tests/ -q                  # 3. Validate
 ### Model Outputs
 | Table | Rows | Notes |
 |-------|------|-------|
-| employer_friendliness_scores.parquet | 70,206 | Rules-based EFS (0–100) |
-| employer_friendliness_scores_ml.parquet | 956 | ML-based EFS for top employers |
+| employer_friendliness_scores.parquet | 70,401 | Rules-based EFS (0–100) |
+| employer_friendliness_scores_ml.parquet | 1,695 | ML-based EFS for top employers |
 | employer_scores.parquet | 0 | Legacy stub (superseded by EFS) |
 | pd_forecasts.parquet | 1,344 | 56 series × 24 months (exponential-weighted seasonal model) |
 | oews_wages.parquet | 0 | Legacy stub (data is in fact_oews) |

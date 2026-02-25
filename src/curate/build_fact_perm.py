@@ -375,29 +375,88 @@ def build_fact_perm(
         try:
             # Read full Excel file
             df = pd.read_excel(file_path)
-            print(f"    Loaded {len(df)} rows")
-            
+            print(f"    Loaded {len(df)} rows, {len(df.columns)} cols")
+
+            # ── Column name normalisation ──────────────────────────────────
+            # PERM files use 4+ naming eras:
+            #   Legacy SPACES  (FY2009):  "DECISION DATE", "EMPLOYER NAME"
+            #   Legacy Title   (FY2013-14): "Decision_Date", "Employer_Name"
+            #   iCERT UPPER    (FY2015-19): "CASE_RECEIVED_DATE"
+            #   FLAG UPPER     (FY2020-24): "RECEIVED_DATE"
+            # Normalise ALL column names to UPPER_UNDERSCORE so col_map
+            # can use a single canonical lookup regardless of era.
+            df.columns = df.columns.str.strip().str.upper().str.replace(' ', '_')
+
             # Multi-schema column candidates: try each in order, use first match.
-            # FY2025+: PWD_SOC_CODE, JOB_OPP_WAGE_FROM, EMP_BUSINESS_NAME, PRIMARY_WORKSITE_*
-            # FY2022-2024: PW_SOC_CODE, WAGE_OFFER_FROM, EMPLOYER_NAME, WORKSITE_*
+            # After normalisation all column names are UPPER_UNDERSCORE.
+            # Aliases are ordered: newer-form → older-form (first match wins).
             col_map = {
-                'case_number':    ['CASE_NUMBER', 'CASE_NO'],
-                'case_status':    ['CASE_STATUS'],
-                'received_date':  ['RECEIVED_DATE'],
-                'decision_date':  ['DECISION_DATE'],
-                'employer_name':  ['EMP_BUSINESS_NAME', 'EMPLOYER_NAME'],
-                'employer_country': ['EMP_COUNTRY', 'EMPLOYER_COUNTRY'],
-                'soc_code':       ['PWD_SOC_CODE', 'PW_SOC_CODE'],
-                'soc_title':      ['PWD_SOC_TITLE', 'PW_SOC_TITLE'],
-                'job_title':      ['JOB_TITLE'],
-                'wage_from':      ['JOB_OPP_WAGE_FROM', 'WAGE_OFFER_FROM', 'WAGE_OFFER_FROM_9089'],
-                'wage_to':        ['JOB_OPP_WAGE_TO', 'WAGE_OFFER_TO', 'WAGE_OFFER_TO_9089'],
-                'wage_unit':      ['JOB_OPP_WAGE_PER', 'WAGE_OFFER_UNIT_OF_PAY', 'PW_UNIT_OF_PAY_9089'],
-                'worksite_city':  ['PRIMARY_WORKSITE_CITY', 'WORKSITE_CITY'],
-                'worksite_state': ['PRIMARY_WORKSITE_STATE', 'WORKSITE_STATE', 'EMPLOYER_STATE_PROVINCE'],
-                'worksite_postal':['PRIMARY_WORKSITE_POSTAL_CODE', 'WORKSITE_POSTAL_CODE', 'EMPLOYER_POSTAL_CODE'],
-                'worksite_area':  ['PRIMARY_WORKSITE_BLS_AREA'],  # newer files only
-                'is_fulltime':    ['OTHER_REQ_IS_FULLTIME_EMP'],
+                'case_number':      ['CASE_NUMBER', 'CASE_NO'],
+                'case_status':      ['CASE_STATUS'],
+                'received_date':    ['RECEIVED_DATE', 'CASE_RECEIVED_DATE'],
+                'decision_date':    ['DECISION_DATE'],
+                'employer_name':    ['EMP_BUSINESS_NAME', 'EMPLOYER_NAME'],
+                'employer_country': [
+                    # Worker's country of citizenship (most useful for immigration analytics).
+                    # FY2008-2024 old form: COUNTRY_OF_CITIZENSHIP / COUNTRY_OF_CITZENSHIP (typo in source).
+                    # FY2024 new form / FY2025+: only EMP_COUNTRY available (employer location).
+                    'COUNTRY_OF_CITIZENSHIP', 'COUNTRY_OF_CITZENSHIP',
+                    'EMP_COUNTRY', 'EMPLOYER_COUNTRY',
+                ],
+                'soc_code':         ['PWD_SOC_CODE', 'PW_SOC_CODE'],
+                'soc_title':        ['PWD_SOC_TITLE', 'PW_SOC_TITLE'],
+                'job_title':        [
+                    'JOB_TITLE',              # FY2020+ FLAG / new form
+                    'JOB_INFO_JOB_TITLE',     # FY2015-2019 iCERT (actual job title)
+                    'PW_JOB_TITLE_9089',      # FY2008-2018 legacy
+                    'PW_JOB_TITLE',           # FY2019
+                ],
+                'wage_from':        [
+                    'JOB_OPP_WAGE_FROM',      # FY2024 new / FY2025+
+                    'WAGE_OFFER_FROM',        # FY2020-2024 FLAG
+                    'WAGE_OFFER_FROM_9089',   # FY2008-2018
+                    'WAGE_OFFERED_FROM_9089',  # FY2013-2014, FY2019
+                ],
+                'wage_to':          [
+                    'JOB_OPP_WAGE_TO',
+                    'WAGE_OFFER_TO',
+                    'WAGE_OFFER_TO_9089',
+                    'WAGE_OFFERED_TO_9089',
+                ],
+                'wage_unit':        [
+                    'JOB_OPP_WAGE_PER',
+                    'WAGE_OFFER_UNIT_OF_PAY',
+                    'PW_UNIT_OF_PAY_9089',
+                    'WAGE_OFFER_UNIT_OF_PAY_9089',
+                    'WAGE_OFFERED_UNIT_OF_PAY_9089',
+                ],
+                'worksite_city':    [
+                    'PRIMARY_WORKSITE_CITY',   # FY2024 new / FY2025+
+                    'WORKSITE_CITY',           # FY2020-2024 FLAG
+                    'JOB_INFO_WORK_CITY',      # FY2008-2019 iCERT (actual worksite)
+                    'EMPLOYER_CITY',           # FY2008-2019 fallback (employer HQ)
+                ],
+                'worksite_state':   [
+                    'PRIMARY_WORKSITE_STATE',
+                    'WORKSITE_STATE',
+                    'JOB_INFO_WORK_STATE',
+                    'EMPLOYER_STATE',
+                    'EMPLOYER_STATE_PROVINCE',
+                ],
+                'worksite_postal':  [
+                    'PRIMARY_WORKSITE_POSTAL_CODE',
+                    'WORKSITE_POSTAL_CODE',
+                    'JOB_INFO_WORK_POSTAL_CODE',
+                    'EMPLOYER_POSTAL_CODE',
+                ],
+                'worksite_area':    ['PRIMARY_WORKSITE_BLS_AREA'],  # FY2024 new+ only
+                'is_fulltime':      ['OTHER_REQ_IS_FULLTIME_EMP'],
+                'naics_code':       [
+                    'NAICS_CODE',             # FY2020-2024 FLAG
+                    'NAICS_US_CODE',          # FY2015-2019 iCERT
+                    'EMP_NAICS',              # FY2024 new / FY2025+
+                    '2007_NAICS_US_CODE',     # FY2008-2014 legacy
+                ],
             }
 
             # Check which logical fields have no matching column
@@ -422,6 +481,11 @@ def build_fact_perm(
 
             # --- Vectorized SOC mapping ---
             raw_soc_series = safe_col('soc_code')
+            # Preserve the raw SOC code (stripped of .XX suffix) for downstream
+            # consumers that need the original code even when dim_soc lookup fails.
+            soc_code_raw_series = raw_soc_series.apply(
+                lambda x: re.sub(r'\.\d+$', '', str(x).strip()) if pd.notna(x) and isinstance(x, str) else None
+            )
             soc_code_series = raw_soc_series.apply(_map_soc_vec)
             unmapped_soc.update(
                 raw_soc_series[
@@ -454,12 +518,13 @@ def build_fact_perm(
             # --- Build chunk DataFrame ---
             chunk_df = pd.DataFrame({
                 'case_number':    safe_col('case_number'),
-                'case_status':    safe_col('case_status'),
+                'case_status':    safe_col('case_status').astype(str).str.strip().str.upper(),
                 'received_date':  received_date_series,
                 'decision_date':  decision_date_series,
                 'employer_id':    employer_id_series,
                 'employer_name':  safe_col('employer_name').astype(str).str.strip(),
                 'soc_code':       soc_code_series,
+                'soc_code_raw':   soc_code_raw_series,
                 'area_code':      area_code_series,
                 'employer_country': country_series,
                 'job_title':      safe_col('job_title'),
@@ -469,7 +534,8 @@ def build_fact_perm(
                 'worksite_city':  safe_col('worksite_city'),
                 'worksite_state': safe_col('worksite_state'),
                 'worksite_postal': safe_col('worksite_postal').astype(str),
-                'is_fulltime':    safe_col('is_fulltime') == 'Y',
+                'is_fulltime':    safe_col('is_fulltime').astype(str).str.strip().str.upper() == 'Y',
+                'naics_code':     safe_col('naics_code'),
                 # *** Key fix: force fiscal_year from directory, not from received_date ***
                 'fiscal_year':    fy,
                 'source_file':    f"PERM/PERM/FY{fy}/{file_path.name}",
@@ -498,9 +564,16 @@ def build_fact_perm(
     print(f"\n  Validation:")
     print(f"    Unique case_numbers: {result_df['case_number'].nunique()}")
     print(f"    Non-null employer_id: {result_df['employer_id'].notna().sum()}")
-    print(f"    Non-null soc_code: {result_df['soc_code'].notna().sum()}")
+    print(f"    Non-null soc_code: {result_df['soc_code'].notna().sum()} ({result_df['soc_code'].notna().mean()*100:.1f}%)")
+    print(f"    Non-null soc_code_raw: {result_df['soc_code_raw'].notna().sum()} ({result_df['soc_code_raw'].notna().mean()*100:.1f}%)")
     print(f"    Non-null area_code: {result_df['area_code'].notna().sum()}")
-    print(f"    Non-null employer_country: {result_df['employer_country'].notna().sum()}")
+    print(f"    Non-null employer_country: {result_df['employer_country'].notna().sum()} ({result_df['employer_country'].notna().mean()*100:.1f}%)")
+    print(f"    Non-null job_title: {result_df['job_title'].notna().sum()} ({result_df['job_title'].notna().mean()*100:.1f}%)")
+    print(f"    Non-null wage_offer_from: {result_df['wage_offer_from'].notna().sum()} ({result_df['wage_offer_from'].notna().mean()*100:.1f}%)")
+    print(f"    Non-null worksite_city: {result_df['worksite_city'].notna().sum()} ({result_df['worksite_city'].notna().mean()*100:.1f}%)")
+    print(f"    Non-null worksite_state: {result_df['worksite_state'].notna().sum()} ({result_df['worksite_state'].notna().mean()*100:.1f}%)")
+    print(f"    Non-null received_date: {result_df['received_date'].notna().sum()} ({result_df['received_date'].notna().mean()*100:.1f}%)")
+    print(f"    Non-null naics_code: {result_df['naics_code'].notna().sum()} ({result_df['naics_code'].notna().mean()*100:.1f}%)")
 
     fy_dist = result_df['fiscal_year'].value_counts().sort_index()
     print(f"\n  fiscal_year distribution ({len(fy_dist)} partitions):")

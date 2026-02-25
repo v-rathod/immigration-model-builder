@@ -34,7 +34,7 @@ def _excl(p: Path) -> bool:
 
 
 def collect_valid_soc_codes(dir_path: Path) -> set:
-    """Read all soc_code values from a partitioned parquet directory."""
+    """Read all soc_code AND soc_code_raw values from a partitioned parquet directory."""
     codes: set = set()
     if not dir_path.exists():
         return codes
@@ -42,10 +42,16 @@ def collect_valid_soc_codes(dir_path: Path) -> set:
         if _excl(pf):
             continue
         try:
-            df = pd.read_parquet(pf, columns=["soc_code"])
-            valid = df["soc_code"].dropna().astype(str)
-            valid = valid[valid.str.match(SOC_FMT)]
-            codes.update(valid.unique())
+            import pyarrow.parquet as pq
+            schema_cols = [f.name for f in pq.read_schema(pf)]
+            read_cols = [c for c in ["soc_code", "soc_code_raw"] if c in schema_cols]
+            if not read_cols:
+                continue
+            df = pd.read_parquet(pf, columns=read_cols)
+            for col in read_cols:
+                valid = df[col].dropna().astype(str)
+                valid = valid[valid.str.match(SOC_FMT)]
+                codes.update(valid.unique())
         except Exception as e:
             log.warning(f"Skipping {pf}: {e}")
     return codes

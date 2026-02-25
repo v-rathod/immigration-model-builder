@@ -504,16 +504,35 @@ def _process_one_file(
     else:
         result["is_fulltime"] = pd.NA
 
-    # Wage fields
+    # Wage fields — handle range-format strings (e.g. "20000 -" or "66000 - 70000")
+    _wage_from_raw = None  # Save raw series for wage_rate_to fallback
     for wf in ["wage_rate_from", "wage_rate_to", "prevailing_wage"]:
         s = _col(wf)
         if s is not None:
-            result[wf] = pd.to_numeric(
-                s.loc[idx].astype(str).str.replace(",", "", regex=False).str.replace("$", "", regex=False),
-                errors="coerce",
+            cleaned = (
+                s.loc[idx].astype(str)
+                .str.replace(",", "", regex=False)
+                .str.replace("$", "", regex=False)
+                .str.strip()
             )
+            if wf == "wage_rate_from":
+                _wage_from_raw = cleaned.copy()
+                # Extract leading number from range like "20000 -" or "66000 - 70000"
+                cleaned = cleaned.str.extract(r'^([\d.]+)', expand=False).fillna("")
+            elif wf == "wage_rate_to":
+                # Extract leading number (handles normal numeric values too)
+                cleaned = cleaned.str.extract(r'^([\d.]+)', expand=False).fillna("")
+            result[wf] = pd.to_numeric(cleaned, errors="coerce")
         else:
             result[wf] = pd.NA
+
+    # Fallback: extract wage_rate_to from range-format wage_rate_from
+    # (e.g. FY2015 "66000 - 70000" → wage_rate_to = 70000)
+    if result["wage_rate_to"].isna().all() and _wage_from_raw is not None:
+        second_num = _wage_from_raw.str.extract(r'[\d.]+\s*-\s*([\d.]+)', expand=False)
+        second_parsed = pd.to_numeric(second_num, errors="coerce")
+        if second_parsed.notna().any():
+            result["wage_rate_to"] = second_parsed
 
     # Wage unit / PW unit
     for uf in ["wage_unit", "pw_unit"]:
