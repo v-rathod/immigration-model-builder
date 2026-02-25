@@ -51,7 +51,7 @@ Compass  (P3: immigration-insights-app)   →  public web app consuming Meridian
 | Curated tables | `artifacts/tables/` (~41 parquet files/dirs) |
 | Model artifacts | `artifacts/models/` |
 | Metrics & reports | `artifacts/metrics/` |
-| Tests | `tests/` (449 tests across 20+ files) |
+| Tests | `tests/` (469 tests across 20+ files) |
 | Pipeline config | `configs/paths.yaml` (data_root + artifacts_root) |
 | Schemas | `configs/schemas.yml` |
 | Full pipeline | `scripts/build_all.sh` |
@@ -59,8 +59,8 @@ Compass  (P3: immigration-insights-app)   →  public web app consuming Meridian
 
 ---
 
-## Current State (Milestone 16 — 2026-02-25)
-- **Test pass rate: 99.8%** (449 passed, 0 failed, 1 skipped, 3 deselected)
+## Current State (Milestone 18 — 2026-02-25)
+- **Test pass rate: 100%** (469 passed, 0 failed, 1 skipped, 3 deselected)
 - **3-tier QA**: Golden snapshot regression (7 tests), data sanity suite (47 tests), pytest-cov (11.4% line coverage)
 - **All 3 CRITICAL data quality findings resolved** (PERM columns, LCA aliases, SOC dimension)
 - dim_employer.parquet: 243,694 rows (patched from fact_perm)
@@ -75,6 +75,7 @@ Compass  (P3: immigration-insights-app)   →  public web app consuming Meridian
 - soc_demand_metrics.parquet: 4,241 rows (3 windows × 2 datasets)
 - employer_monthly_metrics.parquet: 224,114 rows
 - processing_times_trends.parquet: 35 rows (FY2014–FY2025 quarterly USCIS I-485)
+- queue_depth_estimates.parquet: 2,382 rows (3 categories × 5 countries × ~159 PD months; EB2 India ~364K ahead)
 - 3 integration tests marked `@pytest.mark.slow_integration` (auto-skipped)
 - Known issues documented in "Unable to Fix" section of FINAL_SINGLE_REPORT.md
 
@@ -197,6 +198,7 @@ python3 -m pytest tests/ -q                  # 3. Validate
 | backlog_estimates.parquet | 8,315 | Estimated backlogs by cat × country |
 | fact_cutoff_trends.parquet | 8,315 | Cutoff date movement trends |
 | processing_times_trends.parquet | 35 | FY2014–FY2025 quarterly USCIS I-485 performance |
+| queue_depth_estimates.parquet | 2,382 | Queue position estimator: 3 EB cats × 5 countries × PD months |
 
 ### Model Outputs
 | Table | Rows | Notes |
@@ -248,6 +250,8 @@ tests/
 ├── p2_hardening/                          # 2 files, ~94 tests
 │   ├── test_schema_and_pk.py              # Comprehensive schema/PK for all P2 artifacts
 │   └── test_ranges_and_integrity.py       # RI, ranges, statistical checks
+├── test_queue_depth_estimates.py           # 20 tests — queue depth schema, PK, business logic
+├── test_rag_quality.py                    # 32 tests — RAG fidelity, balance, retrieval, freshness
 ├── p2_gap_curation/                       # Gap table tests
 └── p3_metrics/                            # 6 files — metric table tests
     ├── test_category_movement_metrics.py
@@ -316,7 +320,8 @@ src/
 ├── features/
 │   ├── run_features.py                    # CLI orchestrator
 │   ├── employer_features.py               # PERM aggregates → employer features (25 cols)
-│   └── salary_benchmarks.py               # OEWS + PERM → salary percentiles
+│   ├── salary_benchmarks.py               # OEWS + PERM → salary percentiles
+│   └── queue_depth_estimates.py           # Queue depth per EB category × country × PD month
 ├── models/
 │   ├── run_models.py                      # CLI orchestrator
 │   ├── employer_score.py                  # Rules-based EFS (0–100)
@@ -371,7 +376,7 @@ When editing documentation files in this project:
 ---
 
 ## Important Files to Read for Full Context
-1. **`PROGRESS.md`** — Full milestone history (Milestones 1–12), ~2,100 lines
+1. **`PROGRESS.md`** — Full milestone history (Milestones 1–18), ~2,700 lines
 2. **`artifacts/metrics/FINAL_SINGLE_REPORT.md`** — Comprehensive data quality report, ~1,230 lines
 3. **`pytest.ini`** — Test configuration with slow_integration marker
 4. **`scripts/build_all.sh`** — Full pipeline with dim_employer patch
