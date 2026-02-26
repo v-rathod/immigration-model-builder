@@ -65,9 +65,7 @@ CURATED_MAP: dict[str, list[tuple[str, str]]] = {
         ("dim_employer.parquet",                   "dim_employer"),
     ],
     "USCIS_IMMIGRATION":      [],  # gap
-    "USCIS_Processing_Times": [
-        ("processing_times_trends.parquet", "processing_times_trends"),
-    ],
+    # USCIS_Processing_Times: P1 source dir deleted (Vue.js SPA, no usable data)
     "DHS_Yearbook":           [],  # gap
     "NIV_Statistics":         [],  # gap
     "TRAC":                   [],  # gap
@@ -92,7 +90,7 @@ GAP_NOTES: dict[str, str] = {
     "Codebooks":              "Reference only — schema codebooks for DOL/OEWS files",
     "DOL_Record_Layouts":     "Reference only — column layout specs for LCA/PERM raw files",
     "BLS":                    "BLS raw feeds partially ingested via BLS_OEWS pipeline",
-    "USCIS_Processing_Times": "processing_times_trends parquet present; not yet joined to employer model",
+    # USCIS_Processing_Times: P1 dir deleted (SPA, no data); processing_times_trends built from USCIS_IMMIGRATION
 }
 
 # Gap priority + placement notes

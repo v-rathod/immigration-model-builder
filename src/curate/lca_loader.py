@@ -318,10 +318,13 @@ def load_lca(
                 log_lines.append(f"  Dedupe: {pre_dedup:,} → {post_dedup:,} (-{pre_dedup - post_dedup:,})")
 
             # Write partitioned parquet
+            # Drop fiscal_year column to avoid conflict with partition key
+            # (pyarrow reads partition as dictionary, clashes with int64 column)
+            write_df = fy_df.drop(columns=["fiscal_year"], errors="ignore")
             part_dir = out_dir / f"fiscal_year={fy}"
             part_dir.mkdir(parents=True, exist_ok=True)
             out_file = part_dir / "part-0.parquet"
-            fy_df.to_parquet(out_file, index=False, engine="pyarrow")
+            write_df.to_parquet(out_file, index=False, engine="pyarrow")
 
             total_rows += len(fy_df)
             fy_summaries[fy] = len(fy_df)

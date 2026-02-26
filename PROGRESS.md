@@ -50,18 +50,18 @@ bash scripts/build_incremental.sh --full       # full rebuild + save manifest
 
 ### Known Unfixable Issues
 - 4 legacy stub tables with 0 rows (superseded by other artifacts)
-- fact_perm_unique_case: 20% duplicate case_numbers (multi-year refilings)
-- fact_lca/: schema merge error (fiscal_year int64 vs dictionary)
-- Country RI < 95% for DOS tables (naming conventions)
+- fact_perm_unique_case: 0.4% NaN case_numbers (from source data)
+- ~~fact_lca/: schema merge error~~ **FIXED** — now readable as single directory
+- Country RI < 95% for DOS tables (naming conventions + mixed data)
 - competitiveness_ratio feature not generated (SOC version mismatch)
 - TRAC/ACS data unavailable (subscription/API issues)
 - See `artifacts/metrics/FINAL_SINGLE_REPORT.md` → "Unable to Fix" section for full details
 
 ### Key Gotchas for New Sessions
-1. `build_dim_employer.py` only produces ~19K rows; MUST run `patch_dim_employer_from_fact_perm.py` after curate
-2. 3 slow_integration tests re-run full curate pipeline (20+ min) and overwrite dim_employer — auto-skipped via pytest.ini
+1. ~~`build_dim_employer.py` only produces ~19K rows~~ **FIXED** — now reads from fact_perm (fast) or all Excel files (complete)
+2. 3 slow_integration tests re-run full curate pipeline (20+ min) — auto-skipped via pytest.ini
 3. Mixed case_status values in PERM data — tests normalize to uppercase
-4. fact_lca/ cannot be read as a single directory via `pd.read_parquet()` — read individual partition files instead
+4. `build_dim_soc.py` resets to 1,396 rows; `expand_dim_soc_legacy.py` re-adds legacy codes
 
 ---
 
@@ -2658,3 +2658,166 @@ Rebuilt all 19 LCA FY partitions: **9,558,695 rows**.
 - **449 passed, 0 failed, 1 skipped, 3 deselected** (99.8% pass rate)
 - Golden manifest regenerated (37 artifacts)
 - All CRITICAL audit findings resolved
+
+---
+
+## Milestone 17 — P1 Data Ingestion (240 New Files) — 2025-02-25
+
+### Objective
+Ingest 240 new files fetched by Horizon (P1) into Meridian (P2). Sources include USCIS_IMMIGRATION (215), H1B_EMPLOYER_HUB (14), BLS_OEWS (3), DOS_Waiting_List (2), USCIS_Processing_Times (2), BLS_CES (5), ACS (1), DOS_Numerical_Limits (1), WARN (1).
+
+### Work Performed
+
+#### 1. Incremental Rebuild (Existing Sources)
+- Ran `build_incremental.sh --execute` — detected 1 new + 239 changed files across 8 datasets
+- `run_curate` processed all LCA/PERM/OEWS/Visa Bulletin data (~27 min)
+- Rebuilt: dim_visa_ceiling, fact_oews, salary_benchmarks, processing_times_trends, worksite_geo_metrics
+- Fixed 3 builder commands in DEPENDENCY_GRAPH (uscis_approvals, waiting_list, warn_events needed `--downloads`/`--out` args)
+- Re-ran: fact_uscis_approvals (146 rows), fact_waiting_list (9 rows), fact_warn_events (985 rows)
+- dim_employer patch confirmed complete: 243,694 rows
+
+#### 2. New Builder: fact_h1b_employer_hub (729,865 rows)
+- Created `scripts/build_fact_h1b_employer_hub.py` — parses 14 USCIS H-1B Employer Hub CSVs
+- FY2010–2023, 317,265 unique employers, COL_MAP handles schema variations
+- **Stale data**: USCIS discontinued after FY2023. All rows marked `is_stale=True`, `data_weight=0.6`
+- PK: (fiscal_year, employer_name, state, city, naics_code)
+
+#### 3. New Builder: fact_processing_times (0-row stub)
+- Created `scripts/build_fact_processing_times.py`
+- USCIS Processing Times page is Vue.js SPA — P1's parsed CSV is header-only
+- Gracefully produces 0-row stub with correct schema (snapshot_date, form, category, office, processing_time_min/max, unit)
+
+#### 4. New Builder: fact_bls_ces (26 rows)
+- Created `scripts/build_fact_bls_ces.py` — parses BLS CES JSON employment snapshots
+- 2 series: Total Nonfarm (CES0000000001), Total Private (CES0500000003)
+- Deduplicates across 5 daily snapshot files, keeps latest per (series_id, year, period)
+
+#### 5. ACS Skip (Census API 404)
+- P1 file contains `{"error": "404 Client Error"}` — data not published until ~Sep 2026
+- Documented in DEPENDENCY_GRAPH with skip command
+
+#### 6. Tests (21 new, all passing)
+- Created `tests/test_new_p1_tables.py`: TestFactH1BEmployerHub (11), TestFactProcessingTimes (3), TestFactBLSCES (7)
+- Fixed `test_perm_spans_many_fiscal_years` — pyarrow string dtype handling
+- Fixed smoke test mtime preservation (prevents RAG freshness false positives)
+- Regenerated golden manifest (37 artifacts)
+
+#### 7. Infrastructure Updates
+- Updated `src/incremental/change_detector.py`:
+  - DEPENDENCY_GRAPH: added H1B_EMPLOYER_HUB, USCIS_PROC_TIMES, BLS_CES, ACS entries
+  - Fixed USCIS/WAITING_LIST/WARN commands to include `--downloads`/`--out` args
+- Updated `scripts/build_all.sh`: added Stage 1c (3 new builders)
+- Updated `.github/copilot-instructions.md`: stubs, gotchas #9–12, stale data section
+- Regenerated RAG: 63 chunks, 173 Q&A pairs
+
+### Files Created
+- `scripts/build_fact_h1b_employer_hub.py` — H1B Employer Hub CSV parser (245 lines)
+- `scripts/build_fact_processing_times.py` — USCIS Processing Times stub builder (165 lines)
+- `scripts/build_fact_bls_ces.py` — BLS CES JSON parser (195 lines)
+- `tests/test_new_p1_tables.py` — Tests for all 3 new tables (21 tests)
+
+### Files Modified
+- `src/incremental/change_detector.py` — DEPENDENCY_GRAPH updates + P1 deletion cleanup
+- `scripts/build_all.sh` — Stage 1c added; expand_dim_soc_legacy.py added to Stage 1b
+- `.github/copilot-instructions.md` — Stubs, gotchas, stale data docs, P1 deletion updates
+- `tests/test_data_sanity.py` — pyarrow str dtype fix
+- `tests/test_smoke.py` — Model artifact mtime preservation
+- `scripts/map_datasets_to_curated.py` — USCIS_Processing_Times removed
+- `scripts/inventory_downloads.py` — USCIS_Processing_Times removed
+- `scripts/build_fact_processing_times.py` — Updated docstring/logs for P1 deletion
+- `tests/test_new_p1_tables.py` — Updated docstrings for P1 deletion
+
+### New Artifact Inventory
+| Artifact | Rows | Notes |
+|----------|------|-------|
+| fact_h1b_employer_hub.parquet | 729,865 | FY2010–2023, is_stale=True, data_weight=0.6 |
+| fact_bls_ces.parquet | 26 | 2 BLS series, 2025–2026 |
+| fact_processing_times.parquet | 0 | Stub — P1 source dir deleted (USCIS Vue.js SPA) |
+| fact_acs_wages.parquet | 0 | Stub (Census API 404, ~Sep 2026) |
+
+### P1 Deletion Cleanup (2025-02-25)
+- `USCIS_Processing_Times/` directory deleted from P1 downloads
+- Updated 7 files: change_detector.py, build_all.sh, build_fact_processing_times.py, map_datasets_to_curated.py, inventory_downloads.py, test_new_p1_tables.py, copilot-instructions.md
+- Removed USCIS_Processing_Times from DATASET_PATTERNS; DEPENDENCY_GRAPH entry replaced with skip comment
+
+### Documentation Freeze (2025-02-25)
+- Fixed dim_soc regression: curate overwrote to 1,396 rows → re-expanded to 1,801 via `expand_dim_soc_legacy.py`
+- Added `expand_dim_soc_legacy.py` to `scripts/build_all.sh` Stage 1b (prevents future regression)
+- Fixed smoke test mtime paths: `artifacts/` → `artifacts/tables/` (prevents RAG freshness false positives)
+- Regenerated RAG QA cache: 173 Q&A pairs
+- Updated `FINAL_SINGLE_REPORT.md`: artifact inventory (44 tables, 18,352,612 rows), test summary (490 passed), new tables, known issues, coverage matrix
+- Updated `.github/copilot-instructions.md`: dim_soc gotcha #13, updated test thresholds
+- Regenerated golden manifest (37 artifacts, dim_soc=1,801)
+- Re-initialized P1 manifest (1,195 files)
+
+### Current Test State (Frozen)
+- **490 passed, 0 failed, 1 skipped, 3 deselected** (100% pass rate)
+- 44 parquet artifacts, 18,352,612 total rows
+- Golden manifest: 37 artifacts
+- P1 manifest: 1,195 files
+- RAG: 63 chunks, 173 Q&A pairs
+- All 240 P1 files ingested or documented
+- fact_lca schema merge error: **FIXED** (removed redundant fiscal_year from FY2021-2026 partitions)
+- **M17 FROZEN — Ready for P3 scaffolding**
+
+### fact_lca Schema Merge Fix (2026-02-25)
+- **ROOT CAUSE**: Partitions 2021-2026 had `fiscal_year` as BOTH:
+  1. A column inside the parquet file (int64)
+  2. The partition directory name (`fiscal_year=XXXX`)
+  - Pyarrow reads partition key as dictionary type, causing merge conflict
+- **FIX**: Removed redundant `fiscal_year` column from 6 partition files (2021-2026)
+- **RESULT**: `pd.read_parquet('artifacts/tables/fact_lca')` now works: 9,558,695 rows
+- Updated `src/curate/lca_loader.py`: drop `fiscal_year` column before writing partitioned parquet (prevents recurrence)
+- Updated `tests/datasets/test_schema_and_pk_core.py`: read fact_lca directory (not individual files) for schema test
+- Updated Known Issue #7 in FINAL_SINGLE_REPORT.md: marked RESOLVED
+
+### Issue Analysis Summary (2026-02-25)
+Reviewed all "Known Issues" and "Unable to Fix" items:
+| Issue | Status | Finding |
+|-------|--------|---------|
+| fact_lca schema merge error | **FIXED** | Removed redundant fiscal_year column |
+| fact_perm_unique_case dedup | Not an issue | 99.6% unique, 6,292 NaN from source |
+| case_status mixed casing | Not an issue | Already normalized to uppercase |
+| Country RI aliases | Data quality | DOS data mixes countries/cities/visa codes |
+| build_dim_employer limits | **FIXED** | Now reads from fact_perm or all Excel files (243K rows directly) |
+| Legacy stub tables | Documented | Tests handle as KNOWN_STUBS |
+
+### build_dim_employer Root Cause Fix (2026-02-25)
+- **PROBLEM**: `build_dim_employer.py` had `max_years=2` and `nrows=50000` limits → only 19K employers
+- **SOLUTION**: Refactored to check for existing `fact_perm`:
+  - If fact_perm exists → extract from parquet (fast, 243K employers in seconds)
+  - If no fact_perm → read ALL PERM Excel files, all rows (complete but slower)
+- **FILES CHANGED**:
+  - `src/curate/build_dim_employer.py` — Added `_build_from_fact_perm()`, removed `max_years=2` and `nrows=50000` limits
+  - `src/curate/run_curate.py` — Pass `artifacts_root` parameter
+- **RESULT**: dim_employer now produces 243K rows directly, patch script becomes safety net only
+- **TESTS**: 490 passed, 0 failed
+
+### Full RAG Coverage Expansion (2026-02-25)
+- **OBJECTIVE**: Add all P1 data sources to RAG — "We have spent so much time collecting these PDFs and spreadsheets. We better utilize them all."
+- **AUDIT FINDINGS**:
+  - P1→P2: All 17 P1 download directories mapped to P2 tables ✅
+  - P2→RAG catalog: 45/46 tables in catalog (only .gitkeep missing) ✅ 
+  - RAG chunks: Only 17/46 tables had text chunks (29 had metadata only)
+- **CHANGES**:
+  1. **rag_builder.py** — Added 9 new chunk builder functions covering 21 previously unchunked tables:
+     - `_build_lca_perm_chunks`: fact_lca (9.6M rows), fact_perm (1.7M rows) — filing summaries, top employers, approval rates, wage distributions
+     - `_build_employer_extended_chunks`: dim_employer, employer_features, employer_monthly_metrics, employer_risk_features, employer_friendliness_scores_ml
+     - `_build_niv_issuance_chunks`: fact_niv_issuance (501K rows) — NIV by country, visa class, FY trends
+     - `_build_iv_issuance_detail_chunks`: fact_visa_issuance, fact_visa_applications — IV by country, refusal rates
+     - `_build_oews_detail_chunks`: fact_oews (446K rows) — OEWS wage data, top-paying SOCs
+     - `_build_dim_extended_chunks`: dim_soc (1,801 codes), dim_area (587 areas)
+     - `_build_queue_depth_chunks`: queue_depth_estimates (2,382 rows) — wait time estimates
+     - `_build_h1b_hub_chunks`: fact_h1b_employer_hub (730K rows, stale) — top H-1B employers, FY trends
+     - `_build_small_table_chunks`: fact_bls_ces, fact_uscis_approvals, fact_waiting_list, fact_cutoff_trends
+  2. **TOPICS** updated: added "filings" topic, expanded existing topics with missing tables
+  3. **qa_generator.py** — Added `_filings_qas()` function (5 QA pairs about LCA vs PERM)
+  4. **make_visa_demand_metrics.py** — Added fact_iv_post as 4th data source (post-level IV data)
+- **RESULTS**:
+  - RAG chunks: 67 → **98** across **10 topics** (was 9)
+  - Source artifacts with chunks: 17 → **36**
+  - QA pairs: 173 → **178**
+  - visa_demand_metrics: 537,735 → **568,930 rows** (31K new from fact_iv_post)
+  - Only 10 tables remain without chunks — all are 0-row stubs, backups, or exact duplicates
+  - Tests: **490 passed**, 1 skipped, 3 deselected
+  - Practical RAG test: **29/29 passed**

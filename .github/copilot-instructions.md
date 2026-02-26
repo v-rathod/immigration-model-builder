@@ -72,6 +72,69 @@ Compass  (P3: immigration-insights-app)   →  public web app consuming Meridian
 
 ---
 
+## P3 Compass — Architecture Decisions (for P2 awareness)
+
+> **Any future P2 changes must preserve compatibility with the P3 data contract described below.**
+
+### P3 Tech Stack (Decided)
+| Layer | Technology | Why |
+|-------|-----------|-----|
+| Framework | **Next.js 16** (App Router, static export) | Zero server cost — `output: "export"` generates pure HTML/JS/CSS |
+| Language | **TypeScript 5** (strict) | Type-safe consumption of P2 data |
+| Styling | **Tailwind CSS 4** + shadcn/ui | Utility-first, dark-first "Aurora" design system |
+| Charts | **Recharts 2** | Composable, React-native charting |
+| Animation | **Framer Motion 12** | Glassmorphic transitions, staggered reveals |
+| Search | **Fuse.js 7** | Client-side fuzzy search over RAG chunks + QA pairs |
+| Maps | **react-simple-maps 3** | Lightweight SVG maps for geographic dashboard |
+| Icons | **Lucide React** | Consistent icon set |
+| State | **nuqs 2** | URL-synced query params (filters, user inputs) |
+| Font | **Geist** (Sans + Mono) | Vercel's open-source font family |
+
+### AWS Hosting ($1–3/month target)
+```
+S3 (static site)  →  CloudFront (CDN)  →  Route 53 (DNS)  →  ACM (SSL)
+```
+**Non-negotiable constraints:**
+- **Zero Lambda, zero database, zero API Gateway** — everything is static JSON + client-side JS
+- All data pre-computed by P2 Meridian at build time
+- Only external API call: GPT-4o-mini for RAG chat fallback (~$0.15/month at 100 visitors)
+
+### P2 → P3 Data Pipeline
+```
+P2 Parquet artifacts  →  sync_p2_data.py  →  JSON slices  →  public/data/  →  S3
+```
+- **Sync script**: `P3/scripts/sync_p2_data.py` reads P2 Parquet files + converts to JSON
+- **Pre-build hook**: `npm run prebuild` auto-runs sync before every `next build`
+- **Manual sync**: `npm run sync-data` (full) or `npm run sync-rag` (RAG only)
+
+### P3 Dashboard → P2 Artifact Mapping
+| P3 Dashboard | P2 Artifacts Consumed | Key Columns |
+|-------------|----------------------|-------------|
+| 1. Visa Bulletin & Forecasts | fact_cutoff_trends, pd_forecasts, pd_forecast_model.json | category, country, cutoff_date, forecast_date |
+| 2. Employer Friendliness | employer_friendliness_scores, employer_monthly_metrics | employer_id, efs_score, tier, approval_rate |
+| 3. Salary & Wage | salary_benchmarks, employer_features | soc_code, area_code, median_wage, wage_ratio |
+| 4. Geographic Trends | worksite_geo_metrics | state, area_code, filings, approvals |
+| 5. Occupation Demand | soc_demand_metrics | soc_code, lca_filings, perm_filings |
+| 6. Visa Demand & Issuance | visa_demand_metrics | visa_class, fiscal_year, issued, refused |
+| 7. Backlog & Queue | backlog_estimates, queue_depth_estimates | category, country, est_wait_years |
+| 8. Processing Times | processing_times_trends | form_type, service_center, median_days |
+
+### P2→P3 Data Contract (MUST preserve)
+When modifying P2 artifacts, **do NOT:**
+- ❌ Rename columns consumed by P3 (see mapping above)
+- ❌ Change primary key structure of any dimension table
+- ❌ Remove or rename RAG topic names (`pd_forecast`, `employer`, `salary`, `visa_bulletin`, `geographic`, `occupation`, `processing`, `visa_demand`, `filings`, `general`)
+- ❌ Change QA pair JSON schema (`question`, `answer`, `topic`, `sources`)
+- ❌ Change RAG chunk JSON schema (`chunk_id`, `topic`, `title`, `content`, `sources`, `row_count`)
+
+When adding new P2 artifacts:
+- ✅ Add corresponding chunk builder in `src/export/rag_builder.py`
+- ✅ Register in `src/export/qa_generator.py` topic list
+- ✅ Update P3 sync script (`scripts/sync_p2_data.py` in P3 repo) to include new artifact
+- ✅ Add TypeScript interface in P3 `src/types/p2-artifacts.ts`
+
+---
+
 ## Key Paths
 | What | Path |
 |------|------|
@@ -80,6 +143,7 @@ Compass  (P3: immigration-insights-app)   →  public web app consuming Meridian
 | Curated tables | `artifacts/tables/` |
 | Model artifacts | `artifacts/models/` |
 | Metrics & reports | `artifacts/metrics/` |
+| RAG artifacts | `artifacts/rag/` (catalog, chunks, QA cache) |
 | Tests | `tests/` |
 | Pipeline config | `configs/paths.yaml` (data_root + artifacts_root) |
 | Schemas | `configs/schemas.yml` |
@@ -110,14 +174,24 @@ Compass  (P3: immigration-insights-app)   →  public web app consuming Meridian
 # Stage 1: Curate raw data → canonical tables
 python3 -m src.curate.run_curate --paths configs/paths.yaml
 
-# Stage 1b: Patch dim_employer (MUST run after curate — see gotchas)
+# Stage 1b: Patch dim_employer + expand dim_soc (MUST run after curate — see gotchas)
 python3 scripts/patch_dim_employer_from_fact_perm.py
+python3 scripts/expand_dim_soc_legacy.py
+
+# Stage 1c: Additional P1-sourced fact tables
+python3 scripts/build_fact_h1b_employer_hub.py
+python3 scripts/build_fact_bls_ces.py
+python3 scripts/build_fact_iv_post.py
 
 # Stage 2: Feature engineering
 python3 -m src.features.run_features --paths configs/paths.yaml
 
 # Stage 3: Model training
 python3 -m src.models.run_models --paths configs/paths.yaml
+
+# Stage 4: RAG + QA generation (for P3 Compass)
+python3 -m src.export.rag_builder
+python3 -m src.export.qa_generator
 ```
 
 Other useful commands:
@@ -176,9 +250,18 @@ python3 -m pytest tests/ -q                  # 3. Validate
 - Partitioned tables are directories (e.g., `fact_perm/`); flat copies end in `.parquet`
 
 **Stub / empty tables (expected — no data source available):**
+
+**Post-level IV issuance data:**
+- `fact_iv_post.parquet` — Monthly immigrant visa issuances by consular post × visa class (163K rows, 153 posts, FY2017–FY2025). Source: 99 DOS "IV Issuances by Post" PDFs. Feeds into `visa_demand_metrics`.
+
+**Stub / empty tables (expected — no data source available):**
 - `fact_trac_adjudications.parquet` — TRAC requires paid subscription
-- `fact_acs_wages.parquet` — Census API HTTP 404
+- `fact_acs_wages.parquet` — Census API HTTP 404 (data not yet published, ~Sep 2026)
+- `fact_processing_times.parquet` — USCIS Processing Times page is Vue.js SPA; P1 source directory deleted (no usable data)
 - `employer_scores.parquet`, `oews_wages.parquet`, `visa_bulletin.parquet` — Legacy stubs, superseded by other artifacts
+
+**Stale / discontinued data sources:**
+- `fact_h1b_employer_hub.parquet` — USCIS H-1B Employer Hub (discontinued after FY2023). All rows marked `is_stale=True`, `data_weight=0.6`. Historical context only.
 
 ---
 
@@ -210,21 +293,22 @@ Discover current test files and counts: `python3 -m pytest tests/ --co -q 2>&1 |
 | DOS visa tables | Country RI | 50–70% | DOS/FAO naming ≠ ISO-3166 |
 | soc_demand_metrics | SOC RI | 80% | Legacy SOC-2000/2010 codes |
 | fact_perm_unique_case | PK uniqueness | ≥ 70% | Multi-year refilings |
-| TRAC / ACS | Row count | 0 acceptable | Stubs, no data source |
+| TRAC / ACS / Processing Times | Row count | 0 acceptable | Stubs, no data source |
+| fact_h1b_employer_hub | is_stale | All True | USCIS discontinued after FY2023 |
 
 ---
 
 ## Critical Gotchas / Traps
 
-1. **dim_employer gets overwritten**: `build_dim_employer.py` only reads 2 FYs × 50K rows → produces ~19K rows. MUST run `scripts/patch_dim_employer_from_fact_perm.py` after curate. This is now in `build_all.sh` as Stage 1b.
+1. ~~**dim_employer gets overwritten**~~ — **FIXED**: `build_dim_employer.py` now reads from `fact_perm` if it exists (fast, complete), otherwise reads ALL PERM Excel files (no row/FY limits). Produces ~243K employers directly. The patch script in `build_all.sh` remains as a safety net but typically finds no missing employers.
 
-2. **slow_integration tests re-run the full curate pipeline** (~20+ min each via subprocess). They will also **overwrite dim_employer** back to 19K rows. Auto-skipped via pytest.ini.
+2. **slow_integration tests re-run the full curate pipeline** (~20+ min each via subprocess). Auto-skipped via pytest.ini.
 
-3. **fact_lca/ has a schema merge error**: `pd.read_parquet('artifacts/tables/fact_lca')` fails with "Field fiscal_year has incompatible types: int64 vs dictionary". Individual partition files can be read separately.
+3. ~~**fact_lca/ has a schema merge error**~~ — **FIXED M17**: Removed redundant fiscal_year column from FY2021-2026 partitions. `pd.read_parquet('artifacts/tables/fact_lca')` now works (9,558,695 rows).
 
-4. **fact_perm_unique_case is NOT deduplicated**: Despite the name, it has duplicate case_numbers (multi-year refilings across FY disclosure files).
+4. **fact_perm_unique_case has 0.4% NaN case_numbers**: These are rows with null case_number values from source DOL files, not duplicates. All non-null case_numbers are unique.
 
-5. **case_status values have mixed casing**: Raw DOL data uses both uppercase ('CERTIFIED') and title-case ('Certified') across fiscal years. Tests normalize to uppercase.
+5. **case_status values are normalized to uppercase**: Raw DOL data had mixed casing, but loaders normalize to uppercase. No action needed.
 
 6. **Legacy stub tables are expected to be empty**: employer_scores, oews_wages, visa_bulletin all have 0 rows — superseded by other artifacts.
 
@@ -233,6 +317,18 @@ Discover current test files and counts: `python3 -m pytest tests/ --co -q 2>&1 |
 8. **Incremental builds use file manifests**: `artifacts/metrics/p1_manifest.json` stores fingerprints for Horizon (P1) files. Run `bash scripts/build_incremental.sh --init` to reset. New datasets need `DATASET_PATTERNS` + `DEPENDENCY_GRAPH` entries in `src/incremental/change_detector.py`.
 
 9. **Always run P1 readiness check after any Horizon fetch/update**: `python3 scripts/check_p1_readiness.py`
+
+10. **H1B Employer Hub data is stale/discontinued**: `fact_h1b_employer_hub.parquet` has `is_stale=True` and `data_weight=0.6` on all rows. USCIS discontinued the H-1B Employer Data Hub after FY2023. Use this data for historical trend analysis only; reduce its weight in any scoring models.
+
+11. **ACS data is unavailable**: Census API returns HTTP 404 for 2025 ACS1 data. `fact_acs_wages.parquet` is a 0-row stub. Expected to become available ~Sep 2026.
+
+12. **USCIS Processing Times has no P1 source**: `fact_processing_times.parquet` is a 0-row stub. The USCIS page is a Vue.js SPA; P1 could not extract data and the `USCIS_Processing_Times/` download directory has been deleted. Requires headless browser or direct API integration in P1 to populate.
+
+13. **dim_soc gets overwritten**: `build_dim_soc.py` (via curate) writes only 1,396 SOC-2018 codes from OEWS 2023. MUST run `scripts/expand_dim_soc_legacy.py` after curate to add 405 SOC-2010 legacy codes (→1,801 total). This is now in `build_all.sh` Stage 1b.
+
+14. **Visa_Statistics has two report classes**: FSC (Foreign State of Chargeability) → `fact_visa_applications`, POST (by consular post) → `fact_iv_post`. The `build_fact_visa_applications.py` builder explicitly skips POST PDFs (line 97: `if rpt_class != "FSC": return`). POST data is handled by the separate `build_fact_iv_post.py` builder.
+
+15. **RAG must be rebuilt after any table change**: After rebuilding curated tables, features, or models, run `python3 -m src.export.rag_builder && python3 -m src.export.qa_generator` to regenerate chunks and QA pairs with updated row counts and statistics. The `scripts/test_rag_practical.py` smoke test can detect stale data.
 
 ---
 
@@ -259,7 +355,9 @@ src/
 ├── io/              # Config loading, path resolution
 ├── normalize/       # SOC crosswalks, employer normalization
 ├── validate/        # Data quality check helpers
-└── export/          # Bundle packaging for Compass (P3)
+└── export/          # RAG chunk generation & bundle packaging for Compass (P3)
+    ├── rag_builder.py          # Generate 98 text chunks across 10 topics
+    └── qa_generator.py         # Generate 178 pre-computed Q&A pairs
 ```
 
 ### Key Scripts (scripts/)
@@ -273,6 +371,9 @@ src/
 | `run_full_qa.py` | Comprehensive QA runner |
 | `build_fact_*.py` | Build P2 gap fact tables |
 | `make_*.py` | Build derived metric tables |
+| `build_fact_iv_post.py` | Parse 99 DOS "IV by Post" PDFs → fact_iv_post.parquet |
+| `make_visa_demand_metrics.py` | Aggregate visa demand from 4 sources (incl. fact_iv_post) |
+| `test_rag_practical.py` | Practical RAG smoke test (29 checks) |
 | `audit_*.py` | Input/output audit runners |
 
 ---
@@ -300,3 +401,6 @@ When editing documentation files in this project:
 6. **`conftest.py`** — Root pytest config (chat_tap activation)
 7. **`configs/paths.yaml`** — Data root and artifacts root paths
 8. **`src/incremental/change_detector.py`** — Incremental change detection (manifest, dependency graph)
+9. **`src/export/rag_builder.py`** — RAG chunk generator (98 chunks, 10 topics, 36 source artifacts)
+10. **`src/export/qa_generator.py`** — Pre-computed Q&A pairs (178 pairs across 10 topics)
+11. **`scripts/test_rag_practical.py`** — Practical end-to-end RAG smoke test (29 checks)

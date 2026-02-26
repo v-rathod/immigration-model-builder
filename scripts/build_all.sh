@@ -46,10 +46,21 @@ python3 -m src.curate.run_curate --paths "$PATHS_CONFIG"
 echo ""
 
 # Stage 1b: Patch dim_employer (expand to cover ALL fact_perm employers)
+#           + expand dim_soc with legacy SOC-2010 codes from fact_perm
 echo "------------------------------------------------------------"
-echo "Stage 1b: PATCH DIM_EMPLOYER (fact_perm expansion)"
+echo "Stage 1b: PATCH DIM_EMPLOYER + EXPAND DIM_SOC"
 echo "------------------------------------------------------------"
 python3 scripts/patch_dim_employer_from_fact_perm.py
+python3 scripts/expand_dim_soc_legacy.py
+echo ""
+
+# Stage 1c: Additional P1-sourced fact tables
+echo "------------------------------------------------------------"
+echo "Stage 1c: ADDITIONAL FACT TABLES (H1B Employer Hub, BLS CES, IV Post)"
+echo "------------------------------------------------------------"
+python3 scripts/build_fact_h1b_employer_hub.py
+python3 scripts/build_fact_bls_ces.py
+python3 scripts/build_fact_iv_post.py
 echo ""
 
 # Stage 2: Features

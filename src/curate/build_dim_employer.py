@@ -2,8 +2,9 @@
 Build dim_employer: Canonical employer identities dimension.
 
 Follows adaptive parsing rules:
-- Read layout registry from configs/layouts/employer.yml
-- Extract employer names from PERM data (subset of recent FYs)
+- First tries to read from fact_perm (if already built) - fast parquet read
+- Falls back to P1 PERM Excel files if fact_perm not available
+- Extract employer names from PERM data
 - Normalize names using suffix/punctuation removal rules
 - Generate stable employer_id via SHA1 hash
 - Track aliases (raw variants) per canonical name
@@ -108,9 +109,13 @@ def resolve_employer_column(df: pd.DataFrame, layout: dict) -> Optional[str]:
     return None
 
 
-def find_perm_files(data_root: str, max_years: int = 2) -> List[tuple]:
+def find_perm_files(data_root: str, max_years: Optional[int] = None) -> List[tuple]:
     """
-    Find PERM disclosure files from recent fiscal years.
+    Find PERM disclosure files from fiscal years.
+    
+    Args:
+        data_root: Path to P1 downloads
+        max_years: Max number of recent FYs to read (None = all)
     
     Returns:
         List of (fy, file_path) tuples
@@ -126,8 +131,11 @@ def find_perm_files(data_root: str, max_years: int = 2) -> List[tuple]:
     fy_dirs = sorted([d for d in perm_base.iterdir() if d.is_dir() and d.name.startswith('FY')], 
                      reverse=True)
     
+    if max_years is not None:
+        fy_dirs = fy_dirs[:max_years]
+    
     files = []
-    for fy_dir in fy_dirs[:max_years]:
+    for fy_dir in fy_dirs:
         # Extract FY year
         fy_match = re.match(r'FY(\d{4})', fy_dir.name)
         if not fy_match:
@@ -142,16 +150,71 @@ def find_perm_files(data_root: str, max_years: int = 2) -> List[tuple]:
     return files
 
 
+def _build_from_fact_perm(fact_perm_path: Path, layout: dict) -> dict:
+    """
+    Extract employer data from already-built fact_perm parquet.
+    
+    Returns:
+        Dictionary of {normalized_name: {'aliases': set, 'source_files': set}}
+    """
+    employer_groups = defaultdict(lambda: {'aliases': set(), 'source_files': set()})
+    
+    # Read fact_perm (can be directory or flat file)
+    if fact_perm_path.is_dir():
+        df = pd.read_parquet(fact_perm_path)
+    else:
+        df = pd.read_parquet(fact_perm_path)
+    
+    print(f"    Loaded {len(df):,} rows from fact_perm")
+    
+    # Extract employer names - try multiple column names
+    emp_cols = ['employer_name', 'employer_name_raw', 'EMPLOYER_NAME']
+    emp_col = None
+    for col in emp_cols:
+        if col in df.columns:
+            emp_col = col
+            break
+    
+    if not emp_col:
+        raise ValueError(f"No employer column found in fact_perm. Available: {list(df.columns)[:10]}")
+    
+    # Get unique raw names (fast - just unique values)
+    raw_names = df[emp_col].dropna().unique()
+    print(f"    Found {len(raw_names):,} unique raw employer names")
+    
+    # Process each raw name (no expensive DataFrame lookup needed)
+    for raw_name in raw_names:
+        raw_str = str(raw_name).strip()
+        if not raw_str:
+            continue
+        
+        # Normalize
+        normalized = normalize_employer_name(raw_str, layout)
+        if not normalized:
+            continue
+        
+        employer_groups[normalized]['aliases'].add(raw_str)
+        employer_groups[normalized]['source_files'].add('fact_perm')
+    
+    return employer_groups
+
+
 def build_dim_employer(data_root: str, out_path: str, schemas_path: str = "configs/schemas.yml", 
-                      layout_path: str = "configs/layouts/employer.yml") -> str:
+                      layout_path: str = "configs/layouts/employer.yml",
+                      artifacts_root: str = "artifacts") -> str:
     """
     Build dim_employer dimension from PERM data.
+    
+    Strategy:
+    1. If fact_perm already exists → extract from parquet (fast, complete)
+    2. Otherwise → read P1 Excel files (slower, used for bootstrapping)
     
     Args:
         data_root: Path to P1 downloads
         out_path: Output path for parquet file
         schemas_path: Path to schemas.yml (for validation)
         layout_path: Path to employer layout registry
+        artifacts_root: Path to artifacts directory (to check for existing fact_perm)
     
     Returns:
         Path to written parquet file
@@ -161,73 +224,99 @@ def build_dim_employer(data_root: str, out_path: str, schemas_path: str = "confi
     # Load layout registry
     layout = load_employer_layout(Path(layout_path).parent)
     
-    # Find PERM files (last 2 FYs to start; run_curate expands from fact_perm after build)
-    perm_files = find_perm_files(data_root, max_years=2)
+    # Check if fact_perm already exists (prefer parquet read over Excel)
+    fact_perm_paths = [
+        Path(artifacts_root) / "tables" / "fact_perm_all.parquet",
+        Path(artifacts_root) / "tables" / "fact_perm",
+    ]
     
-    if not perm_files:
-        print(f"  WARNING: No PERM files found in {data_root}/PERM/")
-        print(f"  Creating empty placeholder")
-        out_file = Path(out_path)
-        out_file.parent.mkdir(parents=True, exist_ok=True)
-        empty_df = pd.DataFrame(columns=[
-            'employer_id', 'employer_name', 'aliases', 'domain', 'source_files', 'ingested_at'
-        ])
-        empty_df.to_parquet(out_file, index=False)
-        return str(out_file)
+    fact_perm_path = None
+    for path in fact_perm_paths:
+        if path.exists():
+            fact_perm_path = path
+            break
     
-    print(f"  Found {len(perm_files)} PERM file(s) from recent FYs")
-    for fy, fpath in perm_files:
-        print(f"    FY{fy}: {fpath.name}")
-    
-    # Aggregate employer names across files
     employer_groups = defaultdict(lambda: {'aliases': set(), 'source_files': set()})
-    total_rows = 0
     warnings = []
     
-    for fy, perm_file in perm_files:
-        print(f"\n  Processing FY{fy}...")
-        
+    if fact_perm_path:
+        # Fast path: extract from existing fact_perm parquet
+        print(f"  Using existing fact_perm: {fact_perm_path}")
         try:
-            # Read Excel file (sample first 50k rows for speed; run_curate expands the dim from fact_perm)
-            df = pd.read_excel(perm_file, nrows=50000)
-            print(f"    Loaded {len(df)} rows (sample)")
-            
-            # Resolve employer column
-            emp_col = resolve_employer_column(df, layout)
-            if not emp_col:
-                warnings.append(f"FY{fy}: Could not resolve employer column. Available: {list(df.columns)[:10]}")
-                print(f"    WARNING: Could not find employer column")
-                continue
-            
-            print(f"    Employer column: '{emp_col}'")
-            
-            # Extract and normalize
-            employers = df[emp_col].dropna().unique()
-            print(f"    Found {len(employers)} unique raw employer names")
-            
-            for raw_name in employers:
-                raw_str = str(raw_name).strip()
-                if not raw_str:
-                    continue
-                
-                # Normalize
-                normalized = normalize_employer_name(raw_str, layout)
-                if not normalized:
-                    continue
-                
-                # Group by normalized
-                employer_groups[normalized]['aliases'].add(raw_str)
-                employer_groups[normalized]['source_files'].add(f"PERM/FY{fy}/{perm_file.name}")
-            
-            total_rows += len(df)
-        
+            employer_groups = _build_from_fact_perm(fact_perm_path, layout)
+            print(f"  Extracted {len(employer_groups):,} unique normalized employers from fact_perm")
         except Exception as e:
-            warnings.append(f"FY{fy}: Failed to process - {str(e)}")
-            print(f"    ERROR: {e}")
-            continue
+            warnings.append(f"Failed to read fact_perm: {e}")
+            print(f"  WARNING: Failed to read fact_perm: {e}")
+            print(f"  Falling back to P1 Excel files...")
+            fact_perm_path = None  # Fall through to Excel path
     
-    print(f"\n  Processed {total_rows} total rows")
-    print(f"  Found {len(employer_groups)} unique normalized employers")
+    if not fact_perm_path:
+        # Slow path: read P1 Excel files (all FYs, no row limit)
+        perm_files = find_perm_files(data_root, max_years=None)  # Read ALL FYs
+        
+        if not perm_files:
+            print(f"  WARNING: No PERM files found in {data_root}/PERM/")
+            print(f"  Creating empty placeholder")
+            out_file = Path(out_path)
+            out_file.parent.mkdir(parents=True, exist_ok=True)
+            empty_df = pd.DataFrame(columns=[
+                'employer_id', 'employer_name', 'aliases', 'domain', 'source_files', 'ingested_at'
+            ])
+            empty_df.to_parquet(out_file, index=False)
+            return str(out_file)
+        
+        print(f"  Found {len(perm_files)} PERM file(s) from all FYs")
+        for fy, fpath in perm_files:
+            print(f"    FY{fy}: {fpath.name}")
+        
+        # Aggregate employer names across files
+        total_rows = 0
+        
+        for fy, perm_file in perm_files:
+            print(f"\n  Processing FY{fy}...")
+            
+            try:
+                # Read entire Excel file (no row limit for complete dim_employer)
+                df = pd.read_excel(perm_file)
+                print(f"    Loaded {len(df):,} rows")
+                
+                # Resolve employer column
+                emp_col = resolve_employer_column(df, layout)
+                if not emp_col:
+                    warnings.append(f"FY{fy}: Could not resolve employer column. Available: {list(df.columns)[:10]}")
+                    print(f"    WARNING: Could not find employer column")
+                    continue
+                
+                print(f"    Employer column: '{emp_col}'")
+                
+                # Extract and normalize
+                employers = df[emp_col].dropna().unique()
+                print(f"    Found {len(employers)} unique raw employer names")
+                
+                for raw_name in employers:
+                    raw_str = str(raw_name).strip()
+                    if not raw_str:
+                        continue
+                    
+                    # Normalize
+                    normalized = normalize_employer_name(raw_str, layout)
+                    if not normalized:
+                        continue
+                    
+                    # Group by normalized
+                    employer_groups[normalized]['aliases'].add(raw_str)
+                    employer_groups[normalized]['source_files'].add(f"PERM/FY{fy}/{perm_file.name}")
+                
+                total_rows += len(df)
+            
+            except Exception as e:
+                warnings.append(f"FY{fy}: Failed to process - {str(e)}")
+                print(f"    ERROR: {e}")
+                continue
+        
+        print(f"\n  Processed {total_rows:,} total rows from Excel")
+        print(f"  Found {len(employer_groups):,} unique normalized employers")
     
     # Build canonical records
     records = []

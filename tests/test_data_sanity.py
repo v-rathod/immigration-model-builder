@@ -350,9 +350,9 @@ class TestPERMSanity:
         if fy_col is None:
             pytest.skip("No fiscal year column found")
         years = perm[fy_col].dropna()
-        # Handle "FY2024" string format
-        if years.dtype == object:
-            years = years.str.extract(r"(\d{4})", expand=False).dropna().astype(int)
+        # Handle "FY2024" string format or pyarrow str dtype
+        if not pd.api.types.is_numeric_dtype(years):
+            years = years.astype(str).str.extract(r"(\d{4})", expand=False).dropna().astype(int)
         span = years.max() - years.min()
         assert span >= 15, f"PERM data spans only {span} years — expected ≥15"
 

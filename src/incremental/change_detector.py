@@ -108,7 +108,6 @@ DATASET_PATTERNS = {
     "TRAC":                  "TRAC",
     # ── Tracked but no P2 builder yet (future) ──
     "USCIS_H1B_Employer_Hub": "H1B_EMPLOYER_HUB",    # USCIS H-1B employer-level data FY2010-FY2023
-    "USCIS_Processing_Times": "USCIS_PROC_TIMES",    # USCIS form processing time snapshots
     "BLS/":                   "BLS_CES",             # BLS Current Employment Statistics (JSON)
     # ── Reference / metadata (tracked for completeness, no artifacts) ──
     "DOL_Record_Layouts":     "DOL_RECORD_LAYOUTS",  # DOL LCA/PERM record layout PDFs
@@ -176,39 +175,43 @@ DEPENDENCY_GRAPH: Dict[str, List[Tuple[str, int, str]]] = {
         ("fact_niv_issuance.parquet",          1, "python3 scripts/build_fact_niv_issuance.py"),
     ],
     "USCIS": [
-        ("fact_uscis_approvals.parquet",       1, "python3 scripts/build_fact_uscis_approvals.py"),
+        ("fact_uscis_approvals.parquet",       1, "python3 scripts/build_fact_uscis_approvals.py --downloads {data_root}/USCIS_IMMIGRATION --out artifacts/tables/fact_uscis_approvals.parquet"),
         ("processing_times_trends.parquet",    4, "python3 scripts/make_processing_times_trends.py"),
     ],
     "DHS_ADMISSIONS": [
         ("fact_dhs_admissions.parquet",        1, "python3 scripts/build_fact_dhs_admissions.py"),
     ],
     "WARN": [
-        ("fact_warn_events.parquet",           1, "python3 scripts/build_fact_warn_events.py"),
+        ("fact_warn_events.parquet",           1, "python3 scripts/build_fact_warn_events.py --downloads {data_root}/WARN --out artifacts/tables/fact_warn_events.parquet"),
     ],
     "VISA_CEILING": [
         ("dim_visa_ceiling.parquet",           1, "python3 -m src.curate.run_curate --paths configs/paths.yaml"),
     ],
     "WAITING_LIST": [
-        ("fact_waiting_list.parquet",          1, "python3 scripts/build_fact_waiting_list.py"),
+        ("fact_waiting_list.parquet",          1, "python3 scripts/build_fact_waiting_list.py --downloads {data_root}/DOS_Waiting_List --out artifacts/tables/fact_waiting_list.parquet"),
     ],
     "CODEBOOKS": [
         ("dim_country.parquet",                1, "python3 -m src.curate.run_curate --paths configs/paths.yaml"),
         ("dim_soc.parquet",                    1, "python3 -m src.curate.run_curate --paths configs/paths.yaml"),
     ],
-    # ── Future datasets (tracked, no builder yet) ──
-    # When builders are created, add (artifact, stage, command) tuples here.
-    # Until then, changes are detected and logged but no rebuild is triggered.
+    # ── New datasets (M17 — 2026-02-25) ──
     "H1B_EMPLOYER_HUB": [
-        # Future: fact_h1b_employers.parquet from USCIS H-1B employer hub data
-        # Could enhance employer_features with H-1B petition volumes & approval rates
+        # USCIS H-1B Employer Hub (discontinued after FY2023)
+        # All rows marked is_stale=True, data_weight=0.6
+        ("fact_h1b_employer_hub.parquet", 1, "python3 scripts/build_fact_h1b_employer_hub.py"),
     ],
-    "USCIS_PROC_TIMES": [
-        # Future: fact_processing_times.parquet from USCIS processing time snapshots
-        # Could enhance processing_times_trends with per-form, per-office granularity
-    ],
+    # USCIS_PROC_TIMES: removed — P1 directory deleted (USCIS page is a Vue.js SPA,
+    # no usable data was ever extracted). fact_processing_times.parquet remains as
+    # a 0-row stub artifact.
     "BLS_CES": [
-        # Future: fact_employment_stats.parquet from BLS Current Employment Statistics
-        # Could provide macro employment context for labor market analysis
+        # BLS Current Employment Statistics (nonfarm + private employment)
+        ("fact_bls_ces.parquet", 1, "python3 scripts/build_fact_bls_ces.py"),
+    ],
+    "ACS": [
+        # Census ACS — skipped: API returns HTTP 404 (data not yet available)
+        # P1 file: acs1_2025_nativity.json contains {"error": "404 Client Error"}
+        # No builder until Census publishes 2025 ACS1 data (~Sep 2026)
+        ("fact_acs_wages.parquet", 1, "echo 'ACS: skipped — Census API 404'"),
     ],
     "DOL_RECORD_LAYOUTS": [
         # Reference metadata only — record layout PDFs for LCA/PERM parsers

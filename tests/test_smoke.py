@@ -52,7 +52,22 @@ def test_entrypoints_run_noop():
     with open(config_path, 'r') as f:
         config = yaml.safe_load(f)
     artifacts_root = Path(config["artifacts_root"])
-    
+
+    # Snapshot mtime of model outputs so we can restore them after run_models
+    # (prevents freshness test failures caused by regenerated parquet files).
+    # Note: artifacts_root is ./artifacts but tables live under ./artifacts/tables/
+    TABLES_ROOT = artifacts_root / "tables"
+    MODEL_OUTPUTS = [
+        TABLES_ROOT / "employer_friendliness_scores.parquet",
+        TABLES_ROOT / "employer_friendliness_scores_ml.parquet",
+        TABLES_ROOT / "pd_forecasts.parquet",
+    ]
+    saved_mtimes = {}
+    for p in MODEL_OUTPUTS:
+        if p.exists():
+            s = p.stat()
+            saved_mtimes[p] = (s.st_atime, s.st_mtime)
+
     # Run each entrypoint.
     # run_curate uses --dry-run so it does not overwrite production artifacts
     # (dim_employer, dim_soc, etc.).  run_features and run_models read & write
@@ -84,6 +99,12 @@ def test_entrypoints_run_noop():
     
     # Verify artifacts_root exists after running all entrypoints
     assert artifacts_root.exists(), f"Artifacts root not created: {artifacts_root}"
+
+    # Restore original mtimes on model outputs so RAG freshness tests
+    # don't fail on the next test run.
+    for p, (atime, mtime) in saved_mtimes.items():
+        if p.exists():
+            os.utime(p, (atime, mtime))
 
 
 if __name__ == "__main__":

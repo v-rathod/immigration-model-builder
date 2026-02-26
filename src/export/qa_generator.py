@@ -757,6 +757,83 @@ def _visa_demand_qas(qa_list: list) -> None:
     ))
 
 
+def _filings_qas(qa_list: list) -> None:
+    """Generate Q&A pairs for LCA and PERM filing data."""
+    lca = _safe_read(ARTIFACTS_ROOT / "fact_lca")
+    perm = _safe_read(ARTIFACTS_ROOT / "fact_perm")
+
+    if lca is not None and len(lca) > 0:
+        lca_fys = sorted(lca["fiscal_year"].dropna().unique().tolist()) if "fiscal_year" in lca.columns else []
+        qa_list.append(_qa(
+            "How many LCA filings are in the system?",
+            f"Meridian tracks {len(lca):,} LCA (Labor Condition Application) filings "
+            f"spanning FY{lca_fys[0]}–FY{lca_fys[-1]}. LCA filings are required for "
+            f"H-1B, H-1B1, and E-3 visa petitions. Each record includes employer, "
+            f"SOC code, job title, wage offer, and worksite location.",
+            ["fact_lca"],
+            "filings"
+        ))
+
+        if "employer_name_raw" in lca.columns:
+            emp_col = "employer_name_raw"
+        elif "employer_name" in lca.columns:
+            emp_col = "employer_name"
+        else:
+            emp_col = None
+        if emp_col:
+            top5 = lca[emp_col].value_counts().head(5)
+            lines = [f"  {emp}: {cnt:,}" for emp, cnt in top5.items()]
+            qa_list.append(_qa(
+                "Which employers file the most H-1B LCA applications?",
+                "Top 5 LCA filers (all fiscal years):\n" +
+                "\n".join(lines) +
+                "\n\nIndian IT services and large tech companies typically dominate "
+                "LCA filing volumes.",
+                ["fact_lca"],
+                "filings"
+            ))
+
+    if perm is not None and len(perm) > 0:
+        perm_fys = sorted(perm["fiscal_year"].dropna().unique().tolist()) if "fiscal_year" in perm.columns else []
+        certified = (perm["case_status"].str.upper() == "CERTIFIED").sum() if "case_status" in perm.columns else 0
+        total = len(perm)
+        rate = certified / total * 100 if total > 0 else 0
+        qa_list.append(_qa(
+            "How many PERM labor certification cases are tracked?",
+            f"Meridian tracks {len(perm):,} PERM labor certification cases "
+            f"spanning FY{perm_fys[0]}–FY{perm_fys[-1]}. The overall certification rate "
+            f"is {rate:.1f}% ({certified:,} of {total:,}). PERM is the first step in "
+            f"most EB-2 and EB-3 green card applications.",
+            ["fact_perm"],
+            "filings"
+        ))
+
+        if "employer_name" in perm.columns:
+            top5 = perm["employer_name"].value_counts().head(5)
+            lines = [f"  {emp}: {cnt:,}" for emp, cnt in top5.items()]
+            qa_list.append(_qa(
+                "Which employers file the most PERM applications?",
+                "Top 5 PERM filers (all fiscal years):\n" +
+                "\n".join(lines) +
+                "\n\nThese employers are typically large tech companies and Indian "
+                "IT services firms with significant green card sponsorship programs.",
+                ["fact_perm"],
+                "filings"
+            ))
+
+    qa_list.append(_qa(
+        "What is the difference between LCA and PERM?",
+        "LCA (Labor Condition Application) is filed with DOL for H-1B nonimmigrant "
+        "work visas. It certifies that the employer will pay prevailing wages and "
+        "provide proper working conditions. PERM (Program Electronic Review Management) "
+        "is the permanent labor certification for employment-based green cards (EB-2, EB-3). "
+        "It requires the employer to prove no qualified U.S. workers are available. "
+        "PERM typically takes 6–18 months; LCA typically takes 1–3 weeks.",
+        ["fact_lca", "fact_perm"],
+        "filings"
+    ))
+
+
 # ---------------------------------------------------------------------------
 # Main generator
 # ---------------------------------------------------------------------------
@@ -780,6 +857,7 @@ def generate_qa_cache() -> dict:
     _visa_bulletin_qas(qa_list)
     _occupation_qas(qa_list)
     _visa_demand_qas(qa_list)
+    _filings_qas(qa_list)
     _general_qas(qa_list)
 
     # Deduplicate by question text

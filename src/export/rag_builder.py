@@ -42,20 +42,22 @@ SAMPLE_ROWS = 10
 # Categories for chunk tagging
 TOPICS = {
     "pd_forecast": ["pd_forecasts", "fact_cutoff_trends", "category_movement_metrics",
-                     "backlog_estimates", "fact_cutoffs_all"],
+                     "backlog_estimates", "fact_cutoffs_all", "queue_depth_estimates"],
     "employer": ["employer_friendliness_scores", "employer_friendliness_scores_ml",
                  "employer_features", "employer_monthly_metrics", "employer_risk_features",
-                 "dim_employer"],
-    "salary": ["salary_benchmarks", "fact_oews"],
+                 "dim_employer", "fact_h1b_employer_hub"],
+    "salary": ["salary_benchmarks", "fact_oews", "fact_bls_ces"],
     "visa_bulletin": ["fact_cutoffs_all", "fact_cutoff_trends", "category_movement_metrics",
-                      "dim_visa_class", "dim_visa_ceiling"],
+                      "dim_visa_class", "dim_visa_ceiling", "fact_cutoffs",
+                      "fact_waiting_list"],
     "geographic": ["worksite_geo_metrics", "dim_area"],
-    "occupation": ["soc_demand_metrics", "dim_soc"],
+    "occupation": ["soc_demand_metrics", "dim_soc", "fact_lca"],
     "processing": ["processing_times_trends", "fact_uscis_approvals"],
     "visa_demand": ["visa_demand_metrics", "fact_visa_issuance",
-                    "fact_visa_applications", "fact_niv_issuance"],
-    "general": ["dim_country", "fact_dhs_admissions", "fact_warn_events",
-                "fact_waiting_list"],
+                    "fact_visa_applications", "fact_niv_issuance",
+                    "fact_iv_post"],
+    "filings": ["fact_lca", "fact_perm", "fact_perm_unique_case"],
+    "general": ["dim_country", "fact_dhs_admissions", "fact_warn_events"],
 }
 
 
@@ -832,6 +834,666 @@ def _build_visa_demand_chunks(chunks: list) -> None:
                                   "\n".join(lines)))
 
 
+def _build_iv_post_chunks(chunks: list) -> None:
+    """Generate chunks for IV issuances by consular post.
+    
+    Source: fact_iv_post.parquet — monthly immigrant visa issuances
+    by consular post (city) and visa class. Enables queries like
+    'How many F1 visas were issued in Amsterdam in Feb 2025?'
+    """
+    path = ARTIFACTS_ROOT / "fact_iv_post.parquet"
+    df = _safe_read(path)
+    if df is None:
+        return
+
+    # Summary chunk
+    posts = df["post"].nunique() if "post" in df.columns else 0
+    classes = df["visa_class"].nunique() if "visa_class" in df.columns else 0
+    fys = sorted(df["fiscal_year"].unique().tolist()) if "fiscal_year" in df.columns else []
+    months = sorted(df["month"].unique().tolist()) if "month" in df.columns else []
+
+    summary = (
+        f"Immigrant Visa Issuances by Consular Post:\n"
+        f"Total records: {len(df):,}\n"
+        f"Consular posts: {posts} (e.g., Amsterdam, Chennai, London, Mexico City)\n"
+        f"Visa classes: {classes} (F1, E2, IR1, DV, etc.)\n"
+        f"Fiscal years: {', '.join(str(y) for y in fys)}\n"
+        f"Months available: {', '.join(months)}\n"
+        f"Granularity: monthly × post × visa_class\n"
+        f"Source: DOS 'IV Issuances by Post and Visa Class' monthly PDFs\n"
+        f"Use: Answer questions about visa issuance volume at specific consular posts."
+    )
+    chunks.append(_make_chunk("fact_iv_post.parquet",
+                              "iv_post_summary", "visa_demand", summary,
+                              _table_stats(df)))
+
+    # Top posts by total issuances
+    if "post" in df.columns and "issued" in df.columns:
+        top_posts = df.groupby("post")["issued"].sum().nlargest(30)
+        lines = ["Top 30 Consular Posts by Total IV Issuances:"]
+        for post, cnt in top_posts.items():
+            lines.append(f"  {post}: {cnt:,.0f}")
+        chunks.append(_make_chunk("fact_iv_post.parquet",
+                                  "iv_post_top_posts", "visa_demand",
+                                  "\n".join(lines)))
+
+    # Top visa classes
+    if "visa_class" in df.columns and "issued" in df.columns:
+        top_classes = df.groupby("visa_class")["issued"].sum().nlargest(20)
+        lines = ["Top 20 Visa Classes by IV Issuances (all posts):"]
+        for vc, cnt in top_classes.items():
+            lines.append(f"  {vc}: {cnt:,.0f}")
+        chunks.append(_make_chunk("fact_iv_post.parquet",
+                                  "iv_post_top_classes", "visa_demand",
+                                  "\n".join(lines)))
+
+    # Recent month detail (latest available month)
+    if "calendar_year" in df.columns and "month" in df.columns:
+        latest = df.sort_values(["calendar_year", "month"]).iloc[-1]
+        latest_month = latest["month"]
+        latest_year = latest["calendar_year"]
+        recent = df[(df["month"] == latest_month) & (df["calendar_year"] == latest_year)]
+        top_recent = recent.groupby("post")["issued"].sum().nlargest(15)
+        lines = [f"IV Issuances for {latest_month} {latest_year} — Top 15 Posts:"]
+        for post, cnt in top_recent.items():
+            lines.append(f"  {post}: {cnt:,.0f}")
+        chunks.append(_make_chunk("fact_iv_post.parquet",
+                                  "iv_post_recent_month", "visa_demand",
+                                  "\n".join(lines)))
+
+
+def _build_lca_perm_chunks(chunks: list) -> None:
+    """Generate chunks for LCA and PERM filing data — the backbone DOL tables."""
+    # ── LCA summary & stats ──────────────────────────────────────────────
+    lca_path = ARTIFACTS_ROOT / "fact_lca"
+    lca = _safe_read(lca_path)
+    if lca is not None and len(lca) > 0:
+        fys = sorted(lca["fiscal_year"].dropna().unique().tolist()) if "fiscal_year" in lca.columns else []
+        statuses = lca["case_status"].value_counts().to_dict() if "case_status" in lca.columns else {}
+        visa_classes = lca["visa_class"].value_counts().head(10).to_dict() if "visa_class" in lca.columns else {}
+
+        summary = (
+            f"LCA (Labor Condition Application) Filing Data:\n"
+            f"Total records: {len(lca):,}\n"
+            f"Fiscal years: {', '.join(str(y) for y in fys)}\n"
+            f"Case status distribution: {statuses}\n"
+            f"Top visa classes: {visa_classes}\n"
+            f"Key columns: employer, SOC code, job title, wage, worksite\n"
+            f"Source: DOL disclosure data (H-1B, H-1B1, E-3 filings)\n"
+            f"Use: Track H-1B sponsorship volume, employer filing patterns, wage offers."
+        )
+        chunks.append(_make_chunk("fact_lca", "lca_summary", "filings", summary))
+
+        # Top LCA employers
+        if "employer_name_raw" in lca.columns:
+            emp_col = "employer_name_raw"
+        elif "employer_name" in lca.columns:
+            emp_col = "employer_name"
+        else:
+            emp_col = None
+
+        if emp_col:
+            top_emp = lca[emp_col].value_counts().head(40)
+            lines = ["Top 40 LCA Employers by Filing Volume (all years):"]
+            for emp, cnt in top_emp.items():
+                lines.append(f"  {emp}: {cnt:,}")
+            chunks.append(_make_chunk("fact_lca", "lca_top_employers",
+                                      "filings", "\n".join(lines)))
+
+        # LCA fiscal year trends
+        if "fiscal_year" in lca.columns:
+            by_fy = lca.groupby("fiscal_year").size().sort_index()
+            lines = ["LCA Filings by Fiscal Year:"]
+            for fy, cnt in by_fy.items():
+                lines.append(f"  FY{fy}: {cnt:,}")
+            chunks.append(_make_chunk("fact_lca", "lca_fy_trends",
+                                      "filings", "\n".join(lines)))
+
+        # LCA wage distribution
+        wage_col = next((c for c in lca.columns if c in ("wage_rate_from", "wage_offer_from")), None)
+        if wage_col:
+            wages = lca[wage_col].dropna()
+            annual = wages[wages > 10000]  # filter out hourlies
+            if len(annual) > 0:
+                lines = [
+                    "LCA Wage Distribution (annual rates only, >$10K):",
+                    f"  Records: {len(annual):,}",
+                    f"  Min: ${annual.min():,.0f}",
+                    f"  25th pct: ${annual.quantile(0.25):,.0f}",
+                    f"  Median: ${annual.median():,.0f}",
+                    f"  75th pct: ${annual.quantile(0.75):,.0f}",
+                    f"  Max: ${annual.max():,.0f}",
+                ]
+                chunks.append(_make_chunk("fact_lca", "lca_wage_distribution",
+                                          "filings", "\n".join(lines)))
+
+    # ── PERM summary & stats ─────────────────────────────────────────────
+    perm_path = ARTIFACTS_ROOT / "fact_perm"
+    perm = _safe_read(perm_path)
+    if perm is not None and len(perm) > 0:
+        fys = sorted(perm["fiscal_year"].dropna().unique().tolist()) if "fiscal_year" in perm.columns else []
+        statuses = perm["case_status"].value_counts().to_dict() if "case_status" in perm.columns else {}
+
+        summary = (
+            f"PERM (Labor Certification) Filing Data:\n"
+            f"Total records: {len(perm):,}\n"
+            f"Fiscal years: {', '.join(str(y) for y in fys)}\n"
+            f"Case status distribution: {statuses}\n"
+            f"Key columns: case_number, employer, SOC, job_title, wages, worksite\n"
+            f"Source: DOL PERM disclosure data\n"
+            f"Use: Track EB-2/EB-3 green card sponsorship, approval/denial rates, employer patterns.\n"
+            f"Note: PERM is the first step in most employment-based green card applications."
+        )
+        chunks.append(_make_chunk("fact_perm", "perm_summary", "filings", summary))
+
+        # Top PERM employers
+        if "employer_name" in perm.columns:
+            top_emp = perm["employer_name"].value_counts().head(40)
+            lines = ["Top 40 PERM Employers by Filing Volume (all years):"]
+            for emp, cnt in top_emp.items():
+                lines.append(f"  {emp}: {cnt:,}")
+            chunks.append(_make_chunk("fact_perm", "perm_top_employers",
+                                      "filings", "\n".join(lines)))
+
+        # PERM approval/denial rates by FY
+        if "fiscal_year" in perm.columns and "case_status" in perm.columns:
+            lines = ["PERM Approval/Denial Rates by Fiscal Year:"]
+            for fy in sorted(perm["fiscal_year"].dropna().unique()):
+                fy_data = perm[perm["fiscal_year"] == fy]
+                total = len(fy_data)
+                certified = (fy_data["case_status"].str.upper() == "CERTIFIED").sum()
+                denied = (fy_data["case_status"].str.upper() == "DENIED").sum()
+                rate = certified / total * 100 if total > 0 else 0
+                lines.append(f"  FY{fy}: {total:,} total, {certified:,} certified "
+                             f"({rate:.1f}%), {denied:,} denied")
+            chunks.append(_make_chunk("fact_perm", "perm_approval_rates",
+                                      "filings", "\n".join(lines)))
+
+
+def _build_employer_extended_chunks(chunks: list) -> None:
+    """Generate chunks for employer dim, features, monthly metrics, risk, and ML scores."""
+    # ── dim_employer summary ─────────────────────────────────────────────
+    de_path = ARTIFACTS_ROOT / "dim_employer.parquet"
+    de = _safe_read(de_path)
+    if de is not None and len(de) > 0:
+        lines = [
+            f"Employer Directory (dim_employer):",
+            f"Total employers: {len(de):,}",
+            f"Columns: {', '.join(de.columns.tolist())}",
+            f"Source: De-duplicated from PERM, LCA, and H-1B filings",
+            f"Use: Canonical employer reference — employer_id links to all other employer tables.",
+        ]
+        if "aliases" in de.columns:
+            has_aliases = de["aliases"].dropna()
+            has_aliases = has_aliases[has_aliases.str.len() > 2]
+            lines.append(f"  Employers with aliases: {len(has_aliases):,}")
+        chunks.append(_make_chunk("dim_employer.parquet", "dim_employer_summary",
+                                  "employer", "\n".join(lines)))
+
+    # ── employer_features summary ────────────────────────────────────────
+    ef_path = ARTIFACTS_ROOT / "employer_features.parquet"
+    ef = _safe_read(ef_path)
+    if ef is not None and len(ef) > 0:
+        lines = [
+            f"Employer Features Table:",
+            f"Total employers with features: {len(ef):,}",
+            f"Feature columns: {', '.join(ef.columns.tolist())}",
+            f"Windows: 12-month, 24-month, 36-month rolling from latest PERM data",
+        ]
+        for col in ["approval_rate_24m", "wage_ratio_med", "n_24m"]:
+            if col in ef.columns:
+                vals = ef[col].dropna()
+                if len(vals) > 0:
+                    lines.append(f"  {col}: mean={vals.mean():.2f}, median={vals.median():.2f}")
+        chunks.append(_make_chunk("employer_features.parquet",
+                                  "employer_features_summary", "employer",
+                                  "\n".join(lines)))
+
+    # ── employer_monthly_metrics summary ─────────────────────────────────
+    emm_path = ARTIFACTS_ROOT / "employer_monthly_metrics.parquet"
+    emm = _safe_read(emm_path)
+    if emm is not None and len(emm) > 0:
+        n_employers = emm["employer_id"].nunique() if "employer_id" in emm.columns else 0
+        months_range = ""
+        if "month" in emm.columns:
+            months = pd.to_datetime(emm["month"], errors="coerce").dropna()
+            if len(months) > 0:
+                months_range = f"{months.min().strftime('%Y-%m')} to {months.max().strftime('%Y-%m')}"
+
+        lines = [
+            f"Employer Monthly Metrics:",
+            f"Total records: {len(emm):,} ({n_employers:,} unique employers)",
+            f"Date range: {months_range}",
+            f"Columns: {', '.join(emm.columns.tolist())}",
+            f"Use: Track monthly filing volume, approval/denial/audit rates per employer.",
+        ]
+        # Top employers by total filings
+        if "employer_name" in emm.columns and "filings" in emm.columns:
+            by_emp = emm.groupby("employer_name")["filings"].sum().nlargest(20)
+            lines.append("\nTop 20 employers by total monthly filings:")
+            for emp, cnt in by_emp.items():
+                lines.append(f"  {emp}: {cnt:,.0f}")
+        chunks.append(_make_chunk("employer_monthly_metrics.parquet",
+                                  "employer_monthly_summary", "employer",
+                                  "\n".join(lines)))
+
+    # ── employer_risk_features ───────────────────────────────────────────
+    erf_path = ARTIFACTS_ROOT / "employer_risk_features.parquet"
+    erf = _safe_read(erf_path)
+    if erf is not None and len(erf) > 0:
+        lines = [
+            f"Employer Risk Features (WARN Act linkage):",
+            f"Total employers flagged: {len(erf):,}",
+            f"Columns: {', '.join(erf.columns.tolist())}",
+            f"These employers had WARN Act layoff events that may affect sponsorship.",
+        ]
+        if "employer_name_raw" in erf.columns and "total_employees_affected" in erf.columns:
+            top = erf.nlargest(20, "total_employees_affected")
+            lines.append("\nTop 20 employers by employees affected in layoffs:")
+            for _, row in top.iterrows():
+                name = row["employer_name_raw"]
+                affected = row["total_employees_affected"]
+                events = row.get("total_warn_events", "?")
+                lines.append(f"  {name}: {affected:,.0f} employees, {events} events")
+        chunks.append(_make_chunk("employer_risk_features.parquet",
+                                  "employer_risk_summary", "employer",
+                                  "\n".join(lines)))
+
+    # ── employer_friendliness_scores_ml ──────────────────────────────────
+    ml_path = ARTIFACTS_ROOT / "employer_friendliness_scores_ml.parquet"
+    ml = _safe_read(ml_path)
+    if ml is not None and len(ml) > 0:
+        lines = [
+            f"ML-Based Employer Friendliness Scores:",
+            f"Total employers scored: {len(ml):,}",
+            f"Columns: {', '.join(ml.columns.tolist())}",
+            f"Model: XGBoost classifier calibrated on PERM case outcomes",
+            f"Score (efs_ml): 0–100 scale based on calibrated approval probability",
+        ]
+        if "efs_ml" in ml.columns:
+            vals = ml["efs_ml"].dropna()
+            lines.append(f"  Score stats: mean={vals.mean():.1f}, median={vals.median():.1f}, "
+                         f"std={vals.std():.1f}")
+        chunks.append(_make_chunk("employer_friendliness_scores_ml.parquet",
+                                  "efs_ml_summary", "employer",
+                                  "\n".join(lines)))
+
+
+def _build_niv_issuance_chunks(chunks: list) -> None:
+    """Generate chunks for nonimmigrant visa (NIV) issuance data."""
+    path = ARTIFACTS_ROOT / "fact_niv_issuance.parquet"
+    df = _safe_read(path)
+    if df is None or len(df) == 0:
+        return
+
+    fys = sorted(df["fiscal_year"].unique().tolist()) if "fiscal_year" in df.columns else []
+    n_countries = df["country"].nunique() if "country" in df.columns else 0
+    n_classes = df["visa_class"].nunique() if "visa_class" in df.columns else 0
+
+    summary = (
+        f"Nonimmigrant Visa (NIV) Issuance Data:\n"
+        f"Total records: {len(df):,}\n"
+        f"Fiscal years: {', '.join(str(y) for y in fys)}\n"
+        f"Countries: {n_countries}\n"
+        f"Visa classes: {n_classes} (H-1B, L-1, F-1, B-1/B-2, J-1, etc.)\n"
+        f"Source: DOS NIV Statistics PDFs and spreadsheets\n"
+        f"Use: Track nonimmigrant visa demand by country and class, year-over-year trends."
+    )
+    chunks.append(_make_chunk("fact_niv_issuance.parquet",
+                              "niv_issuance_summary", "visa_demand", summary))
+
+    # Top countries
+    if "country" in df.columns and "issued" in df.columns:
+        top = df.groupby("country")["issued"].sum().nlargest(25)
+        lines = ["Top 25 Countries by NIV Issuances (all years):"]
+        for ctry, cnt in top.items():
+            lines.append(f"  {ctry}: {cnt:,}")
+        chunks.append(_make_chunk("fact_niv_issuance.parquet",
+                                  "niv_top_countries", "visa_demand",
+                                  "\n".join(lines)))
+
+    # Top visa classes
+    if "visa_class" in df.columns and "issued" in df.columns:
+        top = df.groupby("visa_class")["issued"].sum().nlargest(20)
+        lines = ["Top 20 NIV Visa Classes by Issuances:"]
+        for vc, cnt in top.items():
+            lines.append(f"  {vc}: {cnt:,}")
+        chunks.append(_make_chunk("fact_niv_issuance.parquet",
+                                  "niv_top_classes", "visa_demand",
+                                  "\n".join(lines)))
+
+    # Year-over-year totals
+    if "fiscal_year" in df.columns and "issued" in df.columns:
+        by_fy = df.groupby("fiscal_year")["issued"].sum().sort_index()
+        lines = ["NIV Issuances by Fiscal Year:"]
+        for fy, cnt in by_fy.items():
+            lines.append(f"  FY{fy}: {cnt:,}")
+        chunks.append(_make_chunk("fact_niv_issuance.parquet",
+                                  "niv_fy_trends", "visa_demand",
+                                  "\n".join(lines)))
+
+
+def _build_iv_issuance_detail_chunks(chunks: list) -> None:
+    """Generate chunks for immigrant visa issuance and applications."""
+    # ── fact_visa_issuance (IV by country/category) ──────────────────────
+    vi_path = ARTIFACTS_ROOT / "fact_visa_issuance.parquet"
+    vi = _safe_read(vi_path)
+    if vi is not None and len(vi) > 0:
+        lines = [
+            f"Immigrant Visa Issuances by Country (fact_visa_issuance):",
+            f"Total records: {len(vi):,}",
+            f"Fiscal years: {sorted(vi['fiscal_year'].unique().tolist()) if 'fiscal_year' in vi.columns else 'N/A'}",
+            f"Source: DOS Visa Annual Reports",
+            f"Use: Track immigrant visa issuances by chargeability country and category.",
+        ]
+        if "country" in vi.columns and "issued" in vi.columns:
+            top = vi.groupby("country")["issued"].sum().nlargest(20)
+            lines.append("\nTop 20 countries by IV issuances:")
+            for ctry, cnt in top.items():
+                lines.append(f"  {ctry}: {cnt:,}")
+        chunks.append(_make_chunk("fact_visa_issuance.parquet",
+                                  "iv_issuance_by_country", "visa_demand",
+                                  "\n".join(lines)))
+
+    # ── fact_visa_applications (by FSC) ──────────────────────────────────
+    va_path = ARTIFACTS_ROOT / "fact_visa_applications.parquet"
+    va = _safe_read(va_path)
+    if va is not None and len(va) > 0:
+        lines = [
+            f"Visa Applications by Foreign State of Chargeability (fact_visa_applications):",
+            f"Total records: {len(va):,}",
+            f"Fiscal years: {sorted(va['fiscal_year'].unique().tolist()) if 'fiscal_year' in va.columns else 'N/A'}",
+            f"Source: DOS IV Issuances by FSC PDFs",
+            f"Use: Track visa applications, refusals, and issuances by country and class.",
+        ]
+        if "country" in va.columns and "applications" in va.columns:
+            top = va.groupby("country")["applications"].sum().nlargest(20)
+            lines.append("\nTop 20 countries by visa applications:")
+            for ctry, cnt in top.items():
+                lines.append(f"  {ctry}: {cnt:,}")
+        if "refusals" in va.columns:
+            total_apps = va["applications"].sum()
+            total_ref = va["refusals"].sum()
+            if total_apps > 0:
+                lines.append(f"\nOverall refusal rate: {total_ref/total_apps*100:.1f}% "
+                             f"({total_ref:,.0f} of {total_apps:,.0f})")
+        chunks.append(_make_chunk("fact_visa_applications.parquet",
+                                  "visa_applications_summary", "visa_demand",
+                                  "\n".join(lines)))
+
+
+def _build_oews_detail_chunks(chunks: list) -> None:
+    """Generate chunks for OEWS wage detail (fact_oews)."""
+    path = ARTIFACTS_ROOT / "fact_oews"
+    df = _safe_read(path)
+    if df is None or len(df) == 0:
+        return
+
+    n_socs = df["soc_code"].nunique() if "soc_code" in df.columns else 0
+    n_areas = df["area_code"].nunique() if "area_code" in df.columns else 0
+    ref_years = sorted(df["ref_year"].unique().tolist()) if "ref_year" in df.columns else []
+
+    summary = (
+        f"OEWS Wage Data (fact_oews):\n"
+        f"Total records: {len(df):,} (SOC × area combinations)\n"
+        f"SOC codes: {n_socs}\n"
+        f"Geographic areas: {n_areas}\n"
+        f"Reference years: {', '.join(str(y) for y in ref_years)}\n"
+        f"Key wage columns: a_mean, a_median, a_pct10–a_pct90 (annual), h_* (hourly)\n"
+        f"Source: BLS Occupational Employment and Wage Statistics\n"
+        f"Use: Prevailing wage lookups, wage benchmarking for immigration cases."
+    )
+    chunks.append(_make_chunk("fact_oews", "oews_data_summary", "salary", summary))
+
+    # Top-paying occupations (national level)
+    if "a_median" in df.columns and "soc_code" in df.columns:
+        nat = df.copy()
+        if "area_code" in df.columns:
+            nat_mask = df["area_code"].astype(str).isin(["1", "0", "C0000", "000000"])
+            if nat_mask.sum() > 50:
+                nat = df[nat_mask]
+        top = nat.dropna(subset=["a_median"]).nlargest(25, "a_median")
+        lines = ["Top 25 Highest-Paying SOC Codes (OEWS national median):"]
+        for _, row in top.iterrows():
+            code = row["soc_code"]
+            med = row["a_median"]
+            lines.append(f"  {code}: ${med:,.0f}/year")
+        chunks.append(_make_chunk("fact_oews", "oews_top_paying",
+                                  "salary", "\n".join(lines)))
+
+
+def _build_dim_extended_chunks(chunks: list) -> None:
+    """Generate chunks for dim_soc and dim_area dimension tables."""
+    # ── dim_soc ──────────────────────────────────────────────────────────
+    soc_path = ARTIFACTS_ROOT / "dim_soc.parquet"
+    soc = _safe_read(soc_path)
+    if soc is not None and len(soc) > 0:
+        lines = [
+            f"SOC Code Directory (dim_soc):",
+            f"Total SOC codes: {len(soc):,}",
+            f"Columns: {', '.join(soc.columns.tolist())}",
+        ]
+        if "soc_version" in soc.columns:
+            versions = soc["soc_version"].value_counts().to_dict()
+            lines.append(f"Versions: {versions}")
+        if "soc_major_group" in soc.columns:
+            groups = soc["soc_major_group"].value_counts().head(10)
+            lines.append("\nTop 10 SOC major groups:")
+            for grp, cnt in groups.items():
+                lines.append(f"  {grp}: {cnt} codes")
+        if "soc_code" in soc.columns and "soc_title" in soc.columns:
+            # Show immigration-heavy codes
+            tech_codes = ["15-1252", "15-1256", "15-1211", "15-1299", "17-2061",
+                          "15-2051", "11-3021", "29-1141", "13-1111", "13-2011"]
+            lines.append("\nCommon immigration-sponsored SOC codes:")
+            for code in tech_codes:
+                match = soc[soc["soc_code"] == code]
+                if len(match) > 0:
+                    title = match.iloc[0]["soc_title"]
+                    lines.append(f"  {code}: {title}")
+        chunks.append(_make_chunk("dim_soc.parquet", "dim_soc_summary",
+                                  "occupation", "\n".join(lines)))
+
+    # ── dim_area ─────────────────────────────────────────────────────────
+    area_path = ARTIFACTS_ROOT / "dim_area.parquet"
+    area = _safe_read(area_path)
+    if area is not None and len(area) > 0:
+        lines = [
+            f"Geographic Area Directory (dim_area):",
+            f"Total areas: {len(area):,}",
+            f"Columns: {', '.join(area.columns.tolist())}",
+        ]
+        if "area_type" in area.columns:
+            types = area["area_type"].value_counts().to_dict()
+            lines.append(f"Area types: {types}")
+        if "state_abbr" in area.columns:
+            states = area["state_abbr"].dropna().nunique()
+            lines.append(f"States represented: {states}")
+        if "area_title" in area.columns:
+            lines.append(f"\nSample metro areas: {', '.join(area['area_title'].head(10).tolist())}")
+        chunks.append(_make_chunk("dim_area.parquet", "dim_area_summary",
+                                  "geographic", "\n".join(lines)))
+
+
+def _build_queue_depth_chunks(chunks: list) -> None:
+    """Generate chunks for queue depth and wait time estimates."""
+    path = ARTIFACTS_ROOT / "queue_depth_estimates.parquet"
+    df = _safe_read(path)
+    if df is None or len(df) == 0:
+        return
+
+    summary = (
+        f"Queue Depth & Wait Time Estimates:\n"
+        f"Total records: {len(df):,}\n"
+        f"Columns: {', '.join(df.columns.tolist())}\n"
+        f"Coverage: EB category × country × priority date month\n"
+        f"Key metrics: est_wait_years, est_months_to_current, confidence\n"
+        f"Use: 'How long will I wait?' — estimated queue position and wait time."
+    )
+    chunks.append(_make_chunk("queue_depth_estimates.parquet",
+                              "queue_depth_summary", "pd_forecast", summary,
+                              _table_stats(df)))
+
+    # Highest wait times
+    if "est_wait_years" in df.columns and "category" in df.columns and "country" in df.columns:
+        top_waits = df.nlargest(20, "est_wait_years")
+        lines = ["Longest Estimated Wait Times (top 20):"]
+        for _, row in top_waits.iterrows():
+            cat = row.get("category", "?")
+            ctry = row.get("country", "?")
+            wait = row["est_wait_years"]
+            conf = row.get("confidence", "?")
+            lines.append(f"  {cat} / {ctry}: {wait:.1f} years (confidence: {conf})")
+        chunks.append(_make_chunk("queue_depth_estimates.parquet",
+                                  "queue_longest_waits", "pd_forecast",
+                                  "\n".join(lines)))
+
+
+def _build_h1b_hub_chunks(chunks: list) -> None:
+    """Generate chunks for H-1B Employer Hub data (historical, stale after FY2023)."""
+    path = ARTIFACTS_ROOT / "fact_h1b_employer_hub.parquet"
+    df = _safe_read(path)
+    if df is None or len(df) == 0:
+        return
+
+    fys = sorted(df["fiscal_year"].unique().tolist()) if "fiscal_year" in df.columns else []
+    n_employers = df["employer_name"].nunique() if "employer_name" in df.columns else 0
+
+    summary = (
+        f"H-1B Employer Data Hub (fact_h1b_employer_hub):\n"
+        f"Total records: {len(df):,} ({n_employers:,} unique employers)\n"
+        f"Fiscal years: {', '.join(str(y) for y in fys)}\n"
+        f"⚠️ STALE DATA — USCIS discontinued after FY2023. All rows marked is_stale=True.\n"
+        f"Key columns: employer, initial/continuing approvals+denials, NAICS, state, city\n"
+        f"Source: USCIS H-1B Employer Data Hub CSV files\n"
+        f"Use: Historical H-1B petition trends by employer. Good for long-term patterns."
+    )
+    chunks.append(_make_chunk("fact_h1b_employer_hub.parquet",
+                              "h1b_hub_summary", "employer", summary))
+
+    # Top H-1B employers
+    if "employer_name" in df.columns and "total_petitions" in df.columns:
+        top = df.groupby("employer_name")["total_petitions"].sum().nlargest(30)
+        lines = ["Top 30 H-1B Employers by Total Petitions (historical FY2009–FY2023):"]
+        for emp, cnt in top.items():
+            lines.append(f"  {emp}: {cnt:,}")
+        chunks.append(_make_chunk("fact_h1b_employer_hub.parquet",
+                                  "h1b_hub_top_employers", "employer",
+                                  "\n".join(lines)))
+
+    # H-1B filings by FY
+    if "fiscal_year" in df.columns and "total_petitions" in df.columns:
+        by_fy = df.groupby("fiscal_year")["total_petitions"].sum().sort_index()
+        lines = ["H-1B Petitions by Fiscal Year (Employer Hub data):"]
+        for fy, cnt in by_fy.items():
+            lines.append(f"  FY{fy}: {cnt:,}")
+        if "approval_rate" in df.columns:
+            fy_rates = df.groupby("fiscal_year")["approval_rate"].mean()
+            lines.append("\nAverage approval rate by FY:")
+            for fy, rate in fy_rates.items():
+                lines.append(f"  FY{fy}: {rate:.1%}")
+        chunks.append(_make_chunk("fact_h1b_employer_hub.parquet",
+                                  "h1b_hub_fy_trends", "employer",
+                                  "\n".join(lines)))
+
+
+def _build_small_table_chunks(chunks: list) -> None:
+    """Generate chunks for smaller reference tables: BLS CES, USCIS approvals,
+    waiting list, and cutoff trends."""
+    # ── fact_bls_ces (26 rows) ───────────────────────────────────────────
+    bls_path = ARTIFACTS_ROOT / "fact_bls_ces.parquet"
+    bls = _safe_read(bls_path)
+    if bls is not None and len(bls) > 0:
+        lines = [
+            f"BLS Current Employment Statistics (fact_bls_ces):",
+            f"Total records: {len(bls):,}",
+            f"Columns: {', '.join(bls.columns.tolist())}",
+            f"Source: BLS CES API (employment levels, nonfarm payroll)",
+            f"Use: Macro employment trends for immigration context.",
+        ]
+        if "series_title" in bls.columns:
+            for _, row in bls.iterrows():
+                title = row.get("series_title", "")
+                value = row.get("value", "")
+                year = row.get("year", "")
+                period = row.get("period_name", "")
+                lines.append(f"  {title}: {value} ({period} {year})")
+        chunks.append(_make_chunk("fact_bls_ces.parquet",
+                                  "bls_ces_summary", "salary",
+                                  "\n".join(lines)))
+
+    # ── fact_uscis_approvals (146 rows) ──────────────────────────────────
+    ua_path = ARTIFACTS_ROOT / "fact_uscis_approvals.parquet"
+    ua = _safe_read(ua_path)
+    if ua is not None and len(ua) > 0:
+        lines = [
+            f"USCIS Approval/Denial Statistics (fact_uscis_approvals):",
+            f"Total records: {len(ua):,}",
+            f"Columns: {', '.join(ua.columns.tolist())}",
+        ]
+        if "fiscal_year" in ua.columns:
+            fys = sorted(ua["fiscal_year"].unique().tolist())
+            lines.append(f"Fiscal years: {', '.join(str(y) for y in fys)}")
+        if "form" in ua.columns:
+            forms = ua["form"].unique().tolist()
+            lines.append(f"Forms covered: {', '.join(str(f) for f in forms)}")
+        if "approvals" in ua.columns and "denials" in ua.columns:
+            total_approvals = ua["approvals"].sum()
+            total_denials = ua["denials"].sum()
+            lines.append(f"Total approvals: {total_approvals:,.0f}, denials: {total_denials:,.0f}")
+        # Show detail
+        if "category" in ua.columns and "approvals" in ua.columns:
+            lines.append("\nApprovals by category:")
+            by_cat = ua.groupby("category")["approvals"].sum().nlargest(15)
+            for cat, cnt in by_cat.items():
+                lines.append(f"  {cat}: {cnt:,.0f}")
+        chunks.append(_make_chunk("fact_uscis_approvals.parquet",
+                                  "uscis_approvals_summary", "processing",
+                                  "\n".join(lines)))
+
+    # ── fact_waiting_list (9 rows) ───────────────────────────────────────
+    wl_path = ARTIFACTS_ROOT / "fact_waiting_list.parquet"
+    wl = _safe_read(wl_path)
+    if wl is not None and len(wl) > 0:
+        lines = [
+            f"DOS Visa Waiting List (fact_waiting_list):",
+            f"Total records: {len(wl):,}",
+            f"Source: DOS Annual Report of Immigrant Visa Applicants",
+            f"Use: Track how many people are registered in the visa waiting list by category.",
+        ]
+        for _, row in wl.iterrows():
+            cat = row.get("category", "?")
+            ctry = row.get("country", "?")
+            count = row.get("count_waiting", 0)
+            year = row.get("report_year", "?")
+            lines.append(f"  {cat} / {ctry}: {count:,.0f} (report year {year})")
+        chunks.append(_make_chunk("fact_waiting_list.parquet",
+                                  "waiting_list_summary", "visa_bulletin",
+                                  "\n".join(lines)))
+
+    # ── fact_cutoff_trends (8,315 rows) ──────────────────────────────────
+    ct_path = ARTIFACTS_ROOT / "fact_cutoff_trends.parquet"
+    ct = _safe_read(ct_path)
+    if ct is not None and len(ct) > 0:
+        lines = [
+            f"Visa Bulletin Cutoff Trends (fact_cutoff_trends):",
+            f"Total records: {len(ct):,}",
+            f"Columns: {', '.join(ct.columns.tolist())}",
+            f"Key metrics: monthly_advancement_days, velocity_3m/6m, retrogression_flag",
+            f"Use: Analyze cutoff date movement speed and retrogression patterns.",
+        ]
+        if "retrogression_flag" in ct.columns:
+            n_retro = ct["retrogression_flag"].sum()
+            lines.append(f"Total retrogression events: {n_retro:,} of {len(ct):,} months "
+                         f"({n_retro/len(ct)*100:.1f}%)")
+        if "monthly_advancement_days" in ct.columns:
+            adv = ct["monthly_advancement_days"].dropna()
+            lines.append(f"Advancement days: mean={adv.mean():.1f}, median={adv.median():.1f}")
+        chunks.append(_make_chunk("fact_cutoff_trends.parquet",
+                                  "cutoff_trends_summary", "visa_bulletin",
+                                  "\n".join(lines)))
+
+
 def _build_dimension_chunks(chunks: list) -> None:
     """Generate chunks for dimension/lookup tables."""
     dims = {
@@ -958,14 +1620,15 @@ def build_rag_artifacts() -> dict:
         "topics": list(TOPICS.keys()),
         "topic_descriptions": {
             "pd_forecast": "Priority date forecasts — when will my green card become current?",
-            "employer": "Employer friendliness scores, approval rates, sponsorship history",
-            "salary": "Wage benchmarks by occupation and geography (OEWS percentiles)",
-            "visa_bulletin": "Visa bulletin history, cutoff dates, category movement",
+            "employer": "Employer friendliness scores, approval rates, sponsorship history, H-1B data",
+            "salary": "Wage benchmarks by occupation and geography (OEWS percentiles), BLS employment stats",
+            "visa_bulletin": "Visa bulletin history, cutoff dates, category movement, waiting list",
             "geographic": "Geographic sponsorship patterns — states, cities, metro areas",
-            "occupation": "Occupation demand by SOC code — filing volumes, trends",
-            "processing": "USCIS processing times and trends (I-485, etc.)",
-            "visa_demand": "Visa issuance and application volume by category and country",
-            "general": "Country lookups, DHS admissions, WARN layoffs, waiting lists",
+            "occupation": "Occupation demand by SOC code — filing volumes, trends, SOC directory",
+            "processing": "USCIS processing times, approval/denial statistics",
+            "visa_demand": "Visa issuance and application volume — NIV, IV by post, by country",
+            "filings": "DOL filing data — LCA (H-1B) and PERM (green card) applications",
+            "general": "Country lookups, DHS admissions, WARN layoffs",
         },
         "artifacts": _build_catalog_chunk(),
     }
@@ -988,6 +1651,16 @@ def build_rag_artifacts() -> dict:
     _build_movement_chunks(chunks)
     _build_backlog_chunks(chunks)
     _build_visa_demand_chunks(chunks)
+    _build_iv_post_chunks(chunks)
+    _build_lca_perm_chunks(chunks)
+    _build_employer_extended_chunks(chunks)
+    _build_niv_issuance_chunks(chunks)
+    _build_iv_issuance_detail_chunks(chunks)
+    _build_oews_detail_chunks(chunks)
+    _build_dim_extended_chunks(chunks)
+    _build_queue_depth_chunks(chunks)
+    _build_h1b_hub_chunks(chunks)
+    _build_small_table_chunks(chunks)
     _build_dimension_chunks(chunks)
 
     # Write chunks by topic

@@ -23,6 +23,7 @@ SOURCES = {
     "fact_visa_issuance": TABLES / "fact_visa_issuance.parquet",
     "fact_visa_applications": TABLES / "fact_visa_applications.parquet",
     "fact_niv_issuance": TABLES / "fact_niv_issuance.parquet",
+    "fact_iv_post": TABLES / "fact_iv_post.parquet",
 }
 
 
@@ -79,6 +80,20 @@ def main(light: bool = False) -> None:
         )
         agg_niv["source"] = "niv_issuance"
         frames.append(agg_niv)
+
+    # --- fact_iv_post: post × visa_class × fiscal_year → issued (monthly) ---
+    # Aggregates monthly post-level IV issuances up to fiscal_year × visa_class × post
+    if "fact_iv_post" in present:
+        df_post = pd.read_parquet(present["fact_iv_post"])
+        agg_post = (
+            df_post.groupby(["fiscal_year", "visa_class", "post"], dropna=False)["issued"]
+            .sum()
+            .reset_index()
+            .rename(columns={"visa_class": "category", "post": "country",
+                              "issued": "count_issued"})
+        )
+        agg_post["source"] = "iv_post"
+        frames.append(agg_post)
 
     if not frames:
         print("WARN: no usable frames built; skipping output write")

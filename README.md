@@ -57,6 +57,8 @@ A compass translates the navigator's reference framework into actionable directi
 │   │                                                         │
 │   ▼                                                         │
 │   ★ Compass  (immigration-insights-app)                     │
+│      Next.js 16 · static export · Tailwind 4 · Recharts    │
+│      Dark-first "Aurora" design · S3+CloudFront (~$1-3/mo)  │
 │      Guides users with personalized immigration insights    │
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
@@ -143,7 +145,7 @@ See `scripts/check_p1_readiness.py` output section 3 for which datasets currentl
 - **PD Forecast v2.1** — full-history anchored, velocity-capped, cross-verified within ±18% of 10-year actual
 - **EFS dual models** — rules-based (70K employers) + ML gradient boosting (1,695 high-volume)
 - **Incremental builds** — manifest-based change detection for P1 data (1,197 files tracked)
-- **RAG export (Stage 4)** — 63 text chunks + 174 pre-computed Q&A pairs for Compass chat
+- **RAG export (Stage 4)** — 98 text chunks + 178 pre-computed Q&A pairs for Compass chat
 - **100% test pass rate** — 469 passed, 0 failed, 1 skipped, 3 deselected
 - **3-tier QA** — Golden snapshot regression, data sanity suite, pytest-cov line coverage
 
@@ -323,8 +325,8 @@ Meridian pre-computes all retrieval-augmented generation (RAG) artifacts so that
 │                                                         │
 │  41 Parquet artifacts (17.4M rows)                      │
 │       │                                                 │
-│       ├──→ rag_builder.py    → 63 text chunks (JSON)    │
-│       ├──→ qa_generator.py   → 174 pre-computed Q&A     │
+│       ├──→ rag_builder.py    → 98 text chunks (JSON)    │
+│       ├──→ qa_generator.py   → 178 pre-computed Q&A     │
 │       └──→ catalog.json      → artifact registry        │
 │                                                         │
 │  Output: artifacts/rag/ (static JSON — deploy to S3)    │
@@ -354,9 +356,9 @@ Meridian pre-computes all retrieval-augmented generation (RAG) artifacts so that
 | File | Description |
 |------|-------------|
 | `artifacts/rag/catalog.json` | Full artifact registry (41 tables) — feeds LLM system prompt |
-| `artifacts/rag/all_chunks.json` | 63 text chunks across 9 topics — the retrieval corpus |
+| `artifacts/rag/all_chunks.json` | 98 text chunks across 10 topics — the retrieval corpus |
 | `artifacts/rag/chunks/*.json` | Per-topic chunk files for filtered retrieval |
-| `artifacts/rag/qa_cache.json` | 174 pre-computed Q&A pairs — avoids LLM calls entirely |
+| `artifacts/rag/qa_cache.json` | 178 pre-computed Q&A pairs — avoids LLM calls entirely |
 | `artifacts/rag/build_summary.json` | Build metadata and chunk counts |
 
 ### Topics Covered
@@ -371,6 +373,7 @@ Meridian pre-computes all retrieval-augmented generation (RAG) artifacts so that
 | `occupation` | "What are the top SOC codes?" | 2 |
 | `processing` | "How long does I-485 processing take?" | 3 |
 | `visa_demand` | "Visa issuance trends?" | 3 |
+| `filings` | "How many PERM/LCA filings per year?" | 2 |
 | `general` | "What data sources does NorthStar use?" | 4 |
 
 ### Budget-Friendly Deployment (Target: $5-8/month)
@@ -467,9 +470,29 @@ Regenerate after intentional pipeline changes: `python3 scripts/generate_golden_
 
 ## Tech Stack
 
+### P2 Meridian (this repo)
 - Python 3.12 (system)
 - pandas ≥2.0, pyarrow ≥12.0, pytest 9.0.2
 - pdfplumber, openpyxl, pydantic, pyyaml
+
+### P3 Compass (downstream consumer)
+| Layer | Technology |
+|-------|------------|
+| Framework | Next.js 16 (App Router, static export) |
+| Language | TypeScript 5 (strict) |
+| Styling | Tailwind CSS 4 + shadcn/ui |
+| Charts | Recharts 2 |
+| Animation | Framer Motion 12 |
+| Search | Fuse.js 7 (client-side fuzzy) |
+| Maps | react-simple-maps 3 |
+| Hosting | S3 + CloudFront (~$1-3/month) |
+
+### P2→P3 Data Contract
+P3 consumes P2 artifacts via a sync script (`P3/scripts/sync_p2_data.py`) that converts Parquet → JSON at build time. **All P2 changes must preserve:**
+- Column names consumed by P3 dashboards (see `.github/copilot-instructions.md` for full mapping)
+- RAG topic names: `pd_forecast`, `employer`, `salary`, `visa_bulletin`, `geographic`, `occupation`, `processing`, `visa_demand`, `filings`, `general`
+- QA pair schema: `question`, `answer`, `topic`, `sources`
+- RAG chunk schema: `chunk_id`, `topic`, `title`, `content`, `sources`, `row_count`
 
 ## License
 

@@ -74,7 +74,9 @@ class TestFactLca:
         parts = list(d.rglob("*.parquet"))
         if not parts:
             pytest.skip("fact_lca/ has no parquet files")
-        return pd.concat([pd.read_parquet(p) for p in parts[:5]], ignore_index=True)
+        # Read directory directly to get fiscal_year from partition keys
+        df = pd.read_parquet(d)
+        return df.head(100_000)  # Sample for test speed
 
     def test_required_columns(self):
         df = self._load()

@@ -123,7 +123,8 @@ def main():
         print("\n[5/5] dim_employer")
         dim_employer_path = resolve_artifact_path(artifacts_root, "tables", "dim_employer.parquet")
         try:
-            build_dim_employer(data_root, dim_employer_path, schemas_path)
+            # Pass artifacts_root so builder can check for existing fact_perm (fast path)
+            build_dim_employer(data_root, dim_employer_path, schemas_path, artifacts_root=artifacts_root)
             # Verify output
             df = pd.read_parquet(dim_employer_path)
             print(f"  ✓ dim_employer: {len(df)} rows")

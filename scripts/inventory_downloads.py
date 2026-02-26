@@ -40,7 +40,7 @@ DATASET_PATTERNS = [
     ("DOS_Waiting_List",         ["dos_waiting_list", "waiting_list"]),
     ("USCIS_H1B_Employer_Hub",   ["uscis_h1b_employer_hub", "h1b_employer_hub"]),
     ("USCIS_IMMIGRATION",        ["uscis_immigration"]),
-    ("USCIS_Processing_Times",   ["uscis_processing_times", "processing_times"]),
+    # USCIS_Processing_Times: removed — P1 dir deleted (Vue.js SPA, no usable data)
     ("DHS_Yearbook",             ["dhs_yearbook", "dhs"]),
     ("NIV_Statistics",           ["niv_statistics", "niv"]),
     ("TRAC",                     ["trac"]),
