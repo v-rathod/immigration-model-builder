@@ -5,30 +5,29 @@
 
 ---
 
-## Quick Reference (Current State as of Milestone 19 — 2026-03-01)
+## Quick Reference (Current State as of Milestone 20 — 2026-03-01)
 
 | Metric | Value |
 |--------|-------|
-| **Test pass rate** | **100%** (541 passed, 0 failed, 1 skipped, 3 deselected) |
-| Total tests | ~545 collected, 541 executed |
-| Milestone | 19 — Cross-Artifact Employer Name Normalization |
-| dim_employer.parquet | 227,076 rows (patched from fact_perm) |
+| **Test pass rate** | **100%** (562 passed, 0 failed, 1 skipped, 3 deselected) |
+| Total tests | ~566 collected, 562 executed |
+| Milestone | 20 — dim_employer as Source of Truth (title case throughout) |
+| dim_employer.parquet | 256,411 rows (incl. 13,277 new stubs canonicalized) |
 | fact_perm/ | 1,675,051 rows, 20 FY partitions |
-| fact_lca/ | 9,558,695 rows, 19 FY partitions (wages fixed M16) |
+| fact_lca/ | 9,558,695 rows, 19 FY partitions |
 | fact_cutoffs/ | 13,915 rows, 17 partitions |
-| employer_features.parquet | 70,206 rows, 25 columns |
+| employer_features.parquet | 70,206 rows (canonical names) |
 | employer_friendliness_scores_ml.parquet | 956 rows (ML EFS) |
+| employer_monthly_metrics.parquet | 224,114 rows — all-caps multi-word: 6,965 → **34** |
+| employer_salary_profiles.parquet | 2,524,521 rows (canonical names) |
+| employer_salary_yearly.parquet | 1,432,611 rows (canonical names) |
 | pd_forecasts.parquet | 1,344 rows (56 series × 24 months) |
 | **queue_depth_estimates.parquet** | **2,382 rows (3 categories × 5 countries × ~159 PD months)** |
-| worksite_geo_metrics.parquet | 104,951 rows (city grain + CR 79.7%) |
-| soc_demand_metrics.parquet | 3,968 rows (3 windows × 2 datasets) |
-| processing_times_trends.parquet | 35 rows (FY2014–FY2025 quarterly) |
-| employer_salary_profiles.parquet | 2,524,521 rows (canonical employer names) |
-| employer_salary_yearly.parquet | 1,432,611 rows (canonical employer names) |
-| employer_monthly_metrics.parquet | 224,114 rows (canonical employer names) |
+| worksite_geo_metrics.parquet | 104,951 rows |
+| soc_demand_metrics.parquet | 3,968 rows |
+| processing_times_trends.parquet | 35 rows |
 | Total parquet artifacts | ~41 files + 5 partitioned dirs |
-| **Data quality audit** | `artifacts/metrics/DATA_QUALITY_AUDIT.md` |
-| **Normalization module** | `src/normalize/mappings.py` — 4 functions fully implemented |
+| **Normalization** | `src/normalize/mappings.py` + `patch_dim_employer_from_fact_perm.py` = single source of truth |
 
 ### Quick Commands
 ```bash
@@ -90,12 +89,55 @@ bash scripts/build_incremental.sh --full       # full rebuild + save manifest
 | 17 | 2026-02-24 | Comprehensive Data Quality Audit | Found PERM column alias gaps (58% data loss), LCA residual gaps, SOC coverage issue |
 | 18 | 2026-02-25 | Queue Depth Estimation | New feature: queue_depth_estimates.parquet (2,382 rows), 20 new tests, 469 total |
 | 19 | 2026-03-01 | Employer Name Normalization | Full entity resolution: normalize/mappings.py, rebuilt salary/monthly artifacts, 72 new tests, 541 total |
+| 20 | 2026-03-01 | dim_employer as Source of Truth | patch script canonicalizes stubs; 6,965 → 34 all-caps in monthly_metrics; 562 tests |
+
+## 2026-03-01 - Milestone 20: dim_employer as Source of Truth for All Canonical Names
+
+### Objective
+Address the root cause: `patch_dim_employer_from_fact_perm.py` was inserting raw employer names from `fact_perm` (ALL-CAPS DOL source data) into `dim_employer` stub rows, causing them to propagate to all downstream artifacts. Milestone 19 fixed the downstream lookup (join to dim_employer), but dim_employer itself still contained the dirty stubs.
+
+### Root Cause
+- `build_dim_employer.py` correctly calls `title_case_name()` for its initial build
+- `patch_dim_employer_from_fact_perm.py` runs afterward and inserts stubs using raw `employer_name` from `fact_perm` partitions (e.g., "GOOGLE INC.", "INFOSYS BPO LIMITED") without any normalization
+- These stubs propagated dirty names to `employer_features`, `employer_friendliness_scores`, `employer_monthly_metrics` via join
+
+### Diagnosis
+Ran `scripts/_audit_norm2.py` which showed:
+- `employer_monthly_metrics`: **6,965 all-caps multi-word names** (e.g., "COGNIZANT TECHNOLOGY SOLUTIONS")
+- `employer_features`: 15 residual all-caps (all were spaced initials)
+- `dim_employer`: 60 all-caps names, 26 numeric FEIN-leaked names
+
+### Fix — `scripts/patch_dim_employer_from_fact_perm.py`
+Added to the top-level imports:
+```python
+from normalize.mappings import normalize_employer_name, title_case_employer_name
+
+def _canonical(raw): → title_case_employer_name(normalize_employer_name(str(raw))) or str(raw)
+```
+Two changes in `main()`:
+1. **Stub normalization**: apply `_canonical()` to `missing["employer_name"]` before building stub DataFrame
+2. **Cleanup pass**: after concat, sanitize all rows where `employer_name == employer_name.upper() and len > 3` using `_canonical()` — fixes dirty stubs from previous patch runs
+
+### Artifacts Rebuilt (in build order)
+1. `patch_dim_employer_from_fact_perm.py` — 256,411 rows; 13,277 new title-cased stubs; 317 existing sanitized
+2. `src.features.run_features` — `employer_features.parquet` + `salary_benchmarks` + `queue_depth_estimates`
+3. `make_employer_monthly_metrics.py` — all-caps multi-word: **6,965 → 34** (34 = spaced initials "C C T S" etc.)
+4. `make_employer_salary_profiles.py` — refreshed
+5. `make_employer_risk_features.py` — refreshed
+
+### Test Results
+- P2: **562 passed** (was 541 after M19; increase from broader dim_employer coverage)
+- P3 `employer-normalization.test.ts`: **25 tests** (expanded from 15)
+  - New blocks: `employer_features.json`, `employer_friendliness_scores.json`, `employer_monthly_metrics.json`
+  - Added `isDirtyAllCaps()` to exclude legitimate spaced initials from failure
+  - Fixed `loadJson()`: NaN tokens in JSON (from P2 pandas NaN) sanitized to null before parse
+- P3 total: **391 passing** (was 381)
+
+### Files Modified
+- `scripts/patch_dim_employer_from_fact_perm.py` — `_canonical()` + cleanup pass
+- (P3) `src/__tests__/employer-normalization.test.ts` — 25 tests, NaN-safe loader, `isDirtyAllCaps()`
 
 ---
-
-## Detailed Session Log
-
-## 2026-03-01 - Milestone 19: Cross-Artifact Employer Name Normalization
 
 ### Objective
 Fix employer name entity resolution across all P2 artifacts. Multiple raw spelling variants of the same employer ("GOOGLE INC", "Google Inc.", "GOOGLE LLC", "google inc") were appearing as separate entries in `employer_salary_profiles` and `employer_salary_yearly`, causing fragmented salary analytics and duplicate search results in P3 Compass.

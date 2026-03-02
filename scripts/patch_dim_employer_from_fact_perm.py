@@ -22,6 +22,19 @@ import pandas as pd
 ROOT   = pathlib.Path(__file__).resolve().parents[1]
 TABLES = ROOT / "artifacts" / "tables"
 
+# Normalization helpers — applied to all employer names entering dim_employer
+sys.path.insert(0, str(ROOT / "src"))
+from normalize.mappings import normalize_employer_name, title_case_employer_name
+
+
+def _canonical(raw: object) -> str:
+    """Return Title Case canonical name; fall back to original if normalization yields empty."""
+    s = str(raw).strip() if raw and not (isinstance(raw, float)) else ""
+    if not s:
+        return s
+    key = normalize_employer_name(s)
+    return title_case_employer_name(key) if key else s
+
 FACT_PERM_DIR = TABLES / "fact_perm"
 FEAT_PATH     = TABLES / "employer_features.parquet"
 DIM_EMP_PATH  = TABLES / "dim_employer.parquet"
@@ -83,6 +96,10 @@ def main() -> None:
     _first_src = df_dim["source_files"].dropna().iloc[0] if "source_files" in df_dim.columns and df_dim["source_files"].notna().any() else None
     _src_val = ["fact_perm_patch"] if isinstance(_first_src, list) else "fact_perm_patch_FY2022_2026"
 
+    # Normalize stub names to Title Case before inserting into dim_employer
+    missing = missing.copy()
+    missing["employer_name"] = missing["employer_name"].apply(_canonical)
+
     stubs = pd.DataFrame({
         "employer_id":   missing["employer_id"].values,
         "employer_name": missing["employer_name"].values,
@@ -101,6 +118,15 @@ def main() -> None:
     # ── 5. Concat and write ───────────────────────────────────────────────────
     df_out = pd.concat([df_dim, stubs], ignore_index=True)
     df_out = df_out.drop_duplicates(subset=["employer_id"], keep="first")
+
+    # ── 5b. Sanitize ALL employer_name values (clean up prior patch runs) ──────
+    before_allcaps = (df_out["employer_name"] == df_out["employer_name"].str.upper()).sum()
+    df_out["employer_name"] = df_out["employer_name"].apply(
+        lambda v: _canonical(v) if isinstance(v, str) and v == v.upper() and len(v) > 3 else v
+    )
+    after_allcaps = (df_out["employer_name"] == df_out["employer_name"].str.upper()).sum()
+    print(f"  sanitized all-caps employer_names: {before_allcaps} → {after_allcaps}")
+
     df_out.to_parquet(DIM_EMP_PATH, index=False)
     print(f"  dim_employer written: {len(df_out):,} rows (+{len(stubs):,} stubs)")
 
