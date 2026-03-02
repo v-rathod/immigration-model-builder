@@ -1,10 +1,12 @@
 """Employer-level feature engineering for EFS.
 
-Reads curated fact_perm, dim_employer, dim_soc, fact_oews, dim_area.
+Reads curated fact_perm, dim_employer, dim_soc, fact_oews, dim_area,
+fact_lca (H-1B filings), and fact_h1b_employer_hub (USCIS petition data).
 Produces artifacts/tables/employer_features.parquet.
 """
 
 import json
+import re
 import numpy as np
 import pandas as pd
 from datetime import datetime, timezone
@@ -105,6 +107,27 @@ def build_employer_features(in_tables: Path, out_path: Path) -> None:
     area = pd.read_parquet(in_tables / 'dim_area.parquet')
     log(f'  dim_area: {len(area):,} rows')
 
+    # ── Load LCA (H-1B) data ────────────────────────────────
+    log('\n[A2] Loading LCA data (H-1B filings)')
+    lca_dir = in_tables / 'fact_lca'
+    if lca_dir.is_dir():
+        lca = _read_partitioned(lca_dir)
+    elif (in_tables / 'fact_lca.parquet').exists():
+        lca = pd.read_parquet(in_tables / 'fact_lca.parquet')
+    else:
+        lca = pd.DataFrame()
+    log(f'  fact_lca: {len(lca):,} rows')
+
+    # ── Load H-1B Employer Hub ──────────────────────────────
+    log('\n[A3] Loading H-1B Employer Hub')
+    h1b_hub_path = in_tables / 'fact_h1b_employer_hub.parquet'
+    if h1b_hub_path.exists():
+        h1b_hub = pd.read_parquet(h1b_hub_path)
+        log(f'  fact_h1b_employer_hub: {len(h1b_hub):,} rows')
+    else:
+        h1b_hub = pd.DataFrame()
+        log('  fact_h1b_employer_hub: NOT FOUND (skipping)')
+
     # ── Prepare PERM data ───────────────────────────────────
     log('\n[B] Preparing PERM data')
     perm['decision_date'] = pd.to_datetime(perm['decision_date'], errors='coerce')
@@ -174,6 +197,97 @@ def build_employer_features(in_tables: Path, out_path: Path) -> None:
     # Cross-SOC national fallback: overall national median when SOC is not in OEWS
     overall_national_median = float(oews_national['nat_a_median'].median()) if len(oews_national) else 65000.0
     log(f'  Cross-SOC national fallback median: ${overall_national_median:,.0f}')
+
+    # ── Prepare LCA data ────────────────────────────────────
+    log('\n[C2] Preparing LCA features by employer')
+    lca_emp_features = {}
+    if len(lca) > 0:
+        lca['decision_date'] = pd.to_datetime(lca.get('decision_date'), errors='coerce')
+        lca = lca.dropna(subset=['employer_id'])
+        if 'decision_date' in lca.columns and lca['decision_date'].notna().any():
+            lca_anchor = lca['decision_date'].max()
+            lca_start_24m = lca_anchor - pd.DateOffset(months=24)
+            lca_24 = lca[lca['decision_date'] > lca_start_24m].copy()
+        else:
+            lca_24 = lca.copy()
+
+        # Status flags
+        approved_set = {'CERTIFIED', 'CERTIFIED-EXPIRED', 'CERTIFIED - WITHDRAWN', 'APPROVED'}
+        lca_24['is_certified'] = lca_24['case_status'].str.upper().str.strip().isin(approved_set)
+
+        # Annualise LCA wages
+        lca_24['wage_rate_from'] = pd.to_numeric(lca_24.get('wage_rate_from'), errors='coerce')
+        lca_24['prevailing_wage'] = pd.to_numeric(lca_24.get('prevailing_wage'), errors='coerce')
+        lca_24['wage_mult'] = lca_24.get('wage_unit', '').str.lower().str.strip().map(WAGE_UNIT_MULTIPLIER).fillna(1.0)
+        lca_24['lca_annual_wage'] = lca_24['wage_rate_from'] * lca_24['wage_mult']
+        lca_24['pw_mult'] = lca_24.get('pw_unit', '').str.lower().str.strip().map(WAGE_UNIT_MULTIPLIER).fillna(1.0)
+        lca_24['lca_annual_pw'] = lca_24['prevailing_wage'] * lca_24['pw_mult']
+
+        # Per-employer LCA features
+        lca_grp = lca_24.groupby('employer_id')
+        lca_emp_agg = lca_grp.agg(
+            lca_filings_24m=('employer_id', 'count'),
+            lca_certified_24m=('is_certified', 'sum'),
+            lca_median_wage=('lca_annual_wage', 'median'),
+            lca_median_pw=('lca_annual_pw', 'median'),
+            lca_soc_breadth=('soc_code', 'nunique'),
+        )
+        lca_emp_agg['lca_approval_rate_24m'] = (lca_emp_agg['lca_certified_24m'] / lca_emp_agg['lca_filings_24m']).clip(0, 1)
+        lca_emp_agg['lca_wage_ratio'] = np.where(
+            lca_emp_agg['lca_median_pw'].notna() & (lca_emp_agg['lca_median_pw'] > 0),
+            (lca_emp_agg['lca_median_wage'] / lca_emp_agg['lca_median_pw']).clip(0.5, 2.0),
+            np.nan
+        )
+        lca_emp_features = lca_emp_agg.to_dict(orient='index')
+        log(f'  LCA employer features: {len(lca_emp_features):,} employers')
+    else:
+        log('  LCA data empty — skipping')
+
+    # ── Prepare H1B Hub retention features ──────────────────
+    log('\n[C3] Computing H1B Hub retention features by employer')
+    h1b_hub_features = {}
+    if len(h1b_hub) > 0:
+        # H1B Hub has employer_name but no employer_id — need fuzzy match
+        def _norm_name(s):
+            s = str(s).upper().strip()
+            s = re.sub(r'[^A-Z0-9\s]', ' ', s)
+            s = re.sub(r'\s+', ' ', s).strip()
+            return s
+
+        h1b_hub['_norm'] = h1b_hub['employer_name'].apply(_norm_name)
+        emp['_norm'] = emp['employer_name'].apply(_norm_name)
+
+        # Build name→employer_id lookup from dim_employer
+        name_to_eid = emp.drop_duplicates(subset='_norm').set_index('_norm')['employer_id'].to_dict()
+        h1b_hub['employer_id'] = h1b_hub['_norm'].map(name_to_eid)
+        matched = h1b_hub['employer_id'].notna().sum()
+        log(f'  H1B Hub name match: {matched:,}/{len(h1b_hub):,} ({matched/len(h1b_hub)*100:.1f}%)')
+
+        h1b_matched = h1b_hub[h1b_hub['employer_id'].notna()].copy()
+        if len(h1b_matched) > 0:
+            h1b_grp = h1b_matched.groupby('employer_id').agg(
+                h1b_hub_total_petitions=('total_petitions', 'sum'),
+                h1b_hub_initial_approvals=('initial_approvals', 'sum'),
+                h1b_hub_continuing_approvals=('continuing_approvals', 'sum'),
+                h1b_hub_initial_denials=('initial_denials', 'sum'),
+                h1b_hub_continuing_denials=('continuing_denials', 'sum'),
+                h1b_hub_naics=('naics_code', 'first'),
+                h1b_hub_years=('fiscal_year', 'nunique'),
+            )
+            # Retention ratio: continuing / (initial + continuing) — higher = retains workers
+            total_app = h1b_grp['h1b_hub_initial_approvals'] + h1b_grp['h1b_hub_continuing_approvals']
+            h1b_grp['h1b_hub_retention_ratio'] = np.where(
+                total_app > 0,
+                (h1b_grp['h1b_hub_continuing_approvals'] / total_app).clip(0, 1),
+                np.nan
+            )
+            h1b_hub_features = h1b_grp.to_dict(orient='index')
+            log(f'  H1B Hub features: {len(h1b_hub_features):,} employers')
+
+        # Clean up temp column
+        emp.drop(columns=['_norm'], inplace=True, errors='ignore')
+    else:
+        log('  H1B Hub data empty — skipping')
 
     # ── Compute features per employer and employer×SOC ──────
     log('\n[D] Computing features')
@@ -292,6 +406,18 @@ def build_employer_features(in_tables: Path, out_path: Path) -> None:
                 if oews_p75 and oews_p75 > 0:
                     wage_ratio_p75 = min(1.3, offered_median / oews_p75)
 
+        # LCA (H-1B) features for this employer
+        lca_f = lca_emp_features.get(employer_id, {})
+        lca_filings_24m = lca_f.get('lca_filings_24m')
+        lca_approval_rate_24m = lca_f.get('lca_approval_rate_24m')
+        lca_median_wage = lca_f.get('lca_median_wage')
+        lca_wage_ratio = lca_f.get('lca_wage_ratio')
+        lca_soc_breadth = lca_f.get('lca_soc_breadth')
+        # H1B-to-PERM ratio: how many H-1B filings per PERM filing
+        lca_to_perm_ratio = None
+        if lca_filings_24m and n_24m and n_24m > 0:
+            lca_to_perm_ratio = round(lca_filings_24m / n_24m, 2)
+
         return {
             'employer_id': employer_id,
             'employer_name': employer_name,
@@ -316,6 +442,13 @@ def build_employer_features(in_tables: Path, out_path: Path) -> None:
             'outcome_volatility': outcome_volatility,
             'wage_ratio_med': wage_ratio_med,
             'wage_ratio_p75': wage_ratio_p75,
+            # LCA-derived features
+            'lca_filings_24m': lca_filings_24m,
+            'lca_approval_rate_24m': lca_approval_rate_24m,
+            'lca_median_wage': lca_median_wage,
+            'lca_wage_ratio': lca_wage_ratio,
+            'lca_soc_breadth': lca_soc_breadth,
+            'lca_to_perm_ratio': lca_to_perm_ratio,
             'windows_used': windows_info,
             'last_refreshed_at': refreshed_at,
         }
@@ -349,9 +482,30 @@ def build_employer_features(in_tables: Path, out_path: Path) -> None:
 
     log(f'  Total feature rows: {len(results):,} ({total_employers:,} employers)')
 
-    # ── Write output ────────────────────────────────────────
-    log('\n[E] Writing employer_features.parquet')
+    # ── Merge H1B Hub features ──────────────────────────────
+    log('\n[E] Merging H1B Hub retention features')
     df_out = pd.DataFrame(results)
+
+    if h1b_hub_features:
+        h1b_df = pd.DataFrame.from_dict(h1b_hub_features, orient='index')
+        h1b_cols = ['h1b_hub_total_petitions', 'h1b_hub_initial_approvals',
+                    'h1b_hub_continuing_approvals', 'h1b_hub_retention_ratio',
+                    'h1b_hub_naics', 'h1b_hub_years']
+        h1b_cols = [c for c in h1b_cols if c in h1b_df.columns]
+        h1b_df = h1b_df[h1b_cols].reset_index().rename(columns={'index': 'employer_id'})
+        pre_rows = len(df_out)
+        df_out = df_out.merge(h1b_df, on='employer_id', how='left')
+        matched = df_out['h1b_hub_total_petitions'].notna().sum()
+        log(f'  H1B Hub joined: {matched:,}/{pre_rows:,} feature rows matched')
+    else:
+        for col in ['h1b_hub_total_petitions', 'h1b_hub_initial_approvals',
+                    'h1b_hub_continuing_approvals', 'h1b_hub_retention_ratio',
+                    'h1b_hub_naics', 'h1b_hub_years']:
+            df_out[col] = None
+        log('  H1B Hub: no data — columns set to null')
+
+    # ── Write output ────────────────────────────────────────
+    log('\n[F] Writing employer_features.parquet')
     out_path.parent.mkdir(parents=True, exist_ok=True)
     df_out.to_parquet(out_path, index=False, engine='pyarrow')
     log(f'  Written: {out_path} ({len(df_out):,} rows)')
@@ -360,9 +514,13 @@ def build_employer_features(in_tables: Path, out_path: Path) -> None:
     overall = df_out[df_out['scope'] == 'overall']
     soc_slices = df_out[df_out['scope'] == 'SOC']
     wage_null_pct = round(overall['wage_ratio_med'].isna().mean() * 100, 1)
+    lca_fill_pct = round(overall['lca_filings_24m'].notna().mean() * 100, 1)
+    h1b_fill_pct = round(overall['h1b_hub_total_petitions'].notna().mean() * 100, 1)
     log(f'\n  Overall rows: {len(overall):,}')
     log(f'  SOC-specific rows: {len(soc_slices):,}')
     log(f'  wage_ratio_med null: {wage_null_pct}%')
+    log(f'  lca_filings_24m fill: {lca_fill_pct}%')
+    log(f'  h1b_hub fill: {h1b_fill_pct}%')
     if wage_null_pct > 50:
         log(f'  WARN: High wage_ratio null rate ({wage_null_pct}%) — OEWS coverage may be limited')
         warn_count += 1

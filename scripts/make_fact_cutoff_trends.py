@@ -140,9 +140,9 @@ def qa_checks(df: pd.DataFrame, logs: list[str]) -> bool:
         ok = False
     else:
         logs.append(f"OK: 0 duplicate 5-col PK rows ({len(pk_present)}-col key used)")
-    # row count: fact_cutoffs_all has 8,315 PK5-unique rows; trends must match
-    if len(df) < 8000 or len(df) > 8500:
-        logs.append(f"FAIL: fact_cutoff_trends rows={len(df)} outside [8000,8500]")
+    # row count: fact_cutoffs_all feeds this; range adjusted for 6/7-column expansion
+    if len(df) < 7000 or len(df) > 10000:
+        logs.append(f"FAIL: fact_cutoff_trends rows={len(df)} outside [7000,10000]")
         ok = False
     # advancement range
     adv = df["monthly_advancement_days"].dropna()

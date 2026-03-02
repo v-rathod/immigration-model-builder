@@ -46,7 +46,9 @@ TOPICS = {
     "employer": ["employer_friendliness_scores", "employer_friendliness_scores_ml",
                  "employer_features", "employer_monthly_metrics", "employer_risk_features",
                  "dim_employer", "fact_h1b_employer_hub"],
-    "salary": ["salary_benchmarks", "fact_oews", "fact_bls_ces"],
+    "salary": ["salary_benchmarks", "fact_oews", "fact_bls_ces",
+                 "employer_salary_profiles", "employer_salary_yearly",
+                 "soc_salary_market"],
     "visa_bulletin": ["fact_cutoffs_all", "fact_cutoff_trends", "category_movement_metrics",
                       "dim_visa_class", "dim_visa_ceiling", "fact_cutoffs",
                       "fact_waiting_list"],
@@ -1262,6 +1264,384 @@ def _build_oews_detail_chunks(chunks: list) -> None:
                                   "salary", "\n".join(lines)))
 
 
+def _build_salary_profile_chunks(chunks: list) -> None:
+    """Generate chunks for employer salary profiles, yearly trends, and SOC salary market.
+
+    These artifacts power free-form queries like:
+      - "Which employer pays the most for H-1B in 2024?"
+      - "What is the median salary for software engineers?"
+      - "How many filings did [employer] have?"
+    """
+    # ── SOC titles lookup ────────────────────────────────────────────────
+    dim_soc = _safe_read(ARTIFACTS_ROOT / "dim_soc.parquet")
+    soc_titles: dict[str, str] = {}
+    if dim_soc is not None:
+        for col in ["soc_title", "title", "occupation_title"]:
+            if col in dim_soc.columns and "soc_code" in dim_soc.columns:
+                soc_titles = dict(zip(dim_soc["soc_code"], dim_soc[col]))
+                break
+
+    # ── employer_salary_profiles ─────────────────────────────────────────
+    esp_path = ARTIFACTS_ROOT / "employer_salary_profiles.parquet"
+    esp = _safe_read(esp_path)
+    if esp is not None and len(esp) > 0:
+        n_employers = esp["employer_id"].nunique() if "employer_id" in esp.columns else 0
+        n_socs = esp["soc_code"].nunique() if "soc_code" in esp.columns else 0
+        visa_types = esp["visa_type"].unique().tolist() if "visa_type" in esp.columns else []
+        fys = sorted(esp["fiscal_year"].unique().tolist()) if "fiscal_year" in esp.columns else []
+
+        summary = (
+            f"Employer Salary Profiles:\n"
+            f"Total records: {len(esp):,} (employer × SOC × visa_type × fiscal_year)\n"
+            f"Unique employers: {n_employers:,}\n"
+            f"Unique SOC codes: {n_socs:,}\n"
+            f"Visa types: {', '.join(str(v) for v in visa_types)}\n"
+            f"Fiscal years: FY{min(fys)}–FY{max(fys)}\n"
+            f"Key columns: employer_name, soc_code, visa_type, fiscal_year, n_filings, "
+            f"mean_salary, median_salary, min_salary, max_salary, prevailing_wage_median, "
+            f"p25_salary, p75_salary, oews_national_median, wage_premium_pct, wage_vs_pw_pct\n"
+            f"Use: Look up what a specific employer pays for a specific role in a given year. "
+            f"Compare employer salaries against prevailing wages and OEWS benchmarks."
+        )
+        chunks.append(_make_chunk("employer_salary_profiles.parquet",
+                                  "salary_profiles_summary", "salary", summary,
+                                  {"n_employers": n_employers, "n_socs": n_socs}))
+
+        # Top-paying employers for H-1B (latest 2 fiscal years, ≥50 filings)
+        for fy in sorted(fys)[-2:]:
+            h1b_fy = esp[(esp["visa_type"] == "H-1B") & (esp["fiscal_year"] == fy)]
+            # Aggregate to employer level for this FY
+            if "n_filings" in h1b_fy.columns and "median_salary" in h1b_fy.columns:
+                emp_agg = h1b_fy.groupby("employer_name").agg(
+                    total_filings=("n_filings", "sum"),
+                    wt_median=("median_salary", "median"),
+                ).reset_index()
+                # Filter ≥50 filings
+                emp_agg = emp_agg[emp_agg["total_filings"] >= 50]
+                if len(emp_agg) > 0:
+                    top = emp_agg.nlargest(30, "wt_median")
+                    lines = [f"Top 30 Highest-Paying H-1B Employers FY{fy} (≥50 filings):"]
+                    for _, row in top.iterrows():
+                        lines.append(
+                            f"  {row['employer_name']}: ${row['wt_median']:,.0f} median, "
+                            f"{row['total_filings']:,.0f} filings"
+                        )
+                    chunks.append(_make_chunk("employer_salary_profiles.parquet",
+                                              f"salary_top_employers_fy{fy}", "salary",
+                                              "\n".join(lines),
+                                              {"fiscal_year": int(fy), "visa_type": "H-1B"}))
+
+                    # Also bottom 30
+                    bottom = emp_agg.nsmallest(30, "wt_median")
+                    lines = [f"Lowest-Paying H-1B Employers FY{fy} (≥50 filings):"]
+                    for _, row in bottom.iterrows():
+                        lines.append(
+                            f"  {row['employer_name']}: ${row['wt_median']:,.0f} median, "
+                            f"{row['total_filings']:,.0f} filings"
+                        )
+                    chunks.append(_make_chunk("employer_salary_profiles.parquet",
+                                              f"salary_bottom_employers_fy{fy}", "salary",
+                                              "\n".join(lines),
+                                              {"fiscal_year": int(fy), "visa_type": "H-1B"}))
+
+        # Top positions (SOC) by total filings per recent FY
+        for fy in sorted(fys)[-3:]:
+            h1b_fy = esp[(esp["visa_type"] == "H-1B") & (esp["fiscal_year"] == fy)]
+            if "n_filings" in h1b_fy.columns and "soc_code" in h1b_fy.columns:
+                soc_agg = h1b_fy.groupby("soc_code").agg(
+                    total_filings=("n_filings", "sum"),
+                    n_employers=("employer_id", "nunique"),
+                    med_salary=("median_salary", "median"),
+                ).reset_index()
+                top = soc_agg.nlargest(15, "total_filings")
+                lines = [f"Top 15 H-1B Positions by Filing Volume — FY{fy}:"]
+                for _, row in top.iterrows():
+                    title = soc_titles.get(row["soc_code"], row["soc_code"])
+                    lines.append(
+                        f"  {row['soc_code']} ({title}): {row['total_filings']:,.0f} filings, "
+                        f"{row['n_employers']:,.0f} employers, ${row['med_salary']:,.0f} median"
+                    )
+                chunks.append(_make_chunk("employer_salary_profiles.parquet",
+                                          f"salary_top_positions_fy{fy}", "salary",
+                                          "\n".join(lines),
+                                          {"fiscal_year": int(fy), "visa_type": "H-1B"}))
+
+        # Top employers by total filings (all years)
+        if "n_filings" in esp.columns and "employer_name" in esp.columns:
+            emp_total = esp.groupby("employer_name")["n_filings"].sum().nlargest(50)
+            lines = ["Top 50 Employers by Total Salary Profile Filings (all years, all visa types):"]
+            for emp, cnt in emp_total.items():
+                lines.append(f"  {emp}: {cnt:,.0f}")
+            chunks.append(_make_chunk("employer_salary_profiles.parquet",
+                                      "salary_top_employers_alltime", "salary",
+                                      "\n".join(lines)))
+
+    # ── employer_salary_yearly ───────────────────────────────────────────
+    esy_path = ARTIFACTS_ROOT / "employer_salary_yearly.parquet"
+    esy = _safe_read(esy_path)
+    if esy is not None and len(esy) > 0:
+        summary = (
+            f"Employer Salary Yearly Trends:\n"
+            f"Total records: {len(esy):,} (employer × fiscal_year aggregates)\n"
+            f"Columns: {', '.join(esy.columns.tolist())}\n"
+            f"Use: Track how employer wages change year-over-year. "
+            f"Identify employers with rising or declining salary trends."
+        )
+        chunks.append(_make_chunk("employer_salary_yearly.parquet",
+                                  "salary_yearly_summary", "salary", summary))
+
+        # Employers with largest YoY salary increases
+        if all(c in esy.columns for c in ["employer_name", "fiscal_year", "median_salary"]):
+            esy_sorted = esy.sort_values(["employer_name", "fiscal_year"])
+            esy_sorted["prev_median"] = esy_sorted.groupby("employer_name")["median_salary"].shift(1)
+            esy_sorted["yoy_change"] = esy_sorted["median_salary"] - esy_sorted["prev_median"]
+            valid = esy_sorted.dropna(subset=["yoy_change"])
+            if len(valid) > 0:
+                biggest_raise = valid.nlargest(20, "yoy_change")
+                lines = ["Largest Year-over-Year Salary Increases (employer × year):"]
+                for _, row in biggest_raise.iterrows():
+                    lines.append(
+                        f"  {row['employer_name']} FY{row['fiscal_year']}: "
+                        f"+${row['yoy_change']:,.0f} (${row['prev_median']:,.0f} → ${row['median_salary']:,.0f})"
+                    )
+                chunks.append(_make_chunk("employer_salary_yearly.parquet",
+                                          "salary_yearly_biggest_raises", "salary",
+                                          "\n".join(lines)))
+
+    # ── soc_salary_market ────────────────────────────────────────────────
+    ssm_path = ARTIFACTS_ROOT / "soc_salary_market.parquet"
+    ssm = _safe_read(ssm_path)
+    if ssm is not None and len(ssm) > 0:
+        summary = (
+            f"SOC Salary Market Benchmarks:\n"
+            f"Total records: {len(ssm):,} (SOC × visa_type × fiscal_year)\n"
+            f"Columns: {', '.join(ssm.columns.tolist())}\n"
+            f"Use: Market-level salary stats per occupation. Compare individual employer "
+            f"offers against market median for the same SOC code."
+        )
+        chunks.append(_make_chunk("soc_salary_market.parquet",
+                                  "soc_salary_market_summary", "salary", summary))
+
+        # Top SOC codes by market median salary (latest FY)
+        if "fiscal_year" in ssm.columns and "market_median" in ssm.columns:
+            latest_fy = ssm["fiscal_year"].max()
+            latest = ssm[ssm["fiscal_year"] == latest_fy]
+            h1b = latest[latest["visa_type"] == "H-1B"] if "visa_type" in latest.columns else latest
+            if len(h1b) > 0 and "soc_code" in h1b.columns:
+                top = h1b.nlargest(25, "market_median")
+                lines = [f"Top 25 Highest-Paying SOC Codes (H-1B market median, FY{latest_fy}):"]
+                for _, row in top.iterrows():
+                    code = row["soc_code"]
+                    title = soc_titles.get(code, code)
+                    med = row["market_median"]
+                    n = row.get("n_employers", "?")
+                    lines.append(f"  {code} ({title}): ${med:,.0f} median, {n} employers")
+                chunks.append(_make_chunk("soc_salary_market.parquet",
+                                          f"soc_salary_top_paying_fy{latest_fy}", "salary",
+                                          "\n".join(lines),
+                                          {"fiscal_year": int(latest_fy)}))
+
+
+def _build_soc_salary_trends_chunks(chunks: list) -> None:
+    """Generate chunks for SOC-level salary trends over time.
+
+    Powers queries like:
+      - 'How much median income growth did software developers experience in past 5 years?'
+      - 'Show percentage salary hike for data scientists each year'
+      - 'What is the salary trend for mechanical engineers?'
+    """
+    ssm = _safe_read(ARTIFACTS_ROOT / "soc_salary_market.parquet")
+    if ssm is None or len(ssm) == 0:
+        return
+
+    dim_soc = _safe_read(ARTIFACTS_ROOT / "dim_soc.parquet")
+    soc_titles: dict[str, str] = {}
+    if dim_soc is not None:
+        for col in ["soc_title", "title", "occupation_title"]:
+            if col in dim_soc.columns and "soc_code" in dim_soc.columns:
+                soc_titles = dict(zip(dim_soc["soc_code"], dim_soc[col]))
+                break
+
+    # For each visa type, build YoY growth for immigration-heavy SOC codes
+    heavy_socs = [
+        "15-1252", "15-1256", "15-1211", "15-1299", "15-1132",
+        "15-2051", "15-1245", "15-1244", "15-1241", "15-1221",
+        "17-2061", "17-2071", "17-2141", "17-2112",
+        "11-3021", "13-2011", "13-1111", "13-1161",
+        "29-1141", "29-1171", "29-1123", "29-1127",
+    ]
+
+    for vtype in ["H-1B", "PERM"]:
+        vdata = ssm[ssm["visa_type"] == vtype]
+        if len(vdata) == 0:
+            continue
+
+        # Build YoY for all SOC codes with 3+ years of data
+        soc_fy = vdata.groupby(["soc_code", "fiscal_year"]).agg(
+            market_median=("market_median", "first"),
+            total_filings=("total_filings", "first"),
+            n_employers=("n_employers", "first"),
+        ).reset_index().sort_values(["soc_code", "fiscal_year"])
+
+        soc_years = soc_fy.groupby("soc_code")["fiscal_year"].nunique()
+        socs_with_trend = soc_years[soc_years >= 3].index.tolist()
+
+        # Focus on immigration-heavy SOCs + any high-volume SOC with 3+ years
+        top_volume = vdata.groupby("soc_code")["total_filings"].sum().nlargest(30).index.tolist()
+        target_socs = list(set(heavy_socs) & set(socs_with_trend)) + \
+                      [s for s in top_volume if s in socs_with_trend and s not in heavy_socs]
+
+        for soc in target_socs[:40]:  # cap at 40 to avoid chunk explosion
+            sdata = soc_fy[soc_fy["soc_code"] == soc].sort_values("fiscal_year")
+            if len(sdata) < 3:
+                continue
+
+            title = soc_titles.get(soc, soc)
+            sdata = sdata.copy()
+            sdata["prev_median"] = sdata["market_median"].shift(1)
+            sdata["yoy_pct"] = ((sdata["market_median"] - sdata["prev_median"])
+                                / sdata["prev_median"] * 100).round(1)
+
+            lines = [f"Salary Trend for {soc} ({title}) — {vtype}:"]
+            for _, row in sdata.iterrows():
+                yoy = f" ({row['yoy_pct']:+.1f}% YoY)" if pd.notna(row["yoy_pct"]) else ""
+                lines.append(
+                    f"  FY{row['fiscal_year']}: ${row['market_median']:,.0f} median"
+                    f"{yoy}, {row['total_filings']:,.0f} filings, "
+                    f"{row['n_employers']:,.0f} employers"
+                )
+
+            # Overall growth
+            first_med = sdata.iloc[0]["market_median"]
+            last_med = sdata.iloc[-1]["market_median"]
+            total_growth = ((last_med - first_med) / first_med * 100) if first_med > 0 else 0
+            n_years = int(sdata.iloc[-1]["fiscal_year"] - sdata.iloc[0]["fiscal_year"])
+            lines.append(
+                f"\n  Overall: ${first_med:,.0f} → ${last_med:,.0f} "
+                f"({total_growth:+.1f}% over {n_years} years)"
+            )
+
+            chunks.append(_make_chunk("soc_salary_market.parquet",
+                                      f"soc_trend_{soc}_{vtype.lower().replace('-','')}", "occupation",
+                                      "\n".join(lines),
+                                      {"soc_code": soc, "visa_type": vtype}))
+
+    # ── Cross-SOC comparison chunk (latest FY, H-1B top 30) ──────────────
+    h1b = ssm[ssm["visa_type"] == "H-1B"]
+    if len(h1b) > 0 and "fiscal_year" in h1b.columns:
+        latest_fy = h1b["fiscal_year"].max()
+        prev_fy = latest_fy - 1
+        current = h1b[h1b["fiscal_year"] == latest_fy]
+        previous = h1b[h1b["fiscal_year"] == prev_fy]
+        if len(current) > 0 and len(previous) > 0:
+            merged = current.merge(
+                previous[["soc_code", "market_median"]].rename(
+                    columns={"market_median": "prev_median"}),
+                on="soc_code", how="inner"
+            )
+            merged["yoy_pct"] = ((merged["market_median"] - merged["prev_median"])
+                                 / merged["prev_median"] * 100).round(1)
+            # Top growers
+            top_growth = merged.nlargest(20, "yoy_pct")
+            lines = [f"Top 20 H-1B SOC Codes by Salary Growth FY{prev_fy}→FY{latest_fy}:"]
+            for _, row in top_growth.iterrows():
+                title = soc_titles.get(row["soc_code"], row["soc_code"])
+                lines.append(
+                    f"  {row['soc_code']} ({title}): {row['yoy_pct']:+.1f}% "
+                    f"(${row['prev_median']:,.0f} → ${row['market_median']:,.0f}), "
+                    f"{row.get('total_filings', 0):,.0f} filings"
+                )
+            chunks.append(_make_chunk("soc_salary_market.parquet",
+                                      f"soc_salary_top_growth_fy{latest_fy}", "occupation",
+                                      "\n".join(lines)))
+
+            # Top decliners
+            bottom_growth = merged.nsmallest(20, "yoy_pct")
+            lines = [f"Bottom 20 H-1B SOC Codes by Salary Change FY{prev_fy}→FY{latest_fy}:"]
+            for _, row in bottom_growth.iterrows():
+                title = soc_titles.get(row["soc_code"], row["soc_code"])
+                lines.append(
+                    f"  {row['soc_code']} ({title}): {row['yoy_pct']:+.1f}% "
+                    f"(${row['prev_median']:,.0f} → ${row['market_median']:,.0f})"
+                )
+            chunks.append(_make_chunk("soc_salary_market.parquet",
+                                      f"soc_salary_bottom_growth_fy{latest_fy}", "occupation",
+                                      "\n".join(lines)))
+
+
+def _build_employer_position_comparison_chunks(chunks: list) -> None:
+    """Generate chunks for employer top-position breakdowns with market comparison.
+
+    Powers queries like:
+      - 'At Google, what positions get the most filings and median income?'
+      - 'Compare Amazon software developer salary with market median'
+      - 'What does Microsoft pay data scientists vs the industry?'
+    """
+    esp = _safe_read(ARTIFACTS_ROOT / "employer_salary_profiles.parquet")
+    ssm = _safe_read(ARTIFACTS_ROOT / "soc_salary_market.parquet")
+    if esp is None or ssm is None or len(esp) == 0:
+        return
+
+    dim_soc = _safe_read(ARTIFACTS_ROOT / "dim_soc.parquet")
+    soc_titles: dict[str, str] = {}
+    if dim_soc is not None:
+        for col in ["soc_title", "title", "occupation_title"]:
+            if col in dim_soc.columns and "soc_code" in dim_soc.columns:
+                soc_titles = dict(zip(dim_soc["soc_code"], dim_soc[col]))
+                break
+
+    # Build market median lookup: (soc_code, visa_type) → median across all FYs
+    market_lookup = ssm.groupby(["soc_code", "visa_type"])["market_median"].median().to_dict()
+
+    # Identify top employers by total filings (dedup by employer_id)
+    emp_totals = esp.groupby("employer_id").agg(
+        total_filings=("n_filings", "sum"),
+        employer_name=("employer_name", "first"),
+    ).reset_index()
+    top_employers = emp_totals.nlargest(150, "total_filings")
+
+    for _, emp_row in top_employers.iterrows():
+        emp_name = emp_row["employer_name"]
+        emp_id = emp_row["employer_id"]
+        emp_data = esp[esp["employer_id"] == emp_id]
+        total_filings = emp_data["n_filings"].sum()
+
+        if total_filings < 50:
+            continue
+
+        # Group by SOC code
+        soc_breakdown = emp_data.groupby("soc_code").agg(
+            total_filings=("n_filings", "sum"),
+            med_salary=("median_salary", "median"),
+            mean_salary=("mean_salary", "mean"),
+            n_years=("fiscal_year", "nunique"),
+        ).reset_index().sort_values("total_filings", ascending=False)
+
+        top_socs = soc_breakdown.head(10)
+        lines = [f"Position Breakdown for {emp_name} ({total_filings:,.0f} total filings):"]
+        for _, soc_row in top_socs.iterrows():
+            soc = soc_row["soc_code"]
+            title = soc_titles.get(soc, soc)
+            emp_med = soc_row["med_salary"]
+            n_filed = soc_row["total_filings"]
+            # Market comparison
+            mkt_med = market_lookup.get((soc, "H-1B"), market_lookup.get((soc, "PERM"), 0))
+            diff_pct = ((emp_med - mkt_med) / mkt_med * 100) if mkt_med > 0 else 0
+
+            parts = [
+                f"  {soc} ({title}): {n_filed:,.0f} filings",
+                f"    Employer median: ${emp_med:,.0f}",
+            ]
+            if mkt_med > 0:
+                parts.append(f"    Market median: ${mkt_med:,.0f} ({diff_pct:+.1f}% vs market)")
+            lines.extend(parts)
+
+        chunks.append(_make_chunk("employer_salary_profiles.parquet",
+                                  f"employer_positions_{emp_id}", "employer",
+                                  "\n".join(lines),
+                                  {"employer_id": emp_id, "employer_name": emp_name}))
+
+
 def _build_dim_extended_chunks(chunks: list) -> None:
     """Generate chunks for dim_soc and dim_area dimension tables."""
     # ── dim_soc ──────────────────────────────────────────────────────────
@@ -1657,6 +2037,9 @@ def build_rag_artifacts() -> dict:
     _build_niv_issuance_chunks(chunks)
     _build_iv_issuance_detail_chunks(chunks)
     _build_oews_detail_chunks(chunks)
+    _build_salary_profile_chunks(chunks)
+    _build_soc_salary_trends_chunks(chunks)
+    _build_employer_position_comparison_chunks(chunks)
     _build_dim_extended_chunks(chunks)
     _build_queue_depth_chunks(chunks)
     _build_h1b_hub_chunks(chunks)

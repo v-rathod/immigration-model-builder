@@ -8,21 +8,45 @@ import pandas as pd
 import pdfplumber
 
 
-# Month name to number mapping
+# Month name to number mapping (both full and abbreviated forms)
 MONTH_MAP = {
     'january': 1, 'february': 2, 'march': 3, 'april': 4,
     'may': 5, 'june': 6, 'july': 7, 'august': 8,
-    'september': 9, 'october': 10, 'november': 11, 'december': 12
+    'september': 9, 'october': 10, 'november': 11, 'december': 12,
+    'jan': 1, 'feb': 2, 'mar': 3, 'apr': 4,
+    'jun': 6, 'jul': 7, 'aug': 8,
+    'sep': 9, 'oct': 10, 'nov': 11, 'dec': 12,
 }
 
 # Country name mappings to ISO3 codes
 COUNTRY_MAP = {
     'All Chargeability Areas Except Those Listed': 'ROW',  # Rest of World
     'CHINA-mainland born': 'CHN',
+    'EL SALVADOR GUATEMALA HONDURAS': 'EL SALVADOR GUATEMALA HONDURAS',
     'INDIA': 'IND',
     'MEXICO': 'MEX',
     'PHILIPPINES': 'PHL',
+    'VIETNAM': 'VIETNAM',
 }
+
+# Standard country column orders by column count (DOS changed format over time)
+# 5-col: before May 2016, and Apr 2023+
+# 6-col: May 2016–Apr 2018, Oct 2021–Mar 2023 (EL SALVADOR added)
+# 7-col: May 2018–Sep 2021 (EL SALVADOR + VIETNAM added)
+COUNTRY_COLUMNS_5 = [
+    'All Chargeability Areas Except Those Listed',
+    'CHINA-mainland born', 'INDIA', 'MEXICO', 'PHILIPPINES',
+]
+COUNTRY_COLUMNS_6 = [
+    'All Chargeability Areas Except Those Listed',
+    'CHINA-mainland born', 'EL SALVADOR GUATEMALA HONDURAS',
+    'INDIA', 'MEXICO', 'PHILIPPINES',
+]
+COUNTRY_COLUMNS_7 = [
+    'All Chargeability Areas Except Those Listed',
+    'CHINA-mainland born', 'EL SALVADOR GUATEMALA HONDURAS',
+    'INDIA', 'MEXICO', 'PHILIPPINES', 'VIETNAM',
+]
 
 # Category normalization
 CATEGORY_MAP = {
@@ -97,11 +121,34 @@ def parse_date(date_str: str) -> Tuple[Optional[str], str]:
     return (None, 'U')
 
 
+def _detect_country_columns(text: str) -> List[str]:
+    """Detect the country column layout from the PDF header text.
+    
+    DOS changed the employment-based table format over time:
+    - 5-col: ROW, CHN, IND, MEX, PHL  (before May 2016, and Apr 2023+)
+    - 6-col: ROW, CHN, EL_SAL, IND, MEX, PHL  (May 2016–Apr 2018, Oct 2021–Mar 2023)
+    - 7-col: ROW, CHN, EL_SAL, IND, MEX, PHL, VNM  (May 2018–Sep 2021)
+    """
+    has_el_salvador = bool(re.search(r'EL\s+SALVADOR|GUATEMALA|HONDURAS', text, re.IGNORECASE))
+    has_vietnam = bool(re.search(r'\bVIETNAM\b', text, re.IGNORECASE))
+    
+    if has_vietnam and has_el_salvador:
+        return COUNTRY_COLUMNS_7
+    elif has_el_salvador:
+        return COUNTRY_COLUMNS_6
+    else:
+        return COUNTRY_COLUMNS_5
+
+
 def extract_employment_table_from_text(text: str, chart_type: str) -> List[List]:
     """Extract employment-based table by parsing text when pdfplumber tables fail.
     
     Parses the structured text to extract the employment-based immigration categories
     and their corresponding dates for each country.
+    
+    Dynamically detects the number of country columns (5, 6, or 7) by checking
+    the PDF header for EL SALVADOR and VIETNAM columns that DOS added/removed
+    over time.
     
     Args:
         text: Raw text from PDF page
@@ -113,16 +160,19 @@ def extract_employment_table_from_text(text: str, chart_type: str) -> List[List]
     lines = [line.strip() for line in text.split('\n')]
     table_rows = []
     
-    # Find where the table data starts - look for "All Charge" or "Employment-Based 1st"
-    # The header is usually spread across multiple lines, so we'll construct it
+    # Detect actual country columns from PDF header text
+    country_cols = _detect_country_columns(text)
+    n_country = len(country_cols)        # 5, 6, or 7
+    n_expected = n_country + 1           # category + dates
+    
+    # Find where the table data starts - look for "1st" data row
     data_start_idx = -1
     
     for i, line in enumerate(lines):
         # Look for the start of data rows - lines starting with "1st", "2nd", etc.
         if line.startswith('1st ') or (line == '1st' and i+1 < len(lines)):
-            # Found first data row, construct standard header
-            header = ['Employment-Based', 'All Chargeability Areas Except Those Listed',
-                      'CHINA-mainland born', 'INDIA', 'MEXICO', 'PHILIPPINES']
+            # Found first data row, construct header from detected columns
+            header = ['Employment-Based'] + country_cols
             table_rows.append(header)
             data_start_idx = i
             break
@@ -143,37 +193,37 @@ def extract_employment_table_from_text(text: str, chart_type: str) -> List[List]
         # Look for category markers at line start
         if line.startswith('1st'):
             parts = line.split()
-            if len(parts) >= 6:  # 1st + 5 dates
-                table_rows.append(['1st'] + parts[1:6])
+            if len(parts) >= n_expected:
+                table_rows.append(['1st'] + parts[1:n_expected])
         elif line.startswith('2nd'):
             parts = line.split()
-            if len(parts) >= 6:
-                table_rows.append(['2nd'] + parts[1:6])
+            if len(parts) >= n_expected:
+                table_rows.append(['2nd'] + parts[1:n_expected])
         elif line.startswith('3rd'):
             parts = line.split()
-            if len(parts) >= 6:
-                table_rows.append(['3rd'] + parts[1:6])
+            if len(parts) >= n_expected:
+                table_rows.append(['3rd'] + parts[1:n_expected])
         elif line.startswith('Other'):
             # "Other Workers" - dates might be on same line or next line
             if 'Workers' in line:
                 parts = line.replace('Other Workers', '').strip().split()
-                if len(parts) >= 5:
-                    table_rows.append(['Other Workers'] + parts[:5])
+                if len(parts) >= n_country:
+                    table_rows.append(['Other Workers'] + parts[:n_country])
                 else:
                     # Try next line
                     i += 1
                     if i < len(lines):
                         dates_parts = lines[i].strip().split()
-                        if len(dates_parts) >= 5:
-                            table_rows.append(['Other Workers'] + dates_parts[:5])
+                        if len(dates_parts) >= n_country:
+                            table_rows.append(['Other Workers'] + dates_parts[:n_country])
         elif line.startswith('4th'):
             parts = line.split()
-            if len(parts) >= 6:
-                table_rows.append(['4th'] + parts[1:6])
+            if len(parts) >= n_expected:
+                table_rows.append(['4th'] + parts[1:n_expected])
         elif line.startswith('5th'):
             parts = line.split()
-            if len(parts) >= 6:
-                table_rows.append(['5th'] + parts[1:6])
+            if len(parts) >= n_expected:
+                table_rows.append(['5th'] + parts[1:n_expected])
         elif line.startswith('Certain'):
             # Skip sub-categories like "Certain Religious Workers"
             pass
@@ -238,11 +288,23 @@ def load_visa_bulletin(data_root: str, out_dir: str, schemas_path: str = None) -
             
             # Open PDF and extract text
             with pdfplumber.open(pdf_file) as pdf:
+                fad_found = False   # Track if FAD already found for this file
+                dff_found = False   # Track if DFF already found for this file
                 for page_num, page in enumerate(pdf.pages):
                     text = page.extract_text()
+                    if not text:
+                        continue
                     
-                    # Check for Final Action Dates chart
-                    if 'FINAL ACTION DATES FOR EMPLOYMENT-BASED' in text:
+                    text_upper = text.upper()
+                    
+                    # Check for Final Action Dates chart (case-insensitive)
+                    # Newer format (2015+): "FINAL ACTION DATES FOR EMPLOYMENT-BASED"
+                    # Older format (2011-2014): "CUT-OFF DATE LISTED BELOW" + "EMPLOYMENT"
+                    is_fad_page = (
+                        ('FINAL ACTION DATES' in text_upper and 'EMPLOYMENT' in text_upper)
+                        or ('CUT-OFF DATE' in text_upper and 'EMPLOYMENT' in text_upper)
+                    )
+                    if is_fad_page and not fad_found:
                         table = extract_employment_table_from_text(text, 'FAD')
                         if table:
                             rows = parse_employment_table(
@@ -250,9 +312,10 @@ def load_visa_bulletin(data_root: str, out_dir: str, schemas_path: str = None) -
                                 str(rel_path), f"page_{page_num+1}"
                             )
                             all_rows.extend(rows)
+                            fad_found = True
                     
-                    # Check for Dates for Filing chart
-                    if 'DATES FOR FILING' in text and 'EMPLOYMENT-BASED' in text:
+                    # Check for Dates for Filing chart (case-insensitive)
+                    if 'DATES FOR FILING' in text_upper and 'EMPLOYMENT' in text_upper and not dff_found:
                         table = extract_employment_table_from_text(text, 'DFF')
                         if table:
                             rows = parse_employment_table(
@@ -260,6 +323,7 @@ def load_visa_bulletin(data_root: str, out_dir: str, schemas_path: str = None) -
                                 str(rel_path), f"page_{page_num+1}"
                             )
                             all_rows.extend(rows)
+                            dff_found = True
             
             files_processed += 1
             
@@ -343,8 +407,8 @@ def parse_employment_table(
     for i, row in enumerate(table):
         if row and any(cell and 'Employment' in str(cell) for cell in row):
             header_idx = i
-            # Extract country columns (typically columns 1-5)
-            country_columns = row[1:6] if len(row) > 5 else row[1:]
+            # Extract ALL country columns from header (5, 6, or 7 depending on era)
+            country_columns = row[1:]
             break
     
     if header_idx is None:

@@ -45,8 +45,12 @@ def _log(msg: str = "") -> None:
 
 # ── Feature Engineering ──────────────────────────────────────────────────────
 
-def _build_features(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.Series]:
-    """Extract feature matrix X and binary label y from case-level PERM data."""
+def _build_features(df: pd.DataFrame, in_tables: Path | None = None) -> tuple[pd.DataFrame, pd.Series]:
+    """Extract feature matrix X and binary label y from case-level PERM data.
+    
+    If in_tables is provided, enriches with LCA/H1B employer-level features
+    from employer_features.parquet.
+    """
     rows = df.copy()
 
     # Label: 1 = approved, 0 = denied, drop others
@@ -114,6 +118,26 @@ def _build_features(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.Series]:
     else:
         for country in ["india", "china", "mexico", "philippines", "korea"]:
             features[f"country_{country}"] = 0.0
+
+    # 7. LCA/H1B employer-level features (from employer_features if available)
+    if in_tables is not None:
+        ef_path = in_tables / "employer_features.parquet"
+        if ef_path.exists() and "employer_id" in rows.columns:
+            try:
+                ef = pd.read_parquet(ef_path)
+                ef_overall = ef[ef["scope"] == "overall"].set_index("employer_id")
+                lca_cols = ["lca_approval_rate_24m", "lca_wage_ratio",
+                            "lca_to_perm_ratio", "h1b_hub_retention_ratio"]
+                avail = [c for c in lca_cols if c in ef_overall.columns]
+                if avail:
+                    emp_feats = ef_overall[avail]
+                    for col in avail:
+                        features[col] = rows["employer_id"].map(
+                            emp_feats[col].to_dict()
+                        ).fillna(0).astype(float)
+                    _log(f"  Added {len(avail)} LCA/H1B employer features")
+            except Exception as e:
+                _log(f"  WARNING: could not load employer_features for ML: {e}")
 
     features = features.fillna(0)
     return features, y
@@ -349,7 +373,7 @@ def fit_employer_score_ml(in_tables: Path, out_tables: Path) -> None:
 
     # ── Feature engineering ─────────────────────────────────────────────────
     _log("\n[B] Building features …")
-    X, y = _build_features(df_perm)
+    X, y = _build_features(df_perm, in_tables=in_tables)
     _log(f"  Feature rows: {len(X):,}  (approval rate: {y.mean():.3f})")
     _log(f"  Feature columns: {list(X.columns)}")
 

@@ -70,6 +70,13 @@ echo "------------------------------------------------------------"
 python3 -m src.features.run_features --paths "$PATHS_CONFIG"
 echo ""
 
+# Stage 2b: Salary Profiles (employer×role salary data for P3 Salary page)
+echo "------------------------------------------------------------"
+echo "Stage 2b: SALARY PROFILES (employer×role salary artifact)"
+echo "------------------------------------------------------------"
+python3 scripts/make_employer_salary_profiles.py
+echo ""
+
 # Stage 3: Models
 echo "------------------------------------------------------------"
 echo "Stage 3: MODEL TRAINING"

@@ -362,7 +362,7 @@ def gate_4_range_checks() -> None:
 
 # ── GATE 5: Parity checks ─────────────────────────────────────────────────────
 
-EXPECTED_VB_ROWS = 8_315
+EXPECTED_VB_ROWS = 8_060
 EXPECTED_VB_LEAVES = 168
 
 
@@ -516,11 +516,11 @@ def gate_6_statistical() -> None:
 # ── GATE 7: Golden-sample regression ─────────────────────────────────────────
 
 GOLDEN_EXPECTED: dict[str, int] = {
-    "fact_cutoffs_all": 8_315,
-    "fact_cutoff_trends": 8_315,
-    "category_movement_metrics": 8_315,
+    "fact_cutoffs_all": 8_060,
+    "fact_cutoff_trends": 8_060,
+    "category_movement_metrics": 8_060,
     "employer_monthly_metrics": 74_350,
-    "backlog_estimates": 8_315,
+    "backlog_estimates": 8_060,
     "dim_employer": 227_076,
     "dim_soc": 1_396,
     "dim_area": 587,

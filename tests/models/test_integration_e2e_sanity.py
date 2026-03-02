@@ -138,7 +138,7 @@ class TestCoreTablesNoRegression:
 
     def test_fact_cutoffs_unchanged(self):
         df = _load("fact_cutoffs_all")
-        assert len(df) == 8_315, f"fact_cutoffs_all regressed to {len(df)} rows"
+        assert len(df) == 8_060, f"fact_cutoffs_all regressed to {len(df)} rows"
 
     def test_fact_lca_present(self):
         d = TABLES / "fact_lca"

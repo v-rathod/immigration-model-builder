@@ -45,6 +45,8 @@ ARTIFACTS = [
     "employer_risk_features", "soc_demand_metrics", "visa_demand_metrics",
     "worksite_geo_metrics", "category_movement_metrics",
     "backlog_estimates", "fact_cutoff_trends", "processing_times_trends",
+    # Salary profiles (employer×role salary data for P3)
+    "employer_salary_profiles", "employer_salary_yearly", "soc_salary_market",
     # Models
     "employer_friendliness_scores", "employer_friendliness_scores_ml",
     "pd_forecasts",

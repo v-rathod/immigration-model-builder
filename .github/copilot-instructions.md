@@ -112,7 +112,7 @@ P2 Parquet artifacts  →  sync_p2_data.py  →  JSON slices  →  public/data/ 
 |-------------|----------------------|-------------|
 | 1. Visa Bulletin & Forecasts | fact_cutoff_trends, pd_forecasts, pd_forecast_model.json | category, country, cutoff_date, forecast_date |
 | 2. Employer Friendliness | employer_friendliness_scores, employer_monthly_metrics | employer_id, efs_score, tier, approval_rate |
-| 3. Salary & Wage | salary_benchmarks, employer_features | soc_code, area_code, median_wage, wage_ratio |
+| 3. Salary & Wage | salary_benchmarks, employer_features, employer_salary_profiles, employer_salary_yearly, soc_salary_market | soc_code, area_code, median_wage, wage_ratio |
 | 4. Geographic Trends | worksite_geo_metrics | state, area_code, filings, approvals |
 | 5. Occupation Demand | soc_demand_metrics | soc_code, lca_filings, perm_filings |
 | 6. Visa Demand & Issuance | visa_demand_metrics | visa_class, fiscal_year, issued, refused |
@@ -186,6 +186,9 @@ python3 scripts/build_fact_iv_post.py
 # Stage 2: Feature engineering
 python3 -m src.features.run_features --paths configs/paths.yaml
 
+# Stage 2b: Salary profiles (employer×role salary artifacts for P3)
+python3 scripts/make_employer_salary_profiles.py
+
 # Stage 3: Model training
 python3 -m src.models.run_models --paths configs/paths.yaml
 
@@ -249,7 +252,10 @@ python3 -m pytest tests/ -q                  # 3. Validate
 - `*_scores` / `*_forecasts` — Model output tables
 - Partitioned tables are directories (e.g., `fact_perm/`); flat copies end in `.parquet`
 
-**Stub / empty tables (expected — no data source available):**
+**Salary artifacts (built in Stage 2b — `scripts/make_employer_salary_profiles.py`):**
+- `employer_salary_profiles.parquet` — Per-employer wage statistics by SOC code (2,524,521 rows)
+- `employer_salary_yearly.parquet` — Year-over-year employer wage trends (1,432,611 rows)
+- `soc_salary_market.parquet` — SOC-level market salary benchmarks (18,038 rows)
 
 **Post-level IV issuance data:**
 - `fact_iv_post.parquet` — Monthly immigrant visa issuances by consular post × visa class (163K rows, 153 posts, FY2017–FY2025). Source: 99 DOS "IV Issuances by Post" PDFs. Feeds into `visa_demand_metrics`.
@@ -356,8 +362,8 @@ src/
 ├── normalize/       # SOC crosswalks, employer normalization
 ├── validate/        # Data quality check helpers
 └── export/          # RAG chunk generation & bundle packaging for Compass (P3)
-    ├── rag_builder.py          # Generate 98 text chunks across 10 topics
-    └── qa_generator.py         # Generate 178 pre-computed Q&A pairs
+    ├── rag_builder.py          # Generate 341 text chunks across 10 topics
+    └── qa_generator.py         # Generate 684 pre-computed Q&A pairs
 ```
 
 ### Key Scripts (scripts/)
@@ -372,6 +378,7 @@ src/
 | `build_fact_*.py` | Build P2 gap fact tables |
 | `make_*.py` | Build derived metric tables |
 | `build_fact_iv_post.py` | Parse 99 DOS "IV by Post" PDFs → fact_iv_post.parquet |
+| `make_employer_salary_profiles.py` | Build employer×SOC salary profiles + yearly + market tables |
 | `make_visa_demand_metrics.py` | Aggregate visa demand from 4 sources (incl. fact_iv_post) |
 | `test_rag_practical.py` | Practical RAG smoke test (29 checks) |
 | `audit_*.py` | Input/output audit runners |
@@ -401,6 +408,6 @@ When editing documentation files in this project:
 6. **`conftest.py`** — Root pytest config (chat_tap activation)
 7. **`configs/paths.yaml`** — Data root and artifacts root paths
 8. **`src/incremental/change_detector.py`** — Incremental change detection (manifest, dependency graph)
-9. **`src/export/rag_builder.py`** — RAG chunk generator (98 chunks, 10 topics, 36 source artifacts)
-10. **`src/export/qa_generator.py`** — Pre-computed Q&A pairs (178 pairs across 10 topics)
+9. **`src/export/rag_builder.py`** — RAG chunk generator (341 chunks, 10 topics, 36 source artifacts)
+10. **`src/export/qa_generator.py`** — Pre-computed Q&A pairs (684 pairs across 10 topics)
 11. **`scripts/test_rag_practical.py`** — Practical end-to-end RAG smoke test (29 checks)

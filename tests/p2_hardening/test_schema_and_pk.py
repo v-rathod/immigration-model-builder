@@ -192,16 +192,16 @@ class TestGoldenRowCounts:
     """Assert known stable row counts from prior sessions."""
 
     def test_fact_cutoffs_all_rows(self):
-        assert _row_count("fact_cutoffs_all") == 8_315
+        assert _row_count("fact_cutoffs_all") == 8_060
 
     def test_fact_cutoff_trends_rows(self):
-        assert _row_count("fact_cutoff_trends") == 8_315
+        assert _row_count("fact_cutoff_trends") == 8_060
 
     def test_category_movement_metrics_rows(self):
-        assert _row_count("category_movement_metrics") == 8_315
+        assert _row_count("category_movement_metrics") == 8_060
 
     def test_backlog_estimates_rows(self):
-        assert _row_count("backlog_estimates") == 8_315
+        assert _row_count("backlog_estimates") == 8_060
 
     def test_employer_monthly_metrics_rows(self):
         rows = _row_count("employer_monthly_metrics")

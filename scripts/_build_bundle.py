@@ -66,7 +66,7 @@ session_index = {
         "qa_fail": 0,
         "coverage_oews": "100%",
         "perm_pk": "FIXED",
-        "backlog_rows": 8315,
+        "backlog_rows": 8060,
         "efs_corr": 0.7756,
         "efs_gates": "38/38 PASS"
     }

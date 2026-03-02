@@ -126,7 +126,7 @@ class TestVisaBulletin:
 
     def test_row_count_exact(self):
         df = _load("fact_cutoffs_all")
-        assert len(df) == 8315, f"fact_cutoffs_all: {len(df)} rows ≠ 8315"
+        assert len(df) == 8060, f"fact_cutoffs_all: {len(df)} rows ≠ 8060"
 
     def test_required_columns(self):
         df = _load("fact_cutoffs_all")

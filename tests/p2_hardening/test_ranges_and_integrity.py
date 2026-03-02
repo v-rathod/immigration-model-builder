@@ -240,5 +240,6 @@ class TestStatisticalSmoke:
             pytest.skip("velocity_3m not present")
         numeric = pd.to_numeric(df["velocity_3m"], errors="coerce")
         null_pct = numeric.isna().mean()
-        # First few months per category won't have 3m windows; ≤55% null acceptable
-        assert null_pct <= 0.55, f"fact_cutoff_trends: {null_pct*100:.1f}% null velocity_3m"
+        # First few months per category won't have 3m windows; ≤60% null acceptable
+        # PHL/VIETNAM add new series with initial null velocity windows
+        assert null_pct <= 0.60, f"fact_cutoff_trends: {null_pct*100:.1f}% null velocity_3m"

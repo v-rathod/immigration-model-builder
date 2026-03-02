@@ -2,10 +2,12 @@
 
 Reads employer_features.parquet → produces employer_friendliness_scores.parquet.
 
-Scoring Model:
-  Outcome Sub-score   (50%): approval_rate_24m with Bayesian shrinkage
-  Wage Sub-score      (30%): wage_ratio_med (cap 1.3) rescaled 0-100
-  Sustainability      (20%): months_active, trend, volume, volatility blend
+Scoring Model (v1.1 — enhanced with LCA + H1B Hub signals):
+  Outcome Sub-score     (40%): approval_rate_24m with Bayesian shrinkage
+  Wage Sub-score        (25%): wage_ratio_med (cap 1.3) rescaled 0-100
+  Sustainability        (15%): months_active, trend, volume, volatility blend
+  H-1B Signal           (10%): LCA approval rate + wage competitiveness vs PW
+  Retention Signal      (10%): H1B Hub continuing/total ratio (worker retention)
 
 Eligibility guardrails:
   - n_24m < 3 → EFS = NULL (insufficient data)
@@ -19,9 +21,11 @@ from pathlib import Path
 
 
 # ── Constants ───────────────────────────────────────────────
-WEIGHT_OUTCOME = 0.50
-WEIGHT_WAGE = 0.30
-WEIGHT_SUSTAINABILITY = 0.20
+WEIGHT_OUTCOME = 0.40
+WEIGHT_WAGE = 0.25
+WEIGHT_SUSTAINABILITY = 0.15
+WEIGHT_H1B_SIGNAL = 0.10
+WEIGHT_RETENTION = 0.10
 
 # Bayesian shrinkage prior: population approval rate / strength
 SHRINKAGE_PRIOR = 0.88          # ~88% pop approval rate
@@ -97,6 +101,61 @@ def _sustainability_subscore(row: pd.Series) -> float:
     return round(sum(p * w for p, w in zip(parts, weights)) / sum(weights), 2)
 
 
+def _h1b_signal_subscore(row: pd.Series) -> float:
+    """H-1B signal: LCA approval rate + LCA wage vs prevailing wage.
+    Employers with strong H-1B track records get higher scores."""
+    parts = []
+    weights = []
+
+    # LCA approval rate (if available)
+    lca_ar = row.get('lca_approval_rate_24m')
+    if lca_ar is not None and not np.isnan(lca_ar):
+        parts.append(lca_ar * 100.0)
+        weights.append(0.40)
+
+    # LCA wage ratio vs prevailing wage (higher = paying more)
+    lca_wr = row.get('lca_wage_ratio')
+    if lca_wr is not None and not np.isnan(lca_wr):
+        # Map 0.8→0, 1.0→60, 1.3→100, 1.5+→100
+        wr_clamped = max(0.8, min(1.5, lca_wr))
+        if wr_clamped <= 1.0:
+            wr_score = (wr_clamped - 0.8) / 0.2 * 60.0
+        else:
+            wr_score = 60.0 + (wr_clamped - 1.0) / 0.5 * 40.0
+        parts.append(min(100.0, wr_score))
+        weights.append(0.35)
+
+    # H-1B volume signal (having LCA filings = positive indicator)
+    lca_vol = row.get('lca_filings_24m')
+    if lca_vol is not None and not np.isnan(lca_vol) and lca_vol > 0:
+        vol_score = min(100.0, np.log10(max(lca_vol, 1)) / np.log10(500) * 100.0)
+        parts.append(vol_score)
+        weights.append(0.25)
+
+    if not parts:
+        return 50.0  # neutral if no LCA data
+    return round(sum(p * w for p, w in zip(parts, weights)) / sum(weights), 2)
+
+
+def _retention_subscore(row: pd.Series) -> float:
+    """Retention signal from H1B Hub: continuing approvals / total.
+    Higher ratio = employer retains H-1B workers longer (positive signal)."""
+    ret_ratio = row.get('h1b_hub_retention_ratio')
+    if ret_ratio is not None and not np.isnan(ret_ratio):
+        # Map 0→0, 0.5→50, 1.0→100
+        return round(ret_ratio * 100.0, 2)
+
+    # Fallback: LCA-to-PERM ratio as proxy
+    # Higher ratio = more H-1Bs per PERM filing = employer sponsors for GC
+    ltp = row.get('lca_to_perm_ratio')
+    if ltp is not None and not np.isnan(ltp) and ltp > 0:
+        # Map 1→30, 5→60, 20+→90 (log scale)
+        ltp_score = min(90.0, 30.0 + np.log10(max(ltp, 1)) / np.log10(20) * 60.0)
+        return round(ltp_score, 2)
+
+    return 50.0  # neutral if no data
+
+
 def fit_employer_score(in_tables: Path, out_tables: Path) -> None:
     """Compute EFS for every employer row in employer_features.parquet.
 
@@ -137,13 +196,17 @@ def fit_employer_score(in_tables: Path, out_tables: Path) -> None:
     df['outcome_subscore'] = df.apply(_outcome_subscore, axis=1)
     df['wage_subscore'] = df.apply(_wage_subscore, axis=1)
     df['sustainability_subscore'] = df.apply(_sustainability_subscore, axis=1)
+    df['h1b_signal_subscore'] = df.apply(_h1b_signal_subscore, axis=1)
+    df['retention_subscore'] = df.apply(_retention_subscore, axis=1)
 
     # ── Composite EFS ───────────────────────────────────────
     log('\n[C] Computing composite EFS')
     df['efs_raw'] = (
         df['outcome_subscore'] * WEIGHT_OUTCOME +
         df['wage_subscore'] * WEIGHT_WAGE +
-        df['sustainability_subscore'] * WEIGHT_SUSTAINABILITY
+        df['sustainability_subscore'] * WEIGHT_SUSTAINABILITY +
+        df['h1b_signal_subscore'] * WEIGHT_H1B_SIGNAL +
+        df['retention_subscore'] * WEIGHT_RETENTION
     )
 
     # ── Eligibility guardrails ──────────────────────────────
@@ -180,9 +243,15 @@ def fit_employer_score(in_tables: Path, out_tables: Path) -> None:
         'approval_rate_24m', 'denial_rate_24m',
         'wage_ratio_med', 'wage_ratio_p75',
         'outcome_subscore', 'wage_subscore', 'sustainability_subscore',
+        'h1b_signal_subscore', 'retention_subscore',
         'efs', 'efs_tier',
         'months_active_24m', 'soc_breadth_24m', 'site_breadth_24m',
         'approval_rate_trend_12v12', 'outcome_volatility',
+        # LCA-derived
+        'lca_filings_24m', 'lca_approval_rate_24m', 'lca_median_wage',
+        'lca_wage_ratio', 'lca_to_perm_ratio',
+        # H1B Hub-derived
+        'h1b_hub_retention_ratio', 'h1b_hub_naics',
         'last_refreshed_at',
     ]
     out_cols = [c for c in out_cols if c in df.columns]
