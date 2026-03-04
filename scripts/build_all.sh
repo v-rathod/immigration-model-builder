@@ -2,10 +2,20 @@
 # Full pipeline execution script
 #
 # This script runs the entire immigration model builder pipeline:
-#   1. Curate raw data into canonical tables
-#   1b. Patch dim_employer from all fact_perm partitions
-#   2. Engineer features from curated tables
-#   3. Train models and generate predictions
+#   1.    Curate raw data into canonical tables
+#   1b.   Patch dim_employer + expand dim_soc from fact_perm
+#   1c.   Additional P1-sourced fact tables (H1B hub, BLS CES, IV Post)
+#   2.    Engineer core features (employer_features, salary_benchmarks, queue_depth)
+#   2b.   Salary profiles (employer×role data for P3 Wage page)
+#   2c.   Approval/denial dashboard artifacts
+#   2d.   P3 export artifacts — ALL dashboard data (cutoff trends, CMM, backlog,
+#         geo, SOC demand, processing times, employer monthly, risk, visa demand)
+#   3.    Train models and generate predictions (pd_forecasts, EFS/SRS)
+#   4.    RAG export (pre-compute chunks & Q&A cache for Compass chat)
+#
+# IMPORTANT: Stage 2d MUST run on every full build. It applies the blended-
+# velocity formula (CMM, backlog) and all other data-quality corrections.
+# Never apply data fixes as one-off patches outside this pipeline.
 #
 # Usage: bash scripts/build_all.sh
 #
@@ -75,6 +85,56 @@ echo "------------------------------------------------------------"
 echo "Stage 2b: SALARY PROFILES (employer×role salary artifact)"
 echo "------------------------------------------------------------"
 python3 scripts/make_employer_salary_profiles.py
+echo ""
+
+# Stage 2c: Approval/Denial Dashboard (for P3 approval/denial trends)
+echo "------------------------------------------------------------"
+echo "Stage 2c: APPROVAL/DENIAL TRENDS DASHBOARD"
+echo "------------------------------------------------------------"
+python3 scripts/build_approval_denial_trends.py
+python3 scripts/build_approval_denial_detailed.py
+python3 scripts/export_approval_denial_for_p3.py
+echo ""
+
+# Stage 2d: P3 Export Artifacts — dashboard and visualization data
+#
+# These scripts produce the derived artifacts consumed by Compass (P3).
+# They MUST run on every full build so that fresh P1 data produces correct
+# outputs.  The blended-velocity fix (CMM + backlog) lives inside these
+# scripts — NOT as a one-off patch.
+#
+# Dependency order:
+#   STEP 1  make_fact_cutoff_trends        (requires: fact_cutoffs_all)
+#   STEP 2  make_employer_monthly_metrics  (requires: fact_perm, dim_employer)
+#   STEP 3  make_category_movement_metrics (requires: fact_cutoff_trends STEP 1)
+#   STEP 4  make_worksite_geo_metrics      (requires: fact_perm, fact_lca, dim_area)
+#   STEP 5  make_salary_benchmarks         (already run via run_features above)
+#   STEP 6  make_soc_demand_metrics        (requires: fact_perm, fact_lca, dim_soc)
+#   STEP 7  make_processing_times_trends   (requires: P1 USCIS processing CSV)
+#   STEP 8  make_backlog_estimates         (requires: fact_cutoff_trends STEP 1, fact_perm)
+#   --      make_employer_risk_features    (requires: fact_warn_events, dim_employer)
+#   --      make_visa_demand_metrics       (requires: fact_visa_issuance, fact_visa_applications)
+echo "------------------------------------------------------------"
+echo "Stage 2d: P3 EXPORT ARTIFACTS (dashboards + visualizations)"
+echo "------------------------------------------------------------"
+echo "[STEP 1/8] Cutoff trends (fact_cutoff_trends)"
+python3 scripts/make_fact_cutoff_trends.py
+echo "[STEP 2/8] Employer monthly metrics"
+python3 scripts/make_employer_monthly_metrics.py
+echo "[STEP 3/8] Category movement metrics (blended velocity)"
+python3 scripts/make_category_movement_metrics.py
+echo "[STEP 4/8] Worksite geographic metrics"
+python3 scripts/make_worksite_geo_metrics.py
+echo "[STEP 6/8] SOC demand metrics"
+python3 scripts/make_soc_demand_metrics.py
+echo "[STEP 7/8] Processing times trends"
+python3 scripts/make_processing_times_trends.py
+echo "[STEP 8/8] Backlog estimates (blended velocity)"
+python3 scripts/make_backlog_estimates.py
+echo "[  extra ] Employer risk features"
+python3 scripts/make_employer_risk_features.py
+echo "[  extra ] Visa demand metrics"
+python3 scripts/make_visa_demand_metrics.py
 echo ""
 
 # Stage 3: Models
