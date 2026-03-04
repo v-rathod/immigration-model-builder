@@ -145,6 +145,9 @@ DEPENDENCY_GRAPH: Dict[str, List[Tuple[str, int, str]]] = {
         ("employer_risk_features.parquet",     4, "python3 scripts/make_employer_risk_features.py"),
         ("soc_demand_metrics.parquet",         4, "python3 scripts/make_soc_demand_metrics.py"),
         ("worksite_geo_metrics.parquet",       4, "python3 scripts/make_worksite_geo_metrics.py"),
+        # Also triggers approval_denial rebuild (multi-source):
+        ("approval_denial_trends.parquet",     4, "python3 scripts/build_approval_denial_trends.py"),
+        ("approval_denial_detailed.parquet",   4, "python3 scripts/build_approval_denial_detailed.py"),
     ],
     "LCA": [
         ("fact_lca/",                          1, "python3 -m src.curate.run_curate --paths configs/paths.yaml"),
@@ -170,6 +173,8 @@ DEPENDENCY_GRAPH: Dict[str, List[Tuple[str, int, str]]] = {
     ],
     "VISA_APPLICATIONS": [
         ("fact_visa_applications.parquet",     1, "python3 scripts/build_fact_visa_applications.py"),
+        # Also triggers approval_denial rebuild (multi-source):
+        ("approval_denial_trends.parquet",     4, "python3 scripts/build_approval_denial_trends.py"),
     ],
     "NIV_ISSUANCE": [
         ("fact_niv_issuance.parquet",          1, "python3 scripts/build_fact_niv_issuance.py"),
@@ -177,6 +182,8 @@ DEPENDENCY_GRAPH: Dict[str, List[Tuple[str, int, str]]] = {
     "USCIS": [
         ("fact_uscis_approvals.parquet",       1, "python3 scripts/build_fact_uscis_approvals.py --downloads {data_root}/USCIS_IMMIGRATION --out artifacts/tables/fact_uscis_approvals.parquet"),
         ("processing_times_trends.parquet",    4, "python3 scripts/make_processing_times_trends.py"),
+        # Also triggers approval_denial rebuild (multi-source):
+        ("approval_denial_trends.parquet",     4, "python3 scripts/build_approval_denial_trends.py"),
     ],
     "DHS_ADMISSIONS": [
         ("fact_dhs_admissions.parquet",        1, "python3 scripts/build_fact_dhs_admissions.py"),
@@ -212,6 +219,18 @@ DEPENDENCY_GRAPH: Dict[str, List[Tuple[str, int, str]]] = {
         # P1 file: acs1_2025_nativity.json contains {"error": "404 Client Error"}
         # No builder until Census publishes 2025 ACS1 data (~Sep 2026)
         ("fact_acs_wages.parquet", 1, "echo 'ACS: skipped — Census API 404'"),
+    ],
+    # ── Multi-source derived artifacts (depend on multiple P1 datasets) ──
+    # These are triggered by changes in ANY of their source datasets.
+    # Each rebuild command will detect missing deps and handle gracefully.
+    # Conceptually, they belong to all their source datasets, but we list under
+    # the primary source and cross-reference in code.
+    "APPROVAL_DENIAL": [
+        # Approval/denial dashboard for P3: consolidates PERM + VISA_APPS + USCIS
+        # Triggered by changes in any source
+        ("approval_denial_trends.parquet", 4, "python3 scripts/build_approval_denial_trends.py"),
+        ("approval_denial_detailed.parquet", 4, "python3 scripts/build_approval_denial_detailed.py"),
+        ("approval_denial_export/", 4, "python3 scripts/export_approval_denial_for_p3.py"),
     ],
     "DOL_RECORD_LAYOUTS": [
         # Reference metadata only — record layout PDFs for LCA/PERM parsers

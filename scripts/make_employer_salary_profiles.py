@@ -10,7 +10,7 @@ Combines wage data from:
 Output grain: employer_id × soc_code × visa_type × fiscal_year
 Each row contains:
   - Filing counts
-  - Salary stats (mean, median, p25, p75)
+  - Salary stats (mean, median, p10, p25, p75, p90)
   - Prevailing wage benchmark (from OEWS)
   - Wage premium vs market
 
@@ -230,8 +230,8 @@ def _build_profiles(combined: pd.DataFrame, oews: pd.DataFrame, log_lines: list)
 
     # Step 2: quantiles via describe (much faster than lambda)
     log.info("  Step 2/3: percentile stats ...")
-    pcts = grp["annual_wage"].quantile([0.25, 0.75]).unstack(level=-1)
-    pcts.columns = ["p25_salary", "p75_salary"]
+    pcts = grp["annual_wage"].quantile([0.10, 0.25, 0.75, 0.90]).unstack(level=-1)
+    pcts.columns = ["p10_salary", "p25_salary", "p75_salary", "p90_salary"]
     pcts = pcts.reset_index()
     agg = agg.merge(pcts, on=grp_cols, how="left")
 
@@ -242,8 +242,9 @@ def _build_profiles(combined: pd.DataFrame, oews: pd.DataFrame, log_lines: list)
     log.info("  Step 3/3: OEWS join + wage premium ...")
 
     # Round salary columns
-    for col in ["mean_salary", "median_salary", "p25_salary", "p75_salary",
-                "min_salary", "max_salary", "prevailing_wage_median"]:
+    for col in ["mean_salary", "median_salary", "p10_salary", "p25_salary",
+                "p75_salary", "p90_salary", "min_salary", "max_salary",
+                "prevailing_wage_median"]:
         agg[col] = agg[col].round(0)
 
     # Join OEWS national benchmark
@@ -356,23 +357,29 @@ def _build_soc_market_summary(profiles: pd.DataFrame) -> pd.DataFrame:
     # Weighted aggregation via pre-multiplication
     df["_w_mean"] = df["mean_salary"] * df["n_filings"]
     df["_w_med"] = df["median_salary"] * df["n_filings"]
+    df["_w_p10"] = df["p10_salary"] * df["n_filings"]
     df["_w_p25"] = df["p25_salary"] * df["n_filings"]
     df["_w_p75"] = df["p75_salary"] * df["n_filings"]
+    df["_w_p90"] = df["p90_salary"] * df["n_filings"]
 
     agg = df.groupby(["soc_code", "visa_type", "fiscal_year"], observed=True).agg(
         total_filings=("n_filings", "sum"),
         n_employers=("employer_id", "nunique"),
         _w_mean_sum=("_w_mean", "sum"),
         _w_med_sum=("_w_med", "sum"),
+        _w_p10_sum=("_w_p10", "sum"),
         _w_p25_sum=("_w_p25", "sum"),
         _w_p75_sum=("_w_p75", "sum"),
+        _w_p90_sum=("_w_p90", "sum"),
     ).reset_index()
 
     agg["market_mean"] = (agg["_w_mean_sum"] / agg["total_filings"]).round(0)
     agg["market_median"] = (agg["_w_med_sum"] / agg["total_filings"]).round(0)
+    agg["market_p10"] = (agg["_w_p10_sum"] / agg["total_filings"]).round(0)
     agg["market_p25"] = (agg["_w_p25_sum"] / agg["total_filings"]).round(0)
     agg["market_p75"] = (agg["_w_p75_sum"] / agg["total_filings"]).round(0)
-    agg.drop(columns=["_w_mean_sum", "_w_med_sum", "_w_p25_sum", "_w_p75_sum"], inplace=True)
+    agg["market_p90"] = (agg["_w_p90_sum"] / agg["total_filings"]).round(0)
+    agg.drop(columns=["_w_mean_sum", "_w_med_sum", "_w_p10_sum", "_w_p25_sum", "_w_p75_sum", "_w_p90_sum"], inplace=True)
 
     log.info(f"  SOC market summary rows: {len(agg):,}")
     return agg
