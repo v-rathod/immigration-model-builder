@@ -28,6 +28,57 @@ log = logging.getLogger(__name__)
 
 APPROVED_STATUS = {"CERTIFIED", "CERTIFIED-EXPIRED"}
 
+# Normalize full state names → 2-letter abbreviations.
+# Raw worksite_state fields mix abbreviations and full names (e.g. 'AL' vs 'ALABAMA').
+STATE_NAME_TO_ABBR: dict[str, str] = {
+    "ALABAMA": "AL", "ALASKA": "AK", "ARIZONA": "AZ", "ARKANSAS": "AR",
+    "CALIFORNIA": "CA", "COLORADO": "CO", "CONNECTICUT": "CT", "DELAWARE": "DE",
+    "DISTRICT OF COLUMBIA": "DC", "FLORIDA": "FL", "GEORGIA": "GA", "GUAM": "GU",
+    "HAWAII": "HI", "IDAHO": "ID", "ILLINOIS": "IL", "INDIANA": "IN",
+    "IOWA": "IA", "KANSAS": "KS", "KENTUCKY": "KY", "LOUISIANA": "LA",
+    "MAINE": "ME", "MARYLAND": "MD", "MASSACHUSETTS": "MA", "MICHIGAN": "MI",
+    "MINNESOTA": "MN", "MISSISSIPPI": "MS", "MISSOURI": "MO", "MONTANA": "MT",
+    "NEBRASKA": "NE", "NEVADA": "NV", "NEW HAMPSHIRE": "NH", "NEW JERSEY": "NJ",
+    "NEW MEXICO": "NM", "NEW YORK": "NY", "NORTH CAROLINA": "NC",
+    "NORTH DAKOTA": "ND", "OHIO": "OH", "OKLAHOMA": "OK", "OREGON": "OR",
+    "PENNSYLVANIA": "PA", "PUERTO RICO": "PR", "RHODE ISLAND": "RI",
+    "SOUTH CAROLINA": "SC", "SOUTH DAKOTA": "SD", "TENNESSEE": "TN",
+    "TEXAS": "TX", "UTAH": "UT", "VERMONT": "VT", "VIRGINIA": "VA",
+    "VIRGIN ISLANDS": "VI", "WASHINGTON": "WA", "WEST VIRGINIA": "WV",
+    "WISCONSIN": "WI", "WYOMING": "WY",
+    # Common territories / other entries in the raw data
+    "AMERICAN SAMOA": "AS", "NORTHERN MARIANA ISLANDS": "MP",
+    "FEDERATED STATES OF MICRONESIA": "FM", "PALAU": "PW",
+    "MARSHALL ISLANDS": "MH",
+}
+# Valid 2-letter abbreviations (all values post-normalization must be in this set)
+VALID_STATE_ABBRS: set[str] = set(STATE_NAME_TO_ABBR.values()) | {
+    "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "DC", "FL", "GA", "GU",
+    "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI",
+    "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND",
+    "OH", "OK", "OR", "PA", "PR", "RI", "SC", "SD", "TN", "TX", "UT", "VT",
+    "VA", "VI", "WA", "WV", "WI", "WY", "AS", "MP", "FM", "PW", "MH",
+}
+
+
+def normalize_state(series: pd.Series) -> pd.Series:
+    """Normalize worksite_state to 2-letter uppercase abbreviations.
+
+    Handles three cases in raw data:
+      1. Already a valid 2-letter abbreviation ('CA') → keep
+      2. Full state name in either case ('California', 'CALIFORNIA') → map to abbr
+      3. Anything else (addresses, nulls, junk) → NaN
+    """
+    upper = series.astype(str).str.strip().str.upper()
+    # Map full names to abbreviations; values already 2-letter pass through unchanged
+    normalized = upper.map(STATE_NAME_TO_ABBR).where(
+        upper.map(STATE_NAME_TO_ABBR).notna(),  # full-name match
+        upper,                                   # already an abbreviation (or garbage)
+    )
+    # Null out anything that isn't a valid 2-letter abbreviation
+    return normalized.where(normalized.isin(VALID_STATE_ABBRS), other=pd.NA)
+
+
 WAGE_MULTIPLIERS = {
     "Hour": 2080,
     "hr": 2080,
@@ -137,6 +188,20 @@ def build_geo_metrics(log_lines: list) -> pd.DataFrame:
         log_lines.append(f"{dataset}: {len(df):,} rows loaded")
         # Case-insensitive status match (PERM has mixed-case 'Certified'/'CERTIFIED')
         df["is_approved"] = df["case_status"].str.upper().isin(APPROVED_STATUS).astype(int)
+
+        # ── Normalize worksite_state to 2-letter abbreviations ──────────────
+        # Raw data mixes abbreviations ('CA') and full names ('CALIFORNIA').
+        # Normalize to abbr; drop rows with unrecognised state values.
+        if "worksite_state" in df.columns:
+            before = df["worksite_state"].notna().sum()
+            df["worksite_state"] = normalize_state(df["worksite_state"])
+            after = df["worksite_state"].notna().sum()
+            dropped = int(before - after)
+            if dropped:
+                log_lines.append(f"{dataset}: dropped {dropped:,} rows with unrecognised worksite_state")
+            uniq = int(df["worksite_state"].nunique())
+            log_lines.append(f"{dataset}: {uniq} unique (normalised) states")
+
         df["annualized_wage"] = np.nan
         if wage_col in df.columns and unit_col in df.columns:
             df[wage_col] = pd.to_numeric(df[wage_col], errors="coerce")
