@@ -57,14 +57,81 @@ def build_category_metrics(df: pd.DataFrame, log_lines: list) -> pd.DataFrame:
     df["volatility_score"] = _rolling_trailing(df, series_keys, adv_col, 12, "std")
     df["retrogression_events_12m"] = _rolling_trailing(df, series_keys, retro_col, 12, "sum")
 
-    # Median is computed separately using expanding because pandas rolling doesn't have direct median
-    def _rolling_median(g):
-        return g.rolling(12, min_periods=1).median()
+    # Median — only over non-zero advancement months (zero = frozen cutoff, not useful)
+    def _rolling_nonzero_median(g):
+        result = []
+        vals = g.values
+        for i in range(len(vals)):
+            start = max(0, i - 11)
+            window = vals[start:i + 1]
+            nonzero = [v for v in window if not pd.isna(v) and v != 0.0]
+            if nonzero:
+                result.append(float(np.median(nonzero)))
+            else:
+                result.append(np.nan)
+        return pd.Series(result, index=g.index)
 
     df["median_advancement_days"] = (
         df.groupby(series_keys, observed=True)[adv_col]
-        .transform(_rolling_median)
+        .transform(_rolling_nonzero_median)
     )
+
+    # ── Blended velocity (matches pd_forecast.py formula) ──────────────
+    # For each series at each bulletin month, compute:
+    #   - full_history_net_vel: (last_cutoff - first_cutoff) / total_months
+    #   - rolling_12m_mean: avg of last 12 months (NaN→0)
+    #   - rolling_24m_mean: avg of last 24 months (NaN→0)
+    #   - blended: 50% full_history + 25% capped_r24 + 25% capped_r12
+    # This matches across artifacts (pd_forecasts, queue_depth_estimates).
+    def _compute_blended(group):
+        group = group.sort_values("_sort").copy()
+        adv = group[adv_col].fillna(0.0).values.astype(float)
+
+        # Expanding full-history net velocity using queue_position_days
+        qpos = group["queue_position_days"].values if "queue_position_days" in group.columns else None
+        blended = np.full(len(group), np.nan)
+        net_vel_arr = np.full(len(group), np.nan)
+
+        # Find first valid qpos
+        if qpos is not None:
+            first_valid_idx = None
+            first_qpos = None
+            for i in range(len(qpos)):
+                if not pd.isna(qpos[i]):
+                    if first_valid_idx is None:
+                        first_valid_idx = i
+                        first_qpos = qpos[i]
+                    # Full-history net vel up to this point
+                    months = i - first_valid_idx + 1
+                    if months > 0:
+                        net_vel = (qpos[i] - first_qpos) / months
+                        net_vel = max(net_vel, 0.0)
+                    else:
+                        net_vel = 0.0
+                    net_vel_arr[i] = net_vel
+
+                    # Rolling 12m and 24m means (NaN filled to 0)
+                    r12 = float(np.mean(adv[max(0, i - 11):i + 1]))
+                    r24 = float(np.mean(adv[max(0, i - 23):i + 1]))
+
+                    # Cap rolling means
+                    vel_cap = max(net_vel * 1.25, net_vel + 5.0)
+                    c12 = min(max(r12, 0.0), vel_cap)
+                    c24 = min(max(r24, 0.0), vel_cap)
+
+                    # Blended: 50% full-hist + 25% r24 + 25% r12
+                    b = 0.50 * net_vel + 0.25 * c24 + 0.25 * c12
+                    blended[i] = max(b, 0.0)
+
+        group["blended_velocity"] = blended
+        group["net_velocity"] = net_vel_arr
+        return group
+
+    # pandas 3.x drops group keys from apply; iterate manually
+    parts = []
+    for _keys, group in df.groupby(series_keys, observed=True):
+        parts.append(_compute_blended(group))
+    df = pd.concat(parts, ignore_index=True)
 
     # next_movement_prediction
     vel3 = "velocity_3m" if "velocity_3m" in df.columns else adv_col
@@ -85,6 +152,7 @@ def build_category_metrics(df: pd.DataFrame, log_lines: list) -> pd.DataFrame:
         "bulletin_year", "bulletin_month", "chart", "category", "country",
         "avg_monthly_advancement_days", "median_advancement_days",
         "volatility_score", "retrogression_events_12m", "next_movement_prediction",
+        "blended_velocity", "net_velocity",
     ]
     existing = [c for c in out_cols if c in df.columns]
     result = df[existing].drop_duplicates(["bulletin_year", "bulletin_month", "chart", "category", "country"]).reset_index(drop=True)

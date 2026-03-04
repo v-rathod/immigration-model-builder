@@ -118,8 +118,47 @@ def build_backlog_estimates(log_lines: list) -> pd.DataFrame:
             df["monthly_advancement_days"].rolling(12, min_periods=3).mean()
         )
 
-    # Backlog estimate: queue_position_days / (advancement_days_12m_avg / 30)
-    adv_days_monthly = df["advancement_days_12m_avg"] / 30.0
+    # ── Blended velocity (matches pd_forecast.py formula) ──────────────
+    # 50% full-history net + 25% capped rolling-24m + 25% capped rolling-12m
+    # This smooths out burst advancement spikes while reflecting long-term trends.
+    def _compute_blended_backlog(group):
+        group = group.sort_values(["bulletin_year", "bulletin_month"]).copy()
+        adv = group["monthly_advancement_days"].fillna(0.0).values.astype(float)
+        qpos = group["queue_position_days"].values if "queue_position_days" in group.columns else None
+        blended = np.full(len(group), np.nan)
+
+        if qpos is not None:
+            first_valid_idx = None
+            first_qpos = None
+            for i in range(len(qpos)):
+                if not pd.isna(qpos[i]):
+                    if first_valid_idx is None:
+                        first_valid_idx = i
+                        first_qpos = qpos[i]
+                    months = i - first_valid_idx + 1
+                    net_vel = max((qpos[i] - first_qpos) / months, 0.0) if months > 0 else 0.0
+                    r12 = float(np.mean(adv[max(0, i - 11):i + 1]))
+                    r24 = float(np.mean(adv[max(0, i - 23):i + 1]))
+                    vel_cap = max(net_vel * 1.25, net_vel + 5.0)
+                    c12 = min(max(r12, 0.0), vel_cap)
+                    c24 = min(max(r24, 0.0), vel_cap)
+                    blended[i] = max(0.50 * net_vel + 0.25 * c24 + 0.25 * c12, 0.0)
+
+        group["blended_velocity"] = blended
+        return group
+
+    if group_keys:
+        parts = []
+        for _keys, grp in df.groupby(group_keys, observed=True):
+            parts.append(_compute_blended_backlog(grp))
+        df = pd.concat(parts, ignore_index=True)
+    else:
+        df = _compute_blended_backlog(df)
+
+    # Backlog estimate: use blended_velocity for clearing estimate
+    # (falls back to advancement_days_12m_avg if blended is NaN)
+    effective_vel = df["blended_velocity"].fillna(df["advancement_days_12m_avg"])
+    adv_days_monthly = effective_vel / 30.0
     df["backlog_months_to_clear_est"] = np.where(
         adv_days_monthly.gt(0),
         df["queue_position_days"] / adv_days_monthly,
@@ -134,7 +173,8 @@ def build_backlog_estimates(log_lines: list) -> pd.DataFrame:
     # Final columns
     out_cols = [
         "bulletin_year", "bulletin_month", "chart", "category", "country",
-        "inflow_estimate_12m", "advancement_days_12m_avg", "backlog_months_to_clear_est"
+        "inflow_estimate_12m", "advancement_days_12m_avg", "blended_velocity",
+        "backlog_months_to_clear_est"
     ]
     df_out = df[[c for c in out_cols if c in df.columns]].reset_index(drop=True)
 
