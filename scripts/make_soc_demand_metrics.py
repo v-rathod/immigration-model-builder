@@ -29,6 +29,33 @@ log = logging.getLogger(__name__)
 APPROVED_STATUS = {"CERTIFIED", "CERTIFIED-EXPIRED"}
 WINDOWS_MONTHS = [12, 24, 36]
 
+# BLS Major Occupational Group names (2-digit SOC prefix → label)
+BLS_MAJOR_GROUPS: dict[str, str] = {
+    "11": "Management",
+    "13": "Business and Financial Operations",
+    "15": "Computer and Mathematical",
+    "17": "Architecture and Engineering",
+    "19": "Life, Physical, and Social Science",
+    "21": "Community and Social Service",
+    "23": "Legal",
+    "25": "Educational Instruction and Library",
+    "27": "Arts, Design, Entertainment, Sports, and Media",
+    "29": "Healthcare Practitioners and Technical",
+    "31": "Healthcare Support",
+    "33": "Protective Service",
+    "35": "Food Preparation and Serving Related",
+    "37": "Building and Grounds Cleaning and Maintenance",
+    "39": "Personal Care and Service",
+    "41": "Sales and Related",
+    "43": "Office and Administrative Support",
+    "45": "Farming, Fishing, and Forestry",
+    "47": "Construction and Extraction",
+    "49": "Installation, Maintenance, and Repair",
+    "51": "Production",
+    "53": "Transportation and Material Moving",
+    "55": "Military Specific",
+}
+
 WAGE_MULTIPLIERS = {
     "Hour": 2080, "hr": 2080,
     "Bi-Weekly": 26, "bi-weekly": 26,
@@ -75,8 +102,23 @@ def _top_employers_json(sub: pd.DataFrame, emp_col: str, n: int = 5) -> str:
     return json.dumps([{"employer_id": k, "filings": int(v)} for k, v in top.items()])
 
 
+def _build_title_map() -> dict[str, str]:
+    """Build soc_code → soc_title from dim_soc (skips NaN / legacy codes)."""
+    title_map: dict[str, str] = {}
+    dim_path = TABLES / "dim_soc.parquet"
+    if dim_path.exists():
+        dim = pd.read_parquet(dim_path, columns=["soc_code", "soc_title"])
+        for _, row in dim.iterrows():
+            title = row.get("soc_title")
+            if pd.notna(title):
+                title_map[str(row["soc_code"])] = str(title)
+    return title_map
+
+
 def build_soc_demand(log_lines: list) -> pd.DataFrame:
     records = []
+    # Accumulated soc_title strings from raw LCA/PERM data (fallback for legacy codes)
+    lca_title_map: dict[str, str] = {}
 
     for dataset, fp_dir, wage_col, unit_col in [
         ("PERM", TABLES / "fact_perm", "wage_offer_from", "wage_offer_unit"),
@@ -87,12 +129,25 @@ def build_soc_demand(log_lines: list) -> pd.DataFrame:
             continue
 
         needed = ["case_number", "case_status", "employer_id", "soc_code",
-                  "decision_date", wage_col, unit_col]
+                  "soc_title", "decision_date", wage_col, unit_col]
         log.info(f"Loading {dataset}...")
         df = _read_partitioned_cols(fp_dir, needed)
         if df.empty:
             log_lines.append(f"WARN: {dataset} returned empty")
             continue
+
+        # Capture soc_title strings from raw data for legacy code fallback
+        if "soc_title" in df.columns:
+            raw_titles = (
+                df[["soc_code", "soc_title"]]
+                .dropna(subset=["soc_title"])
+                .drop_duplicates("soc_code")
+                .set_index("soc_code")["soc_title"]
+                .to_dict()
+            )
+            for code, title in raw_titles.items():
+                if code not in lca_title_map and title:
+                    lca_title_map[code] = str(title)
 
         df["decision_date"] = pd.to_datetime(df["decision_date"], errors="coerce")
         df = df.dropna(subset=["decision_date"])
@@ -135,7 +190,29 @@ def build_soc_demand(log_lines: list) -> pd.DataFrame:
         ["window", "dataset"]
     )["offered_median"].rank(pct=True, na_option="keep")
 
-    cols = ["soc_code", "window", "dataset", "filings_count", "approvals_count",
+    # ----- Embed soc_title + soc_major_title -----
+    dim_title_map = _build_title_map()
+
+    def _resolve_title(code: str) -> str:
+        # Prefer dim_soc canonical title, fall back to raw LCA/PERM title
+        if code in dim_title_map:
+            return dim_title_map[code]
+        if code in lca_title_map:
+            return lca_title_map[code]
+        return code  # last resort: show the code itself
+
+    def _resolve_major_title(code: str) -> str:
+        major = code[:2] if len(code) >= 2 else ""
+        return BLS_MAJOR_GROUPS.get(major, "")
+
+    df_out["soc_title"] = df_out["soc_code"].map(_resolve_title)
+    df_out["soc_major_title"] = df_out["soc_code"].map(_resolve_major_title)
+    log_lines.append(
+        f"Titles resolved: {df_out['soc_title'].notna().sum()} / {len(df_out)} rows"
+    )
+
+    cols = ["soc_code", "soc_title", "soc_major_title", "window", "dataset",
+            "filings_count", "approvals_count",
             "approval_rate", "offered_avg", "offered_median",
             "competitiveness_percentile", "top_employers_json"]
     df_out = df_out[[c for c in cols if c in df_out.columns]].reset_index(drop=True)
