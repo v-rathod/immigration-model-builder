@@ -20,7 +20,9 @@ logging.basicConfig(level=logging.INFO, format="%(levelname)s  %(message)s")
 log = logging.getLogger(__name__)
 
 FORM_PATTERN = re.compile(r"(I-?\d{3,4}[A-Z]?)", re.IGNORECASE)
+# Matches "fy2024" (4-digit) OR "fy24" (2-digit, converted to full year)
 FISCAL_YEAR_PATTERN = re.compile(r"fy\s*(\d{4})", re.IGNORECASE)
+FISCAL_YEAR_SHORT = re.compile(r"fy\s*(\d{2})(?!\d)", re.IGNORECASE)  # fy23 → FY2023 (no lookahead for more digits)
 QUARTER_PATTERN = re.compile(r"q(\d)", re.IGNORECASE)
 
 # Column aliases → canonical
@@ -48,22 +50,153 @@ COL_ALIASES = {
 
 
 def extract_form_from_name(fname: str) -> str:
-    """Extract form number from filename."""
+    """Extract form number from filename, normalised (no dashes, uppercase)."""
     m = FORM_PATTERN.search(fname)
     if m:
-        return m.group(1).upper().replace(" ", "-")
+        # Normalise: "I-485" → "I485", "I-765" → "I765"
+        return re.sub(r"-", "", m.group(1)).upper()
     return "UNKNOWN"
 
 
+def _short_year_to_full(two_digit: str) -> str:
+    """Convert 2-digit year to 4-digit (e.g. '23' → '2023', '99' → '1999')."""
+    yr = int(two_digit)
+    return str(2000 + yr) if yr <= 50 else str(1900 + yr)
+
+
 def extract_fy_from_name(fname: str) -> str:
-    """Extract fiscal year from filename."""
+    """Extract fiscal year from filename.
+    Handles: fy2023, fy23, FY24, etc.
+    """
     m = FISCAL_YEAR_PATTERN.search(fname)
     if m:
         return f"FY{m.group(1)}"
-    m2 = re.search(r"(\d{4})", fname)
+    # Try 2-digit: fy23 → FY2023
+    m2 = FISCAL_YEAR_SHORT.search(fname)
     if m2:
-        return f"FY{m2.group(1)}"
+        return f"FY{_short_year_to_full(m2.group(1))}"
+    m3 = re.search(r"(\d{4})", fname)
+    if m3:
+        return f"FY{m3.group(1)}"
     return "FY_UNKNOWN"
+
+
+def extract_fy_from_sheet_data(df_raw: pd.DataFrame) -> str | None:
+    """Scan the first 6 rows of a sheet for 'Fiscal Year YYYY' or 'FY YYYY'.
+    Returns e.g. 'FY2024', or None if not found.
+    """
+    for i in range(min(6, len(df_raw))):
+        for cell in df_raw.iloc[i].tolist():
+            cell_str = str(cell).strip() if pd.notna(cell) else ""
+            m = re.search(r"fiscal\s+year\s+(\d{4})", cell_str, re.IGNORECASE)
+            if m:
+                return f"FY{m.group(1)}"
+            m2 = FISCAL_YEAR_PATTERN.search(cell_str)
+            if m2:
+                return f"FY{m2.group(1)}"
+    return None
+
+
+# ---------------------------------------------------------------------------
+# I-485 specialized parser (wide field-office × category format)
+# ---------------------------------------------------------------------------
+_I485_RE = re.compile(r"i[-.]?485", re.IGNORECASE)
+
+
+def is_i485_file(fname: str) -> bool:
+    return bool(_I485_RE.search(fname))
+
+
+def parse_i485_wide(df_raw: pd.DataFrame, fname: str, default_fy: str) -> list:
+    """Parse I-485 files with wide field-office format.
+
+    Structure:
+      - Header row somewhere in first 15 rows containing repeated
+        'Approved', 'Denied' column groups (one per category: Family,
+        EB, Humanitarian, Others, then a Grand Total section).
+      - First data row is the 'Total' aggregate (all field offices summed).
+      - We extract only that Total row and use the LAST 'Approved' /
+        'Denied' columns, which correspond to the Grand Total section.
+    """
+    now_ts = datetime.now(timezone.utc).isoformat()
+
+    # --- find header row: has multiple 'approv' or 'denied' columns ---
+    h_idx = None
+    for i in range(min(15, len(df_raw))):
+        row_lower = [
+            str(c).strip().lower()
+            for c in df_raw.iloc[i].tolist()
+            if pd.notna(c) and str(c).strip()
+        ]
+        n_approv = sum(1 for v in row_lower if "approv" in v)
+        if n_approv >= 2:
+            h_idx = i
+            break
+
+    if h_idx is None:
+        return []
+
+    headers = [
+        str(c).strip() if pd.notna(c) else f"_col{j}"
+        for j, c in enumerate(df_raw.iloc[h_idx].tolist())
+    ]
+    data = df_raw.iloc[h_idx + 1 :].reset_index(drop=True)
+
+    # --- find 'Total' aggregate row (usually the first non-blank row) ---
+    total_row = None
+    for _, row in data.iterrows():
+        c0 = str(row.iloc[0]).strip().lower() if pd.notna(row.iloc[0]) else ""
+        if c0 in ("total", "grand total"):
+            total_row = row
+            break
+        # Some files: first data row with numbers but blank col-0 = Total
+        if c0 == "" and any(
+            re.search(r"^[\d,]+$", str(row.iloc[j]).strip())
+            for j in range(1, min(len(row), 6))
+            if pd.notna(row.iloc[j])
+        ):
+            total_row = row
+            break
+
+    if total_row is None:
+        return []
+
+    # --- extract LAST approval and LAST denial column (= Grand Total group) ---
+    last_approv_idx = None
+    last_denial_idx = None
+    for j, h in enumerate(headers):
+        hl = h.strip().lower()
+        if re.search(r"approv", hl):
+            last_approv_idx = j
+        elif re.search(r"denied|denial", hl):
+            last_denial_idx = j
+
+    if last_approv_idx is None:
+        return []
+
+    approvals = safe_int(
+        total_row.iloc[last_approv_idx] if last_approv_idx < len(total_row) else 0
+    )
+    denials = (
+        safe_int(total_row.iloc[last_denial_idx] if last_denial_idx < len(total_row) else 0)
+        if last_denial_idx is not None
+        else 0
+    )
+
+    if approvals == 0 and denials == 0:
+        return []
+
+    return [
+        {
+            "fiscal_year": default_fy,
+            "form": "I485",
+            "category": "ALL",
+            "approvals": approvals,
+            "denials": denials,
+            "source_file": fname,
+            "ingested_at": now_ts,
+        }
+    ]
 
 
 def normalize_columns(cols: list) -> dict:
@@ -117,16 +250,33 @@ def safe_int(val) -> int:
 
 
 def find_header_row(df_raw: pd.DataFrame) -> int:
-    """Find the row index that looks like a column header."""
+    """Find the row index that looks like a column header.
+
+    Scans the first 10 rows and returns the one with the most metric
+    keyword matches. Ties are broken by taking the later row (more
+    specific rows like 'Approval2', 'Denial3' appear after group labels).
+    """
+    known_kw = {"fiscal", "fy", "approved", "denied", "receipt", "category",
+                "form", "quarter", "approval", "denial"}
+    # Metric-specific keywords: rows with these are preferred over rows that
+    # only contain category/form labels.
+    metric_kw = {"approved", "denied", "receipt", "approval", "denial"}
+
+    best_i = 0
+    best_score = -1
     for i in range(min(10, len(df_raw))):
         row = df_raw.iloc[i].tolist()
         cell_strs = [str(c).strip().lower() for c in row if pd.notna(c) and str(c).strip()]
-        # Header row has >= 3 text values and contains known column keywords
-        known_kw = {"fiscal", "fy", "approved", "denied", "receipt", "category", "form", "quarter", "approval"}
+        if len(cell_strs) < 3:
+            continue
         matches = sum(1 for c in cell_strs if any(k in c for k in known_kw))
-        if matches >= 2 and len(cell_strs) >= 3:
-            return i
-    return 0
+        metric_matches = sum(1 for c in cell_strs if any(k in c for k in metric_kw))
+        # Score: metric matches weighted 2x + total matches
+        score = metric_matches * 2 + matches
+        if matches >= 2 and score > best_score:
+            best_score = score
+            best_i = i
+    return best_i
 
 
 def parse_transposed_xlsx(df_raw: pd.DataFrame, default_form: str, fname: str) -> list:
@@ -200,6 +350,15 @@ def parse_transposed_xlsx(df_raw: pd.DataFrame, default_form: str, fname: str) -
     return rows_out
 
 
+def _sum_duplicate_col(row: pd.Series, df_columns: pd.Index, col_name: str) -> int:
+    """Sum all occurrences of col_name in a row (handles Initial+Renewal style)."""
+    total = 0
+    for i, c in enumerate(df_columns):
+        if c == col_name:
+            total += safe_int(row.iloc[i])
+    return total
+
+
 def parse_xlsx(path: pathlib.Path) -> pd.DataFrame:
     """Parse a USCIS XLSX file."""
     fname = path.name
@@ -223,6 +382,16 @@ def parse_xlsx(path: pathlib.Path) -> pd.DataFrame:
         if df_raw.empty or len(df_raw) < 3:
             continue
 
+        # Per-sheet FY takes priority over filename FY (handles multi-year workbooks
+        # like i765_rad_fy03-22... which has 20 sheets each saying "Fiscal Year YYYY")
+        sheet_fy = extract_fy_from_sheet_data(df_raw)
+        fy_for_sheet = sheet_fy if sheet_fy else default_fy
+
+        # --- I-485 wide field-office format: specialized parser ---
+        if is_i485_file(fname):
+            rows_out.extend(parse_i485_wide(df_raw, fname, fy_for_sheet))
+            continue
+
         fmt = detect_format(df_raw)
 
         if fmt == "transposed":
@@ -236,37 +405,57 @@ def parse_xlsx(path: pathlib.Path) -> pd.DataFrame:
         df = pd.read_excel(xl, sheet_name=sheet, header=h_idx, dtype=str)
         df = df.rename(columns={c: col_map.get(c, c) for c in df.columns})
 
-        # Drop duplicate columns – keep first occurrence of each name
-        df = df.loc[:, ~df.columns.duplicated(keep="first")]
-
-        # Ensure we have at least approvals or denials
-        if "approvals" not in df.columns and "denials" not in df.columns:
+        # Note: do NOT deduplicate here — instead sum duplicate approvals/denials
+        # columns below (handles Initial+Renewal style I-765 files).
+        has_approvals = "approvals" in df.columns.tolist()
+        has_denials = "denials" in df.columns.tolist()
+        if not has_approvals and not has_denials:
             continue
 
         if "fiscal_year" not in df.columns:
-            df["fiscal_year"] = default_fy
+            df["fiscal_year"] = fy_for_sheet
         else:
-            df["fiscal_year"] = df["fiscal_year"].fillna(default_fy)
+            df["fiscal_year"] = df["fiscal_year"].fillna(fy_for_sheet)
 
         if "form" not in df.columns:
             df["form"] = default_form
-        if "category" not in df.columns:
-            df["category"] = "ALL"
+
+        # Two-level header fix: if no 'category' column detected but the row
+        # above the header row had a 'category'-related label in col 0 (as seen
+        # in I-765 annual files: row N = group labels, row N+1 = metric labels),
+        # map the first Unnamed column to 'category'.
+        if "category" not in df.columns.tolist():
+            if h_idx > 0 and not df_raw.empty:
+                prev_cell_0 = str(df_raw.iloc[h_idx - 1, 0]).strip().lower() if pd.notna(df_raw.iloc[h_idx - 1, 0]) else ""
+                if "category" in prev_cell_0 or "eligibility" in prev_cell_0:
+                    unnamed_col0 = next(
+                        (c for c in df.columns if str(c).startswith("Unnamed")), None
+                    )
+                    if unnamed_col0 is not None:
+                        df = df.rename(columns={unnamed_col0: "category"})
+            if "category" not in df.columns.tolist():
+                df["category"] = "ALL"
+
 
         df = df.dropna(how="all")
 
         for _, row in df.iterrows():
-            fy_raw = str(row.get("fiscal_year", default_fy)).strip()
+            fy_raw = str(row.get("fiscal_year", fy_for_sheet)).strip()
             fy_m = FISCAL_YEAR_PATTERN.search(fy_raw)
-            fy = f"FY{fy_m.group(1)}" if fy_m else fy_raw
+            if fy_m:
+                fy = f"FY{fy_m.group(1)}"
+            else:
+                m2 = FISCAL_YEAR_SHORT.search(fy_raw)
+                fy = f"FY{_short_year_to_full(m2.group(1))}" if m2 else fy_for_sheet
             if not fy.startswith("FY"):
                 yr_m = re.search(r"(\d{4})", fy_raw)
-                fy = f"FY{yr_m.group(1)}" if yr_m else default_fy
+                fy = f"FY{yr_m.group(1)}" if yr_m else fy_for_sheet
 
-            form = str(row.get("form", default_form)).strip().upper()
+            form = re.sub(r"-", "", str(row.get("form", default_form)).strip().upper())
             category = str(row.get("category", "ALL")).strip()
-            approvals = safe_int(row.get("approvals", 0))
-            denials = safe_int(row.get("denials", 0))
+            # Sum ALL approvals/denials columns (handles Initial+Renewal dual columns)
+            approvals = _sum_duplicate_col(row, df.columns, "approvals")
+            denials = _sum_duplicate_col(row, df.columns, "denials")
 
             if approvals == 0 and denials == 0:
                 continue
@@ -293,14 +482,30 @@ def parse_csv_uscis(path: pathlib.Path) -> pd.DataFrame:
     default_fy = extract_fy_from_name(fname)
     now_ts = datetime.now(timezone.utc).isoformat()
 
-    try:
-        df_raw = pd.read_csv(path, header=None, dtype=str, encoding="utf-8", errors="replace")
-    except Exception as e:
-        log.debug("Cannot read CSV %s: %s", fname, e)
+    # Try latin-1 first (many USCIS older CSVs use Windows-1252/latin-1 encoding)
+    for enc in ("utf-8-sig", "latin-1"):
+        try:
+            df_raw = pd.read_csv(path, header=None, dtype=str, encoding=enc)
+            break
+        except UnicodeDecodeError:
+            continue
+        except Exception as e:
+            log.debug("Cannot read CSV %s: %s", fname, e)
+            return pd.DataFrame()
+    else:
         return pd.DataFrame()
 
     if df_raw.empty or len(df_raw) < 3:
         return pd.DataFrame()
+
+    # Per-data-file FY (scan rows for "Fiscal Year YYYY")
+    data_fy = extract_fy_from_sheet_data(df_raw)
+    fy_for_file = data_fy if data_fy else default_fy
+
+    # --- I-485 wide field-office format: specialized parser ---
+    if is_i485_file(fname):
+        rows_out = parse_i485_wide(df_raw, fname, fy_for_file)
+        return pd.DataFrame(rows_out) if rows_out else pd.DataFrame()
 
     # Check for transposed format
     if detect_format(df_raw) == "transposed":
@@ -308,21 +513,26 @@ def parse_csv_uscis(path: pathlib.Path) -> pd.DataFrame:
         return pd.DataFrame(rows_out) if rows_out else pd.DataFrame()
 
     h_idx = find_header_row(df_raw)
-    try:
-        df = pd.read_csv(path, header=h_idx, dtype=str, encoding="utf-8", errors="replace")
-    except Exception:
+    for enc in ("utf-8-sig", "latin-1"):
+        try:
+            df = pd.read_csv(path, header=h_idx, dtype=str, encoding=enc)
+            break
+        except UnicodeDecodeError:
+            continue
+        except Exception:
+            return pd.DataFrame()
+    else:
         return pd.DataFrame()
 
     col_map = normalize_columns(list(df.columns))
     df = df.rename(columns={c: col_map.get(c, c) for c in df.columns})
-    # Drop duplicate columns
-    df = df.loc[:, ~df.columns.duplicated(keep="first")]
+    # Note: do NOT deduplicate — sum duplicate approvals/denials below
 
-    if "approvals" not in df.columns and "denials" not in df.columns:
+    if "approvals" not in df.columns.tolist() and "denials" not in df.columns.tolist():
         return pd.DataFrame()
 
     if "fiscal_year" not in df.columns:
-        df["fiscal_year"] = default_fy
+        df["fiscal_year"] = fy_for_file
     if "form" not in df.columns:
         df["form"] = default_form
     if "category" not in df.columns:
@@ -330,19 +540,24 @@ def parse_csv_uscis(path: pathlib.Path) -> pd.DataFrame:
 
     rows_out = []
     for _, row in df.iterrows():
-        fy_raw = str(row.get("fiscal_year", default_fy)).strip()
+        fy_raw = str(row.get("fiscal_year", fy_for_file)).strip()
         fy_m = FISCAL_YEAR_PATTERN.search(fy_raw)
-        fy = f"FY{fy_m.group(1)}" if fy_m else None
+        if fy_m:
+            fy = f"FY{fy_m.group(1)}"
+        else:
+            m2 = FISCAL_YEAR_SHORT.search(fy_raw)
+            fy = f"FY{_short_year_to_full(m2.group(1))}" if m2 else None
         if not fy:
             yr_m = re.search(r"(\d{4})", fy_raw)
-            fy = f"FY{yr_m.group(1)}" if yr_m else default_fy
+            fy = f"FY{yr_m.group(1)}" if yr_m else fy_for_file
 
-        form = str(row.get("form", default_form)).strip().upper()
+        form = re.sub(r"-", "", str(row.get("form", default_form)).strip().upper())
         if not form or form == "NAN":
             form = default_form
         category = str(row.get("category", "ALL")).strip()
-        approvals = safe_int(row.get("approvals", 0))
-        denials = safe_int(row.get("denials", 0))
+        # Sum ALL approvals/denials columns (handles Initial+Renewal dual columns)
+        approvals = _sum_duplicate_col(row, df.columns, "approvals")
+        denials = _sum_duplicate_col(row, df.columns, "denials")
 
         if approvals == 0 and denials == 0:
             continue
