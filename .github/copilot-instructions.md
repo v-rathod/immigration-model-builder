@@ -1,5 +1,12 @@
 # Immigration Model Builder — Copilot Context
 
+> **START HERE — Cross-Project Context:**
+> All three NorthStar projects live under `/Users/vrathod1/dev/NorthStar/`.
+> Before starting work, read these shared docs:
+> 1. **`/Users/vrathod1/dev/NorthStar/NORTHSTAR_VISION.md`** — Program vision, architecture, guardrails
+> 2. **`ARCHITECTURE.md`** (this repo) — P2 technical design
+> 3. This file — P2 detailed context
+>
 > **NorthStar Program Codenames** (public-facing names for documentation):
 > | Internal | Codename | Repository | Role |
 > |----------|----------|------------|------|
