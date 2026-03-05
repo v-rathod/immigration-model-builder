@@ -3,8 +3,10 @@
 > **Immigration Model Builder** — the analytical backbone of the NorthStar program
 
 > **📋 For AI Assistants**: 
-> - Read [`.github/copilot-instructions.md`](.github/copilot-instructions.md) first — it's the authoritative context file (auto-loaded by Copilot)
-> - Review [`PROGRESS.md`](PROGRESS.md) for chronological work history (Milestones 1–16)
+> 1. Read [`/Users/vrathod1/dev/NorthStar/NORTHSTAR_VISION.md`](../NORTHSTAR_VISION.md) — Program vision, architecture, guardrails
+> 2. Read [`/Users/vrathod1/dev/NorthStar/BEST_PRACTICES.md`](../BEST_PRACTICES.md) — Engineering conventions, testing strategy, agent checklist
+> 3. Read [`.github/copilot-instructions.md`](.github/copilot-instructions.md) — it's the authoritative context file (auto-loaded by Copilot)
+> 4. Review [`PROGRESS.md`](PROGRESS.md) for chronological work history (Milestones 1–16)
 
 ## The NorthStar Program
 
