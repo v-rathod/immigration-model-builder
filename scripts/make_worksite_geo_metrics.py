@@ -271,12 +271,35 @@ def build_geo_metrics(log_lines: list) -> pd.DataFrame:
         log_lines.append("WARN: no grain data produced")
         return pd.DataFrame(columns=[
             "grain", "state", "city", "area_code", "soc_code", "filings_count", "approvals_count",
-            "offered_median", "competitiveness_ratio", "distinct_employers", "dataset"
+            "approval_rate", "offered_median", "competitiveness_ratio", "distinct_employers", "dataset"
         ])
 
     df_out = pd.concat(all_grains, ignore_index=True)
 
+    # ---- Approval rate (approvals / filings) ----
+    # Straightforward fraction: approved cases / total filed cases, always in [0, 1].
+    # Capped at 1.0 to guard against edge cases where batched amendments inflate
+    # approvals_count slightly above filings_count in a given aggregation window.
+    #
+    # NOTE: Do NOT confuse this with competitiveness_ratio (offered wage ÷ OEWS median),
+    # which is a wage benchmark metric and can legitimately exceed 1.0.
+    df_out["approval_rate"] = (
+        df_out["approvals_count"] / df_out["filings_count"].replace(0, np.nan)
+    ).clip(upper=1.0)
+    # Hard validation — approval_rate must never exceed 1.0 in any exported row.
+    # This will fail the build and prevent a bad artifact from being written.
+    over_cap = df_out["approval_rate"].gt(1.0).sum()
+    if over_cap:
+        raise ValueError(
+            f"DATA INTEGRITY: {over_cap} rows with approval_rate > 1.0 after clip — "
+            "check approvals_count / filings_count sources."
+        )
+
     # ---- Competitiveness ratio (per-grain approach) ----
+    #
+    # This is a WAGE metric (offered_median ÷ OEWS wage benchmark), NOT an approval
+    # rate.  Values > 1.0 are expected and mean employers pay above market.
+    # Do not expose this field as "approval rate" in any consumer.
     #
     # For each grain, pick the best available OEWS wage benchmark:
     #   soc_area:  OEWS(area, soc) → fallback OEWS_national(soc)
