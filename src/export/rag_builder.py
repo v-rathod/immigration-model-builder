@@ -1312,10 +1312,15 @@ def _build_salary_profile_chunks(chunks: list) -> None:
             h1b_fy = esp[(esp["visa_type"] == "H-1B") & (esp["fiscal_year"] == fy)]
             # Aggregate to employer level for this FY
             if "n_filings" in h1b_fy.columns and "median_salary" in h1b_fy.columns:
-                emp_agg = h1b_fy.groupby("employer_name").agg(
+                # Use weighted mean to avoid median-of-medians bias
+                _fy = h1b_fy.copy()
+                _fy["_w_med"] = _fy["median_salary"] * _fy["n_filings"]
+                emp_agg = _fy.groupby("employer_name").agg(
                     total_filings=("n_filings", "sum"),
-                    wt_median=("median_salary", "median"),
+                    _w_med_sum=("_w_med", "sum"),
                 ).reset_index()
+                emp_agg["wt_median"] = (emp_agg["_w_med_sum"] / emp_agg["total_filings"]).round(0)
+                emp_agg.drop(columns=["_w_med_sum"], inplace=True)
                 # Filter ≥50 filings
                 emp_agg = emp_agg[emp_agg["total_filings"] >= 50]
                 if len(emp_agg) > 0:
@@ -1348,11 +1353,16 @@ def _build_salary_profile_chunks(chunks: list) -> None:
         for fy in sorted(fys)[-3:]:
             h1b_fy = esp[(esp["visa_type"] == "H-1B") & (esp["fiscal_year"] == fy)]
             if "n_filings" in h1b_fy.columns and "soc_code" in h1b_fy.columns:
-                soc_agg = h1b_fy.groupby("soc_code").agg(
+                # Use weighted mean to avoid median-of-medians bias
+                _fy2 = h1b_fy.copy()
+                _fy2["_w_med"] = _fy2["median_salary"] * _fy2["n_filings"]
+                soc_agg = _fy2.groupby("soc_code").agg(
                     total_filings=("n_filings", "sum"),
                     n_employers=("employer_id", "nunique"),
-                    med_salary=("median_salary", "median"),
+                    _w_med_sum=("_w_med", "sum"),
                 ).reset_index()
+                soc_agg["med_salary"] = (soc_agg["_w_med_sum"] / soc_agg["total_filings"]).round(0)
+                soc_agg.drop(columns=["_w_med_sum"], inplace=True)
                 top = soc_agg.nlargest(15, "total_filings")
                 lines = [f"Top 15 H-1B Positions by Filing Volume — FY{fy}:"]
                 for _, row in top.iterrows():
@@ -1590,8 +1600,13 @@ def _build_employer_position_comparison_chunks(chunks: list) -> None:
                 soc_titles = dict(zip(dim_soc["soc_code"], dim_soc[col]))
                 break
 
-    # Build market median lookup: (soc_code, visa_type) → median across all FYs
-    market_lookup = ssm.groupby(["soc_code", "visa_type"])["market_median"].median().to_dict()
+    # Build market median lookup: (soc_code, visa_type) → latest FY market_median
+    if "fiscal_year" in ssm.columns:
+        latest_fy = ssm["fiscal_year"].max()
+        ssm_latest = ssm[ssm["fiscal_year"] == latest_fy]
+    else:
+        ssm_latest = ssm
+    market_lookup = ssm_latest.groupby(["soc_code", "visa_type"])["market_median"].first().to_dict()
 
     # Identify top employers by total filings (dedup by employer_id)
     emp_totals = esp.groupby("employer_id").agg(
@@ -1609,13 +1624,18 @@ def _build_employer_position_comparison_chunks(chunks: list) -> None:
         if total_filings < 50:
             continue
 
-        # Group by SOC code
-        soc_breakdown = emp_data.groupby("soc_code").agg(
+        # Group by SOC code — use weighted mean to avoid median-of-medians bias
+        _edata = emp_data.copy()
+        _edata["_w_med"] = _edata["median_salary"] * _edata["n_filings"]
+        soc_breakdown = _edata.groupby("soc_code").agg(
             total_filings=("n_filings", "sum"),
-            med_salary=("median_salary", "median"),
+            _w_med_sum=("_w_med", "sum"),
             mean_salary=("mean_salary", "mean"),
             n_years=("fiscal_year", "nunique"),
-        ).reset_index().sort_values("total_filings", ascending=False)
+        ).reset_index()
+        soc_breakdown["med_salary"] = (soc_breakdown["_w_med_sum"] / soc_breakdown["total_filings"]).round(0)
+        soc_breakdown.drop(columns=["_w_med_sum"], inplace=True)
+        soc_breakdown = soc_breakdown.sort_values("total_filings", ascending=False)
 
         top_socs = soc_breakdown.head(10)
         lines = [f"Position Breakdown for {emp_name} ({total_filings:,.0f} total filings):"]

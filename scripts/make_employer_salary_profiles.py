@@ -361,39 +361,55 @@ def _build_employer_yearly_summary(combined: pd.DataFrame, profiles: pd.DataFram
     return agg
 
 
-def _build_soc_market_summary(profiles: pd.DataFrame) -> pd.DataFrame:
-    """Aggregate across employers → SOC × visa_type × fiscal_year summary.
+def _build_soc_market_summary(combined: pd.DataFrame, profiles: pd.DataFrame) -> pd.DataFrame:
+    """Aggregate raw LCA+PERM records → SOC × visa_type × fiscal_year salary summary.
+
+    Uses the raw combined DataFrame (before SOC aggregation) to compute TRUE flat
+    median and percentiles at the SOC × visa_type × fiscal_year grain.  The old
+    approach (weighted mean of per-employer quantiles) was biased by up to ~10%
+    for high-volume SOCs because it averaged per-employer medians weighted by
+    filing count rather than computing the true flat median across all records.
+
+    'profiles' is still needed only to derive n_employers per group.
     This powers the P3 'which roles pay the most' view.
     """
     log.info("Building SOC market summary ...")
-    df = profiles[profiles["n_filings"] >= 1].copy()
+    df = combined.dropna(subset=["annual_wage", "soc_code"]).copy()
+    df = df[(df["annual_wage"] > 5000) & (df["annual_wage"] < 1_000_000)]
 
-    # Weighted aggregation via pre-multiplication
-    df["_w_mean"] = df["mean_salary"] * df["n_filings"]
-    df["_w_med"] = df["median_salary"] * df["n_filings"]
-    df["_w_p10"] = df["p10_salary"] * df["n_filings"]
-    df["_w_p25"] = df["p25_salary"] * df["n_filings"]
-    df["_w_p75"] = df["p75_salary"] * df["n_filings"]
-    df["_w_p90"] = df["p90_salary"] * df["n_filings"]
+    grp_cols = ["soc_code", "visa_type", "fiscal_year"]
 
-    agg = df.groupby(["soc_code", "visa_type", "fiscal_year"], observed=True).agg(
-        total_filings=("n_filings", "sum"),
-        n_employers=("employer_id", "nunique"),
-        _w_mean_sum=("_w_mean", "sum"),
-        _w_med_sum=("_w_med", "sum"),
-        _w_p10_sum=("_w_p10", "sum"),
-        _w_p25_sum=("_w_p25", "sum"),
-        _w_p75_sum=("_w_p75", "sum"),
-        _w_p90_sum=("_w_p90", "sum"),
+    # True flat aggregates from raw records
+    agg = df.groupby(grp_cols, observed=True, dropna=False).agg(
+        total_filings=("annual_wage", "count"),
+        market_mean=("annual_wage", "mean"),
+        market_median=("annual_wage", "median"),
     ).reset_index()
 
-    agg["market_mean"] = (agg["_w_mean_sum"] / agg["total_filings"]).round(0)
-    agg["market_median"] = (agg["_w_med_sum"] / agg["total_filings"]).round(0)
-    agg["market_p10"] = (agg["_w_p10_sum"] / agg["total_filings"]).round(0)
-    agg["market_p25"] = (agg["_w_p25_sum"] / agg["total_filings"]).round(0)
-    agg["market_p75"] = (agg["_w_p75_sum"] / agg["total_filings"]).round(0)
-    agg["market_p90"] = (agg["_w_p90_sum"] / agg["total_filings"]).round(0)
-    agg.drop(columns=["_w_mean_sum", "_w_med_sum", "_w_p10_sum", "_w_p25_sum", "_w_p75_sum", "_w_p90_sum"], inplace=True)
+    # True flat percentiles — must be computed separately via quantile()
+    pcts = (
+        df.groupby(grp_cols, observed=True)["annual_wage"]
+        .quantile([0.10, 0.25, 0.75, 0.90])
+        .unstack(level=-1)
+        .reset_index()
+    )
+    pcts.columns = grp_cols + ["market_p10", "market_p25", "market_p75", "market_p90"]
+    agg = agg.merge(pcts, on=grp_cols, how="left")
+
+    # n_employers from profiles (employer count per SOC × visa_type × fiscal_year)
+    emp_counts = (
+        profiles[profiles["n_filings"] >= 1]
+        .groupby(grp_cols)["employer_id"]
+        .nunique()
+        .reset_index()
+        .rename(columns={"employer_id": "n_employers"})
+    )
+    agg = agg.merge(emp_counts, on=grp_cols, how="left")
+    agg["n_employers"] = agg["n_employers"].fillna(0).astype(int)
+
+    # Round monetary columns
+    for col in ["market_mean", "market_median", "market_p10", "market_p25", "market_p75", "market_p90"]:
+        agg[col] = agg[col].round(0)
 
     log.info(f"  SOC market summary rows: {len(agg):,}")
     return agg
@@ -439,7 +455,7 @@ def main() -> None:
 
     # ── Build summaries ─────────────────────────────────────────────────
     emp_yearly = _build_employer_yearly_summary(combined, profiles)
-    soc_market = _build_soc_market_summary(profiles)
+    soc_market = _build_soc_market_summary(combined, profiles)
 
     # ── Canonicalize employer names ──────────────────────────────────────
     # Load dim_employer (always available at this point) and replace raw
