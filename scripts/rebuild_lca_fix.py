@@ -28,10 +28,11 @@ imo = df[df["employer_name"] == "Intelligent Medical Objects"]
 if len(imo):
     row = imo.iloc[0]
     print(f"\n✓ IMO employer_features after fix:")
-    print(f"  lca_filings_24m:      {row.get('lca_filings_24m')}")
-    print(f"  lca_approval_rate_24m:{row.get('lca_approval_rate_24m'):.4f}")
-    print(f"  lca_certified_24m:    {row.get('lca_certified_24m', 'N/A')}")
-    print(f"  lca_denied_24m:       {row.get('lca_denied_24m', 'N/A')}")
+    print(f"  lca_filings_36m:      {row.get('lca_filings_36m')}")
+    lca_ar = row.get('lca_approval_rate_36m')
+    print(f"  lca_approval_rate_36m:{lca_ar:.4f if lca_ar is not None else 'N/A'}")
+    print(f"  lca_certified_36m:    {row.get('lca_certified_36m', 'N/A')}")
+    print(f"  lca_denied_36m:       {row.get('lca_denied_36m', 'N/A')}")
 else:
     print("! IMO not found in employer_features")
 
@@ -47,7 +48,8 @@ imo_srs = df_srs[df_srs["employer_name"] == "Intelligent Medical Objects"]
 if len(imo_srs):
     row = imo_srs.iloc[0]
     print(f"\n✓ IMO employer_friendliness_scores after fix:")
-    print(f"  lca_approval_rate_24m:{row.get('lca_approval_rate_24m'):.4f}")
+    lca_ar = row.get('lca_approval_rate_36m')
+    print(f"  lca_approval_rate_36m:{lca_ar:.4f if lca_ar is not None else 'N/A'}")
     print(f"  h1b_signal_subscore:  {row.get('h1b_signal_subscore'):.2f}")
     print(f"  efs:                  {row.get('efs')} | tier: {row.get('efs_tier')}")
 else:

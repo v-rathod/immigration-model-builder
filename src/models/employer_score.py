@@ -3,15 +3,15 @@
 Reads employer_features.parquet → produces employer_friendliness_scores.parquet.
 
 Scoring Model (v1.1 — enhanced with LCA + H1B Hub signals):
-  Outcome Sub-score     (40%): approval_rate_24m with Bayesian shrinkage
+  Outcome Sub-score     (40%): approval_rate_36m with Bayesian shrinkage
   Wage Sub-score        (25%): wage_ratio_med (cap 1.3) rescaled 0-100
   Sustainability        (15%): months_active, trend, volume, volatility blend
   H-1B Signal           (10%): LCA approval rate + wage competitiveness vs PW
   Retention Signal      (10%): H1B Hub continuing/total ratio (worker retention)
 
 Eligibility guardrails:
-  - n_24m < 3 → EFS = NULL (insufficient data)
-  - All denials in 24m → EFS capped at 10
+  - n_36m < 3 → EFS = NULL (insufficient data)
+  - All denials in 36m → EFS capped at 10
 """
 
 import numpy as np
@@ -32,7 +32,7 @@ SHRINKAGE_PRIOR = 0.88          # ~88% pop approval rate
 SHRINKAGE_STRENGTH = 20         # pseudo-observations
 
 # Eligibility
-MIN_CASES_24M = 3
+MIN_CASES_36M = 3
 ALL_DENIED_CAP = 10.0
 
 
@@ -45,8 +45,8 @@ def _bayesian_rate(observed_rate, n, prior=SHRINKAGE_PRIOR, strength=SHRINKAGE_S
 
 def _outcome_subscore(row: pd.Series) -> float:
     """Outcome subscore: 0-100 based on shrunk approval rate."""
-    ar = row.get('approval_rate_24m')
-    n = row.get('n_24m', 0)
+    ar = row.get('approval_rate_36m')
+    n = row.get('n_36m', 0)
     shrunk = _bayesian_rate(ar, n)
     return round(shrunk * 100.0, 2)
 
@@ -69,13 +69,13 @@ def _sustainability_subscore(row: pd.Series) -> float:
     parts = []
     weights = []
 
-    # Months active: 0-24 mapped to 0-100
-    ma = row.get('months_active_24m', 0)
-    parts.append(min(100.0, ma / 24.0 * 100.0))
+    # Months active: 0-36 mapped to 0-100
+    ma = row.get('months_active_36m', 0)
+    parts.append(min(100.0, ma / 36.0 * 100.0))
     weights.append(0.30)
 
-    # Volume: log-scaled n_24m (10 → ~50, 100 → ~90, 500+ → 100)
-    n24 = max(row.get('n_24m', 0), 1)
+    # Volume: log-scaled n_36m (10 → ~50, 100 → ~90, 500+ → 100)
+    n24 = max(row.get('n_36m', 0), 1)
     vol_score = min(100.0, np.log10(n24) / np.log10(500) * 100.0)
     parts.append(vol_score)
     weights.append(0.25)
@@ -108,7 +108,7 @@ def _h1b_signal_subscore(row: pd.Series) -> float:
     weights = []
 
     # LCA approval rate (if available)
-    lca_ar = row.get('lca_approval_rate_24m')
+    lca_ar = row.get('lca_approval_rate_36m')
     if lca_ar is not None and not np.isnan(lca_ar):
         parts.append(lca_ar * 100.0)
         weights.append(0.40)
@@ -126,7 +126,7 @@ def _h1b_signal_subscore(row: pd.Series) -> float:
         weights.append(0.35)
 
     # H-1B volume signal (having LCA filings = positive indicator)
-    lca_vol = row.get('lca_filings_24m')
+    lca_vol = row.get('lca_filings_36m')
     if lca_vol is not None and not np.isnan(lca_vol) and lca_vol > 0:
         vol_score = min(100.0, np.log10(max(lca_vol, 1)) / np.log10(500) * 100.0)
         parts.append(vol_score)
@@ -211,15 +211,15 @@ def fit_employer_score(in_tables: Path, out_tables: Path) -> None:
 
     # ── Eligibility guardrails ──────────────────────────────
     log('\n[D] Applying eligibility guardrails')
-    insufficient = df['n_24m'] < MIN_CASES_24M
-    all_denied = df['approval_rate_24m'].fillna(0) == 0
+    insufficient = df['n_36m'] < MIN_CASES_36M
+    all_denied = df['approval_rate_36m'].fillna(0) == 0
     df['efs'] = df['efs_raw'].round(1)
     df.loc[insufficient, 'efs'] = np.nan
     df.loc[all_denied & ~insufficient, 'efs'] = df.loc[all_denied & ~insufficient, 'efs'].clip(upper=ALL_DENIED_CAP)
 
     elig_null = int(insufficient.sum())
     capped = int((all_denied & ~insufficient).sum())
-    log(f'  Insufficient data (n_24m<{MIN_CASES_24M}): {elig_null:,} → EFS=NULL')
+    log(f'  Insufficient data (n_36m<{MIN_CASES_36M}): {elig_null:,} → EFS=NULL')
     log(f'  All-denied cap (≤{ALL_DENIED_CAP}): {capped:,}')
 
     # ── Assign tier labels ──────────────────────────────────
@@ -241,14 +241,15 @@ def fit_employer_score(in_tables: Path, out_tables: Path) -> None:
         'employer_id', 'employer_name', 'scope', 'soc_code',
         'n_12m', 'n_24m', 'n_36m',
         'approval_rate_24m', 'denial_rate_24m',
+        'approval_rate_36m', 'denial_rate_36m',
         'wage_ratio_med', 'wage_ratio_p75',
         'outcome_subscore', 'wage_subscore', 'sustainability_subscore',
         'h1b_signal_subscore', 'retention_subscore',
         'efs', 'efs_tier',
-        'months_active_24m', 'soc_breadth_24m', 'site_breadth_24m',
+        'months_active_24m', 'months_active_36m', 'soc_breadth_24m', 'site_breadth_24m',
         'approval_rate_trend_12v12', 'outcome_volatility',
         # LCA-derived
-        'lca_filings_24m', 'lca_approval_rate_24m', 'lca_median_wage',
+        'lca_filings_36m', 'lca_approval_rate_36m', 'lca_median_wage',
         'lca_wage_ratio', 'lca_to_perm_ratio',
         # H1B Hub-derived
         'h1b_hub_retention_ratio', 'h1b_hub_naics',

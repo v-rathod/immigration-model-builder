@@ -320,28 +320,42 @@ def _canonical_employer_names(df: pd.DataFrame, dim_emp: pd.DataFrame) -> pd.Dat
     return df
 
 
-def _build_employer_yearly_summary(profiles: pd.DataFrame) -> pd.DataFrame:
-    """Aggregate across SOCs → employer × visa_type × fiscal_year summary.
+def _build_employer_yearly_summary(combined: pd.DataFrame, profiles: pd.DataFrame) -> pd.DataFrame:
+    """Aggregate raw records → employer × visa_type × fiscal_year summary.
     This powers the P3 'employer salary trend over time' view.
+
+    Uses the raw combined DataFrame (before SOC aggregation) to compute a
+    TRUE flat median — avoids the median-of-SOC-medians bias that appears
+    when smaller employers have a skewed SOC distribution.  The profiles
+    DataFrame is still used to carry n_soc_codes for informational purposes.
     """
-    log.info("Building employer yearly summary ...")
-    df = profiles[profiles["n_filings"] >= 1].copy()
+    log.info("Building employer yearly summary (from raw records for accurate medians) ...")
 
-    # Weighted mean via pre-multiplication (avoids lambda)
-    df["_w_mean"] = df["mean_salary"] * df["n_filings"]
-    df["_w_med"] = df["median_salary"] * df["n_filings"]
+    # ── True flat median from raw records ────────────────────────────────
+    df = combined.dropna(subset=["annual_wage", "employer_id"]).copy()
+    df = df[(df["annual_wage"] > 5000) & (df["annual_wage"] < 1_000_000)]
 
-    agg = df.groupby(["employer_id", "visa_type", "fiscal_year"], observed=True).agg(
-        total_filings=("n_filings", "sum"),
-        _w_mean_sum=("_w_mean", "sum"),
-        _w_med_sum=("_w_med", "sum"),
-        n_soc_codes=("soc_code", "nunique"),
+    grp_cols = ["employer_id", "visa_type", "fiscal_year"]
+    agg = df.groupby(grp_cols, observed=True, dropna=False).agg(
+        total_filings=("annual_wage", "count"),
+        mean_salary=("annual_wage", "mean"),
+        median_salary=("annual_wage", "median"),
         employer_name=("employer_name", "first"),
     ).reset_index()
 
-    agg["mean_salary"] = (agg["_w_mean_sum"] / agg["total_filings"]).round(0)
-    agg["median_salary"] = (agg["_w_med_sum"] / agg["total_filings"]).round(0)
-    agg.drop(columns=["_w_mean_sum", "_w_med_sum"], inplace=True)
+    agg["mean_salary"] = agg["mean_salary"].round(0)
+    agg["median_salary"] = agg["median_salary"].round(0)
+
+    # ── Attach n_soc_codes from profiles (informational) ─────────────────
+    soc_counts = (
+        profiles[profiles["n_filings"] >= 1]
+        .groupby(grp_cols, observed=True)["soc_code"]
+        .nunique()
+        .reset_index()
+        .rename(columns={"soc_code": "n_soc_codes"})
+    )
+    agg = agg.merge(soc_counts, on=grp_cols, how="left")
+    agg["n_soc_codes"] = agg["n_soc_codes"].fillna(0).astype(int)
 
     log.info(f"  Employer yearly summary rows: {len(agg):,}")
     return agg
@@ -424,7 +438,7 @@ def main() -> None:
     profiles = _build_profiles(combined, oews, log_lines)
 
     # ── Build summaries ─────────────────────────────────────────────────
-    emp_yearly = _build_employer_yearly_summary(profiles)
+    emp_yearly = _build_employer_yearly_summary(combined, profiles)
     soc_market = _build_soc_market_summary(profiles)
 
     # ── Canonicalize employer names ──────────────────────────────────────

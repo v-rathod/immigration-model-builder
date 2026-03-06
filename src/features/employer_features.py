@@ -206,10 +206,10 @@ def build_employer_features(in_tables: Path, out_path: Path) -> None:
         lca = lca.dropna(subset=['employer_id'])
         if 'decision_date' in lca.columns and lca['decision_date'].notna().any():
             lca_anchor = lca['decision_date'].max()
-            lca_start_24m = lca_anchor - pd.DateOffset(months=24)
-            lca_24 = lca[lca['decision_date'] > lca_start_24m].copy()
+            lca_start_36m = lca_anchor - pd.DateOffset(months=36)
+            lca_36 = lca[lca['decision_date'] > lca_start_36m].copy()
         else:
-            lca_24 = lca.copy()
+            lca_36 = lca.copy()
 
         # Status flags.
         # CERTIFIED-WITHDRAWN (no spaces) and CERTIFIED - WITHDRAWN (spaces) both mean
@@ -222,32 +222,32 @@ def build_employer_features(in_tables: Path, out_path: Path) -> None:
             'CERTIFIED - WITHDRAWN',   # spaced variant
         }
         denied_set = {'DENIED', 'REJECTED', 'INVALIDATED', 'SUPERSEDED'}
-        lca_24['is_certified'] = lca_24['case_status'].str.upper().str.strip().isin(approved_set)
-        lca_24['is_denied'] = lca_24['case_status'].str.upper().str.strip().isin(denied_set)
+        lca_36['is_certified'] = lca_36['case_status'].str.upper().str.strip().isin(approved_set)
+        lca_36['is_denied'] = lca_36['case_status'].str.upper().str.strip().isin(denied_set)
 
         # Annualise LCA wages
-        lca_24['wage_rate_from'] = pd.to_numeric(lca_24.get('wage_rate_from'), errors='coerce')
-        lca_24['prevailing_wage'] = pd.to_numeric(lca_24.get('prevailing_wage'), errors='coerce')
-        lca_24['wage_mult'] = lca_24.get('wage_unit', '').str.lower().str.strip().map(WAGE_UNIT_MULTIPLIER).fillna(1.0)
-        lca_24['lca_annual_wage'] = lca_24['wage_rate_from'] * lca_24['wage_mult']
-        lca_24['pw_mult'] = lca_24.get('pw_unit', '').str.lower().str.strip().map(WAGE_UNIT_MULTIPLIER).fillna(1.0)
-        lca_24['lca_annual_pw'] = lca_24['prevailing_wage'] * lca_24['pw_mult']
+        lca_36['wage_rate_from'] = pd.to_numeric(lca_36.get('wage_rate_from'), errors='coerce')
+        lca_36['prevailing_wage'] = pd.to_numeric(lca_36.get('prevailing_wage'), errors='coerce')
+        lca_36['wage_mult'] = lca_36.get('wage_unit', '').str.lower().str.strip().map(WAGE_UNIT_MULTIPLIER).fillna(1.0)
+        lca_36['lca_annual_wage'] = lca_36['wage_rate_from'] * lca_36['wage_mult']
+        lca_36['pw_mult'] = lca_36.get('pw_unit', '').str.lower().str.strip().map(WAGE_UNIT_MULTIPLIER).fillna(1.0)
+        lca_36['lca_annual_pw'] = lca_36['prevailing_wage'] * lca_36['pw_mult']
 
         # Per-employer LCA features
-        lca_grp = lca_24.groupby('employer_id')
+        lca_grp = lca_36.groupby('employer_id')
         lca_emp_agg = lca_grp.agg(
-            lca_filings_24m=('employer_id', 'count'),
-            lca_certified_24m=('is_certified', 'sum'),
-            lca_denied_24m=('is_denied', 'sum'),
+            lca_filings_36m=('employer_id', 'count'),
+            lca_certified_36m=('is_certified', 'sum'),
+            lca_denied_36m=('is_denied', 'sum'),
             lca_median_wage=('lca_annual_wage', 'median'),
             lca_median_pw=('lca_annual_pw', 'median'),
             lca_soc_breadth=('soc_code', 'nunique'),
         )
         # Rate = CERTIFIED / (CERTIFIED + DENIED) — excludes WITHDRAWN (neutral, not a rejection)
-        lca_decided_24m = lca_emp_agg['lca_certified_24m'] + lca_emp_agg['lca_denied_24m']
-        lca_emp_agg['lca_approval_rate_24m'] = np.where(
-            lca_decided_24m > 0,
-            (lca_emp_agg['lca_certified_24m'] / lca_decided_24m).clip(0, 1),
+        lca_decided_36m = lca_emp_agg['lca_certified_36m'] + lca_emp_agg['lca_denied_36m']
+        lca_emp_agg['lca_approval_rate_36m'] = np.where(
+            lca_decided_36m > 0,
+            (lca_emp_agg['lca_certified_36m'] / lca_decided_36m).clip(0, 1),
             np.nan,
         )
         lca_emp_agg['lca_wage_ratio'] = np.where(
@@ -345,6 +345,7 @@ def build_employer_features(in_tables: Path, out_path: Path) -> None:
 
         # Months active
         months_active_24m = int(g24['dec_month'].nunique()) if n_24m > 0 else 0
+        months_active_36m = int(grp['dec_month'].nunique()) if n_36m > 0 else 0
 
         # Breadth (24m)
         soc_breadth_24m = int(g24['soc_code'].nunique()) if n_24m > 0 else 0
@@ -425,15 +426,15 @@ def build_employer_features(in_tables: Path, out_path: Path) -> None:
 
         # LCA (H-1B) features for this employer
         lca_f = lca_emp_features.get(employer_id, {})
-        lca_filings_24m = lca_f.get('lca_filings_24m')
-        lca_approval_rate_24m = lca_f.get('lca_approval_rate_24m')
+        lca_filings_36m = lca_f.get('lca_filings_36m')
+        lca_approval_rate_36m = lca_f.get('lca_approval_rate_36m')
         lca_median_wage = lca_f.get('lca_median_wage')
         lca_wage_ratio = lca_f.get('lca_wage_ratio')
         lca_soc_breadth = lca_f.get('lca_soc_breadth')
         # H1B-to-PERM ratio: how many H-1B filings per PERM filing
         lca_to_perm_ratio = None
-        if lca_filings_24m and n_24m and n_24m > 0:
-            lca_to_perm_ratio = round(lca_filings_24m / n_24m, 2)
+        if lca_filings_36m and n_36m and n_36m > 0:
+            lca_to_perm_ratio = round(lca_filings_36m / n_36m, 2)
 
         return {
             'employer_id': employer_id,
@@ -444,6 +445,7 @@ def build_employer_features(in_tables: Path, out_path: Path) -> None:
             'n_24m': n_24m,
             'n_36m': n_36m,
             'months_active_24m': months_active_24m,
+            'months_active_36m': months_active_36m,
             'soc_breadth_24m': soc_breadth_24m,
             'site_breadth_24m': site_breadth_24m,
             'approval_rate_12m': approval_rate_12m,
@@ -460,8 +462,8 @@ def build_employer_features(in_tables: Path, out_path: Path) -> None:
             'wage_ratio_med': wage_ratio_med,
             'wage_ratio_p75': wage_ratio_p75,
             # LCA-derived features
-            'lca_filings_24m': lca_filings_24m,
-            'lca_approval_rate_24m': lca_approval_rate_24m,
+            'lca_filings_36m': lca_filings_36m,
+            'lca_approval_rate_36m': lca_approval_rate_36m,
             'lca_median_wage': lca_median_wage,
             'lca_wage_ratio': lca_wage_ratio,
             'lca_soc_breadth': lca_soc_breadth,
@@ -531,12 +533,12 @@ def build_employer_features(in_tables: Path, out_path: Path) -> None:
     overall = df_out[df_out['scope'] == 'overall']
     soc_slices = df_out[df_out['scope'] == 'SOC']
     wage_null_pct = round(overall['wage_ratio_med'].isna().mean() * 100, 1)
-    lca_fill_pct = round(overall['lca_filings_24m'].notna().mean() * 100, 1)
+    lca_fill_pct = round(overall['lca_filings_36m'].notna().mean() * 100, 1)
     h1b_fill_pct = round(overall['h1b_hub_total_petitions'].notna().mean() * 100, 1)
     log(f'\n  Overall rows: {len(overall):,}')
     log(f'  SOC-specific rows: {len(soc_slices):,}')
     log(f'  wage_ratio_med null: {wage_null_pct}%')
-    log(f'  lca_filings_24m fill: {lca_fill_pct}%')
+    log(f'  lca_filings_36m fill: {lca_fill_pct}%')
     log(f'  h1b_hub fill: {h1b_fill_pct}%')
     if wage_null_pct > 50:
         log(f'  WARN: High wage_ratio null rate ({wage_null_pct}%) — OEWS coverage may be limited')
