@@ -211,9 +211,19 @@ def build_employer_features(in_tables: Path, out_path: Path) -> None:
         else:
             lca_24 = lca.copy()
 
-        # Status flags
-        approved_set = {'CERTIFIED', 'CERTIFIED-EXPIRED', 'CERTIFIED - WITHDRAWN', 'APPROVED'}
+        # Status flags.
+        # CERTIFIED-WITHDRAWN (no spaces) and CERTIFIED - WITHDRAWN (spaces) both mean
+        # DOL approved but employer later withdrew — count as certified.
+        # Plain WITHDRAWN = employer withdrew before DOL decision — neutral, not a failure.
+        # Rate = CERTIFIED / (CERTIFIED + DENIED) to exclude neutral WITHDRAWN from denominator.
+        approved_set = {
+            'CERTIFIED', 'CERTIFIED-EXPIRED', 'APPROVED',
+            'CERTIFIED-WITHDRAWN',     # no-space variant in DOL data
+            'CERTIFIED - WITHDRAWN',   # spaced variant
+        }
+        denied_set = {'DENIED', 'REJECTED', 'INVALIDATED', 'SUPERSEDED'}
         lca_24['is_certified'] = lca_24['case_status'].str.upper().str.strip().isin(approved_set)
+        lca_24['is_denied'] = lca_24['case_status'].str.upper().str.strip().isin(denied_set)
 
         # Annualise LCA wages
         lca_24['wage_rate_from'] = pd.to_numeric(lca_24.get('wage_rate_from'), errors='coerce')
@@ -228,11 +238,18 @@ def build_employer_features(in_tables: Path, out_path: Path) -> None:
         lca_emp_agg = lca_grp.agg(
             lca_filings_24m=('employer_id', 'count'),
             lca_certified_24m=('is_certified', 'sum'),
+            lca_denied_24m=('is_denied', 'sum'),
             lca_median_wage=('lca_annual_wage', 'median'),
             lca_median_pw=('lca_annual_pw', 'median'),
             lca_soc_breadth=('soc_code', 'nunique'),
         )
-        lca_emp_agg['lca_approval_rate_24m'] = (lca_emp_agg['lca_certified_24m'] / lca_emp_agg['lca_filings_24m']).clip(0, 1)
+        # Rate = CERTIFIED / (CERTIFIED + DENIED) — excludes WITHDRAWN (neutral, not a rejection)
+        lca_decided_24m = lca_emp_agg['lca_certified_24m'] + lca_emp_agg['lca_denied_24m']
+        lca_emp_agg['lca_approval_rate_24m'] = np.where(
+            lca_decided_24m > 0,
+            (lca_emp_agg['lca_certified_24m'] / lca_decided_24m).clip(0, 1),
+            np.nan,
+        )
         lca_emp_agg['lca_wage_ratio'] = np.where(
             lca_emp_agg['lca_median_pw'].notna() & (lca_emp_agg['lca_median_pw'] > 0),
             (lca_emp_agg['lca_median_wage'] / lca_emp_agg['lca_median_pw']).clip(0.5, 2.0),
