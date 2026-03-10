@@ -499,3 +499,11 @@ P3 consumes P2 artifacts via a sync script (`P3/scripts/sync_p2_data.py`) that c
 ## License
 
 MIT
+
+## Latest Session Snapshot (2026-03-10)
+
+- See [LATEST_STATUS.md](../LATEST_STATUS.md) for the authoritative handoff and session summary.
+- Snapshot highlights:
+  - **P2 (Meridian)**: All artifacts exported for P3 consumption; data contracts verified; test suite: **562/562** passing.
+  - **P3 (Compass)**: Received updated artifacts; critical fiscal-year filter fix applied in `scripts/sync_p2_data.py`; P3 tests: **579/579** passing.
+- For automated agents: read [LATEST_STATUS.md](../LATEST_STATUS.md) first — it contains step-by-step verification commands and deployment notes.
