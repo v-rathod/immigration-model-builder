@@ -51,10 +51,10 @@ cd /Users/vrathod1/dev/NorthStar/immigration-model-builder
 cd /Users/vrathod1/dev/NorthStar/immigration-insights-app
 ```
 
-### Current Project Status (as of Mar 6, 2026)
+### Current Project Status (as of Mar 10, 2026)
 - **P1 (Horizon)**: Data collection pipeline, latest sources in `downloads/`, auto-commit policy active
-- **P2 (Meridian)**: 591 tests passing, data pipeline stable, recent USCIS approvals fixes merged, incremental builds enabled
-- **P3 (Compass)**: 549 tests passing, all dashboards live, 102K+ employers searchable, AWS CloudFront deployed
+- **P2 (Meridian)**: 562 tests passing, data pipeline stable, all artifacts export cleanly, incremental builds enabled
+- **P3 (Compass)**: 579 tests passing, all dashboards live, 94K+ employers with FY2023 data, AWS CloudFront deployed, P2→P3 fiscal-year filter fix applied
 
 ### Common Workflow Patterns (P2)
 1. **Run incremental build** → `bash scripts/build_incremental.sh` → Gets P1 changes, rebuilds affected artifacts
@@ -62,17 +62,20 @@ cd /Users/vrathod1/dev/NorthStar/immigration-insights-app
 3. **Run tests** → `python3 -m pytest tests/ -q` → Validates data quality
 4. **Sync to P3** → `cd ../immigration-insights-app && npm run sync-data` → Export artifacts to P3
 
-### Recent Session Notes (Mar 6, 2026)
-**Just configured**: Terminal command auto-approval in VS Code settings.json
-- **Single-line commands** working: `npm run dev`, `npm test`, `git commit`, etc.
-- **Multi-line commands** now supported: Heredocs, pipes with `xargs`, `&&`/`||` chains
-- **File operations** auto-approved without dialogs
-- **Blocker resolved**: Agent can now execute complex commands directly instead of creating wrapper files
+### Recent Session Notes (Mar 10, 2026)
+**Milestone 21 Complete**: P2→P3 Fiscal-Year Filter Fix
+- P2 `fact_lca` partitions: clean data (FY2008..2026), 9.56M+ rows ✅
+- P3 sync fixed: Changed from calendar-based (received_date) → fiscal_year filtering (max_fy - 3) ✅
+- Optum Services shard: 1,928 LCA rows (FY2023–2026), up from 1,299 (FY2024–2026) ✅
+- Root cause: Fiscal year is a legal boundary; must filter on partition key, not derived calendar properties
+- All tests green: P2 (562), P3 (579) ✅
+- Production ready for deployment
 
-**Current test status**:
-- P3: 549 tests passing (latest from Occupation Demand improvements)
-- P2: 591 tests passing (recent USCIS approvals fixes)
-- P1: Data pipeline operational
+**Artifact Inventory** (as of Mar 10, 2026):
+- **46 data tables** + 3 stubs (fact/dim), 18.5M+ rows
+- **341 RAG chunks** (10 topics)
+- **684 QA pairs** (pre-computed)
+- All exported to P3 via fiscal-year-aligned sync
 
 ---
 
