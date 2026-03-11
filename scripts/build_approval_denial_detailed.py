@@ -111,8 +111,13 @@ def build_visa_apps_by_class():
         logger.warning("  fact_visa_applications not found, skipping")
         return pd.DataFrame()
     
-    # Clean fiscal year
-    va['fy'] = va['fiscal_year'].str.replace('FY', '').astype(int)
+    # Clean fiscal year — filter out sentinel values like '_UNKNOWN'
+    va = va[va['fiscal_year'].notna()].copy()
+    va['fiscal_year'] = va['fiscal_year'].astype(str)
+    va = va[~va['fiscal_year'].str.startswith('_')].copy()
+    va['fy'] = va['fiscal_year'].str.replace('FY', '').apply(lambda x: int(x) if x.isdigit() else None)
+    va = va[va['fy'].notna()].copy()
+    va['fy'] = va['fy'].astype(int)
     
     # Group by visa class
     by_class = va.groupby(['fy', 'visa_class']).agg({
@@ -150,8 +155,13 @@ def build_uscis_by_form_type():
         logger.warning("  fact_uscis_approvals not found, skipping")
         return pd.DataFrame()
     
-    # Clean fiscal year
-    ua['fy'] = ua['fiscal_year'].str.replace('FY', '').astype(int)
+    # Clean fiscal year — filter out sentinel values like '_UNKNOWN'
+    ua = ua[ua['fiscal_year'].notna()].copy()
+    ua['fiscal_year'] = ua['fiscal_year'].astype(str)
+    ua = ua[~ua['fiscal_year'].str.startswith('_')].copy()
+    ua['fy'] = ua['fiscal_year'].str.replace('FY', '').apply(lambda x: int(x) if x.isdigit() else None)
+    ua = ua[ua['fy'].notna()].copy()
+    ua['fy'] = ua['fy'].astype(int)
     
     # Aggregate by form and fiscal year
     by_form = ua.groupby(['fy', 'form']).agg({

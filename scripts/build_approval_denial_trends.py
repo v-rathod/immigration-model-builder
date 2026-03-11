@@ -70,7 +70,8 @@ def build_visa_applications_trends():
     logger.info("Loading visa applications data...")
     va = pd.read_parquet(ARTIFACTS_DIR / "fact_visa_applications.parquet")
     
-    # Clean fiscal year format (remove 'FY' prefix)
+    # Clean fiscal year format (remove 'FY' prefix) — drop sentinel/unknown values
+    va = va[va['fiscal_year'].notna() & ~va['fiscal_year'].astype(str).str.startswith('_')].copy()
     va['fy'] = va['fiscal_year'].str.replace('FY', '').astype(int)
     
     # Aggregate by fiscal year and visa class
@@ -111,8 +112,13 @@ def build_uscis_approvals_trends():
     logger.info("Loading USCIS approvals data...")
     ua = pd.read_parquet(ARTIFACTS_DIR / "fact_uscis_approvals.parquet")
     
-    # Clean fiscal year
-    ua['fy'] = ua['fiscal_year'].str.replace('FY', '').astype(int)
+    # Clean fiscal year — drop rows with sentinel/unknown values before conversion
+    ua = ua[ua['fiscal_year'].notna()].copy()
+    ua['fiscal_year'] = ua['fiscal_year'].astype(str)
+    ua = ua[~ua['fiscal_year'].str.startswith('_')].copy()
+    ua['fy'] = ua['fiscal_year'].str.replace('FY', '').apply(lambda x: int(x) if x.isdigit() else None)
+    ua = ua[ua['fy'].notna()].copy()
+    ua['fy'] = ua['fy'].astype(int)
     
     # Aggregate by fiscal year
     ua_agg = ua.groupby('fy').agg({
@@ -140,7 +146,8 @@ def build_niv_issuance_trends():
     try:
         niv = pd.read_parquet(ARTIFACTS_DIR / "fact_niv_issuance.parquet")
         
-        # Clean fiscal year (remove 'FY' prefix)
+        # Clean fiscal year (remove 'FY' prefix) — drop sentinel/unknown values
+        niv = niv[niv['fiscal_year'].notna() & ~niv['fiscal_year'].astype(str).str.startswith('_')].copy()
         niv['fy'] = niv['fiscal_year'].str.replace('FY', '').astype(int)
         
         # Aggregate by fiscal year

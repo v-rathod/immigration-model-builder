@@ -63,18 +63,17 @@ cd /Users/vrathod1/dev/NorthStar/immigration-insights-app
 4. **Sync to P3** → `cd ../immigration-insights-app && npm run sync-data` → Export artifacts to P3
 
 ### Recent Session Notes (Mar 10, 2026)
-**Milestone 21 Complete**: P2→P3 Fiscal-Year Filter Fix
-- P2 `fact_lca` partitions: clean data (FY2008..2026), 9.56M+ rows ✅
-- P3 sync fixed: Changed from calendar-based (received_date) → fiscal_year filtering (max_fy - 3) ✅
-- Optum Services shard: 1,928 LCA rows (FY2023–2026), up from 1,299 (FY2024–2026) ✅
-- Root cause: Fiscal year is a legal boundary; must filter on partition key, not derived calendar properties
-- All tests green: P2 (562), P3 (579) ✅
-- Production ready for deployment
+**Milestone 22 Complete**: Full Pipeline Refresh + Stage 2c Bug Fix
+- P1 data check: 9 new files (BLS CES, ACS, 6 Visa Stats PDFs, CA WARN) ✅
+- Fixed `_UNKNOWN` sentinel bug in `build_approval_denial_trends.py` + `build_approval_denial_detailed.py` ✅
+- Full rebuild Stages 1–4: 46+ artifacts rebuilt, RAG 341 chunks, 719 QA pairs ✅
+- P3 sync: 21 dashboard JSONs + ~95K employer shards refreshed ✅
+- **Key lesson**: pyarrow-backed string columns need explicit `.astype(str)` before `.str.startswith()` works
 
 **Artifact Inventory** (as of Mar 10, 2026):
 - **46 data tables** + 3 stubs (fact/dim), 18.5M+ rows
 - **341 RAG chunks** (10 topics)
-- **684 QA pairs** (pre-computed)
+- **719 QA pairs** (pre-computed)
 - All exported to P3 via fiscal-year-aligned sync
 
 ---

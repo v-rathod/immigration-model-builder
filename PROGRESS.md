@@ -5,14 +5,14 @@
 
 ---
 
-## Quick Reference (Current State as of Milestone 20 — 2026-03-01)
+## Quick Reference (Current State as of Milestone 22 — 2026-03-10)
 
 | Metric | Value |
 |--------|-------|
 | **Test pass rate** | **100%** (562 passed, 0 failed, 1 skipped, 3 deselected) |
 | Total tests | ~566 collected, 562 executed |
-| Milestone | 20 — dim_employer as Source of Truth (title case throughout) |
-| dim_employer.parquet | 256,411 rows (incl. 13,277 new stubs canonicalized) |
+| Milestone | 22 — Full Pipeline Refresh + Stage 2c Bug Fix |
+| dim_employer.parquet | 243,134 rows |
 | fact_perm/ | 1,675,051 rows, 20 FY partitions |
 | fact_lca/ | 9,558,695 rows, 19 FY partitions |
 | fact_cutoffs/ | 13,915 rows, 17 partitions |
@@ -91,6 +91,65 @@ bash scripts/build_incremental.sh --full       # full rebuild + save manifest
 | 19 | 2026-03-01 | Employer Name Normalization | Full entity resolution: normalize/mappings.py, rebuilt salary/monthly artifacts, 72 new tests, 541 total |
 | 20 | 2026-03-01 | dim_employer as Source of Truth | patch script canonicalizes stubs; 6,965 → 34 all-caps in monthly_metrics; 562 tests |
 | 21 | 2026-03-09 | P2→P3 Fiscal-Year Filter Fix | Fixed sync script: changed calendar/received_date → fiscal_year filtering; Optum now 1,928 rows FY2023–2026 ✅ |
+| 22 | 2026-03-10 | Full Pipeline Refresh + Stage 2c Bug Fix | Fixed `_UNKNOWN` sentinel in `build_approval_denial_trends.py` + `build_approval_denial_detailed.py`; full rebuild Stages 1–4 |
+
+## 2026-03-10 — Milestone 22: Full Pipeline Refresh + Stage 2c Bug Fix
+
+### What Was Done
+
+**1. Bug Fix — `_UNKNOWN` Sentinel Values in `fiscal_year`:**
+- `fact_uscis_approvals.parquet` contains `_UNKNOWN` sentinel values in the `fiscal_year` column
+- `build_approval_denial_trends.py` was calling `.str.replace('FY', '').astype(int)` → `ValueError`
+- Same bug in `build_approval_denial_detailed.py` (2 locations)
+- **Fix pattern** (applied in 5 locations across 2 files):
+  ```python
+  # Filter sentinel values before int conversion
+  ua = ua[ua['fiscal_year'].notna()].copy()
+  ua['fiscal_year'] = ua['fiscal_year'].astype(str)
+  ua = ua[~ua['fiscal_year'].str.startswith('_')].copy()
+  ua['fy'] = ua['fiscal_year'].str.replace('FY', '').apply(lambda x: int(x) if x.isdigit() else None)
+  ua = ua[ua['fy'].notna()].copy()
+  ua['fy'] = ua['fy'].astype(int)
+  ```
+- **Key insight**: pyarrow-backed string columns require explicit `.astype(str)` before `.str.startswith()` works correctly
+
+**2. Full Pipeline Rebuild (Stages 1–4):**
+- Stage 1 (Curate): All dimensions + facts rebuilt
+- Stage 1b: dim_employer patch (243,134 rows), dim_soc expansion  
+- Stage 1c: fact_h1b_employer_hub, fact_bls_ces, fact_iv_post
+- Stage 2 (Features): employer_features (70,206 rows)
+- Stage 2b: employer_salary_profiles (2,524,521 rows)
+- Stage 2c: approval_denial_trends + detailed (62 + 3,248 rows) — **fixed**
+- Stage 2d: All 9 P3 export artifacts rebuilt
+- Stage 3: Employer Friendliness Score (15,324 with valid EFS)
+- Stage 4: RAG (341 chunks, 719 Q&A pairs)
+
+### Key Artifact Row Counts
+| Artifact | Rows |
+|----------|------|
+| fact_lca | 9,558,695 (19 FYs, 38 files) |
+| fact_perm | 1,675,051 (19 FYs) |
+| fact_cutoffs | 8,060 (168 PDFs) |
+| fact_oews | 413,327 |
+| dim_employer | 243,134 |
+| dim_soc | 1,396 SOC codes |
+| dim_area | 587 areas |
+| employer_features | 70,206 |
+| employer_salary_profiles | 2,524,521 |
+| employer_salary_yearly | 1,432,611 |
+| soc_salary_market | 18,038 |
+| approval_denial_trends | 62 (FY1992–2026) |
+| approval_denial_detailed | 3,248 |
+| RAG chunks | 341 |
+| QA cache | 719 |
+
+### Files Modified
+| File | Change |
+|------|--------|
+| `scripts/build_approval_denial_trends.py` | Added `_UNKNOWN` sentinel filter in 3 functions |
+| `scripts/build_approval_denial_detailed.py` | Added `_UNKNOWN` sentinel filter in 2 functions |
+
+---
 
 ## 2026-03-01 - Milestone 20: dim_employer as Source of Truth for All Canonical Names
 
