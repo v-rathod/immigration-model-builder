@@ -207,6 +207,16 @@ def build_geo_metrics(log_lines: list) -> pd.DataFrame:
             df[wage_col] = pd.to_numeric(df[wage_col], errors="coerce")
             df["annualized_wage"] = annualize_wage(df[wage_col], df.get(unit_col, pd.Series(["Year"] * len(df))))
 
+            # Cap outlier wages — DOL raw data contains data-entry errors
+            _pre = df["annualized_wage"].notna().sum()
+            df.loc[
+                df["annualized_wage"].notna() &
+                ((df["annualized_wage"] < 5_000) | (df["annualized_wage"] > 1_000_000)),
+                "annualized_wage"
+            ] = np.nan
+            _post = df["annualized_wage"].notna().sum()
+            log_lines.append(f"{dataset}: wage outlier cap [$5K-$1M]: nulled {_pre - _post:,} of {_pre:,} wages")
+
         # Map state → area_code via dim_area (pick first match)
         state_map = state_to_area.groupby("state_abbr")["area_code"].first().to_dict()
         df["area_code"] = df["worksite_state"].map(state_map)

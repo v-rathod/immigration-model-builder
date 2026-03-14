@@ -157,6 +157,17 @@ def build_soc_demand(log_lines: list) -> pd.DataFrame:
         unit_s = df.get(unit_col, pd.Series(["Year"] * len(df), index=df.index))
         df["annualized_wage"] = annualize(df[wage_col], unit_s)
 
+        # Cap outlier wages — DOL raw data contains data-entry errors
+        # (e.g. hourly rate filed as annual, producing $1B+ salaries).
+        _pre = df["annualized_wage"].notna().sum()
+        df.loc[
+            df["annualized_wage"].notna() &
+            ((df["annualized_wage"] < 5_000) | (df["annualized_wage"] > 1_000_000)),
+            "annualized_wage"
+        ] = np.nan
+        _post = df["annualized_wage"].notna().sum()
+        log_lines.append(f"{dataset}: wage outlier cap [$5K-$1M]: nulled {_pre - _post:,} of {_pre:,} wages")
+
         anchor = df["decision_date"].max()
         log_lines.append(f"{dataset}: {len(df):,} rows, anchor={anchor.date()}")
 

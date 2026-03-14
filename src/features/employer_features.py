@@ -169,6 +169,18 @@ def build_employer_features(in_tables: Path, out_path: Path) -> None:
     perm_36['wage_mult'] = perm_36['wage_offer_unit'].map(WAGE_UNIT_MULTIPLIER).fillna(1.0)
     perm_36['annual_wage'] = perm_36['wage_offer_from_num'] * perm_36['wage_mult']
 
+    # Cap outlier wages for aggregation — DOL raw data contains data-entry
+    # errors (e.g. hourly rate filed as annual, producing $1B+ salaries).
+    # Use the same $5K–$1M bounds as make_employer_salary_profiles.py.
+    _pre = perm_36['annual_wage'].notna().sum()
+    perm_36.loc[
+        perm_36['annual_wage'].notna() &
+        ((perm_36['annual_wage'] < 5_000) | (perm_36['annual_wage'] > 1_000_000)),
+        'annual_wage'
+    ] = np.nan
+    _post = perm_36['annual_wage'].notna().sum()
+    log(f'  PERM wage outlier cap [$5K–$1M]: nulled {_pre - _post:,} of {_pre:,} wages')
+
     # ── Build OEWS lookup ───────────────────────────────────
     log('\n[C] Building OEWS wage lookup')
     # Use latest ref_year
@@ -232,6 +244,16 @@ def build_employer_features(in_tables: Path, out_path: Path) -> None:
         lca_36['lca_annual_wage'] = lca_36['wage_rate_from'] * lca_36['wage_mult']
         lca_36['pw_mult'] = lca_36.get('pw_unit', '').str.lower().str.strip().map(WAGE_UNIT_MULTIPLIER).fillna(1.0)
         lca_36['lca_annual_pw'] = lca_36['prevailing_wage'] * lca_36['pw_mult']
+
+        # Cap outlier wages — same $5K–$1M bounds as salary profiles
+        _pre_lca = lca_36['lca_annual_wage'].notna().sum()
+        lca_36.loc[
+            lca_36['lca_annual_wage'].notna() &
+            ((lca_36['lca_annual_wage'] < 5_000) | (lca_36['lca_annual_wage'] > 1_000_000)),
+            'lca_annual_wage'
+        ] = np.nan
+        _post_lca = lca_36['lca_annual_wage'].notna().sum()
+        log(f'  LCA wage outlier cap [$5K–$1M]: nulled {_pre_lca - _post_lca:,} of {_pre_lca:,} wages')
 
         # Per-employer LCA features
         lca_grp = lca_36.groupby('employer_id')
