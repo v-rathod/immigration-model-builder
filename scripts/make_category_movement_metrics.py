@@ -6,6 +6,12 @@ EB category comparison: movement, volatility, predicted next movement.
 Input:  artifacts/tables/fact_cutoff_trends.parquet (or fact_cutoffs_all fallback)
 Output: artifacts/tables/category_movement_metrics.parquet
 Log:    artifacts/metrics/category_movement_metrics.log
+
+Data window: last 10 years from current system date (dynamic — re-running the
+script at a later date will automatically slide the window forward). This ensures
+velocity metrics (avg, blended, net) are computed from the same 10-year horizon
+across all categories, eliminating bias from differently-sized historical backlogs
+(e.g., India EB3's 2005 cutoff start vs India EB2's 2009 cutoff start).
 """
 import os, sys, logging
 from datetime import datetime, timezone
@@ -181,7 +187,24 @@ def main():
     log_lines = [f"=== category_movement_metrics build {datetime.now(timezone.utc).isoformat()} ==="]
 
     df_trends = load_trends()
-    log_lines.append(f"Input rows: {len(df_trends):,}")
+    log_lines.append(f"Input rows (all history): {len(df_trends):,}")
+
+    # ── Apply 10-year rolling window (always relative to current date) ──────
+    # This ensures blended_velocity / net_velocity are computed from the same
+    # horizon across all categories, eliminating historical catch-up bias.
+    now = datetime.now(timezone.utc)
+    window_year  = now.year - 10
+    window_month = now.month
+    window_ym    = window_year * 100 + window_month
+    mask = (
+        df_trends["bulletin_year"]  .astype(int) * 100 +
+        df_trends["bulletin_month"].astype(int)
+    ) >= window_ym
+    df_trends = df_trends[mask].copy()
+    log_lines.append(
+        f"After 10-year filter (from {window_year}-{window_month:02d} onward): "
+        f"{len(df_trends):,} rows"
+    )
 
     df_out = build_category_metrics(df_trends, log_lines)
     log.info(f"Output rows: {len(df_out):,}")
