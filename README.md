@@ -1,10 +1,32 @@
+# 📊 Meridian — NorthStar Analytics Pipeline
+
+> **Part of the NorthStar Immigration Analytics Program**
+> 
+> **📖 READ FIRST:** [NorthStar Vision & Architecture](../northstar-docs/README.md) — Understanding the full program before diving into this project
+>
+> **Project Role:** Analytics backbone — builds forecasts, computes scores, generates artifacts for Compass (P3)
+
+## 🏗️ NorthStar Program Structure
+
+```
+P1: Horizon               P2: Meridian (This Project)  P3: Compass
+Data Collection      →    Analytics & ML              →  Web Dashboard
+├ Fetch PDFs              ├ Build forecasts              ├ Static Next.js site
+├ Parse tables            ├ Compute scores               ├ 9 interactive dashboards
+└ Store raw data          └ Generate artifacts           └ 929+ regression tests
+```
+
+**Program Overview:** [README.md](../northstar-docs/README.md) • **Setup Guide:** [SETUP_GUIDE.md](../northstar-docs/SETUP_GUIDE.md) • **Best Practices:** [BEST_PRACTICES.md](../northstar-docs/BEST_PRACTICES.md) • **Vision:** [NORTHSTAR_VISION.md](../northstar-docs/NORTHSTAR_VISION.md)
+
+---
+
 # NorthStar · Meridian
 
 > **Immigration Model Builder** — the analytical backbone of the NorthStar program
 
 > **📋 For AI Assistants**: 
-> 1. Read [`/Users/vrathod1/dev/NorthStar/NORTHSTAR_VISION.md`](../NORTHSTAR_VISION.md) — Program vision, architecture, guardrails
-> 2. Read [`/Users/vrathod1/dev/NorthStar/BEST_PRACTICES.md`](../BEST_PRACTICES.md) — Engineering conventions, testing strategy, agent checklist
+> 1. Read [Shared Vision & Architecture](../northstar-docs/NORTHSTAR_VISION.md) — Program vision, architecture, guardrails
+> 2. Read [Shared Best Practices](../northstar-docs/BEST_PRACTICES.md) — Engineering conventions, testing strategy, agent checklist
 > 3. Read [`.github/copilot-instructions.md`](.github/copilot-instructions.md) — it's the authoritative context file (auto-loaded by Copilot)
 > 4. Review [`PROGRESS.md`](PROGRESS.md) for chronological work history (Milestones 1–16)
 
