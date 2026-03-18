@@ -3,8 +3,17 @@
 venv/
 ENV/
 
-# Artifacts
-artifacts/
+# Artifacts (stored in GitHub Releases, not Git)
+# See: https://github.com/v-rathod/immigration-model-builder/releases
+artifacts/tables/*.parquet
+artifacts/tables/*.csv
+artifacts/models/*.pkl
+artifacts/models/*.json
+/data/
+
+# Large cache files
+*.cache
+*.db
 
 # Python
 __pycache__/
@@ -15,6 +24,11 @@ __pycache__/
 *.egg-info/
 dist/
 build/
+
+# Environment
+.env
+.env.local
+.env.*.local
 
 # macOS
 .DS_Store
@@ -27,6 +41,10 @@ build/
 
 # Jupyter
 .ipynb_checkpoints/
+
+# OS
+Thumbs.db
+.DS_Store
 
 # Testing
 .pytest_cache/
