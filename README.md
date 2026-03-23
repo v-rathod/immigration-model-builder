@@ -16,7 +16,7 @@ Data Collection      →    Analytics & ML              →  Web Dashboard
 └ Store raw data          └ Generate artifacts           └ 929+ regression tests
 ```
 
-**Program Overview:** [README.md](../northstar-docs/README.md) • **Setup Guide:** [SETUP_GUIDE.md](../northstar-docs/SETUP_GUIDE.md) • **Best Practices:** [BEST_PRACTICES.md](../northstar-docs/BEST_PRACTICES.md) • **Vision:** [NORTHSTAR_VISION.md](../northstar-docs/NORTHSTAR_VISION.md)
+**Program Overview:** [README.md](../northstar-docs/README.md) • **Guardrails:** [GUARDRAILS.md](../northstar-docs/GUARDRAILS.md) • **Setup Guide:** [SETUP_GUIDE.md](../northstar-docs/SETUP_GUIDE.md) • **Best Practices:** [BEST_PRACTICES.md](../northstar-docs/BEST_PRACTICES.md) • **Vision:** [NORTHSTAR_VISION.md](../northstar-docs/NORTHSTAR_VISION.md)
 
 ---
 
@@ -25,10 +25,12 @@ Data Collection      →    Analytics & ML              →  Web Dashboard
 > **Immigration Model Builder** — the analytical backbone of the NorthStar program
 
 > **📋 For AI Assistants**: 
-> 1. Read [Shared Vision & Architecture](../northstar-docs/NORTHSTAR_VISION.md) — Program vision, architecture, guardrails
-> 2. Read [Shared Best Practices](../northstar-docs/BEST_PRACTICES.md) — Engineering conventions, testing strategy, agent checklist
-> 3. Read [`.github/copilot-instructions.md`](.github/copilot-instructions.md) — it's the authoritative context file (auto-loaded by Copilot)
-> 4. Review [`PROGRESS.md`](PROGRESS.md) for chronological work history (Milestones 1–16)
+> 1. Read [Program Guardrails (Ten Commandments)](../northstar-docs/GUARDRAILS.md) — Non-negotiable program-wide rules
+> 2. Read [P2 Guardrails](.github/GUARDRAILS.md) — Project-specific rules for Meridian
+> 3. Read [Shared Vision & Architecture](../northstar-docs/NORTHSTAR_VISION.md) — Program vision, architecture, guardrails
+> 4. Read [Shared Best Practices](../northstar-docs/BEST_PRACTICES.md) — Engineering conventions, testing strategy, agent checklist
+> 5. Read [`.github/copilot-instructions.md`](.github/copilot-instructions.md) — it's the authoritative context file (auto-loaded by Copilot)
+> 6. Review [`PROGRESS.md`](PROGRESS.md) for chronological work history (Milestones 1–16)
 
 ## The NorthStar Program
 
