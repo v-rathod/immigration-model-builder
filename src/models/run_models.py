@@ -14,7 +14,8 @@ except Exception:
     _tap = None  # type: ignore
 
 from src.io.readers import load_paths_config, resolve_artifact_path
-from src.models.pd_forecast import fit_pd_forecast
+from src.models.pd_forecast_v2 import fit_pd_forecast_v2
+from src.models.pd_forecast_retrograde import fit_pd_forecast_retrograde
 from src.models.employer_score import fit_employer_score
 
 
@@ -43,8 +44,11 @@ def main():
     out_tables = Path(artifacts_root) / "tables"
 
     # Train models
-    print("\n--- Priority Date Forecast ---")
-    fit_pd_forecast(in_tables, out_models, out_tables)
+    print("\n--- Priority Date Forecast (v2.2) ---")
+    fit_pd_forecast_v2(in_tables, out_models, out_tables)
+
+    print("\n--- Priority Date Forecast (MCRA — Retrograde-Adjusted) ---")
+    fit_pd_forecast_retrograde(in_tables, out_models, out_tables)
 
     print("\n--- Employer Friendliness Score v1 (rules-based) ---")
     fit_employer_score(in_tables, out_tables)
