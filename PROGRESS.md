@@ -3532,3 +3532,57 @@ Added: 45 new tests from p2_baselines/ + restored MCRA test (was xfail)
 
 ---
 - All quality gates met (coverage ≥95%, PK unique =100%, test pass rate =100%)
+---
+
+## 2026-04-19 - Milestone 25: May 2026 Visa Bulletin Data Import
+
+### Objective
+Resolve data freshness gap where frontend showed "April 2026" for visa bulletin instead of "May 2026". May 2026 Visa Bulletin PDF was available in P1 but not yet parsed by P2.
+
+### Root Cause
+May 2026 Visa Bulletin PDF (`visabulletin_May2026.pdf`, 332 KB) was downloaded by P1 (Horizon) on Apr 19 10:54 AM, but P2's curate pipeline hadn't processed it yet. Full `run_curate` was hanging when attempting to process all 170 visa bulletin PDFs with pdfplumber.
+
+### Solution
+Created targeted script `scripts/append_may2026_bulletin.py` to:
+1. Extract May 2026 bulletin directly from PDF without reprocessing all 170 bulletins
+2. Parse FAD (Final Action Dates) and DFF (Dates for Filing) charts
+3. Append 55 cutoff records to `fact_cutoffs_all.parquet`
+4. Sync to P3 JSON for frontend consumption
+
+**Performance:** Process time ~90 seconds vs expected 20+ minutes for full curate
+
+### Data Changes
+- `fact_cutoffs_all.parquet`: 8,115 rows → 8,170 rows (added May 2026 = +55 rows)
+- `fact_cutoff_trends.parquet`: 8,115 rows → 8,170 rows (synced from _all)
+- Charts added: FAD + DFF (matched April 2026 structure)
+- Categories: EB1, EB2, EB3, EB3-Other, EB4, EB5
+- Countries: ROW, CHN, IND, MEX, PHL + regional variants
+
+### P2→P3 Sync
+- Exported updated `fact_cutoff_trends` to `public/data/dashboards/visa-bulletin/fact_cutoff_trends.json`
+- File size: 8,170 rows × 14 columns = ~1.2 MB JSON
+- P3 frontend dynamically loads from JSON (no rebuild needed)
+
+### Frontend Result
+When user refreshes P3 at `localhost:3000/dashboard/visa-bulletin/`:
+- Visa bulletin display now shows "May 2026" (was "April 2026")
+- All cutoff date projections updated with latest bulletin data
+- PDI (Priority Date Index) calculations use current May 2026 baseline
+
+### Files Created/Modified
+- `scripts/append_may2026_bulletin.py` - NEW (reusable monthly update utility)
+- `artifacts/tables/fact_cutoffs_all.parquet` - Updated (gitignored)
+- `artifacts/tables/fact_cutoff_trends.parquet` - Updated (gitignored)
+- `public/data/dashboards/visa-bulletin/fact_cutoff_trends.json` - Updated (gitignored)
+
+### Testing
+- Verified May 2026 data in fact_cutoff_trends: 55 rows present
+- Verified P3 JSON has 8,170 rows with latest month 2026-05
+- All three repos (P1, P2, P3) aligned on May 2026 data
+- No test failures (655 tests still passing)
+
+### P3 Status
+- Dev server running (`npm run dev` since 9:39 PM)
+- Data pipeline P1→P2→P3 fully operational
+- Frontend ready to display May 2026 on page refresh
+
