@@ -3641,3 +3641,75 @@ Homepage visa-bulletin-pulse widget showed "Invalid Date" and "+NaN days/month" 
 - Homepage widgets: visa-bulletin-pulse shows correct cutoff dates and velocity
 - Priority date check: shows valid month predictions
 - All test suites green
+
+---
+
+## 2026-04-20 - Milestone 27: Homepage Date Rendering Fix + Test Architecture Hardening
+
+### Bug Fixed (Same symptom, different root cause from M26)
+Homepage visa-bulletin-pulse widget showed "Invalid Date" for all cutoff dates and "+NaN days/month" for velocity. Priority-date-check widget also showed invalid. **M26 fix was incomplete** — it addressed the missing computed columns but not the date rendering bug.
+
+### Root Cause (New)
+P2 Meridian serializes pandas Timestamps as `"YYYY-MM-DDTHH:mm:ss"` (e.g. `"2023-12-01T00:00:00"`).
+The component `formatCutoffDate()` function blindly did:
+```javascript
+new Date(iso + "T00:00:00Z")
+// → new Date("2023-12-01T00:00:00T00:00:00Z") → Invalid Date
+```
+
+### Why M26 Tests Didn't Catch This
+The M26 regression test validated:
+```javascript
+new Date(row.cutoff_date).getTime()  // ✅ "2023-12-01T00:00:00" IS parseable by new Date()
+```
+But the COMPONENT was doing `new Date(iso + "T00:00:00Z")` — a different operation. The test checked data validity, not rendering logic.
+
+The mock data in test files (`visa-bulletin-pulse.test.tsx`, `quick-check-widgets.test.tsx`) used bare `"YYYY-MM-DD"` format — which worked fine with the old code. Real P2 data uses `"YYYY-MM-DDTHH:mm:ss"` — which broke.
+
+### Fix Applied
+1. Extracted `parseCutoffIso()` + `formatCutoffIso()` shared utility in `src/lib/utils/format.ts`
+   - Strips time component before appending `T00:00:00Z`: handles both formats
+   - Exported via `src/lib/utils/index.ts`
+2. Both homepage components now use `formatCutoffIso()` instead of local `formatCutoffDate()`
+
+### Prevention: Tests Added (+13 new tests, 1318 total)
+
+**`src/__tests__/format.test.ts`** — 8 new unit tests:
+- `parseCutoffIso`: pandas format, bare date, null, "nan", empty string
+- `formatCutoffIso`: pandas format → "Dec 2023", null/"nan" → "–", never contains "Invalid"
+
+**`src/__tests__/visa-bulletin-pulse.test.tsx`** — 3 new CRITICAL tests:
+- Mock data updated to pandas format (`YYYY-MM-DDTHH:mm:ss`) — critical for catching rendering bugs
+- `CRITICAL: no Invalid Date rendered with pandas datetime format`
+- `CRITICAL: no NaN in velocity display with pandas datetime format`
+- `CRITICAL: all cutoff dates render as valid month strings (pandas format)` verifies all 5 date cells
+
+**`src/__tests__/visa-bulletin-regression.test.ts`** — replaced weak test with 2 better ones:
+- Removed: "cutoff_date is parseable by new Date() [irrelevant to rendering]"
+- Added: "renders correctly when passed through formatCutoffIso" — tests rendering function on ALL 3744 D-rows
+- Added: "parseCutoffIso handles pandas datetime format" — explicit unit test of the fix
+
+**`src/__tests__/quick-check-widgets.test.tsx`** — mock data updated to pandas format
+
+**`src/__tests__/visa-bulletin.test.tsx`** — increased `findBy`/`waitFor` timeout to 5000ms (pre-existing timing fragility)
+
+### Test Architecture Lesson
+> **Mock data MUST match the actual P2 data format.**
+> P2 pandas serializes datetime as `YYYY-MM-DDTHH:mm:ss`. Never use bare `YYYY-MM-DD` in mocks.
+> Always test rendering functions (what the UI shows), not just data validity (what JSON contains).
+
+### Files Modified
+- `src/lib/utils/format.ts` — Added `parseCutoffIso`, `formatCutoffIso`
+- `src/lib/utils/index.ts` — Added exports
+- `src/components/home/visa-bulletin-pulse.tsx` — Use `formatCutoffIso`
+- `src/components/home/pd-quick-check.tsx` — Use `formatCutoffIso`
+- `src/__tests__/format.test.ts` — 8 new utility tests
+- `src/__tests__/visa-bulletin-pulse.test.tsx` — Pandas format mocks + 3 CRITICAL tests
+- `src/__tests__/visa-bulletin-regression.test.ts` — Replaced weak test with 2 rendering tests
+- `src/__tests__/quick-check-widgets.test.tsx` — Pandas format mocks
+- `src/__tests__/visa-bulletin.test.tsx` — Timing robustness fix
+
+### Quality Gates
+- P3: 1318 tests passing (was 1305, +13)
+- Homepage: visa-bulletin-pulse shows valid dates and velocity with real P2 data
+- Regression test: `formatCutoffIso` tested on all 3744 D-rows in live data
