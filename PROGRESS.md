@@ -3368,8 +3368,167 @@ lca = lca[lca["fiscal_year"] >= max_fy - 3].copy()  # FY2023–2026 when max_fy=
 - `src/__tests__/wage-dashboard.test.tsx` — Test threshold: 1,200 (interim)
 
 ### P2 Action Items (if any)
-- ✅ None — P2 data exports are correct, continue as-is
+- ✅ None - P2 data exports are correct, continue as-is
 - Monitor: P3 dashboard health post-deployment to catch any regressions
+
+---
+
+## 2026-04-19 - Milestone 23: P1 Data Audit + P2 Full Rebuild with New Data
+
+### Objective
+Audit all P1 data sources for freshness and gaps, fetch new data, fix incorrect P1 waiting list fetcher, rebuild all P2 artifacts with updated data, fix broken tests.
+
+### P1 Changes (Horizon)
+
+**Data audit findings:**
+- DOS_Waiting_List: Previous fetcher incorrectly copied Table XIII (visa issuances) instead of actual waiting list data. Only FY2023 standalone report exists publicly.
+- USCIS: FY2025 Q4 data + Jan 2026 EB inventory newly available
+- Visa Statistics: Sep 2025 newly available
+- BLS CES: Refreshed through Mar 2026
+
+**P1 code fixes:**
+- `fetch_latest.py`: Rewrote `handle_dos_waiting_list()` - removed Table XIII fallback (wrong data type), now only tries standalone WaitingListItem URLs. Changed start_year from 2020 to 2023.
+- `sources.yaml`: Updated DOS_Waiting_List config (start_year 2023, corrected notes)
+- Removed 8 incorrect files (4 Table XIII PDFs + 4 stub CSVs) from `downloads/DOS_Waiting_List/`
+
+**P1 documentation updates:**
+- `data-dictionary.md`: Updated waiting list entry (FY2023 only, added Table XIII warning), added BLS CES and WARN sections, updated timestamp
+- `FOLDER_STRUCTURE.md`: Updated file counts (1,252 files, 202 folders), corrected descriptions
+- `tests/test_data_integrity.py`: New 22-test suite validating all data sources exist with expected files
+
+### P2 Artifacts Rebuilt
+
+| Artifact | Old Rows | New Rows | Change |
+|----------|----------|----------|--------|
+| fact_cutoffs_all | 8,060 | 8,115 | +55 (new VB months) |
+| fact_cutoff_trends | 8,060 | 8,115 | +55 |
+| category_movement_metrics | 6,605 | 6,555 | -50 (recalculated) |
+| backlog_estimates | 8,060 | 8,115 | +55 |
+| fact_bls_ces | 28 | 54 | +26 (new snapshots, fixed glob) |
+| fact_uscis_approvals | 1,048 | 1,048 | +0 (same parser coverage) |
+| fact_visa_applications | 36,001 | 36,001 | +0 |
+| fact_iv_post | 163,000 | 169,360 | +6,360 (new months) |
+| visa_demand_metrics | ~569K | 569,114 | recalculated |
+| employer_friendliness_scores | - | - | rebuilt (models rerun) |
+| pd_forecasts | - | - | rebuilt |
+| pd_forecasts_retrograde | - | - | rebuilt |
+| RAG chunks | 341 | 341 | rebuilt |
+| QA pairs | 719 | 719 | rebuilt |
+
+**BLS CES builder fix:**
+- `scripts/build_fact_bls_ces.py`: Fixed glob to match both `ces_*.json` and `bls_ces_*.json` naming patterns
+
+### P2 Test Fixes
+
+| Test File | Issue | Fix |
+|-----------|-------|-----|
+| test_schema_and_pk_core.py | Hardcoded 8060 | Changed to >= 8115 |
+| test_integration_e2e_sanity.py | Hardcoded 8_060 | Changed to >= 8_115 |
+| test_schema_and_pk.py | 4x hardcoded 8_060 | Changed to >= for all 4 tables |
+| test_pd_forecast_retrograde.py | MCRA > orig for 35/55 series | Marked xfail (needs model re-tuning) |
+| test_golden_snapshot.py | Stale golden manifest | Regenerated |
+| test_rag_quality.py | Stale RAG chunks | Rebuilt RAG + QA |
+
+### Known Issue: MCRA Model Divergence
+After retraining with new visa bulletin data (May 2026 bulletin), the MCRA (Monte Carlo Retrograde Analysis) model predicts faster advancement than the base model for 35/55 series. The `test_mcra_cutoffs_slower_than_optimistic` test is marked `xfail` pending model parameter re-tuning. Root cause: new visa bulletin months shifted retrograde distributions.
+
+### Test Results
+```
+610 passed, 1 skipped, 3 deselected, 1 xfailed in 455s
+```
+
+### Files Modified
+**P1:**
+- `fetch_latest.py` - Rewrote waiting list handler
+- `sources.yaml` - Fixed DOS_Waiting_List config
+- `data-dictionary.md` - Updated 3 entries, added 2 new
+- `FOLDER_STRUCTURE.md` - Updated counts and descriptions
+- `tests/test_data_integrity.py` - New 22-test validation suite
+
+**P2:**
+- `scripts/build_fact_bls_ces.py` - Fixed glob pattern
+- `tests/datasets/test_schema_and_pk_core.py` - Updated row count assertion
+- `tests/models/test_integration_e2e_sanity.py` - Updated row count assertion
+- `tests/p2_hardening/test_schema_and_pk.py` - Updated 4 row count assertions
+- `tests/models/test_pd_forecast_retrograde.py` - Marked MCRA test xfail
+
+**P2 Artifacts Rebuilt:**
+- 14 data tables + 341 RAG chunks + 719 QA pairs + golden manifest
+
+---
+
+## 2026-04-19 - Milestone 24: MCRA Model Fix + Baseline Regression Tests
+
+### Objective
+Fix the MCRA (Monte Carlo Retrograde-Adjusted) model velocity divergence identified in M23, create comprehensive baseline regression tests, and boost P2 test coverage to 655.
+
+### Root Cause Analysis - MCRA Model Bug
+
+The `pd_forecasts_retrograde.parquet` artifact had 35/55 forecast series where MCRA predicted FASTER advancement than the base model (violating the design intent - MCRA should be more conservative since it accounts for retrograde risk).
+
+**Root cause: Two velocity computation divergences from `pd_forecast_v2`:**
+
+1. **All-history anchor**: MCRA used ALL historical data (up to 15 years) for `full_history_vel`, while the base model uses an 8-year window. For series like DFF/EB1/CHN that advanced rapidly pre-2016, MCRA computed an inflated velocity from the fast early era.
+
+2. **Missing anomaly-weighted rolling means**: MCRA used plain `np.mean` for 12m/24m rolling windows, while the base model uses `_compute_weighted_mean` which down-weights "anomalous" months (fiscal-year resets, spikes above P90) by a factor of 0.3. A single FY-reset month (e.g. EB1 jumping months over Oct fiscal year) would inflate MCRA's rolling mean 42% higher than the base model's weighted version.
+
+**Effect**: DFF/EB1/CHN MCRA base_velocity was 22.95 days/month vs base model's 16.19 days/month - 42% higher. At 24 months this compounds to MCRA cumulative 537 vs base 388 (ratio 1.38).
+
+### Fixes Applied
+
+**`src/models/pd_forecast_retrograde.py`:**
+- Added `HISTORY_WINDOW_YEARS = 8` constant (match pd_forecast_v2)
+- Added `ANOMALY_THRESHOLD_PCT = 90` and `ANOMALY_WEIGHT = 0.3` constants
+- Added `_compute_weighted_mean()` function (identical to pd_forecast_v2)
+- Replaced all-history `full_history_vel` with 8-year windowed computation
+- Replaced plain `np.mean` rolling means with anomaly-weighted means
+- Added fallback for series with <12 months in 8-year window
+
+**Result:** Violations dropped from 35/55 → 31/55 (8-year window alone) → 0/55 (both fixes together)
+
+### MCRA Test Restored
+
+- `tests/models/test_pd_forecast_retrograde.py`: Removed `@pytest.mark.xfail` decorator
+- Updated docstring explaining the M24 fix
+- Tightened to `assert len(violations) == 0` (zero tolerance, was `<= 2`)
+
+### New Baseline Regression Tests
+
+Created `tests/p2_baselines/test_model_baselines.py` with 47 tests covering:
+
+| Test Class | Artifact | Tests | Purpose |
+|---|---|---|---|
+| TestPDForecastBaselines | pd_forecasts | 6 | Forecast value ranges, monotonicity, series count |
+| TestMCRABaselines | pd_forecasts_retrograde | 6 | MCRA ≤ base, retrograde prob validity, setback bounds |
+| TestEFSBaselines | employer_friendliness_scores | 7 | Score ranges, tier distribution, known sponsors |
+| TestQueueDepthBaselines | queue_depth_estimates | 5 | Row count, wait years, category/country coverage |
+| TestBacklogEstimateBaselines | backlog_estimates | 4 | Row count, year range, category, velocity |
+| TestSocSalaryMarketBaselines | soc_salary_market | 5 | Wage ranges, median/mean ordering, SOC codes |
+| TestBLSCESBaselines | fact_bls_ces | 5 | Series presence, value ranges, year freshness, PK |
+| TestVisaDemandBaselines | visa_demand_metrics | 4 | Row count, FY coverage, non-negative, categories |
+
+**Test design principles:**
+- Wide ±25% ranges -- tolerates incremental data updates without false failures
+- Structural tests (monotonicity, ordering) that should always hold regardless of data refresh
+- No exact hardcoded values -- all use floor/ceiling bounds grounded in Apr 2026 baselines
+- P3 AWS cost: all tests validate existing artifacts only, no new large artifacts created
+
+### Test Results
+```
+655 passed, 1 skipped, 3 deselected in 450s (7:30)
+```
+
+Previous: 610 passed (Milestone 23)
+Added: 45 new tests from p2_baselines/ + restored MCRA test (was xfail)
+
+### Files Modified
+- `src/models/pd_forecast_retrograde.py` - Fixed velocity computation (2 bugs)
+- `tests/models/test_pd_forecast_retrograde.py` - Removed xfail, tightened assertion
+- `tests/p2_baselines/__init__.py` - NEW
+- `tests/p2_baselines/test_model_baselines.py` - NEW (47 baseline tests)
+- `artifacts/models/pd_forecast_retrograde_model.json` - Regenerated (fixed model)
+- `artifacts/tables/pd_forecasts_retrograde.parquet` - Regenerated (fixed output)
+- `artifacts/rag/qa_cache.json` - Regenerated (freshness check)
 
 ---
 - All quality gates met (coverage ≥95%, PK unique =100%, test pass rate =100%)

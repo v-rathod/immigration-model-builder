@@ -85,6 +85,7 @@ echo "------------------------------------------------------------"
 echo "Stage 2b: SALARY PROFILES (employer×role salary artifact)"
 echo "------------------------------------------------------------"
 python3 scripts/make_employer_salary_profiles.py
+python3 scripts/make_employer_activity.py
 echo ""
 
 # Stage 2c: Approval/Denial Dashboard (for P3 approval/denial trends)

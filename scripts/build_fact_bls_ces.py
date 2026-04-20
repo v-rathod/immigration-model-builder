@@ -148,8 +148,8 @@ def main():
     log.info("Source: %s", droot)
     log.info("Output: %s", out_path)
 
-    # Discover JSON files
-    json_files = sorted(droot.glob("ces_*.json"))
+    # Discover JSON files (match both ces_*.json and bls_ces_*.json naming)
+    json_files = sorted(set(droot.glob("ces_*.json")) | set(droot.glob("bls_ces_*.json")))
     log.info("Found %d CES JSON files", len(json_files))
 
     if not json_files:

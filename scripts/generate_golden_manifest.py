@@ -47,6 +47,8 @@ ARTIFACTS = [
     "backlog_estimates", "fact_cutoff_trends", "processing_times_trends",
     # Salary profiles (employer×role salary data for P3)
     "employer_salary_profiles", "employer_salary_yearly", "soc_salary_market",
+    # Employer activity classification (active/legacy/historical for P3 search)
+    "employer_activity",
     # Models
     "employer_friendliness_scores", "employer_friendliness_scores_ml",
     "pd_forecasts",
