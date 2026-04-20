@@ -53,10 +53,10 @@ cd /Users/vrathod1/dev/NorthStar/immigration-model-builder
 cd /Users/vrathod1/dev/NorthStar/immigration-insights-app
 ```
 
-### Current Project Status (as of Mar 10, 2026)
+### Current Project Status (as of Apr 19, 2026)
 - **P1 (Horizon)**: Data collection pipeline, latest sources in `downloads/`, auto-commit policy active
-- **P2 (Meridian)**: 562 tests passing, data pipeline stable, all artifacts export cleanly, incremental builds enabled
-- **P3 (Compass)**: 579 tests passing, all dashboards live, 94K+ employers with FY2023 data, AWS CloudFront deployed, P2→P3 fiscal-year filter fix applied
+- **P2 (Meridian)**: 655 tests passing, data pipeline stable, all artifacts export cleanly, incremental builds enabled
+- **P3 (Compass)**: 1302 tests passing, all dashboards live, 95K+ employers with FY2026 data, AWS CloudFront deployed, MCRA model fix applied
 
 ### Common Workflow Patterns (P2)
 1. **Run incremental build** → `bash scripts/build_incremental.sh` → Gets P1 changes, rebuilds affected artifacts
@@ -64,16 +64,16 @@ cd /Users/vrathod1/dev/NorthStar/immigration-insights-app
 3. **Run tests** → `python3 -m pytest tests/ -q` → Validates data quality
 4. **Sync to P3** → `cd ../immigration-insights-app && npm run sync-data` → Export artifacts to P3
 
-### Recent Session Notes (Mar 10, 2026)
-**Milestone 22 Complete**: Full Pipeline Refresh + Stage 2c Bug Fix
-- P1 data check: 9 new files (BLS CES, ACS, 6 Visa Stats PDFs, CA WARN) ✅
-- Fixed `_UNKNOWN` sentinel bug in `build_approval_denial_trends.py` + `build_approval_denial_detailed.py` ✅
-- Full rebuild Stages 1–4: 46+ artifacts rebuilt, RAG 341 chunks, 719 QA pairs ✅
-- P3 sync: 21 dashboard JSONs + ~95K employer shards refreshed ✅
-- **Key lesson**: pyarrow-backed string columns need explicit `.astype(str)` before `.str.startswith()` works
+### Recent Session Notes (Apr 19, 2026)
+**Milestone 24 Complete**: MCRA Model Fix + Baseline Regression Tests
+- MCRA velocity divergence fixed: 35 → 0 violations (`HISTORY_WINDOW_YEARS=8` + anomaly-weighted means) ✅
+- Created `tests/p2_baselines/test_model_baselines.py` with 47 new baseline tests ✅
+- Full rebuild Stages 1–4: 46+ artifacts rebuilt, 23M+ rows, 341 RAG chunks, 719 QA pairs ✅
+- P3 sync: all dashboard JSONs + ~95K employer shards refreshed ✅
+- **Key lesson**: MCRA must match pd_forecast_v2's anomaly-weighted velocity exactly to avoid divergence
 
-**Artifact Inventory** (as of Mar 10, 2026):
-- **46 data tables** + 3 stubs (fact/dim), 18.5M+ rows
+**Artifact Inventory** (as of Apr 19, 2026):
+- **46 data tables** + 3 stubs (fact/dim), 23M+ rows
 - **341 RAG chunks** (10 topics)
 - **719 QA pairs** (pre-computed)
 - All exported to P3 via fiscal-year-aligned sync
@@ -432,7 +432,7 @@ src/
 ├── validate/        # Data quality check helpers
 └── export/          # RAG chunk generation & bundle packaging for Compass (P3)
     ├── rag_builder.py          # Generate 341 text chunks across 10 topics
-    └── qa_generator.py         # Generate 684 pre-computed Q&A pairs
+    └── qa_generator.py         # Generate 719 pre-computed Q&A pairs
 ```
 
 ### Key Scripts (scripts/)
@@ -478,5 +478,5 @@ When editing documentation files in this project:
 7. **`configs/paths.yaml`** — Data root and artifacts root paths
 8. **`src/incremental/change_detector.py`** — Incremental change detection (manifest, dependency graph)
 9. **`src/export/rag_builder.py`** — RAG chunk generator (341 chunks, 10 topics, 36 source artifacts)
-10. **`src/export/qa_generator.py`** — Pre-computed Q&A pairs (684 pairs across 10 topics)
+10. **`src/export/qa_generator.py`** — Pre-computed Q&A pairs (719 pairs across 10 topics)
 11. **`scripts/test_rag_practical.py`** — Practical end-to-end RAG smoke test (29 checks)
