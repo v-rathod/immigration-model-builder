@@ -1,0 +1,37 @@
+
+[A.1] Extracting SOC codes from OEWS 2023
+  OEWS 2023: 1396 distinct detailed SOC codes
+
+[A.2] Loading crosswalk soc_crosswalk_2010_to_2018.csv
+  Crosswalk: 2 rows
+
+[B] Deriving hierarchy (major/minor/broad)
+
+[C] Writing dim_soc.parquet: 1396 rows
+
+  Major group distribution:
+    00: 1
+    11: 73
+    13: 56
+    15: 36
+    17: 61
+    19: 79
+    21: 26
+    23: 15
+    25: 97
+    27: 62
+    29: 101
+    31: 26
+    33: 43
+    35: 33
+    37: 18
+    39: 59
+    41: 43
+    43: 109
+    45: 24
+    47: 102
+    49: 75
+    51: 166
+    53: 91
+
+  Total unique SOC-2018 codes: 1396

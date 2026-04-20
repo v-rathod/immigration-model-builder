@@ -1,0 +1,426 @@
+{
+  "generated": "2026-02-23T17:32:02Z",
+  "coverage": [
+    {
+      "dataset": "ACS",
+      "downloaded": true,
+      "download_files": 1,
+      "download_size": 146,
+      "download_folders": [
+        "ACS"
+      ],
+      "curated_present": false,
+      "outputs": [],
+      "gap": true,
+      "note": "Census ACS occupation/wage data \u2014 salary benchmark supplement"
+    },
+    {
+      "dataset": "BLS",
+      "downloaded": true,
+      "download_files": 4,
+      "download_size": 24161,
+      "download_folders": [
+        "BLS"
+      ],
+      "curated_present": true,
+      "outputs": [
+        {
+          "table": "fact_oews (via BLS raw)",
+          "path": "artifacts/tables/fact_oews",
+          "row_count": null,
+          "size_bytes": 12751738,
+          "last_updated": "2026-02-23T06:47:11Z",
+          "partition_files": 2
+        },
+        {
+          "table": "salary_benchmarks",
+          "path": "artifacts/tables/salary_benchmarks.parquet",
+          "row_count": null,
+          "size_bytes": 2561258,
+          "last_updated": "2026-02-22T21:35:35Z"
+        }
+      ],
+      "gap": false,
+      "note": "BLS raw feeds partially ingested via BLS_OEWS pipeline"
+    },
+    {
+      "dataset": "BLS_OEWS",
+      "downloaded": true,
+      "download_files": 3,
+      "download_size": 80423404,
+      "download_folders": [
+        "BLS_OEWS"
+      ],
+      "curated_present": true,
+      "outputs": [
+        {
+          "table": "fact_oews (partitioned)",
+          "path": "artifacts/tables/fact_oews",
+          "row_count": null,
+          "size_bytes": 12751738,
+          "last_updated": "2026-02-23T06:47:11Z",
+          "partition_files": 2
+        },
+        {
+          "table": "fact_oews (flat)",
+          "path": "artifacts/tables/fact_oews.parquet",
+          "row_count": null,
+          "size_bytes": 10832974,
+          "last_updated": "2026-02-22T21:29:00Z"
+        },
+        {
+          "table": "salary_benchmarks",
+          "path": "artifacts/tables/salary_benchmarks.parquet",
+          "row_count": null,
+          "size_bytes": 2561258,
+          "last_updated": "2026-02-22T21:35:35Z"
+        },
+        {
+          "table": "oews_wages",
+          "path": "artifacts/tables/oews_wages.parquet",
+          "row_count": null,
+          "size_bytes": 5249,
+          "last_updated": "2026-02-21T20:11:32Z"
+        }
+      ],
+      "gap": false,
+      "note": ""
+    },
+    {
+      "dataset": "Codebooks",
+      "downloaded": true,
+      "download_files": 3,
+      "download_size": 688,
+      "download_folders": [
+        "Codebooks"
+      ],
+      "curated_present": false,
+      "outputs": [],
+      "gap": false,
+      "note": "Reference only \u2014 schema codebooks for DOL/OEWS files"
+    },
+    {
+      "dataset": "DHS_Yearbook",
+      "downloaded": true,
+      "download_files": 1,
+      "download_size": 33114,
+      "download_folders": [
+        "DHS_Yearbook"
+      ],
+      "curated_present": false,
+      "outputs": [],
+      "gap": true,
+      "note": "DHS Yearbook of Immigration Statistics \u2014 historical baselines"
+    },
+    {
+      "dataset": "DOL_Record_Layouts",
+      "downloaded": true,
+      "download_files": 15,
+      "download_size": 2538476,
+      "download_folders": [
+        "DOL_Record_Layouts"
+      ],
+      "curated_present": false,
+      "outputs": [],
+      "gap": false,
+      "note": "Reference only \u2014 column layout specs for LCA/PERM raw files"
+    },
+    {
+      "dataset": "DOS_Numerical_Limits",
+      "downloaded": true,
+      "download_files": 1,
+      "download_size": 95621,
+      "download_folders": [
+        "DOS_Numerical_Limits"
+      ],
+      "curated_present": false,
+      "outputs": [],
+      "gap": true,
+      "note": "Annual per-country ceiling data \u2014 key for backlog projection"
+    },
+    {
+      "dataset": "DOS_Waiting_List",
+      "downloaded": true,
+      "download_files": 2,
+      "download_size": 230064,
+      "download_folders": [
+        "DOS_Waiting_List"
+      ],
+      "curated_present": false,
+      "outputs": [],
+      "gap": true,
+      "note": "Priority date waiting-list reports \u2014 direct backlog source"
+    },
+    {
+      "dataset": "LCA",
+      "downloaded": true,
+      "download_files": 217,
+      "download_size": 9854379166,
+      "download_folders": [
+        "LCA"
+      ],
+      "curated_present": true,
+      "outputs": [
+        {
+          "table": "fact_lca (partitioned)",
+          "path": "artifacts/tables/fact_lca",
+          "row_count": null,
+          "size_bytes": 513625378,
+          "last_updated": "2026-02-23T07:19:59Z",
+          "partition_files": 19
+        }
+      ],
+      "gap": false,
+      "note": ""
+    },
+    {
+      "dataset": "NIV_Statistics",
+      "downloaded": true,
+      "download_files": 32,
+      "download_size": 10758069,
+      "download_folders": [
+        "NIV_Statistics"
+      ],
+      "curated_present": false,
+      "outputs": [],
+      "gap": true,
+      "note": "Non-immigrant visa issuance counts by category"
+    },
+    {
+      "dataset": "PERM",
+      "downloaded": true,
+      "download_files": 47,
+      "download_size": 939864136,
+      "download_folders": [
+        "PERM"
+      ],
+      "curated_present": true,
+      "outputs": [
+        {
+          "table": "fact_perm (partitioned)",
+          "path": "artifacts/tables/fact_perm",
+          "row_count": null,
+          "size_bytes": 62453384,
+          "last_updated": "2026-02-23T06:46:18Z",
+          "partition_files": 19
+        },
+        {
+          "table": "fact_perm_unique_case",
+          "path": "artifacts/tables/fact_perm_unique_case",
+          "row_count": null,
+          "size_bytes": 22299003,
+          "last_updated": "2026-02-22T17:17:01Z",
+          "partition_files": 1
+        },
+        {
+          "table": "fact_perm_all",
+          "path": "artifacts/tables/fact_perm_all.parquet",
+          "row_count": null,
+          "size_bytes": 21702351,
+          "last_updated": "2026-02-22T20:22:20Z"
+        }
+      ],
+      "gap": false,
+      "note": ""
+    },
+    {
+      "dataset": "TRAC",
+      "downloaded": true,
+      "download_files": 0,
+      "download_size": 0,
+      "download_folders": [
+        "TRAC"
+      ],
+      "curated_present": false,
+      "outputs": [],
+      "gap": true,
+      "note": "TRAC FOIA records \u2014 adjudication timelines and denial rates"
+    },
+    {
+      "dataset": "USCIS_H1B_Employer_Hub",
+      "downloaded": true,
+      "download_files": 14,
+      "download_size": 61695036,
+      "download_folders": [
+        "USCIS_H1B_Employer_Hub"
+      ],
+      "curated_present": true,
+      "outputs": [
+        {
+          "table": "employer_features",
+          "path": "artifacts/tables/employer_features.parquet",
+          "row_count": null,
+          "size_bytes": 5424337,
+          "last_updated": "2026-02-23T07:24:55Z"
+        },
+        {
+          "table": "employer_scores",
+          "path": "artifacts/tables/employer_scores.parquet",
+          "row_count": null,
+          "size_bytes": 3594,
+          "last_updated": "2026-02-21T20:29:26Z"
+        },
+        {
+          "table": "employer_friendliness_scores",
+          "path": "artifacts/tables/employer_friendliness_scores.parquet",
+          "row_count": null,
+          "size_bytes": 5644575,
+          "last_updated": "2026-02-23T07:24:57Z"
+        },
+        {
+          "table": "employer_friendliness_scores_ml",
+          "path": "artifacts/tables/employer_friendliness_scores_ml.parquet",
+          "row_count": null,
+          "size_bytes": 55379,
+          "last_updated": "2026-02-22T20:27:27Z"
+        },
+        {
+          "table": "employer_monthly_metrics",
+          "path": "artifacts/tables/employer_monthly_metrics.parquet",
+          "row_count": null,
+          "size_bytes": 2409954,
+          "last_updated": "2026-02-22T21:32:53Z"
+        },
+        {
+          "table": "dim_employer",
+          "path": "artifacts/tables/dim_employer.parquet",
+          "row_count": null,
+          "size_bytes": 13396264,
+          "last_updated": "2026-02-23T06:46:18Z"
+        }
+      ],
+      "gap": false,
+      "note": ""
+    },
+    {
+      "dataset": "USCIS_IMMIGRATION",
+      "downloaded": true,
+      "download_files": 245,
+      "download_size": 6430382,
+      "download_folders": [
+        "USCIS_IMMIGRATION"
+      ],
+      "curated_present": false,
+      "outputs": [],
+      "gap": true,
+      "note": "USCIS immigration statistics reports (annual)"
+    },
+    {
+      "dataset": "USCIS_Processing_Times",
+      "downloaded": true,
+      "download_files": 2,
+      "download_size": 106937,
+      "download_folders": [
+        "USCIS_Processing_Times"
+      ],
+      "curated_present": true,
+      "outputs": [
+        {
+          "table": "processing_times_trends",
+          "path": "artifacts/tables/processing_times_trends.parquet",
+          "row_count": null,
+          "size_bytes": 3241,
+          "last_updated": "2026-02-22T20:23:23Z"
+        }
+      ],
+      "gap": false,
+      "note": "processing_times_trends parquet present; not yet joined to employer model"
+    },
+    {
+      "dataset": "Visa_Annual_Reports",
+      "downloaded": true,
+      "download_files": 273,
+      "download_size": 23569095,
+      "download_folders": [
+        "Visa_Annual_Reports"
+      ],
+      "curated_present": false,
+      "outputs": [],
+      "gap": true,
+      "note": "Visa issuance totals by country/category \u2014 complements DOS_Numerical_Limits"
+    },
+    {
+      "dataset": "Visa_Bulletin",
+      "downloaded": true,
+      "download_files": 168,
+      "download_size": 43589947,
+      "download_folders": [
+        "Visa_Bulletin"
+      ],
+      "curated_present": true,
+      "outputs": [
+        {
+          "table": "fact_cutoffs (partitioned)",
+          "path": "artifacts/tables/fact_cutoffs",
+          "row_count": null,
+          "size_bytes": 1529772,
+          "last_updated": "2026-02-23T07:21:16Z",
+          "partition_files": 280
+        },
+        {
+          "table": "fact_cutoffs_all",
+          "path": "artifacts/tables/fact_cutoffs_all.parquet",
+          "row_count": null,
+          "size_bytes": 32208,
+          "last_updated": "2026-02-23T03:47:32Z"
+        },
+        {
+          "table": "fact_cutoff_trends",
+          "path": "artifacts/tables/fact_cutoff_trends.parquet",
+          "row_count": null,
+          "size_bytes": 50415,
+          "last_updated": "2026-02-23T04:50:14Z"
+        },
+        {
+          "table": "backlog_estimates",
+          "path": "artifacts/tables/backlog_estimates.parquet",
+          "row_count": null,
+          "size_bytes": 18565,
+          "last_updated": "2026-02-23T05:40:19Z"
+        },
+        {
+          "table": "category_movement_metrics",
+          "path": "artifacts/tables/category_movement_metrics.parquet",
+          "row_count": null,
+          "size_bytes": 49009,
+          "last_updated": "2026-02-22T20:22:50Z"
+        },
+        {
+          "table": "visa_bulletin",
+          "path": "artifacts/tables/visa_bulletin.parquet",
+          "row_count": null,
+          "size_bytes": 2739,
+          "last_updated": "2026-02-21T20:11:32Z"
+        }
+      ],
+      "gap": false,
+      "note": ""
+    },
+    {
+      "dataset": "Visa_Statistics",
+      "downloaded": true,
+      "download_files": 198,
+      "download_size": 85002188,
+      "download_folders": [
+        "Visa_Statistics"
+      ],
+      "curated_present": false,
+      "outputs": [],
+      "gap": true,
+      "note": "DOS visa applications/refusals \u2014 NIV demand signal"
+    },
+    {
+      "dataset": "WARN",
+      "downloaded": true,
+      "download_files": 2,
+      "download_size": 126091,
+      "download_folders": [
+        "WARN"
+      ],
+      "curated_present": false,
+      "outputs": [],
+      "gap": true,
+      "note": "WARN Act layoff notices \u2014 employer-level workforce signal"
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+fix_fact_cutoffs_dedup — 2026-02-22T16:15:01.849667+00:00
+Mode: WRITE
+
+Before: 14,290 rows, 280 files, 5,975 PK dupes
+After dedup: 8,315 rows (removed 5,975)
+Partition dirs: 168, rewritten: 118
+Total rows written: 5,010
+
+STATUS: APPLIED
+
+=== 2026-02-22T16:34:30Z ===
+Run: audit_outputs.py
+Result: PASS (9/9 tables)
+  dim_country: 249 rows, PK=iso3 ✓
+  dim_soc: 1396 rows, PK=soc_code ✓
+  dim_area: 587 rows ✓
+  dim_employer: 19359 rows ✓
+  dim_visa_class: 6 rows ✓
+  fact_cutoffs: 5600 rows, PK=[chart,category,country,bulletin_year,bulletin_month] ✓
+  fact_perm: 1674724 rows, PK=[case_number,fiscal_year] ✓ (deduped 327 non-null dupes)
+  fact_oews: 223216 rows ✓
+  fact_lca: 9558695 rows ✓
+Fixes applied this run:
+  - visa_bulletin_loader.py: per-partition dedup (removed 5 EB5 category dupes/month)
+  - schemas.yml: fact_perm PK changed to [case_number,fiscal_year]
+  - scripts/fix_fact_perm_dedup.py: removed 327 in-partition dupes (FY2015,2023,2024,2026)
+  - audit_outputs.py: added PARTITIONED_TABLES exclusion + _backup/_quarantine rglob filters
+
+=== 2026-02-22T16:34:38Z ===
+Run: audit_outputs.py  Result: PASS 9/9
+
+=== 2026-02-22T16:34:45Z ===
+audit_outputs.py: PASS 9/9 tables (fact_perm deduped 327 rows)

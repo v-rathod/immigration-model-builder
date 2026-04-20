@@ -1,0 +1,11 @@
+=== fetch_oews 2026-02-22T21:28:59.562192+00:00 ===
+Local OEWS 2024 at /Users/vrathod1/dev/fetch-immigration-data/downloads/BLS_OEWS/2024/oews_all_data_2024.zip: corrupt or missing
+Attempting official BLS download...
+  Trying: https://www.bls.gov/oes/special.requests/oesm24all.zip
+  FAIL: HTTPError: HTTP Error 403: Forbidden
+  Trying: https://www.bls.gov/oes/special.requests/oews_all_data_2024.zip
+  FAIL: HTTPError: HTTP Error 403: Forbidden
+  Trying: https://www.bls.gov/oes/2024/may/national/excel/oesm24all.zip
+  FAIL: HTTPError: HTTP Error 403: Forbidden
+Status: FETCH_FAILED — all BLS endpoints failed or returned corrupt data
+Action: make_oews_2024_fallback.py will produce a synthetic ref_year=2024 record

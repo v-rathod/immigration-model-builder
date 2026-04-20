@@ -1,0 +1,13 @@
+{
+  "timestamp": "2026-02-22T15:32:45Z",
+  "job": "fact_perm_fix_fiscal_year",
+  "mode": "only_rewrite_parquet",
+  "partitions_found": 19,
+  "partitions_processed": 19,
+  "partitions_skipped": 0,
+  "total_rows_checked": 1675051,
+  "total_rows_rewritten": 1675051,
+  "total_rows_moved_cross_partition": 0,
+  "errors": [],
+  "elapsed_seconds": 0.7
+}

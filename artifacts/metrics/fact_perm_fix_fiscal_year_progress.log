@@ -1,0 +1,39 @@
+[2026-02-22T15:32:44Z] fact_perm_fix_fiscal_year START
+[2026-02-22T15:32:44Z] READ   FY2009: 38,247 rows in 0.1s  mismatches=0
+[2026-02-22T15:32:44Z] READ   FY2008: 61,997 rows in 0.1s  mismatches=0
+[2026-02-22T15:32:44Z] READ   FY2010: 81,412 rows in 0.1s  mismatches=0
+[2026-02-22T15:32:44Z] READ   FY2013: 44,152 rows in 0.0s  mismatches=0
+[2026-02-22T15:32:44Z] READ   FY2011: 73,207 rows in 0.0s  mismatches=0
+[2026-02-22T15:32:44Z] READ   FY2012: 66,488 rows in 0.0s  mismatches=0
+[2026-02-22T15:32:44Z] READ   FY2014: 70,998 rows in 0.0s  mismatches=0
+[2026-02-22T15:32:44Z] READ   FY2015: 89,299 rows in 0.0s  mismatches=0
+[2026-02-22T15:32:44Z] WRITE  FY2009: rows_in=38,247  rows_rewritten=38,247  read=0.1s  write=0.0s  moved_out=0  mem=0.4GB
+[2026-02-22T15:32:44Z] READ   FY2016: 126,143 rows in 0.0s  mismatches=0
+[2026-02-22T15:32:44Z] WRITE  FY2008: rows_in=61,997  rows_rewritten=61,997  read=0.1s  write=0.0s  moved_out=0  mem=0.7GB
+[2026-02-22T15:32:44Z] READ   FY2017: 97,603 rows in 0.0s  mismatches=0
+[2026-02-22T15:32:44Z] WRITE  FY2010: rows_in=81,412  rows_rewritten=81,412  read=0.1s  write=0.0s  moved_out=0  mem=0.7GB
+[2026-02-22T15:32:44Z] READ   FY2019: 102,655 rows in 0.0s  mismatches=0
+[2026-02-22T15:32:44Z] WRITE  FY2013: rows_in=44,152  rows_rewritten=44,152  read=0.0s  write=0.0s  moved_out=0  mem=0.7GB
+[2026-02-22T15:32:44Z] READ   FY2018: 119,776 rows in 0.0s  mismatches=0
+[2026-02-22T15:32:44Z] WRITE  FY2011: rows_in=73,207  rows_rewritten=73,207  read=0.0s  write=0.0s  moved_out=0  mem=0.7GB
+[2026-02-22T15:32:44Z] READ   FY2020: 94,019 rows in 0.0s  mismatches=0
+[2026-02-22T15:32:44Z] WRITE  FY2012: rows_in=66,488  rows_rewritten=66,488  read=0.0s  write=0.0s  moved_out=0  mem=0.7GB
+[2026-02-22T15:32:44Z] READ   FY2021: 108,264 rows in 0.0s  mismatches=0
+[2026-02-22T15:32:44Z] WRITE  FY2014: rows_in=70,998  rows_rewritten=70,998  read=0.0s  write=0.0s  moved_out=0  mem=0.7GB
+[2026-02-22T15:32:44Z] READ   FY2022: 104,600 rows in 0.0s  mismatches=0
+[2026-02-22T15:32:44Z] WRITE  FY2015: rows_in=89,299  rows_rewritten=89,299  read=0.0s  write=0.0s  moved_out=0  mem=0.7GB
+[2026-02-22T15:32:44Z] READ   FY2023: 116,427 rows in 0.0s  mismatches=0
+[2026-02-22T15:32:44Z] WRITE  FY2016: rows_in=126,143  rows_rewritten=126,143  read=0.0s  write=0.0s  moved_out=0  mem=0.7GB
+[2026-02-22T15:32:44Z] READ   FY2024: 114,550 rows in 0.0s  mismatches=0
+[2026-02-22T15:32:44Z] WRITE  FY2017: rows_in=97,603  rows_rewritten=97,603  read=0.0s  write=0.0s  moved_out=0  mem=0.7GB
+[2026-02-22T15:32:44Z] READ   FY2025: 147,056 rows in 0.0s  mismatches=0
+[2026-02-22T15:32:44Z] WRITE  FY2019: rows_in=102,655  rows_rewritten=102,655  read=0.0s  write=0.0s  moved_out=0  mem=0.7GB
+[2026-02-22T15:32:44Z] READ   FY2026: 18,158 rows in 0.0s  mismatches=0
+[2026-02-22T15:32:44Z] WRITE  FY2018: rows_in=119,776  rows_rewritten=119,776  read=0.0s  write=0.0s  moved_out=0  mem=0.7GB
+[2026-02-22T15:32:44Z] WRITE  FY2020: rows_in=94,019  rows_rewritten=94,019  read=0.0s  write=0.0s  moved_out=0  mem=0.7GB
+[2026-02-22T15:32:44Z] WRITE  FY2021: rows_in=108,264  rows_rewritten=108,264  read=0.0s  write=0.0s  moved_out=0  mem=0.7GB
+[2026-02-22T15:32:44Z] WRITE  FY2022: rows_in=104,600  rows_rewritten=104,600  read=0.0s  write=0.0s  moved_out=0  mem=0.7GB
+[2026-02-22T15:32:45Z] WRITE  FY2023: rows_in=116,427  rows_rewritten=116,427  read=0.0s  write=0.0s  moved_out=0  mem=0.7GB
+[2026-02-22T15:32:45Z] WRITE  FY2024: rows_in=114,550  rows_rewritten=114,550  read=0.0s  write=0.0s  moved_out=0  mem=0.7GB
+[2026-02-22T15:32:45Z] WRITE  FY2025: rows_in=147,056  rows_rewritten=147,056  read=0.0s  write=0.1s  moved_out=0  mem=0.7GB
+[2026-02-22T15:32:45Z] WRITE  FY2026: rows_in=18,158  rows_rewritten=18,158  read=0.0s  write=0.0s  moved_out=0  mem=0.7GB

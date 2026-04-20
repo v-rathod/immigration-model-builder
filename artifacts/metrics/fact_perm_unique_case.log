@@ -1,0 +1,15 @@
+fact_perm_unique_case build — 2026-02-25T00:27:39.903671
+dry_run=False  chunk_size=187500
+
+base_count = 1,675,051
+null_case_number_rows = 0  (passed through)
+cross_fy_cases = 6,115  (12,400 total rows)
+removed_count (multi-oc dedup) = 6,464
+unique_case_count = 1,668,587
+total_removed = 6,464
+  (= 6,464 dedup + 0 kept null rows; net rows removed = 6,464)
+
+is_crossfy_duplicate=True count: 6,115
+columns: ['case_number', 'case_status', 'received_date', 'decision_date', 'employer_id', 'employer_name', 'soc_code', 'soc_code_raw', 'area_code', 'employer_country', 'job_title', 'wage_offer_from', 'wage_offer_to', 'wage_offer_unit', 'worksite_city', 'worksite_state', 'worksite_postal', 'is_fulltime', 'naics_code', 'source_file', 'ingested_at', 'fiscal_year', 'is_crossfy_duplicate']
+elapsed_sec: 17.4
+output: artifacts/tables/fact_perm_unique_case/part-0.parquet

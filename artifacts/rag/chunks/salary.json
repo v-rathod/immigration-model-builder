@@ -1,0 +1,247 @@
+[
+  {
+    "chunk_id": "cf3f7716162f",
+    "source_artifact": "salary_benchmarks.parquet",
+    "topic": "salary",
+    "label": "salary_summary",
+    "text": "Salary Benchmarks Summary:\nTotal records: 224,047 (SOC \u00d7 area combinations)\nColumns: soc_code, area_code, p10, p25, median, p75, p90\nSource: BLS OEWS 2022\u20132024 + PERM wage data\nUse: Compare offered wages against prevailing wage percentiles (P10, P25, median, P75, P90) for specific occupation + geography.",
+    "metadata": {
+      "rows": 224047,
+      "columns": 7,
+      "column_names": [
+        "soc_code",
+        "area_code",
+        "p10",
+        "p25",
+        "median",
+        "p75",
+        "p90"
+      ],
+      "numeric_summary": {
+        "p10": {
+          "min": 15080.0,
+          "max": 230030.0,
+          "mean": 41733.09
+        },
+        "p25": {
+          "min": 15080.0,
+          "max": 230030.0,
+          "mean": 49687.32
+        },
+        "median": {
+          "min": 15080.0,
+          "max": 237940.0,
+          "mean": 60551.85
+        },
+        "p75": {
+          "min": 16670.0,
+          "max": 238630.0,
+          "mean": 73957.92
+        },
+        "p90": {
+          "min": 16950.0,
+          "max": 239170.0,
+          "mean": 88845.46
+        }
+      }
+    },
+    "generated_at": "2026-04-20T00:51:31.735125+00:00"
+  },
+  {
+    "chunk_id": "9f253fde6025",
+    "source_artifact": "salary_benchmarks.parquet",
+    "topic": "salary",
+    "label": "salary_top30_soc",
+    "text": "Top 30 Highest-Paying Occupations (national median):\n  29-1212 (Cardiologists): median=$219,270\n  29-1213 (Dermatologists): median=$213,180\n  29-1229 (Physicians, All Other): median=$210,360, P75=$211,380\n  29-1241 (Ophthalmologists, Except Pediatric): median=$206,510, P75=$206,510\n  29-1217 (Neurologists): median=$201,840, P75=$203,840\n  29-1211 (Anesthesiologists): median=$189,550, P75=$209,195\n  29-1221 (Pediatricians, General): median=$183,280, P75=$211,460\n  29-1223 (Psychiatrists): median=$180,420, P75=$208,080\n  29-1151 (Nurse Anesthetists): median=$179,790, P75=$205,180\n  29-1215 (Family Medicine Physicians): median=$174,650, P75=$217,170\n  29-1023 (Orthodontists): median=$172,090, P75=$179,370\n  29-1222 (Physicians, Pathologists): median=$168,490, P75=$168,490\n  11-1011 (Chief Executives): median=$165,320, P75=$212,180\n  29-1218 (Obstetricians and Gynecologists): median=$161,710, P75=$200,020\n  29-1021 (Dentists, General): median=$161,300, P75=$216,840\n  11-9041 (Architectural and Engineering Managers): median=$158,450, P75=$177,840\n  29-1242 (Orthopedic Surgeons, Except Pediatric): median=$152,280, P75=$159,500\n  53-2011 (Airline Pilots, Copilots, and Flight Engineers): median=$138,920, P75=$151,170\n  17-2199 (Engineers, All Other): median=$136,990, P75=$171,930\n  11-3031 (Financial Managers): median=$134,080, P75=$171,110\n  17-2061 (Computer Hardware Engineers): median=$132,930, P75=$157,560\n  19-2012 (Physicists): median=$132,930, P75=$157,080\n  11-3021 (Computer and Information Systems Managers): median=$132,840, P75=$169,670\n  29-1081 (Podiatrists): median=$132,270, P75=$197,760\n  29-1051 (Pharmacists): median=$131,880, P75=$139,930\n  17-2011 (Aerospace Engineers): median=$130,870, P75=$163,220\n  17-2161 (Nuclear Engineers): median=$129,460, P75=$139,090\n  15-1241 (Computer Network Architects): median=$125,980, P75=$155,910\n  19-3039 (Psychologists, All Other): median=$125,550, P75=$143,270\n  29-1224 (Radiologists): median=$125,100, P75=$136,790",
+    "metadata": {},
+    "generated_at": "2026-04-20T00:51:31.742868+00:00"
+  },
+  {
+    "chunk_id": "1acb7c1a47d6",
+    "source_artifact": "salary_benchmarks.parquet",
+    "topic": "salary",
+    "label": "salary_tech_socs",
+    "text": "Salary Benchmarks for Common Immigration-Sponsored Tech Roles:\n  11-3021 (Computer & IS Managers): median=$132,840, P10=$80,140, P90=$207,460\n  15-1211 (Computer Systems Analysts): median=$102,560, P10=$63,980, P90=$167,130\n  15-1221 (Computer & Info Research Scientists): median=$102,250, P10=$54,920, P90=$146,900\n  15-1232 (Computer User Support): median=$48,200, P10=$30,000, P90=$75,720\n  15-1241 (Computer Network Architects): median=$125,980, P10=$74,880, P90=$180,280\n  15-1244 (Network & Systems Administrators): median=$82,270, P10=$50,650, P90=$130,080\n  15-1252 (Software Developers): median=$102,730, P10=$61,520, P90=$169,070\n  15-1299 (Computer Occupations, All Other): median=$96,620, P10=$54,150, P90=$132,930\n  15-2051 (Data Scientists): median=$100,560, P10=$54,690, P90=$145,250\n  17-2061 (Computer Hardware Engineers): median=$132,930, P10=$81,890, P90=$181,670",
+    "metadata": {},
+    "generated_at": "2026-04-20T00:51:31.743280+00:00"
+  },
+  {
+    "chunk_id": "a497862cdbfb",
+    "source_artifact": "salary_benchmarks.parquet",
+    "topic": "salary",
+    "label": "salary_distribution",
+    "text": "Salary Distribution Across All SOC \u00d7 Area Combinations:\n  Total records: 224,047\n  Min median salary: $15,080\n  25th percentile: $38,720\n  Overall median: $51,020\n  75th percentile: $73,695\n  Max median salary: $237,940\n  Wage ratio interpretation: ratio \u22651.0 means offered wage \u2265 prevailing median.\n  Employers with wage ratio \u22651.3 (P75+) tend to have higher EFS scores.",
+    "metadata": {},
+    "generated_at": "2026-04-20T00:51:31.748111+00:00"
+  },
+  {
+    "chunk_id": "c9644cd26533",
+    "source_artifact": "fact_oews",
+    "topic": "salary",
+    "label": "oews_data_summary",
+    "text": "OEWS Wage Data (fact_oews):\nTotal records: 446,432 (SOC \u00d7 area combinations)\nSOC codes: 831\nGeographic areas: 587\nReference years: 2023, 2024\nKey wage columns: a_mean, a_median, a_pct10\u2013a_pct90 (annual), h_* (hourly)\nSource: BLS Occupational Employment and Wage Statistics\nUse: Prevailing wage lookups, wage benchmarking for immigration cases.",
+    "metadata": {},
+    "generated_at": "2026-04-20T00:51:33.961425+00:00"
+  },
+  {
+    "chunk_id": "1c2ccb1c72b0",
+    "source_artifact": "fact_oews",
+    "topic": "salary",
+    "label": "oews_top_paying",
+    "text": "Top 25 Highest-Paying SOC Codes (OEWS national median):\n  29-1222: $229,620/year\n  29-1222: $229,620/year\n  29-1215: $217,170/year\n  29-1215: $217,170/year\n  29-1249: $216,840/year\n  29-1249: $216,840/year\n  29-1241: $206,510/year\n  29-1241: $206,510/year\n  29-1218: $200,020/year\n  29-1218: $200,020/year\n  29-1221: $183,280/year\n  29-1221: $183,280/year\n  29-1023: $183,200/year\n  29-1023: $183,200/year\n  29-1223: $180,420/year\n  29-1223: $180,420/year\n  29-1151: $179,790/year\n  29-1151: $179,790/year\n  11-1011: $165,320/year\n  11-1011: $165,320/year\n  29-1021: $161,300/year\n  29-1021: $161,300/year\n  29-1242: $159,500/year\n  29-1242: $159,500/year\n  11-9041: $158,450/year",
+    "metadata": {},
+    "generated_at": "2026-04-20T00:51:33.969571+00:00"
+  },
+  {
+    "chunk_id": "762f42f76b72",
+    "source_artifact": "employer_salary_profiles.parquet",
+    "topic": "salary",
+    "label": "salary_profiles_summary",
+    "text": "Employer Salary Profiles:\nTotal records: 2,524,521 (employer \u00d7 SOC \u00d7 visa_type \u00d7 fiscal_year)\nUnique employers: 491,875\nUnique SOC codes: 1,444\nVisa types: H-1B, PERM\nFiscal years: FY2008\u2013FY2026\nKey columns: employer_name, soc_code, visa_type, fiscal_year, n_filings, mean_salary, median_salary, min_salary, max_salary, prevailing_wage_median, p25_salary, p75_salary, oews_national_median, wage_premium_pct, wage_vs_pw_pct\nUse: Look up what a specific employer pays for a specific role in a given year. Compare employer salaries against prevailing wages and OEWS benchmarks.",
+    "metadata": {
+      "n_employers": 491875,
+      "n_socs": 1444
+    },
+    "generated_at": "2026-04-20T00:51:34.162719+00:00"
+  },
+  {
+    "chunk_id": "7a10554d6c0a",
+    "source_artifact": "employer_salary_profiles.parquet",
+    "topic": "salary",
+    "label": "salary_top_employers_fy2025",
+    "text": "Top 30 Highest-Paying H-1B Employers FY2025 (\u226550 filings):\n  Kirkland Ellis: $333,228 median, 57 filings\n  Osf Multi Specialty Group: $325,264 median, 60 filings\n  Indiana University Health Care Associates: $310,404 median, 104 filings\n  Openai Opco: $307,857 median, 115 filings\n  West Virginia University Medical: $307,773 median, 79 filings\n  Usacs Medical Group: $302,354 median, 69 filings\n  Medical University Of South Carolina And Affiliates: $292,180 median, 66 filings\n  Hartford Healthcare Medical Group: $274,669 median, 61 filings\n  Banner University Medical Group: $269,462 median, 58 filings\n  Anthropic Pbc: $267,970 median, 111 filings\n  Roblox: $265,897 median, 246 filings\n  Simpson Thacher Bartlett: $260,000 median, 68 filings\n  Medstar Medical Group Ii: $259,590 median, 55 filings\n  Cleveland Clinic: $259,193 median, 73 filings\n  Latham Watkins: $255,121 median, 87 filings\n  Reddit: $254,097 median, 99 filings\n  Linklaters: $248,628 median, 51 filings\n  Physician Affiliate Group Of Ny Pc: $247,885 median, 63 filings\n  University Of Pittsburgh Physicians: $238,988 median, 86 filings\n  Citadel Securities Americas Services: $236,479 median, 109 filings\n  Davis Polk Wardwell: $235,000 median, 61 filings\n  Roswell Park Cancer Institute: $233,586 median, 51 filings\n  White Case: $233,209 median, 101 filings\n  People Center D B A Rippling: $232,505 median, 93 filings\n  Sidley Austin Us: $230,612 median, 53 filings\n  Medical College Of Wisconsin: $229,594 median, 128 filings\n  Lsu Health Sciences Center Shreveport: $227,542 median, 59 filings\n  Two Sigma Investments Lp: $227,268 median, 112 filings\n  Paul Weiss Rifkind Wharton Garrison: $225,000 median, 115 filings\n  Netflix: $224,883 median, 314 filings",
+    "metadata": {
+      "fiscal_year": 2025,
+      "visa_type": "H-1B"
+    },
+    "generated_at": "2026-04-20T00:51:34.247393+00:00"
+  },
+  {
+    "chunk_id": "69254dae602c",
+    "source_artifact": "employer_salary_profiles.parquet",
+    "topic": "salary",
+    "label": "salary_bottom_employers_fy2025",
+    "text": "Lowest-Paying H-1B Employers FY2025 (\u226550 filings):\n  The Devereux Foundation: $40,998 median, 279 filings\n  Richmond Children Center: $41,739 median, 130 filings\n  Ernst Young Ey Guam: $46,000 median, 58 filings\n  Milwaukee Board Of School Directors: $54,014 median, 97 filings\n  Harmony Public Schools: $54,668 median, 141 filings\n  Jackson Public School District: $54,895 median, 67 filings\n  Gandara Mental Health Center: $57,546 median, 68 filings\n  Core Tech Construction: $58,884 median, 148 filings\n  Richland County School District One: $59,887 median, 81 filings\n  Lexington County School District One: $60,296 median, 51 filings\n  The University Of Tennessee Health Science Center: $60,557 median, 81 filings\n  Portsmouth Public Schools: $60,936 median, 76 filings\n  Management Health Systems: $61,717 median, 169 filings\n  Triad Math And Science Academy: $61,984 median, 61 filings\n  Rochester Institute Of Technology: $62,104 median, 58 filings\n  Savannah Chatham County Public School System: $62,363 median, 198 filings\n  Conexus Medstaff: $63,567 median, 87 filings\n  Comtrix Solutions: $64,628 median, 73 filings\n  Cosmic Healthcare: $64,635 median, 92 filings\n  Eurofins Lancaster Laboratories Professional Scientific Services: $65,128 median, 59 filings\n  District Of Columbia Public Schools: $65,673 median, 139 filings\n  The Methodist Hospital Research Institute: $66,986 median, 89 filings\n  Savannah College Of Art And Design: $68,041 median, 60 filings\n  The Ohio University: $68,314 median, 51 filings\n  Denver Public Schools District 1: $68,356 median, 147 filings\n  Fuyao Glass America: $68,885 median, 68 filings\n  State University Of New York Upstate Medical University: $69,152 median, 58 filings\n  Ancile: $69,844 median, 107 filings\n  University Of Nebraska Medical Center: $70,280 median, 82 filings\n  Perkins Will: $70,421 median, 63 filings",
+    "metadata": {
+      "fiscal_year": 2025,
+      "visa_type": "H-1B"
+    },
+    "generated_at": "2026-04-20T00:51:34.248139+00:00"
+  },
+  {
+    "chunk_id": "2a5e826c008d",
+    "source_artifact": "employer_salary_profiles.parquet",
+    "topic": "salary",
+    "label": "salary_top_employers_fy2026",
+    "text": "Top 30 Highest-Paying H-1B Employers FY2026 (\u226550 filings):\n  Openai Opco: $285,016 median, 63 filings\n  Netflix: $259,786 median, 67 filings\n  Meta Platforms: $223,270 median, 857 filings\n  Boston Consulting Group: $212,640 median, 67 filings\n  Adobe: $207,245 median, 128 filings\n  Salesforce: $206,481 median, 323 filings\n  Ebay: $205,335 median, 120 filings\n  Tiktok: $204,645 median, 75 filings\n  Bytedance: $202,947 median, 80 filings\n  Atlassian Us: $198,281 median, 64 filings\n  Uber Technologies: $195,606 median, 128 filings\n  Zoox: $195,291 median, 67 filings\n  Google: $194,871 median, 793 filings\n  Nvidia: $194,437 median, 436 filings\n  Docusign: $193,783 median, 73 filings\n  Paypal: $191,767 median, 189 filings\n  Palo Alto Networks: $188,146 median, 78 filings\n  Pricewaterhousecoopers Advisory Services: $187,750 median, 120 filings\n  Intuit: $184,316 median, 124 filings\n  Snowflake: $184,285 median, 79 filings\n  Apple: $183,257 median, 1,175 filings\n  Government Employee Insurance Company Geico: $180,765 median, 98 filings\n  Microsoft: $180,359 median, 1,338 filings\n  Linkedin: $178,709 median, 337 filings\n  Doordash: $175,242 median, 77 filings\n  Capital One Services: $172,777 median, 144 filings\n  Yahoo Holdings: $172,334 median, 58 filings\n  Servicenow: $170,969 median, 143 filings\n  Snap: $170,713 median, 58 filings\n  Bank Of America N A: $170,701 median, 71 filings",
+    "metadata": {
+      "fiscal_year": 2026,
+      "visa_type": "H-1B"
+    },
+    "generated_at": "2026-04-20T00:51:34.296406+00:00"
+  },
+  {
+    "chunk_id": "e7fd3aea8abe",
+    "source_artifact": "employer_salary_profiles.parquet",
+    "topic": "salary",
+    "label": "salary_bottom_employers_fy2026",
+    "text": "Lowest-Paying H-1B Employers FY2026 (\u226550 filings):\n  Grandison Management: $71,573 median, 392 filings\n  University Of Pittsburgh: $73,957 median, 55 filings\n  Washington University: $74,466 median, 55 filings\n  General Hospital: $75,330 median, 50 filings\n  University Of Michigan: $82,126 median, 112 filings\n  Ut Southwestern Medical Center: $90,187 median, 55 filings\n  Tata Consultancy Services: $90,272 median, 777 filings\n  Trustees Of The University Of Pennsylvania: $92,617 median, 57 filings\n  Skilltune Technologies: $94,125 median, 57 filings\n  Infosys: $95,094 median, 735 filings\n  L T Technology Services: $95,942 median, 85 filings\n  Gp Technologies: $96,893 median, 56 filings\n  Ltimindtree: $99,211 median, 278 filings\n  V Soft Consulting Group: $99,650 median, 80 filings\n  Icahn School Of Medicine At Mount Sinai: $99,918 median, 54 filings\n  Cummins: $104,903 median, 172 filings\n  Hexaware Technologies: $105,150 median, 95 filings\n  Coforge: $106,659 median, 53 filings\n  University Of California San Francisco: $106,734 median, 52 filings\n  Dfs Corporate Services: $108,474 median, 77 filings\n  Cgi Technologies And Solutions: $109,004 median, 131 filings\n  Wipro: $109,992 median, 357 filings\n  The Leland Stanford Jr University: $110,599 median, 72 filings\n  American Airlines: $113,684 median, 85 filings\n  Ust Global: $113,816 median, 114 filings\n  Compunnel Software Group: $113,922 median, 469 filings\n  Mayo Clinic: $115,535 median, 67 filings\n  Cognizant Technology Solutions Us: $116,280 median, 1,384 filings\n  Tech Mahindra Americas: $116,494 median, 106 filings\n  Msr Technology Group: $116,590 median, 85 filings",
+    "metadata": {
+      "fiscal_year": 2026,
+      "visa_type": "H-1B"
+    },
+    "generated_at": "2026-04-20T00:51:34.297102+00:00"
+  },
+  {
+    "chunk_id": "67ae80306d2c",
+    "source_artifact": "employer_salary_profiles.parquet",
+    "topic": "salary",
+    "label": "salary_top_positions_fy2024",
+    "text": "Top 15 H-1B Positions by Filing Volume \u2014 FY2024:\n  15-1252 (Software Developers): 165,246 filings, 16,552 employers, $133,322 median\n  15-1299 (Computer Occupations, All Other): 56,719 filings, 7,478 employers, $112,022 median\n  15-2051 (Data Scientists): 23,922 filings, 6,866 employers, $124,771 median\n  15-1253 (Software Quality Assurance Analysts and Testers): 16,854 filings, 4,056 employers, $103,823 median\n  15-1211 (Computer Systems Analysts): 16,310 filings, 3,447 employers, $106,412 median\n  15-1251 (Computer Programmers): 12,595 filings, 1,612 employers, $92,408 median\n  11-3021 (Computer and Information Systems Managers): 10,880 filings, 2,751 employers, $193,128 median\n  17-2141 (Mechanical Engineers): 9,100 filings, 2,860 employers, $107,280 median\n  13-2011 (Accountants and Auditors): 8,869 filings, 2,501 employers, $94,292 median\n  17-2112 (Industrial Engineers): 8,457 filings, 2,594 employers, $108,986 median\n  15-2031 (Operations Research Analysts): 8,443 filings, 1,915 employers, $130,494 median\n  13-2051 (Financial and Investment Analysts): 7,254 filings, 2,512 employers, $141,023 median\n  17-2072 (Electronics Engineers, Except Computer): 7,094 filings, 676 employers, $134,028 median\n  15-1242 (Database Administrators): 6,086 filings, 2,098 employers, $113,740 median\n  17-2071 (Electrical Engineers): 6,069 filings, 1,922 employers, $118,377 median",
+    "metadata": {
+      "fiscal_year": 2024,
+      "visa_type": "H-1B"
+    },
+    "generated_at": "2026-04-20T00:51:34.359050+00:00"
+  },
+  {
+    "chunk_id": "4181d3b0f054",
+    "source_artifact": "employer_salary_profiles.parquet",
+    "topic": "salary",
+    "label": "salary_top_positions_fy2025",
+    "text": "Top 15 H-1B Positions by Filing Volume \u2014 FY2025:\n  15-1252 (Software Developers): 171,860 filings, 17,241 employers, $141,648 median\n  15-1299 (Computer Occupations, All Other): 47,925 filings, 7,154 employers, $117,372 median\n  15-2051 (Data Scientists): 31,732 filings, 8,584 employers, $127,611 median\n  15-1253 (Software Quality Assurance Analysts and Testers): 18,664 filings, 4,174 employers, $110,131 median\n  15-1251 (Computer Programmers): 13,482 filings, 2,206 employers, $94,950 median\n  15-1211 (Computer Systems Analysts): 13,016 filings, 2,952 employers, $110,101 median\n  11-3021 (Computer and Information Systems Managers): 12,861 filings, 3,024 employers, $200,269 median\n  17-2141 (Mechanical Engineers): 10,315 filings, 3,116 employers, $111,603 median\n  17-2112 (Industrial Engineers): 10,139 filings, 3,078 employers, $111,897 median\n  13-2011 (Accountants and Auditors): 9,692 filings, 2,799 employers, $97,365 median\n  13-2051 (Financial and Investment Analysts): 8,212 filings, 2,944 employers, $141,795 median\n  17-2072 (Electronics Engineers, Except Computer): 7,855 filings, 699 employers, $147,177 median\n  15-2031 (Operations Research Analysts): 7,648 filings, 2,129 employers, $126,567 median\n  17-2071 (Electrical Engineers): 6,980 filings, 2,169 employers, $125,345 median\n  15-1242 (Database Administrators): 6,941 filings, 2,257 employers, $115,836 median",
+    "metadata": {
+      "fiscal_year": 2025,
+      "visa_type": "H-1B"
+    },
+    "generated_at": "2026-04-20T00:51:34.425453+00:00"
+  },
+  {
+    "chunk_id": "ff16a60f6d50",
+    "source_artifact": "employer_salary_profiles.parquet",
+    "topic": "salary",
+    "label": "salary_top_positions_fy2026",
+    "text": "Top 15 H-1B Positions by Filing Volume \u2014 FY2026:\n  15-1252 (Software Developers): 26,081 filings, 5,748 employers, $149,809 median\n  15-1299 (Computer Occupations, All Other): 6,219 filings, 1,687 employers, $128,311 median\n  15-2051 (Data Scientists): 4,011 filings, 1,753 employers, $139,918 median\n  15-1253 (Software Quality Assurance Analysts and Testers): 2,790 filings, 1,089 employers, $115,734 median\n  11-3021 (Computer and Information Systems Managers): 2,279 filings, 898 employers, $211,336 median\n  15-1251 (Computer Programmers): 1,806 filings, 533 employers, $100,521 median\n  15-1211 (Computer Systems Analysts): 1,635 filings, 698 employers, $118,372 median\n  17-2141 (Mechanical Engineers): 1,317 filings, 658 employers, $121,965 median\n  17-2112 (Industrial Engineers): 1,273 filings, 618 employers, $121,225 median\n  17-2072 (Electronics Engineers, Except Computer): 1,171 filings, 183 employers, $162,336 median\n  13-2051 (Financial and Investment Analysts): 1,021 filings, 509 employers, $165,197 median\n  15-1242 (Database Administrators): 1,009 filings, 450 employers, $123,323 median\n  17-2071 (Electrical Engineers): 920 filings, 436 employers, $139,292 median\n  13-2011 (Accountants and Auditors): 846 filings, 379 employers, $110,549 median\n  19-1042 (Medical Scientists, Except Epidemiologists): 806 filings, 209 employers, $81,901 median",
+    "metadata": {
+      "fiscal_year": 2026,
+      "visa_type": "H-1B"
+    },
+    "generated_at": "2026-04-20T00:51:34.474265+00:00"
+  },
+  {
+    "chunk_id": "fb97d22f4e3d",
+    "source_artifact": "employer_salary_profiles.parquet",
+    "topic": "salary",
+    "label": "salary_top_employers_alltime",
+    "text": "Top 50 Employers by Total Salary Profile Filings (all years, all visa types):\n  Infosys: 235,039\n  Tata Consultancy Services: 176,192\n  Cognizant Technology Solutions Us: 150,887\n  Microsoft: 137,773\n  Amazon Com Services: 115,013\n  Google: 112,619\n  Deloitte Consulting: 103,945\n  Ernst Young U S: 100,424\n  Wipro: 80,045\n  Accenture: 77,367\n  Capgemini America: 66,798\n  Hcl America: 61,059\n  Intel: 52,172\n  Apple: 50,658\n  Tech Mahindra Americas: 49,613\n  Ibm India Private: 43,052\n  Ibm: 41,591\n  Larsen Toubro Infotech: 35,450\n  Jpmorgan Chase: 33,943\n  Wal Mart Associates: 29,179\n  Amazon Web Services: 29,143\n  Facebook: 28,492\n  Deloitte Touche: 26,333\n  Meta Platforms: 24,125\n  Compunnel Software Group: 23,737\n  Cisco Systems: 23,521\n  Ust Global: 23,162\n  Oracle America: 22,613\n  Qualcomm Technologies: 22,314\n  Cognizant Technology Solutions U S: 20,905\n  Mphasis: 20,895\n  Goldman Sachs: 18,511\n  Amazon Corporate: 16,659\n  Salesforce Com: 15,312\n  Pricewaterhousecoopers: 14,893\n  Linkedin: 14,385\n  L T Technology Services: 14,314\n  Paypal: 14,287\n  Hexaware Technologies: 13,968\n  Cummins: 13,829\n  Tesla: 13,698\n  Pricewaterhousecoopers Advisory Services: 13,658\n  Vmware: 13,520\n  Satyam Computer Services: 13,147\n  Nvidia: 13,067\n  Igate Technologies: 13,046\n  Kpmg: 12,942\n  Ebay: 12,935\n  Bank Of America N A: 12,192\n  Mindtree: 11,832",
+    "metadata": {},
+    "generated_at": "2026-04-20T00:51:34.729746+00:00"
+  },
+  {
+    "chunk_id": "db1bf5170147",
+    "source_artifact": "employer_salary_yearly.parquet",
+    "topic": "salary",
+    "label": "salary_yearly_summary",
+    "text": "Employer Salary Yearly Trends:\nTotal records: 1,432,611 (employer \u00d7 fiscal_year aggregates)\nColumns: employer_id, visa_type, fiscal_year, total_filings, mean_salary, median_salary, employer_name, n_soc_codes\nUse: Track how employer wages change year-over-year. Identify employers with rising or declining salary trends.",
+    "metadata": {},
+    "generated_at": "2026-04-20T00:51:34.759624+00:00"
+  },
+  {
+    "chunk_id": "a1fd7f8ef378",
+    "source_artifact": "employer_salary_yearly.parquet",
+    "topic": "salary",
+    "label": "salary_yearly_biggest_raises",
+    "text": "Largest Year-over-Year Salary Increases (employer \u00d7 year):\n  National Cooperative Business Association Clusa International FY2020: +$899,737 ($81,299 \u2192 $981,036)\n  Kmr FY2009: +$897,360 ($38,640 \u2192 $936,000)\n  Jab Holding FY2018: +$882,250 ($110,000 \u2192 $992,250)\n  Sensient Technologies FY2020: +$873,492 ($55,764 \u2192 $929,256)\n  College Of Business Technology FY2009: +$873,288 ($36,712 \u2192 $910,000)\n  Florida Medical Specialists FY2010: +$855,000 ($55,000 \u2192 $910,000)\n  Aero Tech FY2021: +$848,400 ($150,000 \u2192 $998,400)\n  Viscofan Usa FY2025: +$846,228 ($85,284 \u2192 $931,512)\n  Diamond Innovations FY2014: +$845,000 ($75,000 \u2192 $920,000)\n  Folio Photonics FY2025: +$845,000 ($79,000 \u2192 $924,000)\n  Dart Industries FY2020: +$844,610 ($55,390 \u2192 $900,000)\n  Predictronics FY2025: +$844,330 ($74,942 \u2192 $919,272)\n  Work Editorial FY2017: +$830,300 ($105,700 \u2192 $936,000)\n  Smartadvocate FY2013: +$829,610 ($68,000 \u2192 $897,610)\n  Droisys FY2026: +$803,712 ($96,840 \u2192 $900,552)\n  United Canvas Sling FY2025: +$796,718 ($19,282 \u2192 $816,000)\n  Oc Law Group FY2025: +$786,104 ($55,300 \u2192 $841,404)\n  Magical Nails FY2024: +$781,200 ($30,000 \u2192 $811,200)\n  Para Engineers FY2025: +$769,831 ($67,829 \u2192 $837,660)\n  Cloudaspirers FY2025: +$769,212 ($87,360 \u2192 $856,572)",
+    "metadata": {},
+    "generated_at": "2026-04-20T00:51:35.379379+00:00"
+  },
+  {
+    "chunk_id": "26cc2d849ebc",
+    "source_artifact": "soc_salary_market.parquet",
+    "topic": "salary",
+    "label": "soc_salary_market_summary",
+    "text": "SOC Salary Market Benchmarks:\nTotal records: 18,038 (SOC \u00d7 visa_type \u00d7 fiscal_year)\nColumns: soc_code, visa_type, fiscal_year, total_filings, market_mean, market_median, market_p10, market_p25, market_p75, market_p90, n_employers\nUse: Market-level salary stats per occupation. Compare individual employer offers against market median for the same SOC code.",
+    "metadata": {},
+    "generated_at": "2026-04-20T00:51:35.381554+00:00"
+  },
+  {
+    "chunk_id": "5f555325fc27",
+    "source_artifact": "soc_salary_market.parquet",
+    "topic": "salary",
+    "label": "soc_salary_top_paying_fy2026",
+    "text": "Top 25 Highest-Paying SOC Codes (H-1B market median, FY2026):\n  29-1241 (Ophthalmologists, Except Pediatric): $500,000 median, 2 employers\n  29-1224 (Radiologists): $433,000 median, 33 employers\n  29-1211 (Anesthesiologists): $420,500 median, 23 employers\n  29-1212 (Cardiologists): $416,665 median, 34 employers\n  29-1249 (Surgeons, All Other): $404,240 median, 40 employers\n  29-1217 (Neurologists): $299,160 median, 24 employers\n  29-1223 (Psychiatrists): $294,247 median, 26 employers\n  29-1218 (Obstetricians and Gynecologists): $292,500 median, 5 employers\n  29-1222 (Physicians, Pathologists): $291,157 median, 16 employers\n  29-1229 (Physicians, All Other): $284,750 median, 223 employers\n  29-1214 (Emergency Medicine Physicians): $260,095 median, 6 employers\n  11-1011 (Chief Executives): $250,000 median, 86 employers\n  17-2075 (nan): $249,600 median, 1 employers\n  29-1215 (Family Medicine Physicians): $245,175 median, 41 employers\n  53-2011 (Airline Pilots, Copilots, and Flight Engineers): $243,360 median, 12 employers\n  29-1216 (General Internal Medicine Physicians): $240,000 median, 75 employers\n  29-1024 (Prosthodontists): $239,200 median, 1 employers\n  23-1011 (Lawyers): $225,000 median, 184 employers\n  29-1221 (Pediatricians, General): $215,000 median, 35 employers\n  11-3021 (Computer and Information Systems Managers): $206,720 median, 898 employers\n  11-3031 (Financial Managers): $200,000 median, 213 employers\n  27-1011 (Art Directors): $191,674 median, 21 employers\n  29-1023 (Orthodontists): $191,183 median, 4 employers\n  27-1012 (Craft Artists): $190,000 median, 1 employers\n  29-1029 (Dentists, All Other Specialists): $189,758 median, 11 employers",
+    "metadata": {
+      "fiscal_year": 2026
+    },
+    "generated_at": "2026-04-20T00:51:35.383055+00:00"
+  },
+  {
+    "chunk_id": "16528fd8eaef",
+    "source_artifact": "fact_bls_ces.parquet",
+    "topic": "salary",
+    "label": "bls_ces_summary",
+    "text": "BLS Current Employment Statistics (fact_bls_ces):\nTotal records: 54\nColumns: series_id, series_title, year, period, period_name, value, is_preliminary, snapshot_date, source_file, ingested_at\nSource: BLS CES API (employment levels, nonfarm payroll)\nUse: Macro employment trends for immigration context.\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 157032.0 (January 2024)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 157238.0 (February 2024)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 157466.0 (March 2024)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 157530.0 (April 2024)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 157608.0 (May 2024)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 157695.0 (June 2024)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 157748.0 (July 2024)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 157757.0 (August 2024)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 157912.0 (September 2024)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 157945.0 (October 2024)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 158079.0 (November 2024)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 158316.0 (December 2024)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 158268.0 (January 2025)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 158310.0 (February 2025)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 158377.0 (March 2025)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 158485.0 (April 2025)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 158498.0 (May 2025)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 158478.0 (June 2025)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 158542.0 (July 2025)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 158472.0 (August 2025)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 158548.0 (September 2025)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 158408.0 (October 2025)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 158449.0 (November 2025)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 158432.0 (December 2025)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 158592.0 (January 2026)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 158459.0 (February 2026)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 158637.0 (March 2026)\n  CES0500000003: 34.47 (January 2024)\n  CES0500000003: 34.52 (February 2024)\n  CES0500000003: 34.65 (March 2024)\n  CES0500000003: 34.76 (April 2024)\n  CES0500000003: 34.89 (May 2024)\n  CES0500000003: 35.01 (June 2024)\n  CES0500000003: 35.08 (July 2024)\n  CES0500000003: 35.22 (August 2024)\n  CES0500000003: 35.34 (September 2024)\n  CES0500000003: 35.46 (October 2024)\n  CES0500000003: 35.6 (November 2024)\n  CES0500000003: 35.69 (December 2024)\n  CES0500000003: 35.84 (January 2025)\n  CES0500000003: 35.94 (February 2025)\n  CES0500000003: 36.11 (March 2025)\n  CES0500000003: 36.12 (April 2025)\n  CES0500000003: 36.28 (May 2025)\n  CES0500000003: 36.36 (June 2025)\n  CES0500000003: 36.47 (July 2025)\n  CES0500000003: 36.62 (August 2025)\n  CES0500000003: 36.7 (September 2025)\n  CES0500000003: 36.85 (October 2025)\n  CES0500000003: 37.0 (November 2025)\n  CES0500000003: 37.02 (December 2025)\n  CES0500000003: 37.15 (January 2026)\n  CES0500000003: 37.29 (February 2026)\n  CES0500000003: 37.38 (March 2026)",
+    "metadata": {},
+    "generated_at": "2026-04-20T00:51:39.920930+00:00"
+  }
+]

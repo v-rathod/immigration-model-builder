@@ -1,0 +1,16 @@
+lca_certified: 8,584,237
+perm_certified: 1,429,384
+combined_total: 10,013,621
+profile_rows_detailed: 2,524,521
+canonical_name_dedup_profiles: 733603 -> 490844
+canonical_name_dedup_yearly: 714932 -> 490721
+employer_salary_profiles: 2,524,521 rows
+employer_salary_yearly: 1,432,611 rows
+soc_salary_market: 18,038 rows
+PASS: salary ranges OK
+wage_premium_median: -15.9%
+h1b_profiles: 2,065,076
+perm_profiles: 459,445
+unique_employers: 491,875
+unique_soc: 1,444
+elapsed_seconds: 55.0

@@ -1,0 +1,65 @@
+[
+  {
+    "chunk_id": "83c998b0e323",
+    "source_artifact": "fact_lca",
+    "topic": "filings",
+    "label": "lca_summary",
+    "text": "LCA (Labor Condition Application) Filing Data:\nTotal records: 9,558,695\nFiscal years: 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026\nCase status distribution: {'CERTIFIED': 8584237, 'CERTIFIED-WITHDRAWN': 544407, 'WITHDRAWN': 229595, 'DENIED': 200441, 'PENDING QUALITY AND COMPLIANCE REVIEW - UNASSIGNED': 15}\nTop visa classes: {'H-1B': 8347436, 'R': 663165, '': 342575, 'E-3 AUSTRALIAN': 159249, 'H-1B1 CHILE': 18495, 'H-1B1 SINGAPORE': 17050, 'A': 8196, 'S': 1418, 'C': 1105, 'SELECT VISA CLASSIFICATION': 6}\nKey columns: employer, SOC code, job title, wage, worksite\nSource: DOL disclosure data (H-1B, H-1B1, E-3 filings)\nUse: Track H-1B sponsorship volume, employer filing patterns, wage offers.",
+    "metadata": {},
+    "generated_at": "2026-04-20T00:51:32.223038+00:00"
+  },
+  {
+    "chunk_id": "d4b37cc047eb",
+    "source_artifact": "fact_lca",
+    "topic": "filings",
+    "label": "lca_top_employers",
+    "text": "Top 40 LCA Employers by Filing Volume (all years):\n  INFOSYS LIMITED: 226,714\n  TATA CONSULTANCY SERVICES LIMITED: 145,774\n  COGNIZANT TECHNOLOGY SOLUTIONS US CORP: 131,918\n  WIPRO LIMITED: 82,970\n  DELOITTE CONSULTING LLP: 77,344\n  Amazon.com Services LLC: 60,910\n  CAPGEMINI AMERICA INC: 60,867\n  Microsoft Corporation: 59,188\n  Ernst & Young U.S. LLP: 57,336\n  Google LLC: 56,672\n  ACCENTURE LLP: 53,020\n  IBM INDIA PRIVATE LIMITED: 51,804\n  MICROSOFT CORPORATION: 51,381\n  HCL AMERICA, INC.: 42,456\n  ERNST & YOUNG U.S. LLP: 40,120\n  LARSEN & TOUBRO INFOTECH LIMITED: 31,889\n  WAL-MART ASSOCIATES, INC.: 29,978\n  Apple Inc.: 29,372\n  IBM CORPORATION: 28,864\n  TECH MAHINDRA (AMERICAS),INC.: 27,052\n  GOOGLE INC.: 24,130\n  COGNIZANT TECHNOLOGY SOLUTIONS U.S. CORPORATION: 23,785\n  Accenture LLP: 23,059\n  Deloitte Consulting LLP: 23,044\n  Tata Consultancy Services Limited: 21,752\n  Intel Corporation: 20,890\n  JPMORGAN CHASE & CO.: 20,750\n  GOOGLE LLC: 19,618\n  AMAZON.COM SERVICES LLC: 18,964\n  INTEL CORPORATION: 18,642\n  IBM Corporation: 16,433\n  Amazon Web Services, Inc.: 16,135\n  FACEBOOK, INC.: 15,382\n  DELOITTE & TOUCHE LLP: 15,205\n  HCL AMERICA INC: 14,248\n  APPLE INC.: 14,002\n  AMAZON CORPORATE LLC: 13,832\n  JPMorgan Chase & Co.: 13,477\n  AMAZON.COM SERVICES, INC.: 13,283\n  COMPUNNEL SOFTWARE GROUP, INC: 13,089",
+    "metadata": {},
+    "generated_at": "2026-04-20T00:51:32.591723+00:00"
+  },
+  {
+    "chunk_id": "c22efe5d3862",
+    "source_artifact": "fact_lca",
+    "topic": "filings",
+    "label": "lca_fy_trends",
+    "text": "LCA Filings by Fiscal Year:\n  FY2008: 405,641\n  FY2009: 348,975\n  FY2010: 342,575\n  FY2011: 358,857\n  FY2012: 415,845\n  FY2013: 442,274\n  FY2014: 519,504\n  FY2015: 618,671\n  FY2016: 647,849\n  FY2017: 624,650\n  FY2018: 654,360\n  FY2019: 664,616\n  FY2020: 577,334\n  FY2021: 528,902\n  FY2022: 626,084\n  FY2023: 543,580\n  FY2024: 561,037\n  FY2025: 594,821\n  FY2026: 83,120",
+    "metadata": {},
+    "generated_at": "2026-04-20T00:51:32.668973+00:00"
+  },
+  {
+    "chunk_id": "b68c60fbb1d1",
+    "source_artifact": "fact_lca",
+    "topic": "filings",
+    "label": "lca_wage_distribution",
+    "text": "LCA Wage Distribution (annual rates only, >$10K):\n  Records: 8,853,109\n  Min: $10,004\n  25th pct: $66,000\n  Median: $86,000\n  75th pct: $115,523\n  Max: $7,278,872,788",
+    "metadata": {},
+    "generated_at": "2026-04-20T00:51:32.932969+00:00"
+  },
+  {
+    "chunk_id": "aa904c06e3fa",
+    "source_artifact": "fact_perm",
+    "topic": "filings",
+    "label": "perm_summary",
+    "text": "PERM (Labor Certification) Filing Data:\nTotal records: 1,675,051\nFiscal years: 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026\nCase status distribution: {'CERTIFIED': 770202, 'CERTIFIED-EXPIRED': 659182, 'DENIED': 111083, 'WITHDRAWN': 77511, 'CERTIFIED - EXPIRED': 57073}\nKey columns: case_number, employer, SOC, job_title, wages, worksite\nSource: DOL PERM disclosure data\nUse: Track EB-2/EB-3 green card sponsorship, approval/denial rates, employer patterns.\nNote: PERM is the first step in most employment-based green card applications.",
+    "metadata": {},
+    "generated_at": "2026-04-20T00:51:33.004268+00:00"
+  },
+  {
+    "chunk_id": "3a69b0a1a2fa",
+    "source_artifact": "fact_perm",
+    "topic": "filings",
+    "label": "perm_top_employers",
+    "text": "Top 40 PERM Employers by Filing Volume (all years):\n  MICROSOFT CORPORATION: 36,156\n  COGNIZANT TECHNOLOGY SOLUTIONS US CORPORATION: 26,747\n  INTEL CORPORATION: 18,621\n  GOOGLE LLC: 17,616\n  AMAZON.COM SERVICES LLC: 16,621\n  APPLE INC.: 12,976\n  TATA CONSULTANCY SERVICES LIMITED: 11,355\n  FACEBOOK, INC.: 10,230\n  INFOSYS LTD.: 9,890\n  CISCO SYSTEMS, INC.: 8,595\n  GOOGLE INC.: 8,438\n  AMAZON CORPORATE LLC: 7,648\n  ORACLE AMERICA, INC.: 7,109\n  DELOITTE CONSULTING LLP: 6,172\n  AMAZON.COM SERVICES, INC.: 5,993\n  HCL AMERICA INC.: 5,519\n  AMAZON WEB SERVICES, INC.: 4,584\n  IBM CORPORATION: 4,281\n  QUALCOMM TECHNOLOGIES INC.: 4,146\n  CAPGEMINI AMERICA, INC.: 3,995\n  NVIDIA CORPORATION: 3,889\n  SALESFORCE.COM: 3,715\n  WAYNE FARMS LLC: 3,508\n  WIPRO LIMITED: 3,270\n  VMWARE, INC.: 3,238\n  Microsoft Corporation: 3,234\n  KFORCE INC.: 3,232\n  BLOOMBERG L.P.: 3,167\n  COMPUNNEL SOFTWARE GROUP, INC.: 2,919\n  ACCENTURE LLP: 2,788\n  ERNST & YOUNG U.S. LLP: 2,598\n  JP MORGAN CHASE & CO: 2,594\n  PRICEWATERHOUSECOOPERS: 2,547\n  PAYPAL, INC.: 2,514\n  WALMART ASSOCIATES, INC.: 2,503\n  LINKEDIN CORPORATION: 2,497\n  WAL-MART ASSOCIATES, INC.: 2,494\n  ERNST  YOUNG U.S. LLP: 2,479\n  EBAY INC.: 2,438\n  JP MORGAN CHASE  CO: 2,405",
+    "metadata": {},
+    "generated_at": "2026-04-20T00:51:33.065296+00:00"
+  },
+  {
+    "chunk_id": "1caedc225aea",
+    "source_artifact": "fact_perm",
+    "topic": "filings",
+    "label": "perm_approval_rates",
+    "text": "PERM Approval/Denial Rates by Fiscal Year:\n  FY2008: 61,997 total, 21,092 certified (34.0%), 10,729 denied\n  FY2009: 38,247 total, 16,041 certified (41.9%), 5,356 denied\n  FY2010: 81,412 total, 32,657 certified (40.1%), 8,439 denied\n  FY2011: 73,207 total, 18,714 certified (25.6%), 10,384 denied\n  FY2012: 66,488 total, 2 certified (0.0%), 8,642 denied\n  FY2013: 44,152 total, 13,742 certified (31.1%), 5,874 denied\n  FY2014: 70,998 total, 35,615 certified (50.2%), 4,349 denied\n  FY2015: 89,299 total, 41,223 certified (46.2%), 5,999 denied\n  FY2016: 126,143 total, 58,750 certified (46.6%), 5,560 denied\n  FY2017: 97,603 total, 42,080 certified (43.1%), 6,413 denied\n  FY2018: 119,776 total, 72,187 certified (60.3%), 6,255 denied\n  FY2019: 102,655 total, 55,655 certified (54.2%), 5,535 denied\n  FY2020: 94,019 total, 53,714 certified (57.1%), 4,213 denied\n  FY2021: 108,264 total, 67,481 certified (62.3%), 4,141 denied\n  FY2022: 104,600 total, 40,462 certified (38.7%), 4,573 denied\n  FY2023: 116,427 total, 52,715 certified (45.3%), 6,364 denied\n  FY2024: 114,550 total, 51,222 certified (44.7%), 5,031 denied\n  FY2025: 147,056 total, 80,680 certified (54.9%), 2,615 denied\n  FY2026: 18,158 total, 16,170 certified (89.1%), 611 denied",
+    "metadata": {},
+    "generated_at": "2026-04-20T00:51:33.801033+00:00"
+  }
+]

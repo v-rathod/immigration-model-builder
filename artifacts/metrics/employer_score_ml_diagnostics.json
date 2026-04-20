@@ -1,0 +1,15 @@
+{
+  "cv_auc_mean": 0.8129937672021972,
+  "cv_auc_std": 0.0038243607635441708,
+  "brier_score": 0.05382419440044845,
+  "feature_importances": {},
+  "n_train": 200000,
+  "n_total": 1534193,
+  "approval_rate_train": 0.93093,
+  "corr_efs_ml_vs_v1": 0.4621,
+  "corr_efs_ml_vs_approval_rate_24m": 0.3498,
+  "efs_ml_out_of_range": 0,
+  "n_employers_scored": 1695,
+  "efs_ml_mean": 96.12,
+  "efs_ml_median": 98.1
+}

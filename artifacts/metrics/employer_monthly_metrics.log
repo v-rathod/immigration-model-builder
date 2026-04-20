@@ -1,0 +1,16 @@
+=== employer_monthly_metrics build 2026-03-11T04:16:04.776873+00:00 ===
+fact_perm: 1,675,051 rows
+fact_perm (last 5yr): 591,329 rows  cutoff=2020-12-31
+Output rows: 224,114
+QA PASS: no months with approvals > filings
+Employers with total_filings_36m >= 200: 184
+WARN: 7 employers (total_filings_36m>=200) with weighted avg_approval_rate_36m outside [0.4,1.0]
+Top outliers (employer_id | total_filings_36m | avg_approval_rate_36m):
+  4f63623741bc0a165d7ce069c30e1aba0bdb5448 | 541 | 0.020
+  a936df0cd19f316fea4f4f86464d4471a2b0e76a | 495 | 0.293
+  e8d6ef104cefc0e98b8b86868fc1650271360937 | 447 | 0.293
+  6f59f6e3b6eed03744a03b85c3fd3bebe0d4f8c0 | 383 | 0.373
+  3944b633ea38212184e0244d296f6ab59318601a | 356 | 0.258
+  3995f678510eafe52481dcad51cfaca02550b7fc | 299 | 0.000
+  cbfb5488232dec7c702ca663bd04da8f44e9468f | 206 | 0.058
+Written: /Users/vrathod1/dev/NorthStar/immigration-model-builder/artifacts/tables/employer_monthly_metrics.parquet

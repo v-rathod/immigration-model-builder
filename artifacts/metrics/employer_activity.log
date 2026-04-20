@@ -1,0 +1,28 @@
+======================================================================
+EMPLOYER ACTIVITY CLASSIFICATION
+======================================================================
+Current year:       2026
+Active cutoff:      >= 2023
+Legacy cutoff:      >= 2018
+Historical:         <  2018
+
+Loaded employer_salary_yearly: 1,432,611 rows
+  Visa types: ['H-1B', 'PERM']
+  Fiscal year range: 2008 – 2026
+
+Classification results (491,875 unique employers):
+  active      : 142,890  ( 29.1%)
+  legacy      : 103,842  ( 21.1%)
+  historical  : 245,143  ( 49.8%)
+
+Spot-checks:
+  Capgemini America                                  h1b=2026 perm=2026 any=2026 → active
+  Capgemini Financial Services Usa                   h1b=2017 perm=2016 any=2017 → historical
+  Capgemini US                                       (not found)
+  Google                                             h1b=2026 perm=2024 any=2026 → active
+  Microsoft                                          h1b=2026 perm=2026 any=2026 → active
+  Syntel                                             h1b=2019 perm=2022 any=2022 → legacy
+  Satyam Computer Services                           h1b=2014 perm=2015 any=2015 → historical
+  Yahoo!                                             h1b=2017 perm=2016 any=2017 → historical
+
+Written: employer_activity.parquet (491,875 rows)

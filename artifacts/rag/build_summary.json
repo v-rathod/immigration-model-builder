@@ -1,0 +1,18 @@
+{
+  "catalog_path": "artifacts/rag/catalog.json",
+  "chunks_dir": "artifacts/rag/chunks",
+  "total_chunks": 341,
+  "topics": {
+    "pd_forecast": 38,
+    "employer": 161,
+    "salary": 20,
+    "visa_bulletin": 8,
+    "geographic": 5,
+    "occupation": 81,
+    "processing": 4,
+    "visa_demand": 13,
+    "filings": 7,
+    "general": 4
+  },
+  "all_chunks_path": "artifacts/rag/all_chunks.json"
+}

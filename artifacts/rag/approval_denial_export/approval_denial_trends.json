@@ -1,0 +1,622 @@
+[
+  {
+    "fiscal_year": 1992,
+    "APPROVED": 240,
+    "DENIED": 40,
+    "total_cases": 280,
+    "approval_rate_pct": 85.71,
+    "denial_rate_pct": 14.29,
+    "data_source": "USCIS_Forms",
+    "visa_category": "USCIS_Adjustment"
+  },
+  {
+    "fiscal_year": 1993,
+    "APPROVED": 384,
+    "DENIED": 170,
+    "total_cases": 554,
+    "approval_rate_pct": 69.31,
+    "denial_rate_pct": 30.69,
+    "data_source": "USCIS_Forms",
+    "visa_category": "USCIS_Adjustment"
+  },
+  {
+    "fiscal_year": 1994,
+    "APPROVED": 422,
+    "DENIED": 83,
+    "total_cases": 505,
+    "approval_rate_pct": 83.56,
+    "denial_rate_pct": 16.44,
+    "data_source": "USCIS_Forms",
+    "visa_category": "USCIS_Adjustment"
+  },
+  {
+    "fiscal_year": 1995,
+    "APPROVED": 402,
+    "DENIED": 119,
+    "total_cases": 521,
+    "approval_rate_pct": 77.16,
+    "denial_rate_pct": 22.84,
+    "data_source": "USCIS_Forms",
+    "visa_category": "USCIS_Adjustment"
+  },
+  {
+    "fiscal_year": 1996,
+    "APPROVED": 960,
+    "DENIED": 175,
+    "total_cases": 1135,
+    "approval_rate_pct": 84.58,
+    "denial_rate_pct": 15.42,
+    "data_source": "USCIS_Forms",
+    "visa_category": "USCIS_Adjustment"
+  },
+  {
+    "fiscal_year": 1997,
+    "APPROVED": 1828,
+    "DENIED": 276,
+    "total_cases": 2104,
+    "approval_rate_pct": 86.88,
+    "denial_rate_pct": 13.12,
+    "data_source": "USCIS_Forms",
+    "visa_category": "USCIS_Adjustment"
+  },
+  {
+    "fiscal_year": 1998,
+    "APPROVED": 462,
+    "DENIED": 303,
+    "total_cases": 765,
+    "approval_rate_pct": 60.39,
+    "denial_rate_pct": 39.61,
+    "data_source": "USCIS_Forms",
+    "visa_category": "USCIS_Adjustment"
+  },
+  {
+    "fiscal_year": 1999,
+    "APPROVED": 227,
+    "DENIED": 1582,
+    "total_cases": 1809,
+    "approval_rate_pct": 12.55,
+    "denial_rate_pct": 87.45,
+    "data_source": "USCIS_Forms",
+    "visa_category": "USCIS_Adjustment"
+  },
+  {
+    "fiscal_year": 2000,
+    "APPROVED": 197,
+    "DENIED": 303,
+    "total_cases": 500,
+    "approval_rate_pct": 39.4,
+    "denial_rate_pct": 60.6,
+    "data_source": "USCIS_Forms",
+    "visa_category": "USCIS_Adjustment"
+  },
+  {
+    "fiscal_year": 2001,
+    "APPROVED": 96,
+    "DENIED": 321,
+    "total_cases": 417,
+    "approval_rate_pct": 23.02,
+    "denial_rate_pct": 76.98,
+    "data_source": "USCIS_Forms",
+    "visa_category": "USCIS_Adjustment"
+  },
+  {
+    "fiscal_year": 2002,
+    "APPROVED": 267,
+    "DENIED": 391,
+    "total_cases": 658,
+    "approval_rate_pct": 40.58,
+    "denial_rate_pct": 59.42,
+    "data_source": "USCIS_Forms",
+    "visa_category": "USCIS_Adjustment"
+  },
+  {
+    "fiscal_year": 2003,
+    "APPROVED": 168,
+    "DENIED": 260,
+    "total_cases": 428,
+    "approval_rate_pct": 39.25,
+    "denial_rate_pct": 60.75,
+    "data_source": "USCIS_Forms",
+    "visa_category": "USCIS_Adjustment"
+  },
+  {
+    "fiscal_year": 2004,
+    "APPROVED": 966038,
+    "DENIED": 209470,
+    "total_cases": 1175508,
+    "approval_rate_pct": 82.18,
+    "denial_rate_pct": 17.82,
+    "data_source": "USCIS_Forms",
+    "visa_category": "USCIS_Adjustment"
+  },
+  {
+    "fiscal_year": 2005,
+    "APPROVED": 1041596,
+    "DENIED": 213336,
+    "total_cases": 1254932,
+    "approval_rate_pct": 83.0,
+    "denial_rate_pct": 17.0,
+    "data_source": "USCIS_Forms",
+    "visa_category": "USCIS_Adjustment"
+  },
+  {
+    "fiscal_year": 2006,
+    "APPROVED": 82,
+    "DENIED": 64,
+    "total_cases": 146,
+    "approval_rate_pct": 56.16,
+    "denial_rate_pct": 43.84,
+    "data_source": "USCIS_Forms",
+    "visa_category": "USCIS_Adjustment"
+  },
+  {
+    "fiscal_year": 2007,
+    "APPROVED": 1353288,
+    "DENIED": 138769,
+    "total_cases": 1492057,
+    "approval_rate_pct": 90.7,
+    "denial_rate_pct": 9.3,
+    "data_source": "USCIS_Forms",
+    "visa_category": "USCIS_Adjustment"
+  },
+  {
+    "fiscal_year": 2008,
+    "APPROVED": 49205,
+    "DENIED": 10729,
+    "total_cases": 61997,
+    "approval_rate_pct": 82.1,
+    "denial_rate_pct": 17.9,
+    "data_source": "PERM_Labor_Certification",
+    "visa_category": "Employment_Based_EB"
+  },
+  {
+    "fiscal_year": 2008,
+    "APPROVED": 1476238,
+    "DENIED": 103414,
+    "total_cases": 1579652,
+    "approval_rate_pct": 93.45,
+    "denial_rate_pct": 6.55,
+    "data_source": "USCIS_Forms",
+    "visa_category": "USCIS_Adjustment"
+  },
+  {
+    "fiscal_year": 2009,
+    "APPROVED": 29502,
+    "DENIED": 5356,
+    "total_cases": 38247,
+    "approval_rate_pct": 84.63,
+    "denial_rate_pct": 15.37,
+    "data_source": "PERM_Labor_Certification",
+    "visa_category": "Employment_Based_EB"
+  },
+  {
+    "fiscal_year": 2009,
+    "APPROVED": 1274569,
+    "DENIED": 99993,
+    "total_cases": 1374562,
+    "approval_rate_pct": 92.73,
+    "denial_rate_pct": 7.27,
+    "data_source": "USCIS_Forms",
+    "visa_category": "USCIS_Adjustment"
+  },
+  {
+    "fiscal_year": 2010,
+    "APPROVED": 70237,
+    "DENIED": 8439,
+    "total_cases": 81412,
+    "approval_rate_pct": 89.27,
+    "denial_rate_pct": 10.73,
+    "data_source": "PERM_Labor_Certification",
+    "visa_category": "Employment_Based_EB"
+  },
+  {
+    "fiscal_year": 2010,
+    "APPROVED": 1263959,
+    "DENIED": 94084,
+    "total_cases": 1358043,
+    "approval_rate_pct": 93.07,
+    "denial_rate_pct": 6.93,
+    "data_source": "USCIS_Forms",
+    "visa_category": "USCIS_Adjustment"
+  },
+  {
+    "fiscal_year": 2011,
+    "APPROVED": 59863,
+    "DENIED": 10384,
+    "total_cases": 73207,
+    "approval_rate_pct": 85.22,
+    "denial_rate_pct": 14.78,
+    "data_source": "PERM_Labor_Certification",
+    "visa_category": "Employment_Based_EB"
+  },
+  {
+    "fiscal_year": 2011,
+    "APPROVED": 1260896,
+    "DENIED": 90927,
+    "total_cases": 1351823,
+    "approval_rate_pct": 93.27,
+    "denial_rate_pct": 6.73,
+    "data_source": "USCIS_Forms",
+    "visa_category": "USCIS_Adjustment"
+  },
+  {
+    "fiscal_year": 2012,
+    "APPROVED": 54581,
+    "DENIED": 8642,
+    "total_cases": 66488,
+    "approval_rate_pct": 86.33,
+    "denial_rate_pct": 13.67,
+    "data_source": "PERM_Labor_Certification",
+    "visa_category": "Employment_Based_EB"
+  },
+  {
+    "fiscal_year": 2012,
+    "APPROVED": 1460221,
+    "DENIED": 81275,
+    "total_cases": 1541496,
+    "approval_rate_pct": 94.73,
+    "denial_rate_pct": 5.27,
+    "data_source": "USCIS_Forms",
+    "visa_category": "USCIS_Adjustment"
+  },
+  {
+    "fiscal_year": 2013,
+    "APPROVED": 35203,
+    "DENIED": 5874,
+    "total_cases": 44152,
+    "approval_rate_pct": 85.7,
+    "denial_rate_pct": 14.3,
+    "data_source": "PERM_Labor_Certification",
+    "visa_category": "Employment_Based_EB"
+  },
+  {
+    "fiscal_year": 2013,
+    "APPROVED": 2453785,
+    "DENIED": 108945,
+    "total_cases": 2562730,
+    "approval_rate_pct": 95.75,
+    "denial_rate_pct": 4.25,
+    "data_source": "USCIS_Forms",
+    "visa_category": "USCIS_Adjustment"
+  },
+  {
+    "fiscal_year": 2014,
+    "APPROVED": 62633,
+    "DENIED": 4349,
+    "total_cases": 70998,
+    "approval_rate_pct": 93.51,
+    "denial_rate_pct": 6.49,
+    "data_source": "PERM_Labor_Certification",
+    "visa_category": "Employment_Based_EB"
+  },
+  {
+    "fiscal_year": 2014,
+    "APPROVED": 1996488,
+    "DENIED": 166897,
+    "total_cases": 2163385,
+    "approval_rate_pct": 92.29,
+    "denial_rate_pct": 7.71,
+    "data_source": "USCIS_Forms",
+    "visa_category": "USCIS_Adjustment"
+  },
+  {
+    "fiscal_year": 2015,
+    "APPROVED": 78938,
+    "DENIED": 5999,
+    "total_cases": 89299,
+    "approval_rate_pct": 92.94,
+    "denial_rate_pct": 7.06,
+    "data_source": "PERM_Labor_Certification",
+    "visa_category": "Employment_Based_EB"
+  },
+  {
+    "fiscal_year": 2015,
+    "APPROVED": 290257,
+    "DENIED": 22844,
+    "total_cases": 313101,
+    "approval_rate_pct": 92.7,
+    "denial_rate_pct": 7.3,
+    "data_source": "USCIS_Forms",
+    "visa_category": "USCIS_Adjustment"
+  },
+  {
+    "fiscal_year": 2016,
+    "APPROVED": 115933,
+    "DENIED": 5560,
+    "total_cases": 126143,
+    "approval_rate_pct": 95.42,
+    "denial_rate_pct": 4.58,
+    "data_source": "PERM_Labor_Certification",
+    "visa_category": "Employment_Based_EB"
+  },
+  {
+    "fiscal_year": 2016,
+    "APPROVED": 2497506,
+    "DENIED": 170505,
+    "total_cases": 2668011,
+    "approval_rate_pct": 93.61,
+    "denial_rate_pct": 6.39,
+    "data_source": "USCIS_Forms",
+    "visa_category": "USCIS_Adjustment"
+  },
+  {
+    "fiscal_year": 2017,
+    "APPROVED": 87609,
+    "DENIED": 6413,
+    "total_cases": 97603,
+    "approval_rate_pct": 93.18,
+    "denial_rate_pct": 6.82,
+    "data_source": "PERM_Labor_Certification",
+    "visa_category": "Employment_Based_EB"
+  },
+  {
+    "fiscal_year": 2017,
+    "APPROVED": 338193,
+    "DENIED": 33174,
+    "total_cases": 371367,
+    "approval_rate_pct": 91.07,
+    "denial_rate_pct": 8.93,
+    "data_source": "USCIS_Forms",
+    "visa_category": "USCIS_Adjustment"
+  },
+  {
+    "fiscal_year": 2017,
+    "APPROVED": 44671,
+    "DENIED": 0,
+    "total_cases": 44671,
+    "approval_rate_pct": 100.0,
+    "denial_rate_pct": 0.0,
+    "data_source": "Visa_Applications",
+    "visa_category": "Non_Immigrant_Visa"
+  },
+  {
+    "fiscal_year": 2018,
+    "APPROVED": 109550,
+    "DENIED": 6255,
+    "total_cases": 119776,
+    "approval_rate_pct": 94.6,
+    "denial_rate_pct": 5.4,
+    "data_source": "PERM_Labor_Certification",
+    "visa_category": "Employment_Based_EB"
+  },
+  {
+    "fiscal_year": 2018,
+    "APPROVED": 337631,
+    "DENIED": 39638,
+    "total_cases": 377269,
+    "approval_rate_pct": 89.49,
+    "denial_rate_pct": 10.51,
+    "data_source": "USCIS_Forms",
+    "visa_category": "USCIS_Adjustment"
+  },
+  {
+    "fiscal_year": 2018,
+    "APPROVED": 44480,
+    "DENIED": 0,
+    "total_cases": 44480,
+    "approval_rate_pct": 100.0,
+    "denial_rate_pct": 0.0,
+    "data_source": "Visa_Applications",
+    "visa_category": "Non_Immigrant_Visa"
+  },
+  {
+    "fiscal_year": 2019,
+    "APPROVED": 93865,
+    "DENIED": 5535,
+    "total_cases": 102655,
+    "approval_rate_pct": 94.43,
+    "denial_rate_pct": 5.57,
+    "data_source": "PERM_Labor_Certification",
+    "visa_category": "Employment_Based_EB"
+  },
+  {
+    "fiscal_year": 2019,
+    "APPROVED": 2042040,
+    "DENIED": 302703,
+    "total_cases": 2344743,
+    "approval_rate_pct": 87.09,
+    "denial_rate_pct": 12.91,
+    "data_source": "USCIS_Forms",
+    "visa_category": "USCIS_Adjustment"
+  },
+  {
+    "fiscal_year": 2019,
+    "APPROVED": 45396,
+    "DENIED": 0,
+    "total_cases": 45396,
+    "approval_rate_pct": 100.0,
+    "denial_rate_pct": 0.0,
+    "data_source": "Visa_Applications",
+    "visa_category": "Non_Immigrant_Visa"
+  },
+  {
+    "fiscal_year": 2020,
+    "APPROVED": 86056,
+    "DENIED": 4213,
+    "total_cases": 94019,
+    "approval_rate_pct": 95.33,
+    "denial_rate_pct": 4.67,
+    "data_source": "PERM_Labor_Certification",
+    "visa_category": "Employment_Based_EB"
+  },
+  {
+    "fiscal_year": 2020,
+    "APPROVED": 188721,
+    "DENIED": 18426,
+    "total_cases": 207147,
+    "approval_rate_pct": 91.1,
+    "denial_rate_pct": 8.9,
+    "data_source": "USCIS_Forms",
+    "visa_category": "USCIS_Adjustment"
+  },
+  {
+    "fiscal_year": 2020,
+    "APPROVED": 31317,
+    "DENIED": 0,
+    "total_cases": 31317,
+    "approval_rate_pct": 100.0,
+    "denial_rate_pct": 0.0,
+    "data_source": "Visa_Applications",
+    "visa_category": "Non_Immigrant_Visa"
+  },
+  {
+    "fiscal_year": 2021,
+    "APPROVED": 100552,
+    "DENIED": 4141,
+    "total_cases": 108264,
+    "approval_rate_pct": 96.04,
+    "denial_rate_pct": 3.96,
+    "data_source": "PERM_Labor_Certification",
+    "visa_category": "Employment_Based_EB"
+  },
+  {
+    "fiscal_year": 2021,
+    "APPROVED": 1858467,
+    "DENIED": 266023,
+    "total_cases": 2124490,
+    "approval_rate_pct": 87.48,
+    "denial_rate_pct": 12.52,
+    "data_source": "USCIS_Forms",
+    "visa_category": "USCIS_Adjustment"
+  },
+  {
+    "fiscal_year": 2021,
+    "APPROVED": 52809,
+    "DENIED": 0,
+    "total_cases": 52809,
+    "approval_rate_pct": 100.0,
+    "denial_rate_pct": 0.0,
+    "data_source": "Visa_Applications",
+    "visa_category": "Non_Immigrant_Visa"
+  },
+  {
+    "fiscal_year": 2022,
+    "APPROVED": 94485,
+    "DENIED": 4573,
+    "total_cases": 104600,
+    "approval_rate_pct": 95.38,
+    "denial_rate_pct": 4.62,
+    "data_source": "PERM_Labor_Certification",
+    "visa_category": "Employment_Based_EB"
+  },
+  {
+    "fiscal_year": 2022,
+    "APPROVED": 2757332,
+    "DENIED": 406713,
+    "total_cases": 3164045,
+    "approval_rate_pct": 87.15,
+    "denial_rate_pct": 12.85,
+    "data_source": "USCIS_Forms",
+    "visa_category": "USCIS_Adjustment"
+  },
+  {
+    "fiscal_year": 2022,
+    "APPROVED": 61544,
+    "DENIED": 0,
+    "total_cases": 61544,
+    "approval_rate_pct": 100.0,
+    "denial_rate_pct": 0.0,
+    "data_source": "Visa_Applications",
+    "visa_category": "Non_Immigrant_Visa"
+  },
+  {
+    "fiscal_year": 2023,
+    "APPROVED": 102286,
+    "DENIED": 6364,
+    "total_cases": 116427,
+    "approval_rate_pct": 94.14,
+    "denial_rate_pct": 5.86,
+    "data_source": "PERM_Labor_Certification",
+    "visa_category": "Employment_Based_EB"
+  },
+  {
+    "fiscal_year": 2023,
+    "APPROVED": 438308,
+    "DENIED": 46846,
+    "total_cases": 485154,
+    "approval_rate_pct": 90.34,
+    "denial_rate_pct": 9.66,
+    "data_source": "USCIS_Forms",
+    "visa_category": "USCIS_Adjustment"
+  },
+  {
+    "fiscal_year": 2023,
+    "APPROVED": 48238,
+    "DENIED": 0,
+    "total_cases": 48238,
+    "approval_rate_pct": 100.0,
+    "denial_rate_pct": 0.0,
+    "data_source": "Visa_Applications",
+    "visa_category": "Non_Immigrant_Visa"
+  },
+  {
+    "fiscal_year": 2024,
+    "APPROVED": 102036,
+    "DENIED": 5031,
+    "total_cases": 114550,
+    "approval_rate_pct": 95.3,
+    "denial_rate_pct": 4.7,
+    "data_source": "PERM_Labor_Certification",
+    "visa_category": "Employment_Based_EB"
+  },
+  {
+    "fiscal_year": 2024,
+    "APPROVED": 6781270,
+    "DENIED": 859941,
+    "total_cases": 7641211,
+    "approval_rate_pct": 88.75,
+    "denial_rate_pct": 11.25,
+    "data_source": "USCIS_Forms",
+    "visa_category": "USCIS_Adjustment"
+  },
+  {
+    "fiscal_year": 2024,
+    "APPROVED": 66431,
+    "DENIED": 0,
+    "total_cases": 66431,
+    "approval_rate_pct": 100.0,
+    "denial_rate_pct": 0.0,
+    "data_source": "Visa_Applications",
+    "visa_category": "Non_Immigrant_Visa"
+  },
+  {
+    "fiscal_year": 2025,
+    "APPROVED": 137753,
+    "DENIED": 2615,
+    "total_cases": 147056,
+    "approval_rate_pct": 98.14,
+    "denial_rate_pct": 1.86,
+    "data_source": "PERM_Labor_Certification",
+    "visa_category": "Employment_Based_EB"
+  },
+  {
+    "fiscal_year": 2025,
+    "APPROVED": 1391235,
+    "DENIED": 246501,
+    "total_cases": 1637736,
+    "approval_rate_pct": 84.95,
+    "denial_rate_pct": 15.05,
+    "data_source": "USCIS_Forms",
+    "visa_category": "USCIS_Adjustment"
+  },
+  {
+    "fiscal_year": 2025,
+    "APPROVED": 49876,
+    "DENIED": 0,
+    "total_cases": 49876,
+    "approval_rate_pct": 100.0,
+    "denial_rate_pct": 0.0,
+    "data_source": "Visa_Applications",
+    "visa_category": "Non_Immigrant_Visa"
+  },
+  {
+    "fiscal_year": 2026,
+    "APPROVED": 16170,
+    "DENIED": 611,
+    "total_cases": 18158,
+    "approval_rate_pct": 96.36,
+    "denial_rate_pct": 3.64,
+    "data_source": "PERM_Labor_Certification",
+    "visa_category": "Employment_Based_EB"
+  }
+]

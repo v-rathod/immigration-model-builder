@@ -1,0 +1,62 @@
+=== salary_benchmarks build 2026-02-25T06:33:37.502813+00:00 ===
+fact_oews rows loaded: 446,432
+National fallback fill: 21,791 null percentile cells filled
+  Rows with any null percentile after fill: 446
+enforce_monotonic: corrections_applied=3856  rows_with_null_any_pct=446
+Top corrected examples (index | old→new):
+  [4] corrected
+  [7] corrected
+  [11] corrected
+  [13] corrected
+  [16] corrected
+  [23] corrected
+  [26] corrected
+  [28] corrected
+  [30] corrected
+  [31] corrected
+  [33] corrected
+  [36] corrected
+  [37] corrected
+  [38] corrected
+  [39] corrected
+  [41] corrected
+  [43] corrected
+  [45] corrected
+  [48] corrected
+  [50] corrected
+  [51] corrected
+  [52] corrected
+  [56] corrected
+  [57] corrected
+  [59] corrected
+  [62] corrected
+  [65] corrected
+  [66] corrected
+  [67] corrected
+  [68] corrected
+  [70] corrected
+  [77] corrected
+  [79] corrected
+  [87] corrected
+  [92] corrected
+  [94] corrected
+  [96] corrected
+  [98] corrected
+  [100] corrected
+  [106] corrected
+  [108] corrected
+  [109] corrected
+  [112] corrected
+  [114] corrected
+  [115] corrected
+  [116] corrected
+  [118] corrected
+  [119] corrected
+  [127] corrected
+  [128] corrected
+  ... 3806 more corrections not shown
+WARN: 446 rows have at least one null percentile (kept, monotonically sorted)
+total_corrections: 3856
+QA PASS: percentile ordering p10 <= p25 <= median <= p75 <= p90
+total_rows: 224,047  (area_rows: 223,216  national_rows: 831)
+Written: /Users/vrathod1/dev/NorthStar/immigration-model-builder/artifacts/tables/salary_benchmarks.parquet

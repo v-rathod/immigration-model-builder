@@ -1,0 +1,32 @@
+{
+  "bundle": "artifacts/metrics/overnight_final_bundle_20260223_055006.zip",
+  "latest": "artifacts/metrics/run_bundle_latest.zip",
+  "ts": "20260223_055006",
+  "files_included": [
+    "artifacts/metrics/FINAL_SINGLE_REPORT.md",
+    "artifacts/metrics/input_coverage_report.md",
+    "artifacts/metrics/input_coverage_report.json",
+    "artifacts/metrics/output_audit_report.md",
+    "artifacts/metrics/output_audit_report.json",
+    "artifacts/metrics/build_manifest.json",
+    "artifacts/metrics/perm_pk_report.md",
+    "artifacts/metrics/efs_verify.log",
+    "artifacts/metrics/qa_summaries/qa_summary.json",
+    "artifacts/metrics/chat_transcript_latest.md",
+    "artifacts/metrics/logs/LIVE_CHAT.log",
+    "artifacts/metrics/logs/LIVE_OPS_DASH.ndjson",
+    "artifacts/metrics/logs/LIVE_CHAT.ndjson",
+    "artifacts/metrics/chat_transcript_20260223_1.md",
+    "artifacts/metrics/chat_transcript_20260223_2.md"
+  ],
+  "gate_summary": {
+    "qa_pass": 45,
+    "qa_warn": 2,
+    "qa_fail": 0,
+    "coverage_oews": "100%",
+    "perm_pk": "FIXED",
+    "backlog_rows": 8315,
+    "efs_corr": 0.7756,
+    "efs_gates": "38/38 PASS"
+  }
+}

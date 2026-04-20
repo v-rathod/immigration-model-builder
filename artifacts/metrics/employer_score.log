@@ -1,0 +1,26 @@
+======================================================================
+EMPLOYER FRIENDLINESS SCORE (EFS) v1
+======================================================================
+
+[A] Loaded employer features: 70,206 rows
+  Scopes: {'overall': 67694, 'SOC': 2512}
+
+[B] Computing subscores
+
+[C] Computing composite EFS
+
+[D] Applying eligibility guardrails
+  Insufficient data (n_36m<3): 52,370 → EFS=NULL
+  All-denied cap (≤10.0): 343
+
+[E] Assigning tier labels
+  Tier distribution: {'Unrated': 52370, 'Good': 8615, 'Moderate': 8186, 'Excellent': 452, 'Poor': 343, 'Below Average': 240}
+
+[F] Written: artifacts/tables/employer_friendliness_scores.parquet (70,206 rows)
+
+  Overall employers: 67,694
+  With valid EFS: 15,324
+  EFS mean: 67.5
+  EFS median: 69.3
+  EFS std: 12.1
+  EFS range: [10.0, 93.7]

@@ -1,0 +1,570 @@
+[
+  {
+    "chunk_id": "96d1dfeea0f6",
+    "source_artifact": "pd_forecasts.parquet",
+    "topic": "pd_forecast",
+    "label": "pd_forecast_summary",
+    "text": "Priority Date Forecast Summary (NorthStar Meridian v2.1)\nTotal forecast series: 1320 rows covering 6 categories and 7 countries.\nCategories: EB1, EB2, EB3, EB3-Other, EB4, EB5\nCountries: CHN, EL SALVADOR GUATEMALA HONDURAS, IND, MEX, PHL, ROW, VIETNAM\nForecast horizon: 24 months from latest visa bulletin.\nModel: Exponential-weighted seasonal with velocity cap. Cross-verified within \u00b118% of 10-year actual velocity.\nVelocity blend: 50% full-history net + 25% capped 24-month + 25% capped 12-month.",
+    "metadata": {
+      "categories": [
+        "EB1",
+        "EB2",
+        "EB3",
+        "EB3-Other",
+        "EB4",
+        "EB5"
+      ],
+      "countries": [
+        "CHN",
+        "EL SALVADOR GUATEMALA HONDURAS",
+        "IND",
+        "MEX",
+        "PHL",
+        "ROW",
+        "VIETNAM"
+      ]
+    },
+    "generated_at": "2026-04-20T00:51:31.680535+00:00"
+  },
+  {
+    "chunk_id": "518a22d01eb0",
+    "source_artifact": "pd_forecasts.parquet",
+    "topic": "pd_forecast",
+    "label": "pd_forecast_EB1_CHN",
+    "text": "PD Forecast \u2014 EB1 / CHN (48 months):\n  forecast_month=2026-05, months_ahead=1, chart=DFF, projected_cutoff_date=2023-12-13 10:44:26.214279, confidence_low=2023-12-05 05:20:26.214279, confidence_high=2023-12-21 16:08:26.214279, velocity_days_per_month=12.4, cumulative_advancement_days=12.0\n  forecast_month=2026-06, months_ahead=2, chart=DFF, projected_cutoff_date=2023-12-24 17:49:06.519226, confidence_low=2023-12-13 02:39:09.793261, confidence_high=2024-01-05 08:59:03.245191, velocity_days_per_month=11.3, cumulative_advancement_days=24.0\n  forecast_month=2026-07, months_ahead=3, chart=DFF, projected_cutoff_date=2024-01-09 00:53:51.567192, confidence_low=2023-12-25 18:59:26.981301, confidence_high=2024-01-23 06:48:16.153083, velocity_days_per_month=15.3, cumulative_advancement_days=39.0\n  forecast_month=2026-08, months_ahead=4, chart=DFF, projected_cutoff_date=2024-01-27 06:24:21.766272, confidence_low=2024-01-10 19:36:21.766272, confidence_high=2024-02-12 17:12:21.766272, velocity_days_per_month=18.2, cumulative_advancement_days=57.0\n  forecast_month=2026-09, months_ahead=5, chart=DFF, projected_cutoff_date=2024-02-16 16:12:47.968151, confidence_low=2024-01-29 06:48:48.620621, confidence_high=2024-03-06 01:36:47.315681, velocity_days_per_month=20.4, cumulative_advancement_days=78.0\n  forecast_month=2026-10, months_ahead=6, chart=DFF, projected_cutoff_date=2024-03-11 12:57:15.281601, confidence_low=2024-02-20 09:25:29.890790, confidence_high=2024-03-31 16:29:00.672412, velocity_days_per_month=23.9, cumulative_advancement_days=102.0\n  forecast_month=2026-11, months_ahead=7, chart=DFF, projected_cutoff_date=2024-03-31 04:50:15.463300, confidence_low=2024-03-09 10:33:58.751605, confidence_high=2024-04-21 23:06:32.174995, velocity_days_per_month=19.7, cumulative_advancement_days=121.0\n  forecast_month=2026-12, months_ahead=8, chart=DFF, projected_cutoff_date=2024-04-14 10:34:12.884081, confidence_low=2024-03-22 04:14:19.432151, confidence_high=2024-05-07 16:54:06.336011, velocity_days_per_month=14.2, cumulative_advancement_days=135.0\n  forecast_month=2027-01, months_ahead=9, chart=DFF, projected_cutoff_date=2024-04-27 19:40:52.975162, confidence_low=2024-04-03 03:28:52.975162, confidence_high=2024-05-22 11:52:52.975162, velocity_days_per_month=13.4, cumulative_advancement_days=149.0\n  forecast_month=2027-02, months_ahead=10, chart=DFF, projected_cutoff_date=2024-05-10 22:08:40.877991, confidence_low=2024-04-14 21:54:39.881569, confidence_high=2024-06-05 22:22:41.874413, velocity_days_per_month=13.1, cumulative_advancement_days=162.0\n  ... and 38 more months",
+    "metadata": {
+      "category": "EB1",
+      "country": "CHN"
+    },
+    "generated_at": "2026-04-20T00:51:31.682139+00:00"
+  },
+  {
+    "chunk_id": "92c44f212242",
+    "source_artifact": "pd_forecasts.parquet",
+    "topic": "pd_forecast",
+    "label": "pd_forecast_EB1_EL SALVADOR GUATEMALA HONDURAS",
+    "text": "PD Forecast \u2014 EB1 / EL SALVADOR GUATEMALA HONDURAS (48 months):\n  forecast_month=2019-12, months_ahead=1, chart=DFF, projected_cutoff_date=2019-07-18 21:25:10.615124, confidence_low=2019-07-10 16:01:10.615124, confidence_high=2019-07-27 02:49:10.615124, velocity_days_per_month=17.9, cumulative_advancement_days=18.0\n  forecast_month=2020-01, months_ahead=2, chart=DFF, projected_cutoff_date=2019-08-04 16:55:34.947386, confidence_low=2019-07-24 01:45:38.221421, confidence_high=2019-08-16 08:05:31.673351, velocity_days_per_month=16.8, cumulative_advancement_days=35.0\n  forecast_month=2020-02, months_ahead=3, chart=DFF, projected_cutoff_date=2019-08-21 04:04:46.203317, confidence_low=2019-08-06 22:10:21.617426, confidence_high=2019-09-04 09:59:10.789208, velocity_days_per_month=16.5, cumulative_advancement_days=51.0\n  forecast_month=2020-03, months_ahead=4, chart=DFF, projected_cutoff_date=2019-09-10 04:10:02.083477, confidence_low=2019-08-24 17:22:02.083477, confidence_high=2019-09-26 14:58:02.083477, velocity_days_per_month=20.0, cumulative_advancement_days=71.0\n  forecast_month=2020-04, months_ahead=5, chart=DFF, projected_cutoff_date=2019-09-30 18:12:04.722716, confidence_low=2019-09-12 08:48:05.375186, confidence_high=2019-10-19 03:36:04.070246, velocity_days_per_month=20.6, cumulative_advancement_days=92.0\n  forecast_month=2020-05, months_ahead=6, chart=DFF, projected_cutoff_date=2019-10-16 09:35:50.560345, confidence_low=2019-09-26 06:04:05.169534, confidence_high=2019-11-05 13:07:35.951156, velocity_days_per_month=15.6, cumulative_advancement_days=107.0\n  forecast_month=2020-06, months_ahead=7, chart=DFF, projected_cutoff_date=2019-10-30 14:13:57.207967, confidence_low=2019-10-08 19:57:40.496272, confidence_high=2019-11-21 08:30:13.919662, velocity_days_per_month=14.2, cumulative_advancement_days=122.0\n  forecast_month=2020-07, months_ahead=8, chart=DFF, projected_cutoff_date=2019-11-18 19:30:09.166575, confidence_low=2019-10-26 13:10:15.714645, confidence_high=2019-12-12 01:50:02.618505, velocity_days_per_month=19.2, cumulative_advancement_days=141.0\n  forecast_month=2020-08, months_ahead=9, chart=DFF, projected_cutoff_date=2019-12-11 17:16:24.781599, confidence_low=2019-11-17 01:04:24.781599, confidence_high=2020-01-05 09:28:24.781599, velocity_days_per_month=22.9, cumulative_advancement_days=164.0\n  forecast_month=2020-09, months_ahead=10, chart=DFF, projected_cutoff_date=2020-01-06 08:45:47.145150, confidence_low=2019-12-11 08:31:46.148728, confidence_high=2020-02-01 08:59:48.141572, velocity_days_per_month=25.6, cumulative_advancement_days=189.0\n  ... and 38 more months",
+    "metadata": {
+      "category": "EB1",
+      "country": "EL SALVADOR GUATEMALA HONDURAS"
+    },
+    "generated_at": "2026-04-20T00:51:31.682581+00:00"
+  },
+  {
+    "chunk_id": "33cbbf9dfcaf",
+    "source_artifact": "pd_forecasts.parquet",
+    "topic": "pd_forecast",
+    "label": "pd_forecast_EB1_IND",
+    "text": "PD Forecast \u2014 EB1 / IND (48 months):\n  forecast_month=2026-05, months_ahead=1, chart=DFF, projected_cutoff_date=2023-12-18 20:46:15.065278, confidence_low=2023-12-10 15:22:15.065278, confidence_high=2023-12-27 02:10:15.065278, velocity_days_per_month=17.9, cumulative_advancement_days=18.0\n  forecast_month=2026-06, months_ahead=2, chart=DFF, projected_cutoff_date=2024-01-04 01:50:18.326231, confidence_low=2023-12-23 10:40:21.600266, confidence_high=2024-01-15 17:00:15.052196, velocity_days_per_month=16.2, cumulative_advancement_days=34.0\n  forecast_month=2026-07, months_ahead=3, chart=DFF, projected_cutoff_date=2024-01-26 00:41:34.709082, confidence_low=2024-01-11 18:47:10.123191, confidence_high=2024-02-09 06:35:59.294973, velocity_days_per_month=22.0, cumulative_advancement_days=56.0\n  forecast_month=2026-08, months_ahead=4, chart=DFF, projected_cutoff_date=2024-02-21 04:37:54.641841, confidence_low=2024-02-04 17:49:54.641841, confidence_high=2024-03-08 15:25:54.641841, velocity_days_per_month=26.2, cumulative_advancement_days=82.0\n  forecast_month=2026-09, months_ahead=5, chart=DFF, projected_cutoff_date=2024-03-21 11:37:59.840119, confidence_low=2024-03-03 02:14:00.492589, confidence_high=2024-04-08 21:01:59.187649, velocity_days_per_month=29.3, cumulative_advancement_days=111.0\n  forecast_month=2026-10, months_ahead=6, chart=DFF, projected_cutoff_date=2024-04-24 17:39:58.255422, confidence_low=2024-04-04 14:08:12.864611, confidence_high=2024-05-14 21:11:43.646233, velocity_days_per_month=34.3, cumulative_advancement_days=146.0\n  forecast_month=2026-11, months_ahead=7, chart=DFF, projected_cutoff_date=2024-05-22 22:56:31.752385, confidence_low=2024-05-01 04:40:15.040690, confidence_high=2024-06-13 17:12:48.464080, velocity_days_per_month=28.2, cumulative_advancement_days=174.0\n  forecast_month=2026-12, months_ahead=8, chart=DFF, projected_cutoff_date=2024-06-12 09:25:03.944806, confidence_low=2024-05-20 03:05:10.492876, confidence_high=2024-07-05 15:44:57.396736, velocity_days_per_month=20.4, cumulative_advancement_days=194.0\n  forecast_month=2027-01, months_ahead=9, chart=DFF, projected_cutoff_date=2024-07-01 14:17:46.168928, confidence_low=2024-06-06 22:05:46.168928, confidence_high=2024-07-26 06:29:46.168928, velocity_days_per_month=19.2, cumulative_advancement_days=214.0\n  forecast_month=2027-02, months_ahead=10, chart=DFF, projected_cutoff_date=2024-07-20 09:37:59.448794, confidence_low=2024-06-24 09:23:58.452372, confidence_high=2024-08-15 09:52:00.445216, velocity_days_per_month=18.8, cumulative_advancement_days=232.0\n  ... and 38 more months",
+    "metadata": {
+      "category": "EB1",
+      "country": "IND"
+    },
+    "generated_at": "2026-04-20T00:51:31.682999+00:00"
+  },
+  {
+    "chunk_id": "ac7ee898ce5c",
+    "source_artifact": "pd_forecasts.parquet",
+    "topic": "pd_forecast",
+    "label": "pd_forecast_EB1_MEX",
+    "text": "PD Forecast \u2014 EB1 / MEX (48 months):\n  forecast_month=2019-12, months_ahead=1, chart=DFF, projected_cutoff_date=2019-07-18 21:25:10.615124, confidence_low=2019-07-10 16:01:10.615124, confidence_high=2019-07-27 02:49:10.615124, velocity_days_per_month=17.9, cumulative_advancement_days=18.0\n  forecast_month=2020-01, months_ahead=2, chart=DFF, projected_cutoff_date=2019-08-04 16:55:34.947386, confidence_low=2019-07-24 01:45:38.221421, confidence_high=2019-08-16 08:05:31.673351, velocity_days_per_month=16.8, cumulative_advancement_days=35.0\n  forecast_month=2020-02, months_ahead=3, chart=DFF, projected_cutoff_date=2019-08-21 04:04:46.203317, confidence_low=2019-08-06 22:10:21.617426, confidence_high=2019-09-04 09:59:10.789208, velocity_days_per_month=16.5, cumulative_advancement_days=51.0\n  forecast_month=2020-03, months_ahead=4, chart=DFF, projected_cutoff_date=2019-09-10 04:10:02.083477, confidence_low=2019-08-24 17:22:02.083477, confidence_high=2019-09-26 14:58:02.083477, velocity_days_per_month=20.0, cumulative_advancement_days=71.0\n  forecast_month=2020-04, months_ahead=5, chart=DFF, projected_cutoff_date=2019-09-30 18:12:04.722716, confidence_low=2019-09-12 08:48:05.375186, confidence_high=2019-10-19 03:36:04.070246, velocity_days_per_month=20.6, cumulative_advancement_days=92.0\n  forecast_month=2020-05, months_ahead=6, chart=DFF, projected_cutoff_date=2019-10-16 09:35:50.560345, confidence_low=2019-09-26 06:04:05.169534, confidence_high=2019-11-05 13:07:35.951156, velocity_days_per_month=15.6, cumulative_advancement_days=107.0\n  forecast_month=2020-06, months_ahead=7, chart=DFF, projected_cutoff_date=2019-10-30 14:13:57.207967, confidence_low=2019-10-08 19:57:40.496272, confidence_high=2019-11-21 08:30:13.919662, velocity_days_per_month=14.2, cumulative_advancement_days=122.0\n  forecast_month=2020-07, months_ahead=8, chart=DFF, projected_cutoff_date=2019-11-18 19:30:09.166575, confidence_low=2019-10-26 13:10:15.714645, confidence_high=2019-12-12 01:50:02.618505, velocity_days_per_month=19.2, cumulative_advancement_days=141.0\n  forecast_month=2020-08, months_ahead=9, chart=DFF, projected_cutoff_date=2019-12-11 17:16:24.781599, confidence_low=2019-11-17 01:04:24.781599, confidence_high=2020-01-05 09:28:24.781599, velocity_days_per_month=22.9, cumulative_advancement_days=164.0\n  forecast_month=2020-09, months_ahead=10, chart=DFF, projected_cutoff_date=2020-01-06 08:45:47.145150, confidence_low=2019-12-11 08:31:46.148728, confidence_high=2020-02-01 08:59:48.141572, velocity_days_per_month=25.6, cumulative_advancement_days=189.0\n  ... and 38 more months",
+    "metadata": {
+      "category": "EB1",
+      "country": "MEX"
+    },
+    "generated_at": "2026-04-20T00:51:31.683411+00:00"
+  },
+  {
+    "chunk_id": "8f4108929056",
+    "source_artifact": "pd_forecasts.parquet",
+    "topic": "pd_forecast",
+    "label": "pd_forecast_EB1_PHL",
+    "text": "PD Forecast \u2014 EB1 / PHL (48 months):\n  forecast_month=2019-12, months_ahead=1, chart=DFF, projected_cutoff_date=2019-07-18 21:25:10.615124, confidence_low=2019-07-10 16:01:10.615124, confidence_high=2019-07-27 02:49:10.615124, velocity_days_per_month=17.9, cumulative_advancement_days=18.0\n  forecast_month=2020-01, months_ahead=2, chart=DFF, projected_cutoff_date=2019-08-04 16:55:34.947386, confidence_low=2019-07-24 01:45:38.221421, confidence_high=2019-08-16 08:05:31.673351, velocity_days_per_month=16.8, cumulative_advancement_days=35.0\n  forecast_month=2020-02, months_ahead=3, chart=DFF, projected_cutoff_date=2019-08-21 04:04:46.203317, confidence_low=2019-08-06 22:10:21.617426, confidence_high=2019-09-04 09:59:10.789208, velocity_days_per_month=16.5, cumulative_advancement_days=51.0\n  forecast_month=2020-03, months_ahead=4, chart=DFF, projected_cutoff_date=2019-09-10 04:10:02.083477, confidence_low=2019-08-24 17:22:02.083477, confidence_high=2019-09-26 14:58:02.083477, velocity_days_per_month=20.0, cumulative_advancement_days=71.0\n  forecast_month=2020-04, months_ahead=5, chart=DFF, projected_cutoff_date=2019-09-30 18:12:04.722716, confidence_low=2019-09-12 08:48:05.375186, confidence_high=2019-10-19 03:36:04.070246, velocity_days_per_month=20.6, cumulative_advancement_days=92.0\n  forecast_month=2020-05, months_ahead=6, chart=DFF, projected_cutoff_date=2019-10-16 09:35:50.560345, confidence_low=2019-09-26 06:04:05.169534, confidence_high=2019-11-05 13:07:35.951156, velocity_days_per_month=15.6, cumulative_advancement_days=107.0\n  forecast_month=2020-06, months_ahead=7, chart=DFF, projected_cutoff_date=2019-10-30 14:13:57.207967, confidence_low=2019-10-08 19:57:40.496272, confidence_high=2019-11-21 08:30:13.919662, velocity_days_per_month=14.2, cumulative_advancement_days=122.0\n  forecast_month=2020-07, months_ahead=8, chart=DFF, projected_cutoff_date=2019-11-18 19:30:09.166575, confidence_low=2019-10-26 13:10:15.714645, confidence_high=2019-12-12 01:50:02.618505, velocity_days_per_month=19.2, cumulative_advancement_days=141.0\n  forecast_month=2020-08, months_ahead=9, chart=DFF, projected_cutoff_date=2019-12-11 17:16:24.781599, confidence_low=2019-11-17 01:04:24.781599, confidence_high=2020-01-05 09:28:24.781599, velocity_days_per_month=22.9, cumulative_advancement_days=164.0\n  forecast_month=2020-09, months_ahead=10, chart=DFF, projected_cutoff_date=2020-01-06 08:45:47.145150, confidence_low=2019-12-11 08:31:46.148728, confidence_high=2020-02-01 08:59:48.141572, velocity_days_per_month=25.6, cumulative_advancement_days=189.0\n  ... and 38 more months",
+    "metadata": {
+      "category": "EB1",
+      "country": "PHL"
+    },
+    "generated_at": "2026-04-20T00:51:31.683819+00:00"
+  },
+  {
+    "chunk_id": "1ead7804edae",
+    "source_artifact": "pd_forecasts.parquet",
+    "topic": "pd_forecast",
+    "label": "pd_forecast_EB1_ROW",
+    "text": "PD Forecast \u2014 EB1 / ROW (48 months):\n  forecast_month=2019-12, months_ahead=1, chart=DFF, projected_cutoff_date=2019-07-18 21:25:10.615124, confidence_low=2019-07-10 16:01:10.615124, confidence_high=2019-07-27 02:49:10.615124, velocity_days_per_month=17.9, cumulative_advancement_days=18.0\n  forecast_month=2020-01, months_ahead=2, chart=DFF, projected_cutoff_date=2019-08-04 16:55:34.947386, confidence_low=2019-07-24 01:45:38.221421, confidence_high=2019-08-16 08:05:31.673351, velocity_days_per_month=16.8, cumulative_advancement_days=35.0\n  forecast_month=2020-02, months_ahead=3, chart=DFF, projected_cutoff_date=2019-08-21 04:04:46.203317, confidence_low=2019-08-06 22:10:21.617426, confidence_high=2019-09-04 09:59:10.789208, velocity_days_per_month=16.5, cumulative_advancement_days=51.0\n  forecast_month=2020-03, months_ahead=4, chart=DFF, projected_cutoff_date=2019-09-10 04:10:02.083477, confidence_low=2019-08-24 17:22:02.083477, confidence_high=2019-09-26 14:58:02.083477, velocity_days_per_month=20.0, cumulative_advancement_days=71.0\n  forecast_month=2020-04, months_ahead=5, chart=DFF, projected_cutoff_date=2019-09-30 18:12:04.722716, confidence_low=2019-09-12 08:48:05.375186, confidence_high=2019-10-19 03:36:04.070246, velocity_days_per_month=20.6, cumulative_advancement_days=92.0\n  forecast_month=2020-05, months_ahead=6, chart=DFF, projected_cutoff_date=2019-10-16 09:35:50.560345, confidence_low=2019-09-26 06:04:05.169534, confidence_high=2019-11-05 13:07:35.951156, velocity_days_per_month=15.6, cumulative_advancement_days=107.0\n  forecast_month=2020-06, months_ahead=7, chart=DFF, projected_cutoff_date=2019-10-30 14:13:57.207967, confidence_low=2019-10-08 19:57:40.496272, confidence_high=2019-11-21 08:30:13.919662, velocity_days_per_month=14.2, cumulative_advancement_days=122.0\n  forecast_month=2020-07, months_ahead=8, chart=DFF, projected_cutoff_date=2019-11-18 19:30:09.166575, confidence_low=2019-10-26 13:10:15.714645, confidence_high=2019-12-12 01:50:02.618505, velocity_days_per_month=19.2, cumulative_advancement_days=141.0\n  forecast_month=2020-08, months_ahead=9, chart=DFF, projected_cutoff_date=2019-12-11 17:16:24.781599, confidence_low=2019-11-17 01:04:24.781599, confidence_high=2020-01-05 09:28:24.781599, velocity_days_per_month=22.9, cumulative_advancement_days=164.0\n  forecast_month=2020-09, months_ahead=10, chart=DFF, projected_cutoff_date=2020-01-06 08:45:47.145150, confidence_low=2019-12-11 08:31:46.148728, confidence_high=2020-02-01 08:59:48.141572, velocity_days_per_month=25.6, cumulative_advancement_days=189.0\n  ... and 38 more months",
+    "metadata": {
+      "category": "EB1",
+      "country": "ROW"
+    },
+    "generated_at": "2026-04-20T00:51:31.684276+00:00"
+  },
+  {
+    "chunk_id": "d736106bb0e6",
+    "source_artifact": "pd_forecasts.parquet",
+    "topic": "pd_forecast",
+    "label": "pd_forecast_EB1_VIETNAM",
+    "text": "PD Forecast \u2014 EB1 / VIETNAM (24 months):\n  forecast_month=2020-05, months_ahead=1, chart=FAD, projected_cutoff_date=2019-07-01 18:47:15.748074, confidence_low=2019-04-19 23:25:55.748074, confidence_high=2019-09-12 14:08:35.748074, velocity_days_per_month=30.8, cumulative_advancement_days=31.0\n  forecast_month=2020-06, months_ahead=2, chart=FAD, projected_cutoff_date=2019-07-29 17:09:54.820092, confidence_low=2019-04-17 18:01:52.690255, confidence_high=2019-11-09 16:17:56.949929, velocity_days_per_month=27.9, cumulative_advancement_days=59.0\n  forecast_month=2020-07, months_ahead=3, chart=FAD, projected_cutoff_date=2019-09-05 12:57:16.928204, confidence_low=2019-05-02 10:26:45.964208, confidence_high=2020-01-09 15:27:47.892200, velocity_days_per_month=37.8, cumulative_advancement_days=97.0\n  forecast_month=2020-08, months_ahead=4, chart=FAD, projected_cutoff_date=2019-10-20 14:54:58.033939, confidence_low=2019-05-28 00:12:18.033939, confidence_high=2020-03-14 05:37:38.033939, velocity_days_per_month=45.1, cumulative_advancement_days=142.0\n  forecast_month=2020-09, months_ahead=5, chart=FAD, projected_cutoff_date=2019-12-10 02:12:47.060127, confidence_low=2019-06-30 07:00:26.169024, confidence_high=2020-05-20 21:25:07.951230, velocity_days_per_month=50.5, cumulative_advancement_days=192.0\n  forecast_month=2020-10, months_ahead=6, chart=FAD, projected_cutoff_date=2020-02-07 02:36:19.880640, confidence_low=2019-08-12 18:28:33.643457, confidence_high=2020-08-03 10:44:06.117823, velocity_days_per_month=59.0, cumulative_advancement_days=251.0\n  forecast_month=2020-11, months_ahead=7, chart=FAD, projected_cutoff_date=2020-03-26 17:34:35.590927, confidence_low=2019-09-16 02:30:29.883701, confidence_high=2020-10-05 08:38:41.298153, velocity_days_per_month=48.6, cumulative_advancement_days=300.0\n  forecast_month=2020-12, months_ahead=8, chart=FAD, projected_cutoff_date=2020-04-30 22:41:01.655208, confidence_low=2019-10-08 00:24:57.395535, confidence_high=2020-11-22 20:57:05.914881, velocity_days_per_month=35.2, cumulative_advancement_days=335.0\n  forecast_month=2021-01, months_ahead=9, chart=FAD, projected_cutoff_date=2020-06-03 00:47:38.264710, confidence_low=2019-10-28 14:43:38.264710, confidence_high=2021-01-07 10:51:38.264710, velocity_days_per_month=33.1, cumulative_advancement_days=368.0\n  forecast_month=2021-02, months_ahead=10, chart=FAD, projected_cutoff_date=2020-07-05 10:27:50.399090, confidence_low=2019-11-18 04:50:26.023354, confidence_high=2021-02-20 16:05:14.774826, velocity_days_per_month=32.4, cumulative_advancement_days=400.0\n  ... and 14 more months",
+    "metadata": {
+      "category": "EB1",
+      "country": "VIETNAM"
+    },
+    "generated_at": "2026-04-20T00:51:31.684675+00:00"
+  },
+  {
+    "chunk_id": "5c7874c2eeb8",
+    "source_artifact": "pd_forecasts.parquet",
+    "topic": "pd_forecast",
+    "label": "pd_forecast_EB2_CHN",
+    "text": "PD Forecast \u2014 EB2 / CHN (48 months):\n  forecast_month=2026-05, months_ahead=1, chart=DFF, projected_cutoff_date=2022-01-16 14:21:47.892044, confidence_low=2022-01-07 11:01:47.892044, confidence_high=2022-01-25 17:41:47.892044, velocity_days_per_month=15.6, cumulative_advancement_days=16.0\n  forecast_month=2026-06, months_ahead=2, chart=DFF, projected_cutoff_date=2022-01-30 18:03:40.868022, confidence_low=2022-01-17 19:52:37.839172, confidence_high=2022-02-12 16:14:43.896872, velocity_days_per_month=14.2, cumulative_advancement_days=30.0\n  forecast_month=2026-07, months_ahead=3, chart=DFF, projected_cutoff_date=2022-02-18 22:03:44.380467, confidence_low=2022-02-03 02:09:57.062811, confidence_high=2022-03-06 17:57:31.698123, velocity_days_per_month=19.2, cumulative_advancement_days=49.0\n  forecast_month=2026-08, months_ahead=4, chart=DFF, projected_cutoff_date=2022-03-13 18:19:15.029859, confidence_low=2022-02-23 11:39:15.029859, confidence_high=2022-04-01 00:59:15.029859, velocity_days_per_month=22.8, cumulative_advancement_days=72.0\n  forecast_month=2026-09, months_ahead=5, chart=DFF, projected_cutoff_date=2022-04-08 08:07:01.547329, confidence_low=2022-03-18 21:40:22.272295, confidence_high=2022-04-28 18:33:40.822363, velocity_days_per_month=25.6, cumulative_advancement_days=97.0\n  forecast_month=2026-10, months_ahead=6, chart=DFF, projected_cutoff_date=2022-05-08 05:50:26.425427, confidence_low=2022-04-15 20:35:09.324525, confidence_high=2022-05-30 15:05:43.526329, velocity_days_per_month=29.9, cumulative_advancement_days=127.0\n  forecast_month=2026-11, months_ahead=7, chart=DFF, projected_cutoff_date=2022-06-01 21:10:32.916348, confidence_low=2022-05-08 16:52:27.681131, confidence_high=2022-06-26 01:28:38.151565, velocity_days_per_month=24.6, cumulative_advancement_days=152.0\n  forecast_month=2026-12, months_ahead=8, chart=DFF, projected_cutoff_date=2022-06-19 17:24:50.533352, confidence_low=2022-05-24 21:02:44.475652, confidence_high=2022-07-15 13:46:56.591052, velocity_days_per_month=17.8, cumulative_advancement_days=170.0\n  forecast_month=2027-01, months_ahead=9, chart=DFF, projected_cutoff_date=2022-07-06 11:48:38.510008, confidence_low=2022-06-09 01:48:38.510008, confidence_high=2022-08-02 21:48:38.510008, velocity_days_per_month=16.8, cumulative_advancement_days=186.0\n  forecast_month=2027-02, months_ahead=10, chart=DFF, projected_cutoff_date=2022-07-22 21:52:36.145217, confidence_low=2022-06-24 00:17:01.704748, confidence_high=2022-08-20 19:28:10.585686, velocity_days_per_month=16.4, cumulative_advancement_days=203.0\n  ... and 38 more months",
+    "metadata": {
+      "category": "EB2",
+      "country": "CHN"
+    },
+    "generated_at": "2026-04-20T00:51:31.685071+00:00"
+  },
+  {
+    "chunk_id": "5744a0cba54a",
+    "source_artifact": "pd_forecasts.parquet",
+    "topic": "pd_forecast",
+    "label": "pd_forecast_EB2_IND",
+    "text": "PD Forecast \u2014 EB2 / IND (48 months):\n  forecast_month=2026-05, months_ahead=1, chart=DFF, projected_cutoff_date=2015-02-01 03:35:03.735702, confidence_low=2015-01-23 22:11:03.735702, confidence_high=2015-02-09 08:59:03.735702, velocity_days_per_month=17.1, cumulative_advancement_days=17.0\n  forecast_month=2026-06, months_ahead=2, chart=DFF, projected_cutoff_date=2015-02-16 17:03:24.822059, confidence_low=2015-02-05 01:53:28.096094, confidence_high=2015-02-28 08:13:21.548024, velocity_days_per_month=15.6, cumulative_advancement_days=33.0\n  forecast_month=2026-07, months_ahead=3, chart=DFF, projected_cutoff_date=2015-03-09 18:47:36.467130, confidence_low=2015-02-23 12:53:11.881239, confidence_high=2015-03-24 00:42:01.053021, velocity_days_per_month=21.1, cumulative_advancement_days=54.0\n  forecast_month=2026-08, months_ahead=4, chart=DFF, projected_cutoff_date=2015-04-03 21:33:45.266555, confidence_low=2015-03-18 10:45:45.266555, confidence_high=2015-04-20 08:21:45.266555, velocity_days_per_month=25.1, cumulative_advancement_days=79.0\n  forecast_month=2026-09, months_ahead=5, chart=DFF, projected_cutoff_date=2015-05-02 00:23:07.855376, confidence_low=2015-04-13 14:59:08.507846, confidence_high=2015-05-20 09:47:07.202906, velocity_days_per_month=28.1, cumulative_advancement_days=107.0\n  forecast_month=2026-10, months_ahead=6, chart=DFF, projected_cutoff_date=2015-06-03 21:28:07.507581, confidence_low=2015-05-14 17:56:22.116770, confidence_high=2015-06-24 00:59:52.898392, velocity_days_per_month=32.9, cumulative_advancement_days=140.0\n  forecast_month=2026-11, months_ahead=7, chart=DFF, projected_cutoff_date=2015-06-30 23:35:50.562524, confidence_low=2015-06-09 05:19:33.850829, confidence_high=2015-07-22 17:52:07.274219, velocity_days_per_month=27.1, cumulative_advancement_days=167.0\n  forecast_month=2026-12, months_ahead=8, chart=DFF, projected_cutoff_date=2015-07-20 14:24:47.472647, confidence_low=2015-06-27 08:04:54.020717, confidence_high=2015-08-12 20:44:40.924577, velocity_days_per_month=19.6, cumulative_advancement_days=187.0\n  forecast_month=2027-01, months_ahead=9, chart=DFF, projected_cutoff_date=2015-08-08 00:49:05.271362, confidence_low=2015-07-14 08:37:05.271362, confidence_high=2015-09-01 17:01:05.271362, velocity_days_per_month=18.4, cumulative_advancement_days=205.0\n  forecast_month=2027-02, months_ahead=10, chart=DFF, projected_cutoff_date=2015-08-26 02:03:50.939233, confidence_low=2015-07-31 01:49:49.942811, confidence_high=2015-09-21 02:17:51.935655, velocity_days_per_month=18.1, cumulative_advancement_days=223.0\n  ... and 38 more months",
+    "metadata": {
+      "category": "EB2",
+      "country": "IND"
+    },
+    "generated_at": "2026-04-20T00:51:31.685467+00:00"
+  },
+  {
+    "chunk_id": "6df205063fc2",
+    "source_artifact": "pd_forecasts.parquet",
+    "topic": "pd_forecast",
+    "label": "pd_forecast_EB2_MEX",
+    "text": "PD Forecast \u2014 EB2 / MEX (48 months):\n  forecast_month=2026-03, months_ahead=1, chart=DFF, projected_cutoff_date=2024-10-26 17:37:24.661876, confidence_low=2024-10-18 12:13:24.661876, confidence_high=2024-11-03 23:01:24.661876, velocity_days_per_month=11.7, cumulative_advancement_days=12.0\n  forecast_month=2026-04, months_ahead=2, chart=DFF, projected_cutoff_date=2024-11-07 19:25:41.031780, confidence_low=2024-10-27 04:15:44.305815, confidence_high=2024-11-19 10:35:37.757745, velocity_days_per_month=12.1, cumulative_advancement_days=24.0\n  forecast_month=2026-05, months_ahead=3, chart=DFF, projected_cutoff_date=2024-11-16 23:38:18.818206, confidence_low=2024-11-02 17:43:54.232315, confidence_high=2024-12-01 05:32:43.404097, velocity_days_per_month=9.2, cumulative_advancement_days=33.0\n  forecast_month=2026-06, months_ahead=4, chart=DFF, projected_cutoff_date=2024-11-25 07:27:28.901077, confidence_low=2024-11-08 20:39:28.901077, confidence_high=2024-12-11 18:15:28.901077, velocity_days_per_month=8.3, cumulative_advancement_days=41.0\n  forecast_month=2026-07, months_ahead=5, chart=DFF, projected_cutoff_date=2024-12-06 14:02:34.407611, confidence_low=2024-11-18 04:38:35.060081, confidence_high=2024-12-24 23:26:33.755141, velocity_days_per_month=11.3, cumulative_advancement_days=53.0\n  forecast_month=2026-08, months_ahead=6, chart=DFF, projected_cutoff_date=2024-12-20 00:32:35.504251, confidence_low=2024-11-29 21:00:50.113440, confidence_high=2025-01-09 04:04:20.895062, velocity_days_per_month=13.4, cumulative_advancement_days=66.0\n  forecast_month=2026-09, months_ahead=7, chart=DFF, projected_cutoff_date=2025-01-04 01:35:40.381575, confidence_low=2024-12-13 07:19:23.669880, confidence_high=2025-01-25 19:51:57.093270, velocity_days_per_month=15.0, cumulative_advancement_days=81.0\n  forecast_month=2026-10, months_ahead=8, chart=DFF, projected_cutoff_date=2025-01-21 15:46:43.437813, confidence_low=2024-12-29 09:26:49.985883, confidence_high=2025-02-13 22:06:36.889743, velocity_days_per_month=17.6, cumulative_advancement_days=99.0\n  forecast_month=2026-11, months_ahead=9, chart=DFF, projected_cutoff_date=2025-02-05 03:37:04.287327, confidence_low=2025-01-11 11:25:04.287327, confidence_high=2025-03-01 19:49:04.287327, velocity_days_per_month=14.5, cumulative_advancement_days=113.0\n  forecast_month=2026-12, months_ahead=10, chart=DFF, projected_cutoff_date=2025-02-15 15:31:08.483387, confidence_low=2025-01-20 15:17:07.486965, confidence_high=2025-03-13 15:45:09.479809, velocity_days_per_month=10.5, cumulative_advancement_days=124.0\n  ... and 38 more months",
+    "metadata": {
+      "category": "EB2",
+      "country": "MEX"
+    },
+    "generated_at": "2026-04-20T00:51:31.685859+00:00"
+  },
+  {
+    "chunk_id": "0680615d3010",
+    "source_artifact": "pd_forecasts.parquet",
+    "topic": "pd_forecast",
+    "label": "pd_forecast_EB2_PHL",
+    "text": "PD Forecast \u2014 EB2 / PHL (48 months):\n  forecast_month=2026-03, months_ahead=1, chart=DFF, projected_cutoff_date=2024-10-29 12:54:05.166660, confidence_low=2024-10-21 07:30:05.166660, confidence_high=2024-11-06 18:18:05.166660, velocity_days_per_month=14.5, cumulative_advancement_days=15.0\n  forecast_month=2026-04, months_ahead=2, chart=DFF, projected_cutoff_date=2024-11-13 11:56:17.851487, confidence_low=2024-11-01 20:46:21.125522, confidence_high=2024-11-25 03:06:14.577452, velocity_days_per_month=15.0, cumulative_advancement_days=29.0\n  forecast_month=2026-05, months_ahead=3, chart=DFF, projected_cutoff_date=2024-11-24 20:45:20.011343, confidence_low=2024-11-10 14:50:55.425452, confidence_high=2024-12-09 02:39:44.597234, velocity_days_per_month=11.4, cumulative_advancement_days=41.0\n  forecast_month=2026-06, months_ahead=4, chart=DFF, projected_cutoff_date=2024-12-05 04:18:37.873011, confidence_low=2024-11-18 17:30:37.873011, confidence_high=2024-12-21 15:06:37.873011, velocity_days_per_month=10.3, cumulative_advancement_days=51.0\n  forecast_month=2026-07, months_ahead=5, chart=DFF, projected_cutoff_date=2024-12-19 03:32:10.473904, confidence_low=2024-11-30 18:08:11.126374, confidence_high=2025-01-06 12:56:09.821434, velocity_days_per_month=14.0, cumulative_advancement_days=65.0\n  forecast_month=2026-08, months_ahead=6, chart=DFF, projected_cutoff_date=2025-01-04 19:04:46.733752, confidence_low=2024-12-15 15:33:01.342941, confidence_high=2025-01-24 22:36:32.124563, velocity_days_per_month=16.6, cumulative_advancement_days=82.0\n  forecast_month=2026-09, months_ahead=7, chart=DFF, projected_cutoff_date=2025-01-23 10:23:01.263331, confidence_low=2025-01-01 16:06:44.551636, confidence_high=2025-02-14 04:39:17.975026, velocity_days_per_month=18.6, cumulative_advancement_days=100.0\n  forecast_month=2026-10, months_ahead=8, chart=DFF, projected_cutoff_date=2025-02-14 05:25:29.132526, confidence_low=2025-01-21 23:05:35.680596, confidence_high=2025-03-09 11:45:22.584456, velocity_days_per_month=21.8, cumulative_advancement_days=122.0\n  forecast_month=2026-11, months_ahead=9, chart=DFF, projected_cutoff_date=2025-03-04 04:21:36.915746, confidence_low=2025-02-07 12:09:36.915746, confidence_high=2025-03-28 20:33:36.915746, velocity_days_per_month=18.0, cumulative_advancement_days=140.0\n  forecast_month=2026-12, months_ahead=10, chart=DFF, projected_cutoff_date=2025-03-17 04:26:19.942492, confidence_low=2025-02-19 04:12:18.946070, confidence_high=2025-04-12 04:40:20.938914, velocity_days_per_month=13.0, cumulative_advancement_days=153.0\n  ... and 38 more months",
+    "metadata": {
+      "category": "EB2",
+      "country": "PHL"
+    },
+    "generated_at": "2026-04-20T00:51:31.686259+00:00"
+  },
+  {
+    "chunk_id": "a7bea2f166c1",
+    "source_artifact": "pd_forecasts.parquet",
+    "topic": "pd_forecast",
+    "label": "pd_forecast_EB2_ROW",
+    "text": "PD Forecast \u2014 EB2 / ROW (48 months):\n  forecast_month=2026-03, months_ahead=1, chart=DFF, projected_cutoff_date=2024-10-29 12:54:05.166660, confidence_low=2024-10-21 07:30:05.166660, confidence_high=2024-11-06 18:18:05.166660, velocity_days_per_month=14.5, cumulative_advancement_days=15.0\n  forecast_month=2026-04, months_ahead=2, chart=DFF, projected_cutoff_date=2024-11-13 11:56:17.851487, confidence_low=2024-11-01 20:46:21.125522, confidence_high=2024-11-25 03:06:14.577452, velocity_days_per_month=15.0, cumulative_advancement_days=29.0\n  forecast_month=2026-05, months_ahead=3, chart=DFF, projected_cutoff_date=2024-11-24 20:45:20.011343, confidence_low=2024-11-10 14:50:55.425452, confidence_high=2024-12-09 02:39:44.597234, velocity_days_per_month=11.4, cumulative_advancement_days=41.0\n  forecast_month=2026-06, months_ahead=4, chart=DFF, projected_cutoff_date=2024-12-05 04:18:37.873011, confidence_low=2024-11-18 17:30:37.873011, confidence_high=2024-12-21 15:06:37.873011, velocity_days_per_month=10.3, cumulative_advancement_days=51.0\n  forecast_month=2026-07, months_ahead=5, chart=DFF, projected_cutoff_date=2024-12-19 03:32:10.473904, confidence_low=2024-11-30 18:08:11.126374, confidence_high=2025-01-06 12:56:09.821434, velocity_days_per_month=14.0, cumulative_advancement_days=65.0\n  forecast_month=2026-08, months_ahead=6, chart=DFF, projected_cutoff_date=2025-01-04 19:04:46.733752, confidence_low=2024-12-15 15:33:01.342941, confidence_high=2025-01-24 22:36:32.124563, velocity_days_per_month=16.6, cumulative_advancement_days=82.0\n  forecast_month=2026-09, months_ahead=7, chart=DFF, projected_cutoff_date=2025-01-23 10:23:01.263331, confidence_low=2025-01-01 16:06:44.551636, confidence_high=2025-02-14 04:39:17.975026, velocity_days_per_month=18.6, cumulative_advancement_days=100.0\n  forecast_month=2026-10, months_ahead=8, chart=DFF, projected_cutoff_date=2025-02-14 05:25:29.132526, confidence_low=2025-01-21 23:05:35.680596, confidence_high=2025-03-09 11:45:22.584456, velocity_days_per_month=21.8, cumulative_advancement_days=122.0\n  forecast_month=2026-11, months_ahead=9, chart=DFF, projected_cutoff_date=2025-03-04 04:21:36.915746, confidence_low=2025-02-07 12:09:36.915746, confidence_high=2025-03-28 20:33:36.915746, velocity_days_per_month=18.0, cumulative_advancement_days=140.0\n  forecast_month=2026-12, months_ahead=10, chart=DFF, projected_cutoff_date=2025-03-17 04:26:19.942492, confidence_low=2025-02-19 04:12:18.946070, confidence_high=2025-04-12 04:40:20.938914, velocity_days_per_month=13.0, cumulative_advancement_days=153.0\n  ... and 38 more months",
+    "metadata": {
+      "category": "EB2",
+      "country": "ROW"
+    },
+    "generated_at": "2026-04-20T00:51:31.686655+00:00"
+  },
+  {
+    "chunk_id": "62cecbf4f9f4",
+    "source_artifact": "pd_forecasts.parquet",
+    "topic": "pd_forecast",
+    "label": "pd_forecast_EB3_CHN",
+    "text": "PD Forecast \u2014 EB3 / CHN (48 months):\n  forecast_month=2026-05, months_ahead=1, chart=DFF, projected_cutoff_date=2022-01-12 07:46:22.651725, confidence_low=2022-01-04 02:22:22.651725, confidence_high=2022-01-20 13:10:22.651725, velocity_days_per_month=11.3, cumulative_advancement_days=11.0\n  forecast_month=2026-06, months_ahead=2, chart=DFF, projected_cutoff_date=2022-01-22 14:22:49.127807, confidence_low=2022-01-10 23:12:52.401842, confidence_high=2022-02-03 05:32:45.853772, velocity_days_per_month=10.3, cumulative_advancement_days=22.0\n  forecast_month=2026-07, months_ahead=3, chart=DFF, projected_cutoff_date=2022-02-05 12:19:22.212329, confidence_low=2022-01-22 06:24:57.626438, confidence_high=2022-02-19 18:13:46.798220, velocity_days_per_month=13.9, cumulative_advancement_days=36.0\n  forecast_month=2026-08, months_ahead=4, chart=DFF, projected_cutoff_date=2022-02-22 02:20:12.637812, confidence_low=2022-02-05 15:32:12.637812, confidence_high=2022-03-10 13:08:12.637812, velocity_days_per_month=16.6, cumulative_advancement_days=52.0\n  forecast_month=2026-09, months_ahead=5, chart=DFF, projected_cutoff_date=2022-03-12 15:55:43.176448, confidence_low=2022-02-22 06:31:43.828918, confidence_high=2022-03-31 01:19:42.523978, velocity_days_per_month=18.6, cumulative_advancement_days=71.0\n  forecast_month=2026-10, months_ahead=6, chart=DFF, projected_cutoff_date=2022-04-03 08:58:03.374377, confidence_low=2022-03-14 05:26:17.983566, confidence_high=2022-04-23 12:29:48.765188, velocity_days_per_month=21.7, cumulative_advancement_days=92.0\n  forecast_month=2026-11, months_ahead=7, chart=DFF, projected_cutoff_date=2022-04-21 06:15:12.730316, confidence_low=2022-03-30 11:58:56.018621, confidence_high=2022-05-13 00:31:29.442011, velocity_days_per_month=17.9, cumulative_advancement_days=110.0\n  forecast_month=2026-12, months_ahead=8, chart=DFF, projected_cutoff_date=2022-05-04 05:08:15.215097, confidence_low=2022-04-10 22:48:21.763167, confidence_high=2022-05-27 11:28:08.667027, velocity_days_per_month=13.0, cumulative_advancement_days=123.0\n  forecast_month=2027-01, months_ahead=9, chart=DFF, projected_cutoff_date=2022-05-16 09:15:41.858654, confidence_low=2022-04-21 17:03:41.858654, confidence_high=2022-06-10 01:27:41.858654, velocity_days_per_month=12.2, cumulative_advancement_days=135.0\n  forecast_month=2027-02, months_ahead=10, chart=DFF, projected_cutoff_date=2022-05-28 07:20:16.699906, confidence_low=2022-05-02 07:06:15.703484, confidence_high=2022-06-23 07:34:17.696328, velocity_days_per_month=11.9, cumulative_advancement_days=147.0\n  ... and 38 more months",
+    "metadata": {
+      "category": "EB3",
+      "country": "CHN"
+    },
+    "generated_at": "2026-04-20T00:51:31.687048+00:00"
+  },
+  {
+    "chunk_id": "31b18d49116b",
+    "source_artifact": "pd_forecasts.parquet",
+    "topic": "pd_forecast",
+    "label": "pd_forecast_EB3_EL SALVADOR GUATEMALA HONDURAS",
+    "text": "PD Forecast \u2014 EB3 / EL SALVADOR GUATEMALA HONDURAS (24 months):\n  forecast_month=2020-09, months_ahead=1, chart=FAD, projected_cutoff_date=2019-05-02 17:40:56.002030, confidence_low=2019-03-25 23:06:16.002030, confidence_high=2019-06-09 12:15:36.002030, velocity_days_per_month=31.7, cumulative_advancement_days=32.0\n  forecast_month=2020-10, months_ahead=2, chart=FAD, projected_cutoff_date=2019-06-08 20:19:53.980204, confidence_low=2019-04-16 10:14:13.460958, confidence_high=2019-08-01 06:25:34.499450, velocity_days_per_month=37.1, cumulative_advancement_days=69.0\n  forecast_month=2020-11, months_ahead=3, chart=FAD, projected_cutoff_date=2019-07-09 10:08:27.817763, confidence_low=2019-05-04 23:54:08.238117, confidence_high=2019-09-12 20:22:47.397409, velocity_days_per_month=30.6, cumulative_advancement_days=99.0\n  forecast_month=2020-12, months_ahead=4, chart=FAD, projected_cutoff_date=2019-07-31 13:33:27.142191, confidence_low=2019-05-17 00:24:07.142191, confidence_high=2019-10-15 02:42:47.142191, velocity_days_per_month=22.1, cumulative_advancement_days=122.0\n  forecast_month=2021-01, months_ahead=5, chart=FAD, projected_cutoff_date=2019-08-21 08:54:22.583269, confidence_low=2019-05-28 21:44:12.246462, confidence_high=2019-11-13 20:04:32.920076, velocity_days_per_month=20.8, cumulative_advancement_days=142.0\n  forecast_month=2021-02, months_ahead=6, chart=FAD, projected_cutoff_date=2019-09-10 17:55:01.912723, confidence_low=2019-06-10 05:15:51.228996, confidence_high=2019-12-12 06:34:12.596450, velocity_days_per_month=20.4, cumulative_advancement_days=163.0\n  forecast_month=2021-03, months_ahead=7, chart=FAD, projected_cutoff_date=2019-10-05 12:02:11.875067, confidence_low=2019-06-27 13:27:26.236172, confidence_high=2020-01-13 10:36:57.513962, velocity_days_per_month=24.8, cumulative_advancement_days=188.0\n  forecast_month=2021-04, months_ahead=8, chart=FAD, projected_cutoff_date=2019-10-30 23:24:53.836464, confidence_low=2019-07-16 03:13:32.797972, confidence_high=2020-02-14 19:36:14.874956, velocity_days_per_month=25.5, cumulative_advancement_days=213.0\n  forecast_month=2021-05, months_ahead=9, chart=FAD, projected_cutoff_date=2019-11-19 07:58:33.853306, confidence_low=2019-07-29 00:14:33.853306, confidence_high=2020-03-11 15:42:33.853306, velocity_days_per_month=19.4, cumulative_advancement_days=232.0\n  forecast_month=2021-06, months_ahead=10, chart=FAD, projected_cutoff_date=2019-12-06 21:31:11.294318, confidence_low=2019-08-09 10:40:08.940380, confidence_high=2020-04-04 08:22:13.648256, velocity_days_per_month=17.6, cumulative_advancement_days=250.0\n  ... and 14 more months",
+    "metadata": {
+      "category": "EB3",
+      "country": "EL SALVADOR GUATEMALA HONDURAS"
+    },
+    "generated_at": "2026-04-20T00:51:31.687447+00:00"
+  },
+  {
+    "chunk_id": "0cffd5bb283b",
+    "source_artifact": "pd_forecasts.parquet",
+    "topic": "pd_forecast",
+    "label": "pd_forecast_EB3_IND",
+    "text": "PD Forecast \u2014 EB3 / IND (48 months):\n  forecast_month=2026-05, months_ahead=1, chart=DFF, projected_cutoff_date=2015-01-30 15:43:39.403174, confidence_low=2015-01-22 10:19:39.403174, confidence_high=2015-02-07 21:07:39.403174, velocity_days_per_month=15.7, cumulative_advancement_days=16.0\n  forecast_month=2026-06, months_ahead=2, chart=DFF, projected_cutoff_date=2015-02-13 20:39:49.094682, confidence_low=2015-02-02 05:29:52.368717, confidence_high=2015-02-25 11:49:45.820647, velocity_days_per_month=14.2, cumulative_advancement_days=30.0\n  forecast_month=2026-07, months_ahead=3, chart=DFF, projected_cutoff_date=2015-03-05 02:20:27.653542, confidence_low=2015-02-18 20:26:03.067651, confidence_high=2015-03-19 08:14:52.239433, velocity_days_per_month=19.2, cumulative_advancement_days=49.0\n  forecast_month=2026-08, months_ahead=4, chart=DFF, projected_cutoff_date=2015-03-28 00:35:51.256325, confidence_low=2015-03-11 13:47:51.256325, confidence_high=2015-04-13 11:23:51.256325, velocity_days_per_month=22.9, cumulative_advancement_days=72.0\n  forecast_month=2026-09, months_ahead=5, chart=DFF, projected_cutoff_date=2015-04-22 16:37:50.558644, confidence_low=2015-04-04 07:13:51.211114, confidence_high=2015-05-11 02:01:49.906174, velocity_days_per_month=25.7, cumulative_advancement_days=98.0\n  forecast_month=2026-10, months_ahead=6, chart=DFF, projected_cutoff_date=2015-05-22 16:58:11.710470, confidence_low=2015-05-02 13:26:26.319659, confidence_high=2015-06-11 20:29:57.101281, velocity_days_per_month=30.0, cumulative_advancement_days=128.0\n  forecast_month=2026-11, months_ahead=7, chart=DFF, projected_cutoff_date=2015-06-16 10:27:36.304490, confidence_low=2015-05-25 16:11:19.592795, confidence_high=2015-07-08 04:43:53.016185, velocity_days_per_month=24.7, cumulative_advancement_days=152.0\n  forecast_month=2026-12, months_ahead=8, chart=DFF, projected_cutoff_date=2015-07-04 08:15:32.252135, confidence_low=2015-06-11 01:55:38.800205, confidence_high=2015-07-27 14:35:25.704065, velocity_days_per_month=17.9, cumulative_advancement_days=170.0\n  forecast_month=2027-01, months_ahead=9, chart=DFF, projected_cutoff_date=2015-07-21 04:07:19.527423, confidence_low=2015-06-26 11:55:19.527423, confidence_high=2015-08-14 20:19:19.527423, velocity_days_per_month=16.8, cumulative_advancement_days=187.0\n  forecast_month=2027-02, months_ahead=10, chart=DFF, projected_cutoff_date=2015-08-06 15:37:27.166144, confidence_low=2015-07-11 15:23:26.169722, confidence_high=2015-09-01 15:51:28.162566, velocity_days_per_month=16.5, cumulative_advancement_days=204.0\n  ... and 38 more months",
+    "metadata": {
+      "category": "EB3",
+      "country": "IND"
+    },
+    "generated_at": "2026-04-20T00:51:31.687848+00:00"
+  },
+  {
+    "chunk_id": "e71341c00798",
+    "source_artifact": "pd_forecasts.parquet",
+    "topic": "pd_forecast",
+    "label": "pd_forecast_EB3_MEX",
+    "text": "PD Forecast \u2014 EB3 / MEX (48 months):\n  forecast_month=2026-04, months_ahead=1, chart=DFF, projected_cutoff_date=2024-02-03 06:11:01.925163, confidence_low=2024-01-26 00:47:01.925163, confidence_high=2024-02-11 11:35:01.925163, velocity_days_per_month=19.3, cumulative_advancement_days=19.0\n  forecast_month=2026-05, months_ahead=2, chart=DFF, projected_cutoff_date=2024-02-17 21:22:41.825711, confidence_low=2024-02-06 06:12:45.099746, confidence_high=2024-02-29 12:32:38.551676, velocity_days_per_month=14.6, cumulative_advancement_days=34.0\n  forecast_month=2026-06, months_ahead=3, chart=DFF, projected_cutoff_date=2024-03-02 04:03:10.214767, confidence_low=2024-02-16 22:08:45.628876, confidence_high=2024-03-16 09:57:34.800658, velocity_days_per_month=13.3, cumulative_advancement_days=47.0\n  forecast_month=2026-07, months_ahead=4, chart=DFF, projected_cutoff_date=2024-03-20 03:35:05.697202, confidence_low=2024-03-03 16:47:05.697202, confidence_high=2024-04-05 14:23:05.697202, velocity_days_per_month=18.0, cumulative_advancement_days=65.0\n  forecast_month=2026-08, months_ahead=5, chart=DFF, projected_cutoff_date=2024-04-10 13:54:44.573059, confidence_low=2024-03-23 04:30:45.225529, confidence_high=2024-04-28 23:18:43.920589, velocity_days_per_month=21.4, cumulative_advancement_days=87.0\n  forecast_month=2026-09, months_ahead=6, chart=DFF, projected_cutoff_date=2024-05-04 13:43:17.534965, confidence_low=2024-04-14 10:11:32.144154, confidence_high=2024-05-24 17:15:02.925776, velocity_days_per_month=24.0, cumulative_advancement_days=111.0\n  forecast_month=2026-10, months_ahead=7, chart=DFF, projected_cutoff_date=2024-06-01 15:01:33.892402, confidence_low=2024-05-10 20:45:17.180707, confidence_high=2024-06-23 09:17:50.604097, velocity_days_per_month=28.1, cumulative_advancement_days=139.0\n  forecast_month=2026-11, months_ahead=8, chart=DFF, projected_cutoff_date=2024-06-24 17:45:51.155809, confidence_low=2024-06-01 11:25:57.703879, confidence_high=2024-07-18 00:05:44.607739, velocity_days_per_month=23.1, cumulative_advancement_days=162.0\n  forecast_month=2026-12, months_ahead=9, chart=DFF, projected_cutoff_date=2024-07-11 11:29:57.470284, confidence_low=2024-06-16 19:17:57.470284, confidence_high=2024-08-05 03:41:57.470284, velocity_days_per_month=16.7, cumulative_advancement_days=178.0\n  forecast_month=2027-01, months_ahead=10, chart=DFF, projected_cutoff_date=2024-07-27 04:59:31.634959, confidence_low=2024-07-01 04:45:30.638537, confidence_high=2024-08-22 05:13:32.631381, velocity_days_per_month=15.7, cumulative_advancement_days=194.0\n  ... and 38 more months",
+    "metadata": {
+      "category": "EB3",
+      "country": "MEX"
+    },
+    "generated_at": "2026-04-20T00:51:31.688249+00:00"
+  },
+  {
+    "chunk_id": "4181be8196bc",
+    "source_artifact": "pd_forecasts.parquet",
+    "topic": "pd_forecast",
+    "label": "pd_forecast_EB3_PHL",
+    "text": "PD Forecast \u2014 EB3 / PHL (48 months):\n  forecast_month=2026-05, months_ahead=1, chart=DFF, projected_cutoff_date=2024-01-18 08:09:39.061976, confidence_low=2024-01-10 02:45:39.061976, confidence_high=2024-01-26 13:33:39.061976, velocity_days_per_month=17.3, cumulative_advancement_days=17.0\n  forecast_month=2026-06, months_ahead=2, chart=DFF, projected_cutoff_date=2024-02-03 01:47:09.894048, confidence_low=2024-01-22 10:37:13.168083, confidence_high=2024-02-14 16:57:06.620013, velocity_days_per_month=15.7, cumulative_advancement_days=33.0\n  forecast_month=2026-07, months_ahead=3, chart=DFF, projected_cutoff_date=2024-02-24 09:08:45.687232, confidence_low=2024-02-10 03:14:21.101341, confidence_high=2024-03-09 15:03:10.273123, velocity_days_per_month=21.3, cumulative_advancement_days=54.0\n  forecast_month=2026-08, months_ahead=4, chart=DFF, projected_cutoff_date=2024-03-20 18:37:02.754079, confidence_low=2024-03-04 07:49:02.754079, confidence_high=2024-04-06 05:25:02.754079, velocity_days_per_month=25.4, cumulative_advancement_days=80.0\n  forecast_month=2026-09, months_ahead=5, chart=DFF, projected_cutoff_date=2024-04-18 04:56:37.855810, confidence_low=2024-03-30 19:32:38.508280, confidence_high=2024-05-06 14:20:37.203340, velocity_days_per_month=28.4, cumulative_advancement_days=108.0\n  forecast_month=2026-10, months_ahead=6, chart=DFF, projected_cutoff_date=2024-05-21 10:48:03.750588, confidence_low=2024-05-01 07:16:18.359777, confidence_high=2024-06-10 14:19:49.141399, velocity_days_per_month=33.2, cumulative_advancement_days=141.0\n  forecast_month=2026-11, months_ahead=7, chart=DFF, projected_cutoff_date=2024-06-17 20:09:30.828778, confidence_low=2024-05-27 01:53:14.117083, confidence_high=2024-07-09 14:25:47.540473, velocity_days_per_month=27.4, cumulative_advancement_days=169.0\n  forecast_month=2026-12, months_ahead=8, chart=DFF, projected_cutoff_date=2024-07-07 16:12:34.042609, confidence_low=2024-06-14 09:52:40.590679, confidence_high=2024-07-30 22:32:27.494539, velocity_days_per_month=19.8, cumulative_advancement_days=189.0\n  forecast_month=2027-01, months_ahead=9, chart=DFF, projected_cutoff_date=2024-07-26 07:32:00.885477, confidence_low=2024-07-01 15:20:00.885477, confidence_high=2024-08-19 23:44:00.885477, velocity_days_per_month=18.6, cumulative_advancement_days=207.0\n  forecast_month=2027-02, months_ahead=10, chart=DFF, projected_cutoff_date=2024-08-13 13:35:48.974538, confidence_low=2024-07-18 13:21:47.978116, confidence_high=2024-09-08 13:49:49.970960, velocity_days_per_month=18.3, cumulative_advancement_days=226.0\n  ... and 38 more months",
+    "metadata": {
+      "category": "EB3",
+      "country": "PHL"
+    },
+    "generated_at": "2026-04-20T00:51:31.688640+00:00"
+  },
+  {
+    "chunk_id": "bb4a2333476d",
+    "source_artifact": "pd_forecasts.parquet",
+    "topic": "pd_forecast",
+    "label": "pd_forecast_EB3_ROW",
+    "text": "PD Forecast \u2014 EB3 / ROW (48 months):\n  forecast_month=2026-04, months_ahead=1, chart=DFF, projected_cutoff_date=2024-02-03 06:11:01.925163, confidence_low=2024-01-26 00:47:01.925163, confidence_high=2024-02-11 11:35:01.925163, velocity_days_per_month=19.3, cumulative_advancement_days=19.0\n  forecast_month=2026-05, months_ahead=2, chart=DFF, projected_cutoff_date=2024-02-17 21:22:41.825711, confidence_low=2024-02-06 06:12:45.099746, confidence_high=2024-02-29 12:32:38.551676, velocity_days_per_month=14.6, cumulative_advancement_days=34.0\n  forecast_month=2026-06, months_ahead=3, chart=DFF, projected_cutoff_date=2024-03-02 04:03:10.214767, confidence_low=2024-02-16 22:08:45.628876, confidence_high=2024-03-16 09:57:34.800658, velocity_days_per_month=13.3, cumulative_advancement_days=47.0\n  forecast_month=2026-07, months_ahead=4, chart=DFF, projected_cutoff_date=2024-03-20 03:35:05.697202, confidence_low=2024-03-03 16:47:05.697202, confidence_high=2024-04-05 14:23:05.697202, velocity_days_per_month=18.0, cumulative_advancement_days=65.0\n  forecast_month=2026-08, months_ahead=5, chart=DFF, projected_cutoff_date=2024-04-10 13:54:44.573059, confidence_low=2024-03-23 04:30:45.225529, confidence_high=2024-04-28 23:18:43.920589, velocity_days_per_month=21.4, cumulative_advancement_days=87.0\n  forecast_month=2026-09, months_ahead=6, chart=DFF, projected_cutoff_date=2024-05-04 13:43:17.534965, confidence_low=2024-04-14 10:11:32.144154, confidence_high=2024-05-24 17:15:02.925776, velocity_days_per_month=24.0, cumulative_advancement_days=111.0\n  forecast_month=2026-10, months_ahead=7, chart=DFF, projected_cutoff_date=2024-06-01 15:01:33.892402, confidence_low=2024-05-10 20:45:17.180707, confidence_high=2024-06-23 09:17:50.604097, velocity_days_per_month=28.1, cumulative_advancement_days=139.0\n  forecast_month=2026-11, months_ahead=8, chart=DFF, projected_cutoff_date=2024-06-24 17:45:51.155809, confidence_low=2024-06-01 11:25:57.703879, confidence_high=2024-07-18 00:05:44.607739, velocity_days_per_month=23.1, cumulative_advancement_days=162.0\n  forecast_month=2026-12, months_ahead=9, chart=DFF, projected_cutoff_date=2024-07-11 11:29:57.470284, confidence_low=2024-06-16 19:17:57.470284, confidence_high=2024-08-05 03:41:57.470284, velocity_days_per_month=16.7, cumulative_advancement_days=178.0\n  forecast_month=2027-01, months_ahead=10, chart=DFF, projected_cutoff_date=2024-07-27 04:59:31.634959, confidence_low=2024-07-01 04:45:30.638537, confidence_high=2024-08-22 05:13:32.631381, velocity_days_per_month=15.7, cumulative_advancement_days=194.0\n  ... and 38 more months",
+    "metadata": {
+      "category": "EB3",
+      "country": "ROW"
+    },
+    "generated_at": "2026-04-20T00:51:31.689030+00:00"
+  },
+  {
+    "chunk_id": "c2e4e91fe121",
+    "source_artifact": "pd_forecasts.parquet",
+    "topic": "pd_forecast",
+    "label": "pd_forecast_EB3-Other_CHN",
+    "text": "PD Forecast \u2014 EB3-Other / CHN (24 months):\n  forecast_month=2026-05, months_ahead=1, chart=DFF, projected_cutoff_date=2019-10-23 07:04:17.568499, confidence_low=2019-10-15 01:40:17.568499, confidence_high=2019-10-31 12:28:17.568499, velocity_days_per_month=22.3, cumulative_advancement_days=22.0\n  forecast_month=2026-06, months_ahead=2, chart=DFF, projected_cutoff_date=2019-11-12 12:35:47.737800, confidence_low=2019-10-31 21:25:51.011835, confidence_high=2019-11-24 03:45:44.463765, velocity_days_per_month=20.2, cumulative_advancement_days=43.0\n  forecast_month=2026-07, months_ahead=3, chart=DFF, projected_cutoff_date=2019-12-09 22:04:07.359104, confidence_low=2019-11-25 16:09:42.773213, confidence_high=2019-12-24 03:58:31.944995, velocity_days_per_month=27.4, cumulative_advancement_days=70.0\n  forecast_month=2026-08, months_ahead=4, chart=DFF, projected_cutoff_date=2020-01-11 13:41:09.350600, confidence_low=2019-12-26 02:53:09.350600, confidence_high=2020-01-28 00:29:09.350600, velocity_days_per_month=32.7, cumulative_advancement_days=103.0\n  forecast_month=2026-09, months_ahead=5, chart=DFF, projected_cutoff_date=2020-02-17 02:58:30.745684, confidence_low=2020-01-29 17:34:31.398154, confidence_high=2020-03-06 12:22:30.093214, velocity_days_per_month=36.6, cumulative_advancement_days=139.0\n  forecast_month=2026-10, months_ahead=6, chart=DFF, projected_cutoff_date=2020-03-30 20:48:22.180506, confidence_low=2020-03-10 17:16:36.789695, confidence_high=2020-04-20 00:20:07.571317, velocity_days_per_month=42.7, cumulative_advancement_days=182.0\n  forecast_month=2026-11, months_ahead=7, chart=DFF, projected_cutoff_date=2020-05-05 01:59:31.618901, confidence_low=2020-04-13 07:43:14.907206, confidence_high=2020-05-26 20:15:48.330596, velocity_days_per_month=35.2, cumulative_advancement_days=217.0\n  forecast_month=2026-12, months_ahead=8, chart=DFF, projected_cutoff_date=2020-05-30 14:03:58.460877, confidence_low=2020-05-07 07:44:05.008947, confidence_high=2020-06-22 20:23:51.912807, velocity_days_per_month=25.5, cumulative_advancement_days=243.0\n  forecast_month=2027-01, months_ahead=9, chart=DFF, projected_cutoff_date=2020-06-23 13:12:19.509692, confidence_low=2020-05-29 21:00:19.509692, confidence_high=2020-07-18 05:24:19.509692, velocity_days_per_month=24.0, cumulative_advancement_days=267.0\n  forecast_month=2027-02, months_ahead=10, chart=DFF, projected_cutoff_date=2020-07-17 00:26:15.837943, confidence_low=2020-06-21 00:12:14.841521, confidence_high=2020-08-12 00:40:16.834365, velocity_days_per_month=23.5, cumulative_advancement_days=290.0\n  ... and 14 more months",
+    "metadata": {
+      "category": "EB3-Other",
+      "country": "CHN"
+    },
+    "generated_at": "2026-04-20T00:51:31.689422+00:00"
+  },
+  {
+    "chunk_id": "2b4c1fa875de",
+    "source_artifact": "pd_forecasts.parquet",
+    "topic": "pd_forecast",
+    "label": "pd_forecast_EB3-Other_EL SALVADOR GUATEMALA HONDURAS",
+    "text": "PD Forecast \u2014 EB3-Other / EL SALVADOR GUATEMALA HONDURAS (24 months):\n  forecast_month=2023-04, months_ahead=1, chart=DFF, projected_cutoff_date=2020-02-06 06:34:04.507715, confidence_low=2020-01-29 01:10:04.507715, confidence_high=2020-02-14 11:58:04.507715, velocity_days_per_month=5.3, cumulative_advancement_days=5.0\n  forecast_month=2023-05, months_ahead=2, chart=DFF, projected_cutoff_date=2020-02-10 06:44:29.934884, confidence_low=2020-01-29 15:34:33.208919, confidence_high=2020-02-21 21:54:26.660849, velocity_days_per_month=4.0, cumulative_advancement_days=9.0\n  forecast_month=2023-06, months_ahead=3, chart=DFF, projected_cutoff_date=2020-02-13 22:00:35.615739, confidence_low=2020-01-30 16:06:11.029848, confidence_high=2020-02-28 03:55:00.201630, velocity_days_per_month=3.6, cumulative_advancement_days=13.0\n  forecast_month=2023-07, months_ahead=4, chart=DFF, projected_cutoff_date=2020-02-18 20:11:02.020729, confidence_low=2020-02-02 09:23:02.020729, confidence_high=2020-03-06 06:59:02.020729, velocity_days_per_month=4.9, cumulative_advancement_days=18.0\n  forecast_month=2023-08, months_ahead=5, chart=DFF, projected_cutoff_date=2020-02-24 17:01:52.355030, confidence_low=2020-02-06 07:37:53.007500, confidence_high=2020-03-14 02:25:51.702560, velocity_days_per_month=5.9, cumulative_advancement_days=24.0\n  forecast_month=2023-09, months_ahead=6, chart=DFF, projected_cutoff_date=2020-03-02 06:42:54.485991, confidence_low=2020-02-11 03:11:09.095180, confidence_high=2020-03-22 10:14:39.876802, velocity_days_per_month=6.6, cumulative_advancement_days=30.0\n  forecast_month=2023-10, months_ahead=7, chart=DFF, projected_cutoff_date=2020-03-09 23:05:52.559059, confidence_low=2020-02-17 04:49:35.847364, confidence_high=2020-03-31 17:22:09.270754, velocity_days_per_month=7.7, cumulative_advancement_days=38.0\n  forecast_month=2023-11, months_ahead=8, chart=DFF, projected_cutoff_date=2020-03-16 07:00:41.793016, confidence_low=2020-02-22 00:40:48.341086, confidence_high=2020-04-08 13:20:35.244946, velocity_days_per_month=6.3, cumulative_advancement_days=44.0\n  forecast_month=2023-12, months_ahead=9, chart=DFF, projected_cutoff_date=2020-03-20 21:01:32.799429, confidence_low=2020-02-25 04:49:32.799429, confidence_high=2020-04-14 13:13:32.799429, velocity_days_per_month=4.6, cumulative_advancement_days=49.0\n  forecast_month=2024-01, months_ahead=10, chart=DFF, projected_cutoff_date=2020-03-25 04:24:04.541648, confidence_low=2020-02-28 04:10:03.545226, confidence_high=2020-04-20 04:38:05.538070, velocity_days_per_month=4.3, cumulative_advancement_days=53.0\n  ... and 14 more months",
+    "metadata": {
+      "category": "EB3-Other",
+      "country": "EL SALVADOR GUATEMALA HONDURAS"
+    },
+    "generated_at": "2026-04-20T00:51:31.689815+00:00"
+  },
+  {
+    "chunk_id": "4968d9310866",
+    "source_artifact": "pd_forecasts.parquet",
+    "topic": "pd_forecast",
+    "label": "pd_forecast_EB3-Other_IND",
+    "text": "PD Forecast \u2014 EB3-Other / IND (24 months):\n  forecast_month=2026-05, months_ahead=1, chart=DFF, projected_cutoff_date=2015-01-30 15:43:39.403174, confidence_low=2015-01-22 10:19:39.403174, confidence_high=2015-02-07 21:07:39.403174, velocity_days_per_month=15.7, cumulative_advancement_days=16.0\n  forecast_month=2026-06, months_ahead=2, chart=DFF, projected_cutoff_date=2015-02-13 20:39:49.094682, confidence_low=2015-02-02 05:29:52.368717, confidence_high=2015-02-25 11:49:45.820647, velocity_days_per_month=14.2, cumulative_advancement_days=30.0\n  forecast_month=2026-07, months_ahead=3, chart=DFF, projected_cutoff_date=2015-03-05 02:20:27.653542, confidence_low=2015-02-18 20:26:03.067651, confidence_high=2015-03-19 08:14:52.239433, velocity_days_per_month=19.2, cumulative_advancement_days=49.0\n  forecast_month=2026-08, months_ahead=4, chart=DFF, projected_cutoff_date=2015-03-28 00:35:51.256325, confidence_low=2015-03-11 13:47:51.256325, confidence_high=2015-04-13 11:23:51.256325, velocity_days_per_month=22.9, cumulative_advancement_days=72.0\n  forecast_month=2026-09, months_ahead=5, chart=DFF, projected_cutoff_date=2015-04-22 16:37:50.558644, confidence_low=2015-04-04 07:13:51.211114, confidence_high=2015-05-11 02:01:49.906174, velocity_days_per_month=25.7, cumulative_advancement_days=98.0\n  forecast_month=2026-10, months_ahead=6, chart=DFF, projected_cutoff_date=2015-05-22 16:58:11.710470, confidence_low=2015-05-02 13:26:26.319659, confidence_high=2015-06-11 20:29:57.101281, velocity_days_per_month=30.0, cumulative_advancement_days=128.0\n  forecast_month=2026-11, months_ahead=7, chart=DFF, projected_cutoff_date=2015-06-16 10:27:36.304490, confidence_low=2015-05-25 16:11:19.592795, confidence_high=2015-07-08 04:43:53.016185, velocity_days_per_month=24.7, cumulative_advancement_days=152.0\n  forecast_month=2026-12, months_ahead=8, chart=DFF, projected_cutoff_date=2015-07-04 08:15:32.252135, confidence_low=2015-06-11 01:55:38.800205, confidence_high=2015-07-27 14:35:25.704065, velocity_days_per_month=17.9, cumulative_advancement_days=170.0\n  forecast_month=2027-01, months_ahead=9, chart=DFF, projected_cutoff_date=2015-07-21 04:07:19.527423, confidence_low=2015-06-26 11:55:19.527423, confidence_high=2015-08-14 20:19:19.527423, velocity_days_per_month=16.8, cumulative_advancement_days=187.0\n  forecast_month=2027-02, months_ahead=10, chart=DFF, projected_cutoff_date=2015-08-06 15:37:27.166144, confidence_low=2015-07-11 15:23:26.169722, confidence_high=2015-09-01 15:51:28.162566, velocity_days_per_month=16.5, cumulative_advancement_days=204.0\n  ... and 14 more months",
+    "metadata": {
+      "category": "EB3-Other",
+      "country": "IND"
+    },
+    "generated_at": "2026-04-20T00:51:31.690216+00:00"
+  },
+  {
+    "chunk_id": "4deb2c007ddd",
+    "source_artifact": "pd_forecasts.parquet",
+    "topic": "pd_forecast",
+    "label": "pd_forecast_EB3-Other_MEX",
+    "text": "PD Forecast \u2014 EB3-Other / MEX (24 months):\n  forecast_month=2026-05, months_ahead=1, chart=DFF, projected_cutoff_date=2022-08-13 03:09:21.799672, confidence_low=2022-08-04 21:45:21.799672, confidence_high=2022-08-21 08:33:21.799672, velocity_days_per_month=12.1, cumulative_advancement_days=12.0\n  forecast_month=2026-06, months_ahead=2, chart=DFF, projected_cutoff_date=2022-08-24 03:21:06.021373, confidence_low=2022-08-12 12:11:09.295408, confidence_high=2022-09-04 18:31:02.747338, velocity_days_per_month=11.0, cumulative_advancement_days=23.0\n  forecast_month=2026-07, months_ahead=3, chart=DFF, projected_cutoff_date=2022-09-08 01:06:40.619155, confidence_low=2022-08-24 19:12:16.033264, confidence_high=2022-09-22 07:01:05.205046, velocity_days_per_month=14.9, cumulative_advancement_days=38.0\n  forecast_month=2026-08, months_ahead=4, chart=DFF, projected_cutoff_date=2022-09-25 19:30:43.250980, confidence_low=2022-09-09 08:42:43.250980, confidence_high=2022-10-12 06:18:43.250980, velocity_days_per_month=17.8, cumulative_advancement_days=56.0\n  forecast_month=2026-09, months_ahead=5, chart=DFF, projected_cutoff_date=2022-10-15 16:53:01.850700, confidence_low=2022-09-27 07:29:02.503170, confidence_high=2022-11-03 02:17:01.198230, velocity_days_per_month=19.9, cumulative_advancement_days=76.0\n  forecast_month=2026-10, months_ahead=6, chart=DFF, projected_cutoff_date=2022-11-07 23:05:01.559693, confidence_low=2022-10-18 19:33:16.168882, confidence_high=2022-11-28 02:36:46.950504, velocity_days_per_month=23.3, cumulative_advancement_days=99.0\n  forecast_month=2026-11, months_ahead=7, chart=DFF, projected_cutoff_date=2022-11-27 02:59:12.354534, confidence_low=2022-11-05 08:42:55.642839, confidence_high=2022-12-18 21:15:29.066229, velocity_days_per_month=19.2, cumulative_advancement_days=118.0\n  forecast_month=2026-12, months_ahead=8, chart=DFF, projected_cutoff_date=2022-12-11 00:02:35.960476, confidence_low=2022-11-17 17:42:42.508546, confidence_high=2023-01-03 06:22:29.412406, velocity_days_per_month=13.9, cumulative_advancement_days=132.0\n  forecast_month=2027-01, months_ahead=9, chart=DFF, projected_cutoff_date=2022-12-24 01:00:07.007064, confidence_low=2022-11-29 08:48:07.007064, confidence_high=2023-01-17 17:12:07.007064, velocity_days_per_month=13.0, cumulative_advancement_days=145.0\n  forecast_month=2027-02, months_ahead=10, chart=DFF, projected_cutoff_date=2023-01-05 19:28:53.466441, confidence_low=2022-12-10 19:14:52.470019, confidence_high=2023-01-31 19:42:54.462863, velocity_days_per_month=12.8, cumulative_advancement_days=158.0\n  ... and 14 more months",
+    "metadata": {
+      "category": "EB3-Other",
+      "country": "MEX"
+    },
+    "generated_at": "2026-04-20T00:51:31.691042+00:00"
+  },
+  {
+    "chunk_id": "42b8a7d1965f",
+    "source_artifact": "pd_forecasts.parquet",
+    "topic": "pd_forecast",
+    "label": "pd_forecast_EB3-Other_PHL",
+    "text": "PD Forecast \u2014 EB3-Other / PHL (24 months):\n  forecast_month=2026-05, months_ahead=1, chart=DFF, projected_cutoff_date=2022-08-14 06:42:45.690595, confidence_low=2022-08-06 01:18:45.690595, confidence_high=2022-08-22 12:06:45.690595, velocity_days_per_month=13.3, cumulative_advancement_days=13.0\n  forecast_month=2026-06, months_ahead=2, chart=DFF, projected_cutoff_date=2022-08-26 07:54:47.731583, confidence_low=2022-08-14 16:44:51.005618, confidence_high=2022-09-06 23:04:44.457548, velocity_days_per_month=12.1, cumulative_advancement_days=25.0\n  forecast_month=2026-07, months_ahead=3, chart=DFF, projected_cutoff_date=2022-09-11 15:31:59.657997, confidence_low=2022-08-28 09:37:35.072106, confidence_high=2022-09-25 21:26:24.243888, velocity_days_per_month=16.3, cumulative_advancement_days=42.0\n  forecast_month=2026-08, months_ahead=4, chart=DFF, projected_cutoff_date=2022-10-01 02:17:27.303888, confidence_low=2022-09-14 15:29:27.303888, confidence_high=2022-10-17 13:05:27.303888, velocity_days_per_month=19.4, cumulative_advancement_days=61.0\n  forecast_month=2026-09, months_ahead=5, chart=DFF, projected_cutoff_date=2022-10-22 20:50:38.001640, confidence_low=2022-10-04 11:26:38.654110, confidence_high=2022-11-10 06:14:37.349170, velocity_days_per_month=21.8, cumulative_advancement_days=83.0\n  forecast_month=2026-10, months_ahead=6, chart=DFF, projected_cutoff_date=2022-11-17 07:52:29.887147, confidence_low=2022-10-28 04:20:44.496336, confidence_high=2022-12-07 11:24:15.277958, velocity_days_per_month=25.5, cumulative_advancement_days=108.0\n  forecast_month=2026-11, months_ahead=7, chart=DFF, projected_cutoff_date=2022-12-08 07:18:20.726685, confidence_low=2022-11-16 13:02:04.014990, confidence_high=2022-12-30 01:34:37.438380, velocity_days_per_month=21.0, cumulative_advancement_days=129.0\n  forecast_month=2026-12, months_ahead=8, chart=DFF, projected_cutoff_date=2022-12-23 11:53:04.735154, confidence_low=2022-11-30 05:33:11.283224, confidence_high=2023-01-15 18:12:58.187084, velocity_days_per_month=15.2, cumulative_advancement_days=144.0\n  forecast_month=2027-01, months_ahead=9, chart=DFF, projected_cutoff_date=2023-01-06 18:27:48.333672, confidence_low=2022-12-13 02:15:48.333672, confidence_high=2023-01-31 10:39:48.333672, velocity_days_per_month=14.3, cumulative_advancement_days=159.0\n  forecast_month=2027-02, months_ahead=10, chart=DFF, projected_cutoff_date=2023-01-20 17:56:59.775683, confidence_low=2022-12-25 17:42:58.779261, confidence_high=2023-02-15 18:11:00.772105, velocity_days_per_month=14.0, cumulative_advancement_days=173.0\n  ... and 14 more months",
+    "metadata": {
+      "category": "EB3-Other",
+      "country": "PHL"
+    },
+    "generated_at": "2026-04-20T00:51:31.691442+00:00"
+  },
+  {
+    "chunk_id": "5b44eff885d3",
+    "source_artifact": "pd_forecasts.parquet",
+    "topic": "pd_forecast",
+    "label": "pd_forecast_EB3-Other_ROW",
+    "text": "PD Forecast \u2014 EB3-Other / ROW (24 months):\n  forecast_month=2026-05, months_ahead=1, chart=DFF, projected_cutoff_date=2022-08-13 03:09:21.799672, confidence_low=2022-08-04 21:45:21.799672, confidence_high=2022-08-21 08:33:21.799672, velocity_days_per_month=12.1, cumulative_advancement_days=12.0\n  forecast_month=2026-06, months_ahead=2, chart=DFF, projected_cutoff_date=2022-08-24 03:21:06.021373, confidence_low=2022-08-12 12:11:09.295408, confidence_high=2022-09-04 18:31:02.747338, velocity_days_per_month=11.0, cumulative_advancement_days=23.0\n  forecast_month=2026-07, months_ahead=3, chart=DFF, projected_cutoff_date=2022-09-08 01:06:40.619155, confidence_low=2022-08-24 19:12:16.033264, confidence_high=2022-09-22 07:01:05.205046, velocity_days_per_month=14.9, cumulative_advancement_days=38.0\n  forecast_month=2026-08, months_ahead=4, chart=DFF, projected_cutoff_date=2022-09-25 19:30:43.250980, confidence_low=2022-09-09 08:42:43.250980, confidence_high=2022-10-12 06:18:43.250980, velocity_days_per_month=17.8, cumulative_advancement_days=56.0\n  forecast_month=2026-09, months_ahead=5, chart=DFF, projected_cutoff_date=2022-10-15 16:53:01.850700, confidence_low=2022-09-27 07:29:02.503170, confidence_high=2022-11-03 02:17:01.198230, velocity_days_per_month=19.9, cumulative_advancement_days=76.0\n  forecast_month=2026-10, months_ahead=6, chart=DFF, projected_cutoff_date=2022-11-07 23:05:01.559693, confidence_low=2022-10-18 19:33:16.168882, confidence_high=2022-11-28 02:36:46.950504, velocity_days_per_month=23.3, cumulative_advancement_days=99.0\n  forecast_month=2026-11, months_ahead=7, chart=DFF, projected_cutoff_date=2022-11-27 02:59:12.354534, confidence_low=2022-11-05 08:42:55.642839, confidence_high=2022-12-18 21:15:29.066229, velocity_days_per_month=19.2, cumulative_advancement_days=118.0\n  forecast_month=2026-12, months_ahead=8, chart=DFF, projected_cutoff_date=2022-12-11 00:02:35.960476, confidence_low=2022-11-17 17:42:42.508546, confidence_high=2023-01-03 06:22:29.412406, velocity_days_per_month=13.9, cumulative_advancement_days=132.0\n  forecast_month=2027-01, months_ahead=9, chart=DFF, projected_cutoff_date=2022-12-24 01:00:07.007064, confidence_low=2022-11-29 08:48:07.007064, confidence_high=2023-01-17 17:12:07.007064, velocity_days_per_month=13.0, cumulative_advancement_days=145.0\n  forecast_month=2027-02, months_ahead=10, chart=DFF, projected_cutoff_date=2023-01-05 19:28:53.466441, confidence_low=2022-12-10 19:14:52.470019, confidence_high=2023-01-31 19:42:54.462863, velocity_days_per_month=12.8, cumulative_advancement_days=158.0\n  ... and 14 more months",
+    "metadata": {
+      "category": "EB3-Other",
+      "country": "ROW"
+    },
+    "generated_at": "2026-04-20T00:51:31.691853+00:00"
+  },
+  {
+    "chunk_id": "585eab3f177f",
+    "source_artifact": "pd_forecasts.parquet",
+    "topic": "pd_forecast",
+    "label": "pd_forecast_EB4_CHN",
+    "text": "PD Forecast \u2014 EB4 / CHN (48 months):\n  forecast_month=2026-05, months_ahead=1, chart=DFF, projected_cutoff_date=2023-01-06 01:21:31.025142, confidence_low=2022-12-28 19:57:31.025142, confidence_high=2023-01-14 06:45:31.025142, velocity_days_per_month=5.1, cumulative_advancement_days=5.0\n  forecast_month=2026-06, months_ahead=2, chart=DFF, projected_cutoff_date=2023-01-10 15:28:46.860302, confidence_low=2022-12-30 00:18:50.134337, confidence_high=2023-01-22 06:38:43.586267, velocity_days_per_month=4.6, cumulative_advancement_days=10.0\n  forecast_month=2026-07, months_ahead=3, chart=DFF, projected_cutoff_date=2023-01-16 20:35:59.119326, confidence_low=2023-01-02 14:41:34.533435, confidence_high=2023-01-31 02:30:23.705217, velocity_days_per_month=6.2, cumulative_advancement_days=16.0\n  forecast_month=2026-08, months_ahead=4, chart=DFF, projected_cutoff_date=2023-01-24 06:19:50.058847, confidence_low=2023-01-07 19:31:50.058847, confidence_high=2023-02-09 17:07:50.058847, velocity_days_per_month=7.4, cumulative_advancement_days=23.0\n  forecast_month=2026-09, months_ahead=5, chart=DFF, projected_cutoff_date=2023-02-01 13:18:25.126628, confidence_low=2023-01-14 03:54:25.779098, confidence_high=2023-02-19 22:42:24.474158, velocity_days_per_month=8.3, cumulative_advancement_days=32.0\n  forecast_month=2026-10, months_ahead=6, chart=DFF, projected_cutoff_date=2023-02-11 05:58:25.892063, confidence_low=2023-01-22 02:26:40.501252, confidence_high=2023-03-03 09:30:11.282874, velocity_days_per_month=9.7, cumulative_advancement_days=41.0\n  forecast_month=2026-11, months_ahead=7, chart=DFF, projected_cutoff_date=2023-02-19 05:40:08.291580, confidence_low=2023-01-28 11:23:51.579885, confidence_high=2023-03-12 23:56:25.003275, velocity_days_per_month=8.0, cumulative_advancement_days=49.0\n  forecast_month=2026-12, months_ahead=8, chart=DFF, projected_cutoff_date=2023-02-25 00:29:32.654976, confidence_low=2023-02-01 18:09:39.203046, confidence_high=2023-03-20 06:49:26.106906, velocity_days_per_month=5.8, cumulative_advancement_days=55.0\n  forecast_month=2027-01, months_ahead=9, chart=DFF, projected_cutoff_date=2023-03-02 10:56:19.285245, confidence_low=2023-02-05 18:44:19.285245, confidence_high=2023-03-27 03:08:19.285245, velocity_days_per_month=5.4, cumulative_advancement_days=60.0\n  forecast_month=2027-02, months_ahead=10, chart=DFF, projected_cutoff_date=2023-03-07 18:41:03.845104, confidence_low=2023-02-09 18:27:02.848682, confidence_high=2023-04-02 18:55:04.841526, velocity_days_per_month=5.3, cumulative_advancement_days=66.0\n  ... and 38 more months",
+    "metadata": {
+      "category": "EB4",
+      "country": "CHN"
+    },
+    "generated_at": "2026-04-20T00:51:31.692247+00:00"
+  },
+  {
+    "chunk_id": "aa30a9a07224",
+    "source_artifact": "pd_forecasts.parquet",
+    "topic": "pd_forecast",
+    "label": "pd_forecast_EB4_EL SALVADOR GUATEMALA HONDURAS",
+    "text": "PD Forecast \u2014 EB4 / EL SALVADOR GUATEMALA HONDURAS (48 months):\n  forecast_month=2023-04, months_ahead=1, chart=DFF, projected_cutoff_date=2018-04-20 16:24:08.121368, confidence_low=2018-04-02 09:44:08.121368, confidence_high=2018-05-08 23:04:08.121368, velocity_days_per_month=5.7, cumulative_advancement_days=6.0\n  forecast_month=2023-05, months_ahead=2, chart=DFF, projected_cutoff_date=2018-04-25 00:02:55.291129, confidence_low=2018-03-30 03:40:49.233429, confidence_high=2018-05-20 20:25:01.348829, velocity_days_per_month=4.3, cumulative_advancement_days=10.0\n  forecast_month=2023-06, months_ahead=3, chart=DFF, projected_cutoff_date=2018-04-28 22:05:51.669797, confidence_low=2018-03-28 06:18:17.034484, confidence_high=2018-05-30 13:53:26.305110, velocity_days_per_month=3.9, cumulative_advancement_days=14.0\n  forecast_month=2023-07, months_ahead=4, chart=DFF, projected_cutoff_date=2018-05-04 05:27:13.739510, confidence_low=2018-03-28 16:07:13.739510, confidence_high=2018-06-09 18:47:13.739510, velocity_days_per_month=5.3, cumulative_advancement_days=19.0\n  forecast_month=2023-08, months_ahead=5, chart=DFF, projected_cutoff_date=2018-05-10 13:14:41.924184, confidence_low=2018-03-30 16:21:23.374116, confidence_high=2018-06-20 10:08:00.474252, velocity_days_per_month=6.3, cumulative_advancement_days=26.0\n  forecast_month=2023-09, months_ahead=6, chart=DFF, projected_cutoff_date=2018-05-17 15:10:51.446828, confidence_low=2018-04-02 20:40:17.245025, confidence_high=2018-07-01 09:41:25.648631, velocity_days_per_month=7.1, cumulative_advancement_days=33.0\n  forecast_month=2023-10, months_ahead=7, chart=DFF, projected_cutoff_date=2018-05-25 21:53:25.127749, confidence_low=2018-04-07 13:17:14.657316, confidence_high=2018-07-13 06:29:35.598182, velocity_days_per_month=8.3, cumulative_advancement_days=41.0\n  forecast_month=2023-11, months_ahead=8, chart=DFF, projected_cutoff_date=2018-06-01 17:36:27.697678, confidence_low=2018-04-11 00:52:15.582279, confidence_high=2018-07-23 10:20:39.813077, velocity_days_per_month=6.8, cumulative_advancement_days=48.0\n  forecast_month=2023-12, months_ahead=9, chart=DFF, projected_cutoff_date=2018-06-06 16:10:11.898063, confidence_low=2018-04-12 20:10:11.898063, confidence_high=2018-07-31 12:10:11.898063, velocity_days_per_month=4.9, cumulative_advancement_days=53.0\n  forecast_month=2024-01, months_ahead=10, chart=DFF, projected_cutoff_date=2018-06-11 07:34:39.859568, confidence_low=2018-04-14 12:23:30.978630, confidence_high=2018-08-08 02:45:48.740506, velocity_days_per_month=4.6, cumulative_advancement_days=57.0\n  ... and 38 more months",
+    "metadata": {
+      "category": "EB4",
+      "country": "EL SALVADOR GUATEMALA HONDURAS"
+    },
+    "generated_at": "2026-04-20T00:51:31.692639+00:00"
+  },
+  {
+    "chunk_id": "389d27d67700",
+    "source_artifact": "pd_forecasts.parquet",
+    "topic": "pd_forecast",
+    "label": "pd_forecast_EB4_IND",
+    "text": "PD Forecast \u2014 EB4 / IND (48 months):\n  forecast_month=2026-05, months_ahead=1, chart=DFF, projected_cutoff_date=2023-01-06 01:21:31.025142, confidence_low=2022-12-28 19:57:31.025142, confidence_high=2023-01-14 06:45:31.025142, velocity_days_per_month=5.1, cumulative_advancement_days=5.0\n  forecast_month=2026-06, months_ahead=2, chart=DFF, projected_cutoff_date=2023-01-10 15:28:46.860302, confidence_low=2022-12-30 00:18:50.134337, confidence_high=2023-01-22 06:38:43.586267, velocity_days_per_month=4.6, cumulative_advancement_days=10.0\n  forecast_month=2026-07, months_ahead=3, chart=DFF, projected_cutoff_date=2023-01-16 20:35:59.119326, confidence_low=2023-01-02 14:41:34.533435, confidence_high=2023-01-31 02:30:23.705217, velocity_days_per_month=6.2, cumulative_advancement_days=16.0\n  forecast_month=2026-08, months_ahead=4, chart=DFF, projected_cutoff_date=2023-01-24 06:19:50.058847, confidence_low=2023-01-07 19:31:50.058847, confidence_high=2023-02-09 17:07:50.058847, velocity_days_per_month=7.4, cumulative_advancement_days=23.0\n  forecast_month=2026-09, months_ahead=5, chart=DFF, projected_cutoff_date=2023-02-01 13:18:25.126628, confidence_low=2023-01-14 03:54:25.779098, confidence_high=2023-02-19 22:42:24.474158, velocity_days_per_month=8.3, cumulative_advancement_days=32.0\n  forecast_month=2026-10, months_ahead=6, chart=DFF, projected_cutoff_date=2023-02-11 05:58:25.892063, confidence_low=2023-01-22 02:26:40.501252, confidence_high=2023-03-03 09:30:11.282874, velocity_days_per_month=9.7, cumulative_advancement_days=41.0\n  forecast_month=2026-11, months_ahead=7, chart=DFF, projected_cutoff_date=2023-02-19 05:40:08.291580, confidence_low=2023-01-28 11:23:51.579885, confidence_high=2023-03-12 23:56:25.003275, velocity_days_per_month=8.0, cumulative_advancement_days=49.0\n  forecast_month=2026-12, months_ahead=8, chart=DFF, projected_cutoff_date=2023-02-25 00:29:32.654976, confidence_low=2023-02-01 18:09:39.203046, confidence_high=2023-03-20 06:49:26.106906, velocity_days_per_month=5.8, cumulative_advancement_days=55.0\n  forecast_month=2027-01, months_ahead=9, chart=DFF, projected_cutoff_date=2023-03-02 10:56:19.285245, confidence_low=2023-02-05 18:44:19.285245, confidence_high=2023-03-27 03:08:19.285245, velocity_days_per_month=5.4, cumulative_advancement_days=60.0\n  forecast_month=2027-02, months_ahead=10, chart=DFF, projected_cutoff_date=2023-03-07 18:41:03.845104, confidence_low=2023-02-09 18:27:02.848682, confidence_high=2023-04-02 18:55:04.841526, velocity_days_per_month=5.3, cumulative_advancement_days=66.0\n  ... and 38 more months",
+    "metadata": {
+      "category": "EB4",
+      "country": "IND"
+    },
+    "generated_at": "2026-04-20T00:51:31.693032+00:00"
+  },
+  {
+    "chunk_id": "4cbb86f0001d",
+    "source_artifact": "pd_forecasts.parquet",
+    "topic": "pd_forecast",
+    "label": "pd_forecast_EB4_MEX",
+    "text": "PD Forecast \u2014 EB4 / MEX (48 months):\n  forecast_month=2026-05, months_ahead=1, chart=DFF, projected_cutoff_date=2023-01-15 07:41:22.672745, confidence_low=2023-01-07 02:17:22.672745, confidence_high=2023-01-23 13:05:22.672745, velocity_days_per_month=14.3, cumulative_advancement_days=14.0\n  forecast_month=2026-06, months_ahead=2, chart=DFF, projected_cutoff_date=2023-01-28 07:33:15.572465, confidence_low=2023-01-16 16:23:18.846500, confidence_high=2023-02-08 22:43:12.298430, velocity_days_per_month=13.0, cumulative_advancement_days=27.0\n  forecast_month=2026-07, months_ahead=3, chart=DFF, projected_cutoff_date=2023-02-14 21:51:53.487088, confidence_low=2023-01-31 15:57:28.901197, confidence_high=2023-03-01 03:46:18.072979, velocity_days_per_month=17.6, cumulative_advancement_days=45.0\n  forecast_month=2026-08, months_ahead=4, chart=DFF, projected_cutoff_date=2023-03-07 21:12:05.383416, confidence_low=2023-02-19 10:24:05.383416, confidence_high=2023-03-24 08:00:05.383416, velocity_days_per_month=21.0, cumulative_advancement_days=66.0\n  forecast_month=2026-09, months_ahead=5, chart=DFF, projected_cutoff_date=2023-03-31 08:42:21.607117, confidence_low=2023-03-12 23:18:22.259587, confidence_high=2023-04-18 18:06:20.954647, velocity_days_per_month=23.5, cumulative_advancement_days=89.0\n  forecast_month=2026-10, months_ahead=6, chart=DFF, projected_cutoff_date=2023-04-27 19:37:20.950230, confidence_low=2023-04-07 16:05:35.559419, confidence_high=2023-05-17 23:09:06.341041, velocity_days_per_month=27.5, cumulative_advancement_days=117.0\n  forecast_month=2026-11, months_ahead=7, chart=DFF, projected_cutoff_date=2023-05-20 10:30:22.460046, confidence_low=2023-04-28 16:14:05.748351, confidence_high=2023-06-11 04:46:39.171741, velocity_days_per_month=22.6, cumulative_advancement_days=139.0\n  forecast_month=2026-12, months_ahead=8, chart=DFF, projected_cutoff_date=2023-06-05 19:39:23.475770, confidence_low=2023-05-13 13:19:30.023840, confidence_high=2023-06-29 01:59:16.927700, velocity_days_per_month=16.4, cumulative_advancement_days=156.0\n  forecast_month=2027-01, months_ahead=9, chart=DFF, projected_cutoff_date=2023-06-21 05:04:57.288098, confidence_low=2023-05-27 12:52:57.288098, confidence_high=2023-07-15 21:16:57.288098, velocity_days_per_month=15.4, cumulative_advancement_days=171.0\n  forecast_month=2027-02, months_ahead=10, chart=DFF, projected_cutoff_date=2023-07-06 06:51:38.034811, confidence_low=2023-06-10 06:37:37.038389, confidence_high=2023-08-01 07:05:39.031233, velocity_days_per_month=15.1, cumulative_advancement_days=186.0\n  ... and 38 more months",
+    "metadata": {
+      "category": "EB4",
+      "country": "MEX"
+    },
+    "generated_at": "2026-04-20T00:51:31.693420+00:00"
+  },
+  {
+    "chunk_id": "e7f5b6e308f8",
+    "source_artifact": "pd_forecasts.parquet",
+    "topic": "pd_forecast",
+    "label": "pd_forecast_EB4_PHL",
+    "text": "PD Forecast \u2014 EB4 / PHL (48 months):\n  forecast_month=2026-05, months_ahead=1, chart=DFF, projected_cutoff_date=2023-01-06 01:21:31.025142, confidence_low=2022-12-28 19:57:31.025142, confidence_high=2023-01-14 06:45:31.025142, velocity_days_per_month=5.1, cumulative_advancement_days=5.0\n  forecast_month=2026-06, months_ahead=2, chart=DFF, projected_cutoff_date=2023-01-10 15:28:46.860302, confidence_low=2022-12-30 00:18:50.134337, confidence_high=2023-01-22 06:38:43.586267, velocity_days_per_month=4.6, cumulative_advancement_days=10.0\n  forecast_month=2026-07, months_ahead=3, chart=DFF, projected_cutoff_date=2023-01-16 20:35:59.119326, confidence_low=2023-01-02 14:41:34.533435, confidence_high=2023-01-31 02:30:23.705217, velocity_days_per_month=6.2, cumulative_advancement_days=16.0\n  forecast_month=2026-08, months_ahead=4, chart=DFF, projected_cutoff_date=2023-01-24 06:19:50.058847, confidence_low=2023-01-07 19:31:50.058847, confidence_high=2023-02-09 17:07:50.058847, velocity_days_per_month=7.4, cumulative_advancement_days=23.0\n  forecast_month=2026-09, months_ahead=5, chart=DFF, projected_cutoff_date=2023-02-01 13:18:25.126628, confidence_low=2023-01-14 03:54:25.779098, confidence_high=2023-02-19 22:42:24.474158, velocity_days_per_month=8.3, cumulative_advancement_days=32.0\n  forecast_month=2026-10, months_ahead=6, chart=DFF, projected_cutoff_date=2023-02-11 05:58:25.892063, confidence_low=2023-01-22 02:26:40.501252, confidence_high=2023-03-03 09:30:11.282874, velocity_days_per_month=9.7, cumulative_advancement_days=41.0\n  forecast_month=2026-11, months_ahead=7, chart=DFF, projected_cutoff_date=2023-02-19 05:40:08.291580, confidence_low=2023-01-28 11:23:51.579885, confidence_high=2023-03-12 23:56:25.003275, velocity_days_per_month=8.0, cumulative_advancement_days=49.0\n  forecast_month=2026-12, months_ahead=8, chart=DFF, projected_cutoff_date=2023-02-25 00:29:32.654976, confidence_low=2023-02-01 18:09:39.203046, confidence_high=2023-03-20 06:49:26.106906, velocity_days_per_month=5.8, cumulative_advancement_days=55.0\n  forecast_month=2027-01, months_ahead=9, chart=DFF, projected_cutoff_date=2023-03-02 10:56:19.285245, confidence_low=2023-02-05 18:44:19.285245, confidence_high=2023-03-27 03:08:19.285245, velocity_days_per_month=5.4, cumulative_advancement_days=60.0\n  forecast_month=2027-02, months_ahead=10, chart=DFF, projected_cutoff_date=2023-03-07 18:41:03.845104, confidence_low=2023-02-09 18:27:02.848682, confidence_high=2023-04-02 18:55:04.841526, velocity_days_per_month=5.3, cumulative_advancement_days=66.0\n  ... and 38 more months",
+    "metadata": {
+      "category": "EB4",
+      "country": "PHL"
+    },
+    "generated_at": "2026-04-20T00:51:31.693814+00:00"
+  },
+  {
+    "chunk_id": "7b779644a3ce",
+    "source_artifact": "pd_forecasts.parquet",
+    "topic": "pd_forecast",
+    "label": "pd_forecast_EB4_ROW",
+    "text": "PD Forecast \u2014 EB4 / ROW (48 months):\n  forecast_month=2026-05, months_ahead=1, chart=DFF, projected_cutoff_date=2023-01-06 01:21:31.025142, confidence_low=2022-12-28 19:57:31.025142, confidence_high=2023-01-14 06:45:31.025142, velocity_days_per_month=5.1, cumulative_advancement_days=5.0\n  forecast_month=2026-06, months_ahead=2, chart=DFF, projected_cutoff_date=2023-01-10 15:28:46.860302, confidence_low=2022-12-30 00:18:50.134337, confidence_high=2023-01-22 06:38:43.586267, velocity_days_per_month=4.6, cumulative_advancement_days=10.0\n  forecast_month=2026-07, months_ahead=3, chart=DFF, projected_cutoff_date=2023-01-16 20:35:59.119326, confidence_low=2023-01-02 14:41:34.533435, confidence_high=2023-01-31 02:30:23.705217, velocity_days_per_month=6.2, cumulative_advancement_days=16.0\n  forecast_month=2026-08, months_ahead=4, chart=DFF, projected_cutoff_date=2023-01-24 06:19:50.058847, confidence_low=2023-01-07 19:31:50.058847, confidence_high=2023-02-09 17:07:50.058847, velocity_days_per_month=7.4, cumulative_advancement_days=23.0\n  forecast_month=2026-09, months_ahead=5, chart=DFF, projected_cutoff_date=2023-02-01 13:18:25.126628, confidence_low=2023-01-14 03:54:25.779098, confidence_high=2023-02-19 22:42:24.474158, velocity_days_per_month=8.3, cumulative_advancement_days=32.0\n  forecast_month=2026-10, months_ahead=6, chart=DFF, projected_cutoff_date=2023-02-11 05:58:25.892063, confidence_low=2023-01-22 02:26:40.501252, confidence_high=2023-03-03 09:30:11.282874, velocity_days_per_month=9.7, cumulative_advancement_days=41.0\n  forecast_month=2026-11, months_ahead=7, chart=DFF, projected_cutoff_date=2023-02-19 05:40:08.291580, confidence_low=2023-01-28 11:23:51.579885, confidence_high=2023-03-12 23:56:25.003275, velocity_days_per_month=8.0, cumulative_advancement_days=49.0\n  forecast_month=2026-12, months_ahead=8, chart=DFF, projected_cutoff_date=2023-02-25 00:29:32.654976, confidence_low=2023-02-01 18:09:39.203046, confidence_high=2023-03-20 06:49:26.106906, velocity_days_per_month=5.8, cumulative_advancement_days=55.0\n  forecast_month=2027-01, months_ahead=9, chart=DFF, projected_cutoff_date=2023-03-02 10:56:19.285245, confidence_low=2023-02-05 18:44:19.285245, confidence_high=2023-03-27 03:08:19.285245, velocity_days_per_month=5.4, cumulative_advancement_days=60.0\n  forecast_month=2027-02, months_ahead=10, chart=DFF, projected_cutoff_date=2023-03-07 18:41:03.845104, confidence_low=2023-02-09 18:27:02.848682, confidence_high=2023-04-02 18:55:04.841526, velocity_days_per_month=5.3, cumulative_advancement_days=66.0\n  ... and 38 more months",
+    "metadata": {
+      "category": "EB4",
+      "country": "ROW"
+    },
+    "generated_at": "2026-04-20T00:51:31.694204+00:00"
+  },
+  {
+    "chunk_id": "6ad71f287a03",
+    "source_artifact": "pd_forecasts.parquet",
+    "topic": "pd_forecast",
+    "label": "pd_forecast_EB5_CHN",
+    "text": "PD Forecast \u2014 EB5 / CHN (24 months):\n  forecast_month=2025-10, months_ahead=1, chart=FAD, projected_cutoff_date=2015-12-12 03:42:32.799509, confidence_low=2015-12-03 14:59:52.799509, confidence_high=2015-12-20 16:25:12.799509, velocity_days_per_month=4.2, cumulative_advancement_days=4.0\n  forecast_month=2025-11, months_ahead=2, chart=FAD, projected_cutoff_date=2015-12-15 13:51:35.351900, confidence_low=2015-12-03 12:21:16.524974, confidence_high=2015-12-27 15:21:54.178826, velocity_days_per_month=3.4, cumulative_advancement_days=8.0\n  forecast_month=2025-12, months_ahead=3, chart=FAD, projected_cutoff_date=2015-12-18 01:21:08.768089, confidence_low=2015-12-03 06:46:56.604943, confidence_high=2016-01-01 19:55:20.931235, velocity_days_per_month=2.5, cumulative_advancement_days=10.0\n  forecast_month=2026-01, months_ahead=4, chart=FAD, projected_cutoff_date=2015-12-20 09:15:18.124058, confidence_low=2015-12-03 07:49:58.124058, confidence_high=2016-01-06 10:40:38.124058, velocity_days_per_month=2.3, cumulative_advancement_days=12.0\n  forecast_month=2026-02, months_ahead=5, chart=FAD, projected_cutoff_date=2015-12-22 16:00:01.098459, confidence_low=2015-12-03 14:15:08.441761, confidence_high=2016-01-10 17:44:53.755157, velocity_days_per_month=2.3, cumulative_advancement_days=15.0\n  forecast_month=2026-03, months_ahead=6, chart=FAD, projected_cutoff_date=2015-12-25 10:30:45.289272, confidence_low=2015-12-04 13:04:29.328431, confidence_high=2016-01-15 07:57:01.250113, velocity_days_per_month=2.8, cumulative_advancement_days=17.0\n  forecast_month=2026-04, months_ahead=7, chart=FAD, projected_cutoff_date=2015-12-28 06:57:25.220606, confidence_low=2015-12-05 17:20:32.334404, confidence_high=2016-01-19 20:34:18.106808, velocity_days_per_month=2.9, cumulative_advancement_days=20.0\n  forecast_month=2026-05, months_ahead=8, chart=FAD, projected_cutoff_date=2015-12-30 10:57:54.343389, confidence_low=2015-12-06 07:57:16.689536, confidence_high=2016-01-23 13:58:31.997242, velocity_days_per_month=2.2, cumulative_advancement_days=22.0\n  forecast_month=2026-06, months_ahead=9, chart=FAD, projected_cutoff_date=2016-01-01 10:09:26.443216, confidence_low=2015-12-06 20:01:26.443216, confidence_high=2016-01-27 00:17:26.443216, velocity_days_per_month=2.0, cumulative_advancement_days=24.0\n  forecast_month=2026-07, months_ahead=10, chart=FAD, projected_cutoff_date=2016-01-04 02:03:45.261445, confidence_low=2015-12-08 02:42:33.117007, confidence_high=2016-01-31 01:24:57.405883, velocity_days_per_month=2.7, cumulative_advancement_days=27.0\n  ... and 14 more months",
+    "metadata": {
+      "category": "EB5",
+      "country": "CHN"
+    },
+    "generated_at": "2026-04-20T00:51:31.694594+00:00"
+  },
+  {
+    "chunk_id": "d43f026f46b7",
+    "source_artifact": "pd_forecasts.parquet",
+    "topic": "pd_forecast",
+    "label": "pd_forecast_EB5_IND",
+    "text": "PD Forecast \u2014 EB5 / IND (24 months):\n  forecast_month=2026-05, months_ahead=1, chart=FAD, projected_cutoff_date=2016-09-01 00:00:00, confidence_low=2016-08-23 18:36:00, confidence_high=2016-09-09 05:24:00, velocity_days_per_month=0.0, cumulative_advancement_days=0.0\n  forecast_month=2026-06, months_ahead=2, chart=FAD, projected_cutoff_date=2016-09-01 00:00:00, confidence_low=2016-08-20 08:50:03.274035, confidence_high=2016-09-12 15:09:56.725965, velocity_days_per_month=0.0, cumulative_advancement_days=0.0\n  forecast_month=2026-07, months_ahead=3, chart=FAD, projected_cutoff_date=2016-09-01 00:00:00, confidence_low=2016-08-17 18:05:35.414109, confidence_high=2016-09-15 05:54:24.585891, velocity_days_per_month=0.0, cumulative_advancement_days=0.0\n  forecast_month=2026-08, months_ahead=4, chart=FAD, projected_cutoff_date=2016-09-01 00:00:00, confidence_low=2016-08-15 13:12:00, confidence_high=2016-09-17 10:48:00, velocity_days_per_month=0.0, cumulative_advancement_days=0.0\n  forecast_month=2026-09, months_ahead=5, chart=FAD, projected_cutoff_date=2016-09-01 00:00:00, confidence_low=2016-08-13 14:36:00.652470, confidence_high=2016-09-19 09:23:59.347530, velocity_days_per_month=0.0, cumulative_advancement_days=0.0\n  forecast_month=2026-10, months_ahead=6, chart=FAD, projected_cutoff_date=2016-09-01 00:00:00, confidence_low=2016-08-11 20:28:14.609189, confidence_high=2016-09-21 03:31:45.390811, velocity_days_per_month=0.0, cumulative_advancement_days=0.0\n  forecast_month=2026-11, months_ahead=7, chart=FAD, projected_cutoff_date=2016-09-01 00:00:00, confidence_low=2016-08-10 05:43:43.288305, confidence_high=2016-09-22 18:16:16.711695, velocity_days_per_month=0.0, cumulative_advancement_days=0.0\n  forecast_month=2026-12, months_ahead=8, chart=FAD, projected_cutoff_date=2016-09-01 00:00:00, confidence_low=2016-08-08 17:40:06.548070, confidence_high=2016-09-24 06:19:53.451930, velocity_days_per_month=0.0, cumulative_advancement_days=0.0\n  forecast_month=2027-01, months_ahead=9, chart=FAD, projected_cutoff_date=2016-09-01 00:00:00, confidence_low=2016-08-07 07:48:00, confidence_high=2016-09-25 16:12:00, velocity_days_per_month=0.0, cumulative_advancement_days=0.0\n  forecast_month=2027-02, months_ahead=10, chart=FAD, projected_cutoff_date=2016-09-01 00:00:00, confidence_low=2016-08-05 23:45:59.003578, confidence_high=2016-09-27 00:14:00.996422, velocity_days_per_month=0.0, cumulative_advancement_days=0.0\n  ... and 14 more months",
+    "metadata": {
+      "category": "EB5",
+      "country": "IND"
+    },
+    "generated_at": "2026-04-20T00:51:31.694993+00:00"
+  },
+  {
+    "chunk_id": "dc33fe4bc64c",
+    "source_artifact": "pd_forecasts.parquet",
+    "topic": "pd_forecast",
+    "label": "pd_forecast_EB5_VIETNAM",
+    "text": "PD Forecast \u2014 EB5 / VIETNAM (24 months):\n  forecast_month=2021-07, months_ahead=1, chart=FAD, projected_cutoff_date=2018-05-09 20:23:45.095917, confidence_low=2018-04-08 11:21:05.095917, confidence_high=2018-06-10 05:26:25.095917, velocity_days_per_month=24.8, cumulative_advancement_days=25.0\n  forecast_month=2021-08, months_ahead=2, chart=FAD, projected_cutoff_date=2018-06-08 11:13:06.598704, confidence_low=2018-04-25 02:15:10.199653, confidence_high=2018-07-22 20:11:02.997755, velocity_days_per_month=29.6, cumulative_advancement_days=54.0\n  forecast_month=2021-09, months_ahead=3, chart=FAD, projected_cutoff_date=2018-07-11 15:00:41.311247, confidence_low=2018-05-18 06:42:00.853960, confidence_high=2018-09-03 23:19:21.768534, velocity_days_per_month=33.2, cumulative_advancement_days=88.0\n  forecast_month=2021-10, months_ahead=4, chart=FAD, projected_cutoff_date=2018-08-19 09:32:50.145661, confidence_low=2018-06-17 15:27:30.145661, confidence_high=2018-10-21 03:38:10.145661, velocity_days_per_month=38.8, cumulative_advancement_days=126.0\n  forecast_month=2021-11, months_ahead=5, chart=FAD, projected_cutoff_date=2018-09-20 08:13:09.026062, confidence_low=2018-07-12 04:21:38.181779, confidence_high=2018-11-29 12:04:39.870345, velocity_days_per_month=31.9, cumulative_advancement_days=158.0\n  forecast_month=2021-12, months_ahead=6, chart=FAD, projected_cutoff_date=2018-10-13 11:26:03.526325, confidence_low=2018-07-28 14:51:34.813230, confidence_high=2018-12-29 08:00:32.239420, velocity_days_per_month=23.1, cumulative_advancement_days=181.0\n  forecast_month=2022-01, months_ahead=7, chart=FAD, projected_cutoff_date=2018-11-04 05:08:44.168591, confidence_low=2018-08-13 04:46:38.194347, confidence_high=2019-01-26 05:30:50.142835, velocity_days_per_month=21.7, cumulative_advancement_days=203.0\n  forecast_month=2022-02, months_ahead=8, chart=FAD, projected_cutoff_date=2018-11-25 12:03:22.033594, confidence_low=2018-08-28 18:07:29.235492, confidence_high=2019-02-22 05:59:14.831696, velocity_days_per_month=21.3, cumulative_advancement_days=225.0\n  forecast_month=2022-03, months_ahead=9, chart=FAD, projected_cutoff_date=2018-12-21 08:46:56.167081, confidence_low=2018-09-18 05:38:56.167081, confidence_high=2019-03-25 11:54:56.167081, velocity_days_per_month=25.9, cumulative_advancement_days=250.0\n  forecast_month=2022-04, months_ahead=10, chart=FAD, projected_cutoff_date=2019-01-16 23:32:24.784501, confidence_low=2018-10-09 18:12:16.538891, confidence_high=2019-04-26 04:52:33.030111, velocity_days_per_month=26.6, cumulative_advancement_days=277.0\n  ... and 14 more months",
+    "metadata": {
+      "category": "EB5",
+      "country": "VIETNAM"
+    },
+    "generated_at": "2026-04-20T00:51:31.695383+00:00"
+  },
+  {
+    "chunk_id": "d9a5f733a24e",
+    "source_artifact": "backlog_estimates.parquet",
+    "topic": "pd_forecast",
+    "label": "backlog_summary",
+    "text": "Backlog Estimates Summary:\nTotal records: 8,115\nColumns: bulletin_year, bulletin_month, chart, category, country, inflow_estimate_12m, advancement_days_12m_avg, blended_velocity, backlog_months_to_clear_est\nCoverage: Estimated visa backlogs by category \u00d7 country\nUse: 'How many people are ahead of me?' \u2014 queue position estimation.",
+    "metadata": {
+      "rows": 8115,
+      "columns": 9,
+      "column_names": [
+        "bulletin_year",
+        "bulletin_month",
+        "chart",
+        "category",
+        "country",
+        "inflow_estimate_12m",
+        "advancement_days_12m_avg",
+        "blended_velocity",
+        "backlog_months_to_clear_est"
+      ],
+      "numeric_summary": {
+        "bulletin_year": {
+          "min": 2011.0,
+          "max": 2026.0,
+          "mean": 2019.31
+        },
+        "bulletin_month": {
+          "min": 1.0,
+          "max": 12.0,
+          "mean": 6.4
+        },
+        "inflow_estimate_12m": {
+          "min": 141052.0,
+          "max": 141052.0,
+          "mean": 141052.0
+        },
+        "advancement_days_12m_avg": {
+          "min": -526.29,
+          "max": 2026.33,
+          "mean": 31.79
+        },
+        "blended_velocity": {
+          "min": 0.0,
+          "max": 2026.33,
+          "mean": 34.19
+        },
+        "backlog_months_to_clear_est": {
+          "min": 278.68,
+          "max": 600.0,
+          "mean": 599.21
+        }
+      }
+    },
+    "generated_at": "2026-04-20T00:51:31.794779+00:00"
+  },
+  {
+    "chunk_id": "ff6b7953d362",
+    "source_artifact": "backlog_estimates.parquet",
+    "topic": "pd_forecast",
+    "label": "backlog_detail",
+    "text": "Backlog Estimates Detail (latest year: 2026):\n  EB1 / CHN: backlog_months_to_clear_est=600\n  EB2 / ROW: backlog_months_to_clear_est=600\n  EB3 / CHN: backlog_months_to_clear_est=600\n  EB3 / CHN: backlog_months_to_clear_est=600\n  EB3 / CHN: backlog_months_to_clear_est=600\n  EB3 / IND: backlog_months_to_clear_est=600\n  EB3 / IND: backlog_months_to_clear_est=600\n  EB3 / IND: backlog_months_to_clear_est=600\n  EB3 / IND: backlog_months_to_clear_est=600\n  EB3 / MEX: backlog_months_to_clear_est=600\n  EB3 / MEX: backlog_months_to_clear_est=600\n  EB3 / MEX: backlog_months_to_clear_est=600\n  EB3 / MEX: backlog_months_to_clear_est=600\n  EB3 / PHL: backlog_months_to_clear_est=600\n  EB3 / PHL: backlog_months_to_clear_est=600\n  EB3 / PHL: backlog_months_to_clear_est=600\n  EB3 / PHL: backlog_months_to_clear_est=600\n  EB3 / ROW: backlog_months_to_clear_est=600\n  EB3 / ROW: backlog_months_to_clear_est=600\n  EB3 / CHN: backlog_months_to_clear_est=600\n  EB2 / ROW: backlog_months_to_clear_est=600\n  EB3 / ROW: backlog_months_to_clear_est=600\n  EB2 / ROW: backlog_months_to_clear_est=600\n  EB1 / IND: backlog_months_to_clear_est=600\n  EB1 / IND: backlog_months_to_clear_est=600\n  EB1 / IND: backlog_months_to_clear_est=600\n  EB2 / CHN: backlog_months_to_clear_est=600\n  EB2 / CHN: backlog_months_to_clear_est=600\n  EB2 / CHN: backlog_months_to_clear_est=600\n  EB2 / CHN: backlog_months_to_clear_est=600",
+    "metadata": {},
+    "generated_at": "2026-04-20T00:51:31.795578+00:00"
+  },
+  {
+    "chunk_id": "189360fce37f",
+    "source_artifact": "queue_depth_estimates.parquet",
+    "topic": "pd_forecast",
+    "label": "queue_depth_summary",
+    "text": "Queue Depth & Wait Time Estimates:\nTotal records: 2,382\nColumns: category, country, pd_month, perm_filings_certified, eb_category_ratio, est_category_filings, est_applicants_with_dependents, current_cutoff_date, is_ahead_of_cutoff, annual_visa_allocation, velocity_days_per_month, cumulative_ahead, est_wait_years, est_months_to_current, confidence, generated_at\nCoverage: EB category \u00d7 country \u00d7 priority date month\nKey metrics: est_wait_years, est_months_to_current, confidence\nUse: 'How long will I wait?' \u2014 estimated queue position and wait time.",
+    "metadata": {
+      "rows": 2382,
+      "columns": 16,
+      "column_names": [
+        "category",
+        "country",
+        "pd_month",
+        "perm_filings_certified",
+        "eb_category_ratio",
+        "est_category_filings",
+        "est_applicants_with_dependents",
+        "current_cutoff_date",
+        "is_ahead_of_cutoff",
+        "annual_visa_allocation",
+        "velocity_days_per_month",
+        "cumulative_ahead",
+        "est_wait_years",
+        "est_months_to_current",
+        "confidence",
+        "generated_at"
+      ],
+      "numeric_summary": {
+        "perm_filings_certified": {
+          "min": 1.0,
+          "max": 13504.0,
+          "mean": 1345.29
+        },
+        "eb_category_ratio": {
+          "min": 0.08,
+          "max": 0.57,
+          "mean": 0.33
+        },
+        "est_category_filings": {
+          "min": 0.0,
+          "max": 6076.0,
+          "mean": 447.99
+        },
+        "est_applicants_with_dependents": {
+          "min": 0.0,
+          "max": 8202.0,
+          "mean": 604.37
+        },
+        "annual_visa_allocation": {
+          "min": 2802.0,
+          "max": 40040.0,
+          "mean": 11619.06
+        },
+        "velocity_days_per_month": {
+          "min": 11.9,
+          "max": 23.2,
+          "mean": 18.73
+        },
+        "cumulative_ahead": {
+          "min": 0.0,
+          "max": 358291.0,
+          "mean": 12269.68
+        },
+        "est_wait_years": {
+          "min": 0.0,
+          "max": 127.9,
+          "mean": 4.18
+        }
+      }
+    },
+    "generated_at": "2026-04-20T00:51:39.765750+00:00"
+  },
+  {
+    "chunk_id": "419b77b1416a",
+    "source_artifact": "queue_depth_estimates.parquet",
+    "topic": "pd_forecast",
+    "label": "queue_longest_waits",
+    "text": "Longest Estimated Wait Times (top 20):\n  EB2 / IND: 127.9 years (confidence: medium)\n  EB2 / IND: 127.9 years (confidence: medium)\n  EB2 / IND: 125.5 years (confidence: medium)\n  EB2 / IND: 124.4 years (confidence: medium)\n  EB2 / IND: 123.2 years (confidence: medium)\n  EB2 / IND: 121.9 years (confidence: medium)\n  EB2 / IND: 120.4 years (confidence: medium)\n  EB2 / IND: 118.5 years (confidence: medium)\n  EB2 / IND: 116.9 years (confidence: medium)\n  EB2 / IND: 115.2 years (confidence: medium)\n  EB2 / IND: 113.5 years (confidence: medium)\n  EB2 / IND: 111.6 years (confidence: medium)\n  EB2 / IND: 110.1 years (confidence: medium)\n  EB2 / IND: 108.4 years (confidence: medium)\n  EB2 / IND: 107.1 years (confidence: medium)\n  EB2 / IND: 105.8 years (confidence: medium)\n  EB2 / IND: 104.3 years (confidence: medium)\n  EB2 / IND: 102.8 years (confidence: medium)\n  EB2 / IND: 101.4 years (confidence: medium)\n  EB2 / IND: 99.5 years (confidence: medium)",
+    "metadata": {},
+    "generated_at": "2026-04-20T00:51:39.766594+00:00"
+  }
+]

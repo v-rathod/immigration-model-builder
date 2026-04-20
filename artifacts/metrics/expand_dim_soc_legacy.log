@@ -1,0 +1,8 @@
+=== expand_dim_soc_legacy 2026-03-11T03:26:54.601625+00:00 ===
+dim_soc before: 1,396 rows, 1,396 unique codes
+Valid-format codes in PERM: 979
+Valid-format codes in LCA:  1,096
+Union: 1,209
+New codes to add: 405
+Backup saved to /Users/vrathod1/dev/NorthStar/immigration-model-builder/artifacts/tables/dim_soc.bak.parquet
+dim_soc after: 1,801 rows

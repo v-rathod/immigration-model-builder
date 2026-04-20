@@ -1,0 +1,26 @@
+OEWS Processing Metrics - 2026-03-10 21:50:30.949745
+============================================================
+
+Year 2024: oews_all_data_2024.zip
+  WARN: Failed to read oews_all_data_2024.zip — skipped
+
+Year 2023: oews_all_data_2023.zip
+  Loaded: 413327 rows
+  Processed: 223216 records
+  Unique areas: 587, SOCs: 831
+  Unmapped SOCs: 0, areas: 0
+  Hourly→Annual conversions: 1947
+  Written: 223216 rows to artifacts/tables/fact_oews/ref_year=2023/data.parquet
+
+============================================================
+SUMMARY
+Total rows written: 223216
+Years processed: 1
+
+Year 2023:
+  Rows: 223216
+  Unique areas: 587
+  Unique SOCs: 831
+  Unmapped SOCs: 0
+  Unmapped areas: 0
+  Hourly→Annual conversions: 1947

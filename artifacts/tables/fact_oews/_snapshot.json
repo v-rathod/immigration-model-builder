@@ -1,0 +1,26 @@
+{
+  "name": "fact_oews",
+  "generated_at": "2026-02-25T19:07:57.684930+00:00",
+  "total_rows": 446432,
+  "num_files": 2,
+  "partitions": {
+    "ref_year=2023": 223216,
+    "ref_year=2024": 223216
+  },
+  "files": [
+    {
+      "file": "ref_year=2023/data.parquet",
+      "rows": 223216,
+      "sha256": "817e51db78ededfe"
+    },
+    {
+      "file": "ref_year=2024/data.parquet",
+      "rows": 223216,
+      "sha256": "ce45a51d9c838b17"
+    }
+  ],
+  "ref_years": {
+    "2023": 223216,
+    "2024": 223216
+  }
+}

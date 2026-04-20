@@ -1,0 +1,88 @@
+
+[A] Reading existing fact_cutoffs partitioned parquet
+  Loaded 8315 existing rows from 168 files
+
+[B] Parsing Visa Bulletin PDFs
+  Found 168 PDFs
+  [1] LEGACY OK VisaBulletin_August2011.pdf: 30 rows
+  [2] LEGACY OK VisaBulletin_July2011.pdf: 30 rows
+  [3] LEGACY OK VisaBulletin_September2011.pdf: 30 rows
+  [4] LEGACY OK visabulletin_Dec2011.pdf: 30 rows
+  [5] LEGACY OK visabulletin_Nov2011.pdf: 30 rows
+  [6] LEGACY OK visabulletin_Oct2011.pdf: 25 rows
+  [7] LEGACY OK visabulletin_April2012.pdf: 30 rows
+  [8] LEGACY OK visabulletin_August2012.pdf: 30 rows
+  [9] LEGACY OK visabulletin_Feb2012.pdf: 30 rows
+  [10] LEGACY OK visabulletin_Jan2012.pdf: 30 rows
+  [11] LEGACY OK visabulletin_July2012.pdf: 30 rows
+  [12] LEGACY OK visabulletin_June2012.pdf: 30 rows
+  [13] LEGACY OK visabulletin_March2012.pdf: 30 rows
+  [14] LEGACY OK visabulletin_May2012.pdf: 30 rows
+  [15] LEGACY OK visabulletin_November2012.pdf: 30 rows
+  [16] LEGACY OK visabulletin_december2012.pdf: 30 rows
+  [17] LEGACY OK visabulletin_september2012.pdf: 30 rows
+  [18] LEGACY OK visabulletin_april2013.pdf: 30 rows
+  [19] LEGACY OK visabulletin_august2013.pdf: 30 rows
+  [20] LEGACY OK visabulletin_december2013.pdf: 30 rows
+  [21] LEGACY OK visabulletin_february2013.pdf: 30 rows
+  [22] LEGACY OK visabulletin_january2013.pdf: 30 rows
+  [23] LEGACY OK visabulletin_july2013.pdf: 30 rows
+  [24] LEGACY OK visabulletin_june2013.pdf: 30 rows
+  [25] LEGACY OK visabulletin_march2013.pdf: 30 rows
+  [26] LEGACY OK visabulletin_may2013.pdf: 30 rows
+  [27] LEGACY OK visabulletin_november2013.pdf: 30 rows
+  [28] LEGACY OK visabulletin_october2013.pdf: 30 rows
+  [29] LEGACY OK visabulletin_september2013.pdf: 30 rows
+  [30] LEGACY OK visabulletin_December2014.pdf: 30 rows
+  [31] LEGACY OK visabulletin_November2014.pdf: 30 rows
+  [32] LEGACY OK visabulletin_april2014.pdf: 30 rows
+  [33] LEGACY OK visabulletin_august2014.pdf: 30 rows
+  [34] LEGACY OK visabulletin_february2014.pdf: 30 rows
+  [35] LEGACY OK visabulletin_january2014.pdf: 30 rows
+  [36] LEGACY OK visabulletin_july2014.pdf: 30 rows
+  [37] LEGACY OK visabulletin_june2014.pdf: 30 rows
+  [38] LEGACY OK visabulletin_march2014.pdf: 30 rows
+  [39] LEGACY OK visabulletin_may2014.pdf: 30 rows
+  [40] LEGACY OK visabulletin_october2014.pdf: 30 rows
+  [41] LEGACY OK visabulletin_september2014.pdf: 30 rows
+  [42] LEGACY OK visabulletin_April2015.pdf: 30 rows
+  [43] LEGACY OK visabulletin_August2015.pdf: 30 rows
+  [44] LEGACY OK visabulletin_December2015.pdf: 60 rows
+  [45] LEGACY OK visabulletin_February2015.pdf: 30 rows
+  [46] LEGACY OK visabulletin_January2015.pdf: 30 rows
+  [47] LEGACY OK visabulletin_July2015.pdf: 30 rows
+  [48] LEGACY OK visabulletin_June2015.pdf: 30 rows
+  [49] LEGACY OK visabulletin_March2015.pdf: 30 rows
+  [50] LEGACY OK visabulletin_May2015.pdf: 30 rows
+  [51] LEGACY OK visabulletin_November2015.pdf: 60 rows
+  [52] LEGACY OK visabulletin_October2015.pdf: 60 rows
+  [53] LEGACY OK visabulletin_September2015.pdf: 30 rows
+
+  PDF parse: 168 files parsed, 0 skipped
+  New rows from PDFs: 13250
+
+[C] Merging and deduplicating
+  Before: 21565, after: 8315, deduped: 13250
+  PK uniqueness: PASS
+
+  Year coverage:
+    2011: 175 rows
+    2012: 330 rows
+    2013: 360 rows
+    2014: 360 rows
+    2015: 435 rows
+    2016: 660 rows
+    2017: 620 rows
+    2018: 660 rows
+    2019: 720 rows
+    2020: 600 rows
+    2021: 720 rows
+    2022: 540 rows
+    2023: 620 rows
+    2024: 660 rows
+    2025: 675 rows
+    2026: 180 rows
+
+[D] Writing partitioned output
+  Backed up to artifacts/_backup/fact_cutoffs/20260221_191639
+  Written 168 partitions to artifacts/tables/fact_cutoffs

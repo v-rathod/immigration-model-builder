@@ -1,0 +1,10 @@
+{
+  "generated_at": "2026-02-23T05:50:12.722770+00:00",
+  "pass": 45,
+  "warn": 2,
+  "fail": 0,
+  "total": 47,
+  "elapsed_seconds": 0.2,
+  "overall_status": "WARN",
+  "fail_details": []
+}

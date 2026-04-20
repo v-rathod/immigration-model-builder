@@ -1,0 +1,32 @@
+======================================================================
+EMPLOYER FRIENDLINESS SCORE (EFS) v2 — ML
+======================================================================
+  sklearn version: 1.8.0
+
+[A] Loading fact_perm_unique_case (deduped cases) …
+  Loaded: 1,668,587 unique cases
+  Columns: ['case_number', 'case_status', 'received_date', 'decision_date', 'employer_id', 'employer_name', 'soc_code', 'soc_code_raw', 'area_code', 'employer_country', 'job_title', 'wage_offer_from', 'wage_offer_to', 'wage_offer_unit', 'worksite_city', 'worksite_state', 'worksite_postal', 'is_fulltime', 'naics_code', 'source_file', 'ingested_at', 'fiscal_year', 'is_crossfy_duplicate']
+
+[B] Building features …
+  Feature rows: 1,534,193  (approval rate: 0.931)
+  Feature columns: ['wage_level', 'wage_ratio', 'soc_major', 'fy_offset', 'emp_log_vol', 'country_india', 'country_china', 'country_mexico', 'country_philippines', 'country_korea']
+
+[C] Training model …
+  Sampling 200,000 rows from 1,534,193 for training (speed)
+  Training HistGradientBoostingClassifier on 200,000 rows …
+  CV AUC: 0.8130 ± 0.0038
+  Brier score (train): 0.0538
+  WARNING: feature importances not available for this estimator
+  Feature importances: {}
+  SHAP not installed; using sklearn feature_importances instead
+
+[D] Verifying score quality …
+  Employers with n_cases_36m >= 15: 1,695
+  Corr(EFS_ml, EFS_v1): 0.4621
+  Corr(EFS_ml, approval_rate_24m): 0.3498
+  WARN: Corr(EFS_ml, approval_rate_24m)=0.3498 < 0.55 threshold
+  PASS: all EFS_ml in [0,100]
+  EFS_ml stats: mean=96.1, median=98.1, std=5.4, range=[0.0,100.0]
+
+[E] Writing output …
+  Written: artifacts/tables/employer_friendliness_scores_ml.parquet (1,695 rows)

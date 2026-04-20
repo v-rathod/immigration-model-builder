@@ -1,0 +1,121 @@
+
+[A] Quarantine legacy single-file outputs
+
+[B-E] Loading PERM Excel files, harmonize columns, dedupe, write partitions
+  Found 20 PERM file(s) across FY2008-FY2026
+
+  Processing FY2008: PERM_FY2008.xlsx
+    Raw rows: 61997
+    After dedupe: 61997 (removed 0)
+
+  Processing FY2009: PERM_FY2009.xlsx
+    Raw rows: 38247
+    After dedupe: 38247 (removed 0)
+
+  Processing FY2010: PERM_FY2010.xlsx
+    Raw rows: 81412
+    After dedupe: 81412 (removed 0)
+
+  Processing FY2011: PERM_FY2011.xlsx
+    Raw rows: 73207
+    After dedupe: 73207 (removed 0)
+
+  Processing FY2012: PERM_FY2012_Q4.xlsx
+    Raw rows: 66488
+    After dedupe: 66488 (removed 0)
+
+  Processing FY2013: PERM_FY2013.xlsx
+    Raw rows: 44152
+    After dedupe: 44152 (removed 0)
+
+  Processing FY2014: PERM_FY14_Q4.xlsx
+    Raw rows: 70998
+    After dedupe: 70998 (removed 0)
+
+  Processing FY2015: PERM_Disclosure_Data_FY15_Q4.xlsx
+    Raw rows: 89299
+    After dedupe: 89151 (removed 148)
+
+  Processing FY2016: PERM_Disclosure_Data_FY16.xlsx
+    Raw rows: 126143
+    After dedupe: 126143 (removed 0)
+
+  Processing FY2017: PERM_Disclosure_Data_FY17.xlsx
+    Raw rows: 97603
+    After dedupe: 97603 (removed 0)
+
+  Processing FY2018: PERM_Disclosure_Data_FY2018_EOY.xlsx
+    Raw rows: 119776
+    After dedupe: 119776 (removed 0)
+
+  Processing FY2019: PERM_FY2019.xlsx
+    Raw rows: 102655
+    After dedupe: 102655 (removed 0)
+
+  Processing FY2020: PERM_Disclosure_Data_FY2020.xlsx
+    Raw rows: 94019
+    After dedupe: 94019 (removed 0)
+
+  Processing FY2021: PERM_Disclosure_Data_FY2021.xlsx
+    Raw rows: 108264
+    After dedupe: 108264 (removed 0)
+
+  Processing FY2022: PERM_Disclosure_Data_FY2022_Q4.xlsx
+    Raw rows: 104600
+    After dedupe: 104600 (removed 0)
+
+  Processing FY2023: PERM_Disclosure_Data_FY2023_Q4.xlsx
+    Raw rows: 116427
+    After dedupe: 116306 (removed 121)
+
+  Processing FY2024: PERM_Disclosure_Data_FY2024_Q4.xlsx
+    Raw rows: 92258
+    After dedupe: 92258 (removed 0)
+
+  Processing FY2024: PERM_Disclosure_Data_New_Form_FY2024_Q4.xlsx
+    Raw rows: 22292
+    After dedupe: 22241 (removed 51)
+
+  Processing FY2025: PERM_Disclosure_Data_FY2025_Q4.xlsx
+    Raw rows: 147056
+    After dedupe: 147056 (removed 0)
+
+  Processing FY2026: PERM_Disclosure_Data_FY2026_Q1.xlsx
+    Raw rows: 18158
+    After dedupe: 18151 (removed 7)
+
+  Total rows after per-FY dedupe: 1674724
+  Global dedup on case_number: removed 6,137 cross-FY duplicates
+  Final row count: 1,668,587
+
+[D] Casting columns to plain types for Arrow unification
+
+[E] Writing partitioned parquet
+  Backed up existing partitions to artifacts/_backup/fact_perm/20260221_201942
+  Written 22 partitions to artifacts/tables/fact_perm
+
+[F] Writing metrics log
+
+--- Per-FY Statistics ---
+FY         Before      After    Dedup   %EmpNull   %SocNull
+FY2008     61,997     61,997        0       0.0%       0.0%
+FY2009     38,247     38,247        0     100.0%     100.0%
+FY2010     81,412     81,412        0       0.0%       0.2%
+FY2011     73,207     73,207        0       0.0%       0.1%
+FY2012     66,488     66,488        0       0.0%       0.3%
+FY2013     44,152     44,152        0       0.0%       0.2%
+FY2014     70,998     70,998        0       0.0%       0.2%
+FY2015     89,299     89,151      148       0.0%       0.2%
+FY2016    126,143    126,143        0       0.0%       0.1%
+FY2017     97,603     97,603        0       0.0%       0.1%
+FY2018    119,776    119,776        0       0.0%       0.1%
+FY2019    102,655    102,655        0       0.0%       0.5%
+FY2020     94,019     94,019        0       0.0%       0.1%
+FY2021    108,264    108,264        0       0.0%       0.0%
+FY2022    104,600    104,600        0       0.0%       0.0%
+FY2023    116,427    116,306      121       0.0%       0.0%
+FY2024     22,292     22,241       51       0.0%     100.0%
+FY2025    147,056    147,056        0       0.0%       0.1%
+FY2026     18,158     18,151        7       0.0%       0.1%
+TOTAL   1,582,793  1,582,466      327
+  Total: 1,582,793 → 1,582,466 (327 deduped)

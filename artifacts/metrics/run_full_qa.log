@@ -1,0 +1,76 @@
+======================================================================
+FULL QA BATTERY — P2 HARDENING PASS
+Started: 2026-02-22 23:50:12
+======================================================================
+
+── GATE 1: Schema/column presence ────────────────────────────────
+  ✅ [schema] PASS: fact_cutoffs_all: all 6 required columns present — 10 total cols, 8,315 rows
+  ✅ [schema] PASS: fact_cutoff_trends: all 7 required columns present — 14 total cols, 8,315 rows
+  ✅ [schema] PASS: category_movement_metrics: all 4 required columns present — 10 total cols, 8,315 rows
+  ✅ [schema] PASS: employer_monthly_metrics: all 5 required columns present — 10 total cols, 74,350 rows
+  ✅ [schema] PASS: worksite_geo_metrics: all 2 required columns present — 12 total cols, 19,071 rows
+  ✅ [schema] PASS: salary_benchmarks: all 6 required columns present — 7 total cols, 224,047 rows
+  ✅ [schema] PASS: soc_demand_metrics: all 3 required columns present — 8 total cols, 1,923 rows
+  ✅ [schema] PASS: processing_times_trends: all 0 required columns present — 6 total cols, 0 rows
+  ✅ [schema] PASS: backlog_estimates: all 6 required columns present — 8 total cols, 8,315 rows
+  ✅ [schema] PASS: employer_features: all 4 required columns present — 25 total cols, 70,206 rows
+  ✅ [schema] PASS: employer_friendliness_scores: all 4 required columns present — 22 total cols, 70,206 rows
+  ✅ [schema] PASS: dim_employer: all 1 required columns present — 6 total cols, 227,076 rows
+  ✅ [schema] PASS: dim_soc: all 1 required columns present — 12 total cols, 1,396 rows
+  ✅ [schema] PASS: dim_area: all 1 required columns present — 10 total cols, 587 rows
+  ✅ [schema] PASS: dim_country: all 1 required columns present — 6 total cols, 249 rows
+
+── GATE 2: PK uniqueness & monotonic percentiles ─────────────────
+  ✅ [pk_unique] PASS: fact_cutoffs_all: PK unique (8,315 rows)
+  ✅ [pk_unique] PASS: salary_benchmarks: percentile ordering OK (5 cols checked)
+  ✅ [pk_unique] PASS: fact_cutoff_trends: PK unique (8,315 rows)
+
+── GATE 3: Referential integrity ─────────────────────────────────
+  ✅ [ref_integrity] PASS: worksite_geo_metrics: soc_code coverage 81.5% (15,364/18,848)
+  ✅ [ref_integrity] PASS: worksite_geo_metrics: area_code coverage 100.0% (18,956/18,956)
+  ✅ [ref_integrity] PASS: salary_benchmarks: soc_code coverage 100.0% (224,047/224,047)
+  ✅ [ref_integrity] PASS: salary_benchmarks: area_code coverage 100.0% (223,216/223,216)
+  ✅ [ref_integrity] PASS: soc_demand_metrics: soc_code coverage 84.6% (1,626/1,923)
+
+── GATE 4: Range / value checks ───────────────────────────────────
+  ✅ [range] PASS: employer_monthly_metrics.approval_rate: all in [0,1] (74,350 non-null)
+  ✅ [range] PASS: employer_monthly_metrics.denial_rate: all in [0,1] (74,350 non-null)
+  ✅ [range] PASS: employer_features.approval_rate_24m: all in [0,1] (56,936 non-null)
+  ✅ [range] PASS: employer_features.denial_rate_24m: all in [0,1] (56,936 non-null)
+  ✅ [range] PASS: soc_demand_metrics.approval_rate: all in [0,1] (1,923 non-null)
+  ✅ [range] PASS: employer_monthly_metrics: no months with approvals > filings
+  ✅ [range] PASS: employer_friendliness_scores.efs: all in [0,100] (14,280 non-null)
+
+── GATE 5: Parity checks ──────────────────────────────────────────
+  ✅ [parity] PASS: fact_cutoffs_all: 8,315 rows == expected
+  ⚠️ [parity] WARN: fact_cutoffs: 280 leaves ≠ expected 168 — Run make_presentation_and_snapshot.py to rebuild if needed
+  ✅ [parity] PASS: fact_cutoff_trends (8,315) <= fact_cutoffs_all (8,315) rows
+  ⚠️ [parity] WARN: PERM/EMM 36m delta 36.1% (EMM counts CERTIFIED only vs all PERM statuses) — EMM=380,700 PERM_raw=279,706
+
+── GATE 6: Statistical smoke tests ────────────────────────────────
+  ✅ [statistical] PASS: fact_cutoff_trends.monthly_advancement_days median 0.0 in [-120,240]
+  ✅ [statistical] PASS: EFS_v1 corr = 0.5882 >= 0.55 threshold
+  ✅ [statistical] PASS: salary_benchmarks: 0.0% null median (within threshold)
+  ✅ [statistical] PASS: backlog_estimates: all 3,134 values in [0,600] months range
+
+── GATE 7: Golden-sample row count regression ─────────────────────
+  ✅ [golden_sample] PASS: fact_cutoffs_all: 8,315 rows == golden
+  ✅ [golden_sample] PASS: fact_cutoff_trends: 8,315 rows == golden
+  ✅ [golden_sample] PASS: category_movement_metrics: 8,315 rows == golden
+  ✅ [golden_sample] PASS: employer_monthly_metrics: 74,350 rows == golden
+  ✅ [golden_sample] PASS: backlog_estimates: 8,315 rows == golden
+  ✅ [golden_sample] PASS: dim_employer: 227,076 rows (delta 0.000% within tolerance)
+  ✅ [golden_sample] PASS: dim_soc: 1,396 rows (delta 0.000% within tolerance)
+  ✅ [golden_sample] PASS: dim_area: 587 rows (delta 0.000% within tolerance)
+  ✅ [golden_sample] PASS: dim_country: 249 rows (delta 0.000% within tolerance)
+
+======================================================================
+QA SUMMARY
+======================================================================
+  PASS:   45
+  WARN:    2
+  FAIL:    0
+  Total:  47
+  Time:  0.2s
+
+✅ ALL GATES PASS (no FAILs)

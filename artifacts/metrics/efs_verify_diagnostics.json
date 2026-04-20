@@ -1,0 +1,56 @@
+{
+  "gates_passed": 38,
+  "gates_total": 38,
+  "status": "PASS",
+  "strict_violations": 0,
+  "borderline_scored": 12277,
+  "quantiles": {
+    "p01": 10.0,
+    "p05": 53.0,
+    "p10": 57.3,
+    "p25": 64.3,
+    "p50": 72.2,
+    "p75": 78.2,
+    "p90": 81.7,
+    "p95": 84.4,
+    "p99": 87.7
+  },
+  "correlation": {
+    "r": 0.5882,
+    "ci_lo": 0.5647,
+    "ci_hi": 0.6123,
+    "n": 14280
+  },
+  "coverage": {
+    "overall_scored": 11768,
+    "overall_total": 67694,
+    "overall_pct": 17.4,
+    "soc_scored": 2512,
+    "soc_eligible": 2512,
+    "soc_pct": 100.0
+  },
+  "wage_decile_lines": [
+    "  D 1: mean_efs=53.5  n=1427",
+    "  D 2: mean_efs=60.3  n=1427",
+    "  D 3: mean_efs=64.0  n=1426",
+    "  D 4: mean_efs=66.8  n=1427",
+    "  D 5: mean_efs=70.1  n=1426",
+    "  D 6: mean_efs=73.0  n=1427",
+    "  D 7: mean_efs=75.5  n=1426",
+    "  D 8: mean_efs=77.2  n=1427",
+    "  D 9: mean_efs=79.7  n=1426",
+    "  D10: mean_efs=81.1  n=1427"
+  ],
+  "residual_lines": [
+    "    06dc9e13d5f6                         efs=50.4  approval=100.00%  n_24m=3  residual=-2.07",
+    "    Pinnacle Education Services          efs=50.4  approval=100.00%  n_24m=3  residual=-2.07",
+    "    26f03f139162                         efs=50.4  approval=100.00%  n_24m=3  residual=-2.07",
+    "    3155ecb01525                         efs=50.4  approval=100.00%  n_24m=3  residual=-2.07",
+    "    32a6d4f664f0                         efs=50.4  approval=100.00%  n_24m=3  residual=-2.07",
+    "    Perfect 85 Degrees C                 efs=76.0  approval=20.00%  n_24m=5  residual=4.28",
+    "    Quanteam North America               efs=74.6  approval=20.00%  n_24m=5  residual=4.16",
+    "    Grmorales Contractor                 efs=68.8  approval=11.11%  n_24m=9  residual=4.16",
+    "    Teresita E Lim And Fidelio L Lim     efs=74.0  approval=20.00%  n_24m=5  residual=4.11",
+    "    45081607cf88                         efs=74.0  approval=20.00%  n_24m=5  residual=4.11"
+  ]
+}

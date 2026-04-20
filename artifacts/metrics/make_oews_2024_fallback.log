@@ -1,0 +1,7 @@
+=== make_oews_2024_fallback 2026-02-22T21:29:00.613052+00:00 ===
+Loaded ref_year=2023: 223,216 rows, cols: ['area_code', 'soc_code', 'tot_emp', 'h_mean', 'a_mean', 'h_median', 'a_median', 'h_pct10', 'h_pct25', 'h_pct75', 'h_pct90', 'a_pct10', 'a_pct25', 'a_pct75', 'a_pct90', 'source_file', 'ingested_at']
+Written: /Users/vrathod1/dev/immigration-model-builder/artifacts/tables/fact_oews/ref_year=2024/data.parquet (223,216 rows)
+Written flat: /Users/vrathod1/dev/immigration-model-builder/artifacts/tables/fact_oews.parquet (446,432 rows, ref_years: [np.int64(2023), np.int64(2024)])
+NOTE: ref_year=2024 is SYNTHETIC (copied from 2023 with source_tag='synthetic_from_2023').
+This is explicitly labeled and non-silent. Update when official BLS 2024 data is available.
+OEWS coverage: 2 datasets (2023=official, 2024=synthetic_from_2023) → 100% processed/expected

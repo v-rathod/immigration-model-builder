@@ -1,0 +1,262 @@
+{
+  "generated": "2026-02-23T17:31:55Z",
+  "downloads_root": "/Users/vrathod1/dev/fetch-immigration-data/downloads",
+  "datasets": [
+    {
+      "dataset": "ACS",
+      "folders": [
+        "downloads/ACS"
+      ],
+      "files": 1,
+      "total_size_bytes": 146,
+      "ext_counts": {
+        "json": 1
+      },
+      "min_mtime": "2026-02-21T05:23:41Z",
+      "max_mtime": "2026-02-21T05:23:41Z"
+    },
+    {
+      "dataset": "BLS",
+      "folders": [
+        "downloads/BLS"
+      ],
+      "files": 4,
+      "total_size_bytes": 24161,
+      "ext_counts": {
+        "json": 4
+      },
+      "min_mtime": "2026-02-17T04:33:27Z",
+      "max_mtime": "2026-02-21T05:23:40Z"
+    },
+    {
+      "dataset": "BLS_OEWS",
+      "folders": [
+        "downloads/BLS_OEWS"
+      ],
+      "files": 3,
+      "total_size_bytes": 80423404,
+      "ext_counts": {
+        "zip": 2,
+        "pdf": 1
+      },
+      "min_mtime": "2026-02-21T05:25:23Z",
+      "max_mtime": "2026-02-21T05:25:27Z"
+    },
+    {
+      "dataset": "Codebooks",
+      "folders": [
+        "downloads/Codebooks"
+      ],
+      "files": 3,
+      "total_size_bytes": 688,
+      "ext_counts": {
+        "csv": 3
+      },
+      "min_mtime": "2026-02-21T05:25:48Z",
+      "max_mtime": "2026-02-21T05:25:48Z"
+    },
+    {
+      "dataset": "DHS_Yearbook",
+      "folders": [
+        "downloads/DHS_Yearbook"
+      ],
+      "files": 1,
+      "total_size_bytes": 33114,
+      "ext_counts": {
+        "xlsx": 1
+      },
+      "min_mtime": "2026-02-16T15:06:24Z",
+      "max_mtime": "2026-02-16T15:06:24Z"
+    },
+    {
+      "dataset": "DOL_Record_Layouts",
+      "folders": [
+        "downloads/DOL_Record_Layouts"
+      ],
+      "files": 15,
+      "total_size_bytes": 2538476,
+      "ext_counts": {
+        "pdf": 15
+      },
+      "min_mtime": "2026-02-21T05:25:02Z",
+      "max_mtime": "2026-02-21T05:25:22Z"
+    },
+    {
+      "dataset": "DOS_Numerical_Limits",
+      "folders": [
+        "downloads/DOS_Numerical_Limits"
+      ],
+      "files": 1,
+      "total_size_bytes": 95621,
+      "ext_counts": {
+        "pdf": 1
+      },
+      "min_mtime": "2026-02-21T05:24:45Z",
+      "max_mtime": "2026-02-21T05:24:45Z"
+    },
+    {
+      "dataset": "DOS_Waiting_List",
+      "folders": [
+        "downloads/DOS_Waiting_List"
+      ],
+      "files": 2,
+      "total_size_bytes": 230064,
+      "ext_counts": {
+        "csv": 1,
+        "pdf": 1
+      },
+      "min_mtime": "2026-02-21T05:42:25Z",
+      "max_mtime": "2026-02-21T05:42:26Z"
+    },
+    {
+      "dataset": "LCA",
+      "folders": [
+        "downloads/LCA"
+      ],
+      "files": 217,
+      "total_size_bytes": 9854379166,
+      "ext_counts": {
+        "pdf": 69,
+        "xlsx": 124,
+        "doc": 22,
+        "docx": 2
+      },
+      "min_mtime": "2026-02-19T05:14:55Z",
+      "max_mtime": "2026-02-20T04:06:38Z"
+    },
+    {
+      "dataset": "NIV_Statistics",
+      "folders": [
+        "downloads/NIV_Statistics"
+      ],
+      "files": 32,
+      "total_size_bytes": 10758069,
+      "ext_counts": {
+        "pdf": 22,
+        "xlsx": 9,
+        "xls": 1
+      },
+      "min_mtime": "2026-02-17T04:32:45Z",
+      "max_mtime": "2026-02-17T04:33:23Z"
+    },
+    {
+      "dataset": "PERM",
+      "folders": [
+        "downloads/PERM"
+      ],
+      "files": 47,
+      "total_size_bytes": 939864136,
+      "ext_counts": {
+        "pdf": 19,
+        "xlsx": 20,
+        "doc": 8
+      },
+      "min_mtime": "2026-02-20T04:06:41Z",
+      "max_mtime": "2026-02-20T04:07:34Z"
+    },
+    {
+      "dataset": "TRAC",
+      "folders": [
+        "downloads/TRAC"
+      ],
+      "files": 0,
+      "total_size_bytes": 0,
+      "ext_counts": {},
+      "min_mtime": null,
+      "max_mtime": null
+    },
+    {
+      "dataset": "USCIS_H1B_Employer_Hub",
+      "folders": [
+        "downloads/USCIS_H1B_Employer_Hub"
+      ],
+      "files": 14,
+      "total_size_bytes": 61695036,
+      "ext_counts": {
+        "csv": 14
+      },
+      "min_mtime": "2026-02-21T05:25:29Z",
+      "max_mtime": "2026-02-21T05:25:48Z"
+    },
+    {
+      "dataset": "USCIS_IMMIGRATION",
+      "folders": [
+        "downloads/USCIS_IMMIGRATION"
+      ],
+      "files": 245,
+      "total_size_bytes": 6430382,
+      "ext_counts": {
+        "csv": 168,
+        "xlsx": 77
+      },
+      "min_mtime": "2026-02-20T04:07:37Z",
+      "max_mtime": "2026-02-21T05:49:24Z"
+    },
+    {
+      "dataset": "USCIS_Processing_Times",
+      "folders": [
+        "downloads/USCIS_Processing_Times"
+      ],
+      "files": 2,
+      "total_size_bytes": 106937,
+      "ext_counts": {
+        "html": 1,
+        "csv": 1
+      },
+      "min_mtime": "2026-02-21T05:40:35Z",
+      "max_mtime": "2026-02-21T05:40:35Z"
+    },
+    {
+      "dataset": "Visa_Annual_Reports",
+      "folders": [
+        "downloads/Visa_Annual_Reports"
+      ],
+      "files": 273,
+      "total_size_bytes": 23569095,
+      "ext_counts": {
+        "pdf": 273
+      },
+      "min_mtime": "2026-02-17T02:45:05Z",
+      "max_mtime": "2026-02-17T02:50:10Z"
+    },
+    {
+      "dataset": "Visa_Bulletin",
+      "folders": [
+        "downloads/Visa_Bulletin"
+      ],
+      "files": 168,
+      "total_size_bytes": 43589947,
+      "ext_counts": {
+        "pdf": 168
+      },
+      "min_mtime": "2026-02-19T04:32:32Z",
+      "max_mtime": "2026-02-20T04:13:12Z"
+    },
+    {
+      "dataset": "Visa_Statistics",
+      "folders": [
+        "downloads/Visa_Statistics"
+      ],
+      "files": 198,
+      "total_size_bytes": 85002188,
+      "ext_counts": {
+        "pdf": 198
+      },
+      "min_mtime": "2026-02-19T04:52:03Z",
+      "max_mtime": "2026-02-19T04:54:37Z"
+    },
+    {
+      "dataset": "WARN",
+      "folders": [
+        "downloads/WARN"
+      ],
+      "files": 2,
+      "total_size_bytes": 126091,
+      "ext_counts": {
+        "xlsx": 2
+      },
+      "min_mtime": "2026-02-16T15:06:33Z",
+      "max_mtime": "2026-02-21T05:23:43Z"
+    }
+  ]
+}

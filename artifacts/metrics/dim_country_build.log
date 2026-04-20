@@ -1,0 +1,9 @@
+
+  Reading: /Users/vrathod1/dev/fetch-immigration-data/downloads/Codebooks/country_codes_iso.csv
+  Loaded 5 rows, columns: ['country_code', 'country_name', 'region']
+  WARN: Codebook has only 5 rows (need ≥200)
+  Building comprehensive dim_country from pycountry + codebook merge
+  Region taxonomy: artifacts/metrics/dim_country_regions.json
+
+  Written 227 rows to artifacts/tables/dim_country.parquet
+  Region distribution: {'Africa': np.int64(56), 'Americas': np.int64(52), 'Asia': np.int64(50), 'Europe': np.int64(46), 'Oceania': np.int64(23)}

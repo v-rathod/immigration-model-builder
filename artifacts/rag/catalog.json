@@ -1,0 +1,1034 @@
+{
+  "program": "NorthStar",
+  "project": "Meridian (P2)",
+  "description": "Immigration data intelligence platform. Meridian curates U.S. immigration data from DOL, DOS, USCIS, DHS, and BLS into structured tables, engineered features, and predictive models. This catalog describes all available data for answering immigration-related questions.",
+  "generated_at": "2026-04-20T00:51:30.833786+00:00",
+  "topics": [
+    "pd_forecast",
+    "employer",
+    "salary",
+    "visa_bulletin",
+    "geographic",
+    "occupation",
+    "processing",
+    "visa_demand",
+    "filings",
+    "general"
+  ],
+  "topic_descriptions": {
+    "pd_forecast": "Priority date forecasts \u2014 when will my green card become current?",
+    "employer": "Employer friendliness scores, approval rates, sponsorship history, H-1B data",
+    "salary": "Wage benchmarks by occupation and geography (OEWS percentiles), BLS employment stats",
+    "visa_bulletin": "Visa bulletin history, cutoff dates, category movement, waiting list",
+    "geographic": "Geographic sponsorship patterns \u2014 states, cities, metro areas",
+    "occupation": "Occupation demand by SOC code \u2014 filing volumes, trends, SOC directory",
+    "processing": "USCIS processing times, approval/denial statistics",
+    "visa_demand": "Visa issuance and application volume \u2014 NIV, IV by post, by country",
+    "filings": "DOL filing data \u2014 LCA (H-1B) and PERM (green card) applications",
+    "general": "Country lookups, DHS admissions, WARN layoffs"
+  },
+  "artifacts": [
+    {
+      "name": "approval_denial_detailed.parquet",
+      "rows": 3248,
+      "columns": [
+        "fiscal_year",
+        "employer_country",
+        "approved_count",
+        "total_count",
+        "denied_count",
+        "approval_rate_pct",
+        "denial_rate_pct",
+        "data_source",
+        "category"
+      ],
+      "is_partitioned": false
+    },
+    {
+      "name": "approval_denial_trends.parquet",
+      "rows": 62,
+      "columns": [
+        "fiscal_year",
+        "APPROVED",
+        "DENIED",
+        "total_cases",
+        "approval_rate_pct",
+        "denial_rate_pct",
+        "data_source",
+        "visa_category"
+      ],
+      "is_partitioned": false
+    },
+    {
+      "name": "backlog_estimates.parquet",
+      "rows": 8115,
+      "columns": [
+        "bulletin_year",
+        "bulletin_month",
+        "chart",
+        "category",
+        "country",
+        "inflow_estimate_12m",
+        "advancement_days_12m_avg",
+        "blended_velocity",
+        "backlog_months_to_clear_est"
+      ],
+      "is_partitioned": false
+    },
+    {
+      "name": "category_movement_metrics.parquet",
+      "rows": 6555,
+      "columns": [
+        "bulletin_year",
+        "bulletin_month",
+        "chart",
+        "category",
+        "country",
+        "avg_monthly_advancement_days",
+        "median_advancement_days",
+        "volatility_score",
+        "retrogression_events_12m",
+        "next_movement_prediction",
+        "blended_velocity",
+        "net_velocity"
+      ],
+      "is_partitioned": false
+    },
+    {
+      "name": "dim_area.parquet",
+      "rows": 587,
+      "columns": [
+        "area_code",
+        "area_title",
+        "area_type",
+        "state_abbr",
+        "state_fips",
+        "cbsa_code",
+        "metro_status",
+        "ref_year",
+        "source_file",
+        "ingested_at"
+      ],
+      "is_partitioned": false
+    },
+    {
+      "name": "dim_country.parquet",
+      "rows": 249,
+      "columns": [
+        "country_name",
+        "iso2",
+        "iso3",
+        "region",
+        "source_file",
+        "ingested_at"
+      ],
+      "is_partitioned": false
+    },
+    {
+      "name": "dim_employer.parquet",
+      "rows": 256411,
+      "columns": [
+        "employer_id",
+        "employer_name",
+        "aliases",
+        "domain",
+        "source_files",
+        "ingested_at"
+      ],
+      "is_partitioned": false
+    },
+    {
+      "name": "dim_soc.bak.parquet",
+      "rows": 1396,
+      "columns": [
+        "soc_code",
+        "soc_title",
+        "soc_version",
+        "soc_major_group",
+        "soc_minor_group",
+        "soc_broad_group",
+        "from_version",
+        "from_code",
+        "mapping_confidence",
+        "is_aggregated",
+        "source_file",
+        "ingested_at"
+      ],
+      "is_partitioned": false
+    },
+    {
+      "name": "dim_soc.parquet",
+      "rows": 1801,
+      "columns": [
+        "soc_code",
+        "soc_title",
+        "soc_version",
+        "soc_major_group",
+        "soc_minor_group",
+        "soc_broad_group",
+        "from_version",
+        "from_code",
+        "mapping_confidence",
+        "is_aggregated",
+        "source_file",
+        "ingested_at"
+      ],
+      "is_partitioned": false
+    },
+    {
+      "name": "dim_visa_ceiling.parquet",
+      "rows": 14,
+      "columns": [
+        "fiscal_year",
+        "category",
+        "country",
+        "ceiling",
+        "source_file",
+        "ingested_at"
+      ],
+      "is_partitioned": false
+    },
+    {
+      "name": "dim_visa_class.parquet",
+      "rows": 6,
+      "columns": [
+        "family_code",
+        "family_name",
+        "sub_code",
+        "sub_name",
+        "is_employment",
+        "is_grouped",
+        "notes",
+        "source_file",
+        "ingested_at"
+      ],
+      "is_partitioned": false
+    },
+    {
+      "name": "employer_activity.parquet",
+      "rows": 491875,
+      "columns": [
+        "employer_id",
+        "employer_name",
+        "latest_h1b_year",
+        "latest_perm_year",
+        "latest_any_year",
+        "activity_status"
+      ],
+      "is_partitioned": false
+    },
+    {
+      "name": "employer_features.parquet",
+      "rows": 70206,
+      "columns": [
+        "employer_id",
+        "employer_name",
+        "scope",
+        "soc_code",
+        "n_12m",
+        "n_24m",
+        "n_36m",
+        "months_active_24m",
+        "months_active_36m",
+        "soc_breadth_24m",
+        "site_breadth_24m",
+        "approval_rate_12m",
+        "approval_rate_24m",
+        "approval_rate_36m",
+        "denial_rate_12m",
+        "denial_rate_24m",
+        "denial_rate_36m",
+        "audit_rate_12m",
+        "audit_rate_24m",
+        "audit_rate_36m",
+        "approval_rate_trend_12v12",
+        "outcome_volatility",
+        "wage_ratio_med",
+        "wage_ratio_p75",
+        "lca_filings_36m",
+        "lca_approval_rate_36m",
+        "lca_median_wage",
+        "lca_wage_ratio",
+        "lca_soc_breadth",
+        "lca_to_perm_ratio",
+        "windows_used",
+        "last_refreshed_at",
+        "h1b_hub_total_petitions",
+        "h1b_hub_initial_approvals",
+        "h1b_hub_continuing_approvals",
+        "h1b_hub_retention_ratio",
+        "h1b_hub_naics",
+        "h1b_hub_years"
+      ],
+      "is_partitioned": false
+    },
+    {
+      "name": "employer_friendliness_scores.parquet",
+      "rows": 70206,
+      "columns": [
+        "employer_id",
+        "employer_name",
+        "scope",
+        "soc_code",
+        "n_12m",
+        "n_24m",
+        "n_36m",
+        "approval_rate_24m",
+        "denial_rate_24m",
+        "approval_rate_36m",
+        "denial_rate_36m",
+        "wage_ratio_med",
+        "wage_ratio_p75",
+        "outcome_subscore",
+        "wage_subscore",
+        "sustainability_subscore",
+        "h1b_signal_subscore",
+        "retention_subscore",
+        "efs",
+        "efs_tier",
+        "months_active_24m",
+        "months_active_36m",
+        "soc_breadth_24m",
+        "site_breadth_24m",
+        "approval_rate_trend_12v12",
+        "outcome_volatility",
+        "lca_filings_36m",
+        "lca_approval_rate_36m",
+        "lca_median_wage",
+        "lca_wage_ratio",
+        "lca_to_perm_ratio",
+        "h1b_hub_retention_ratio",
+        "h1b_hub_naics",
+        "last_refreshed_at"
+      ],
+      "is_partitioned": false
+    },
+    {
+      "name": "employer_friendliness_scores_ml.parquet",
+      "rows": 1695,
+      "columns": [
+        "employer_id",
+        "n_cases_36m",
+        "avg_calibrated_prob",
+        "median_calibrated_prob",
+        "efs_ml",
+        "scope",
+        "version",
+        "last_refreshed_at"
+      ],
+      "is_partitioned": false
+    },
+    {
+      "name": "employer_monthly_metrics.parquet",
+      "rows": 224114,
+      "columns": [
+        "employer_id",
+        "employer_name",
+        "month",
+        "filings",
+        "approvals",
+        "denials",
+        "approval_rate",
+        "denial_rate",
+        "audit_rate_t12",
+        "dataset"
+      ],
+      "is_partitioned": false
+    },
+    {
+      "name": "employer_risk_features.parquet",
+      "rows": 668,
+      "columns": [
+        "employer_key",
+        "total_warn_events",
+        "total_employees_affected",
+        "states",
+        "employer_name_raw",
+        "employer_id",
+        "is_warn_flagged"
+      ],
+      "is_partitioned": false
+    },
+    {
+      "name": "employer_salary_profiles.parquet",
+      "rows": 2524521,
+      "columns": [
+        "employer_id",
+        "soc_code",
+        "visa_type",
+        "fiscal_year",
+        "n_filings",
+        "mean_salary",
+        "median_salary",
+        "min_salary",
+        "max_salary",
+        "prevailing_wage_median",
+        "employer_name",
+        "job_title_top",
+        "worksite_state_top",
+        "p10_salary",
+        "p25_salary",
+        "p75_salary",
+        "p90_salary",
+        "oews_national_median",
+        "wage_premium_pct",
+        "wage_vs_pw_pct"
+      ],
+      "is_partitioned": false
+    },
+    {
+      "name": "employer_salary_yearly.parquet",
+      "rows": 1432611,
+      "columns": [
+        "employer_id",
+        "visa_type",
+        "fiscal_year",
+        "total_filings",
+        "mean_salary",
+        "median_salary",
+        "employer_name",
+        "n_soc_codes"
+      ],
+      "is_partitioned": false
+    },
+    {
+      "name": "employer_scores.parquet",
+      "rows": 0,
+      "columns": [
+        "employer_name_normalized",
+        "friendliness_score",
+        "approval_component",
+        "volume_component",
+        "wage_component",
+        "diversity_component"
+      ],
+      "is_partitioned": false
+    },
+    {
+      "name": "fact_acs_wages.parquet",
+      "rows": 0,
+      "columns": [
+        "year",
+        "soc_code",
+        "area_code",
+        "p10",
+        "p25",
+        "median",
+        "p75",
+        "p90",
+        "source_file",
+        "ingested_at"
+      ],
+      "is_partitioned": false
+    },
+    {
+      "name": "fact_bls_ces.parquet",
+      "rows": 54,
+      "columns": [
+        "series_id",
+        "series_title",
+        "year",
+        "period",
+        "period_name",
+        "value",
+        "is_preliminary",
+        "snapshot_date",
+        "source_file",
+        "ingested_at"
+      ],
+      "is_partitioned": false
+    },
+    {
+      "name": "fact_cutoff_trends.parquet",
+      "rows": 8115,
+      "columns": [
+        "bulletin_year",
+        "bulletin_month",
+        "chart",
+        "category",
+        "country",
+        "status_flag",
+        "cutoff_date",
+        "queue_position_days",
+        "monthly_advancement_days",
+        "velocity_3m",
+        "velocity_6m",
+        "retrogression_flag",
+        "retrogression_count_cum",
+        "source_file"
+      ],
+      "is_partitioned": false
+    },
+    {
+      "name": "fact_cutoffs",
+      "rows": 8170,
+      "columns": [
+        "chart",
+        "category",
+        "country",
+        "cutoff_date",
+        "status_flag",
+        "source_file",
+        "page_ref",
+        "ingested_at",
+        "bulletin_year",
+        "bulletin_month"
+      ],
+      "is_partitioned": true
+    },
+    {
+      "name": "fact_cutoffs_all.parquet",
+      "rows": 8115,
+      "columns": [
+        "chart",
+        "category",
+        "country",
+        "cutoff_date",
+        "status_flag",
+        "source_file",
+        "page_ref",
+        "ingested_at",
+        "bulletin_year",
+        "bulletin_month"
+      ],
+      "is_partitioned": false
+    },
+    {
+      "name": "fact_dhs_admissions.parquet",
+      "rows": 45,
+      "columns": [
+        "fiscal_year",
+        "class_of_admission",
+        "country",
+        "admissions",
+        "source_file",
+        "ingested_at"
+      ],
+      "is_partitioned": false
+    },
+    {
+      "name": "fact_h1b_employer_hub.parquet",
+      "rows": 729865,
+      "columns": [
+        "fiscal_year",
+        "employer_name",
+        "initial_approvals",
+        "initial_denials",
+        "continuing_approvals",
+        "continuing_denials",
+        "naics_code",
+        "tax_id",
+        "state",
+        "city",
+        "zip_code",
+        "total_petitions",
+        "approval_rate",
+        "is_stale",
+        "data_weight",
+        "source_file",
+        "ingested_at"
+      ],
+      "is_partitioned": false
+    },
+    {
+      "name": "fact_iv_post.parquet",
+      "rows": 169360,
+      "columns": [
+        "fiscal_year",
+        "month",
+        "calendar_year",
+        "post",
+        "visa_class",
+        "category",
+        "issued",
+        "source_file",
+        "ingested_at"
+      ],
+      "is_partitioned": false
+    },
+    {
+      "name": "fact_lca",
+      "rows": 9558695,
+      "columns": [
+        "case_number",
+        "case_status",
+        "visa_class",
+        "received_date",
+        "decision_date",
+        "employer_name_raw",
+        "employer_id",
+        "soc_code",
+        "soc_title",
+        "job_title",
+        "is_fulltime",
+        "wage_rate_from",
+        "wage_rate_to",
+        "prevailing_wage",
+        "wage_unit",
+        "pw_unit",
+        "worksite_city",
+        "worksite_state",
+        "worksite_postal",
+        "naics_code",
+        "source_file",
+        "ingested_at",
+        "fiscal_year"
+      ],
+      "is_partitioned": true
+    },
+    {
+      "name": "fact_niv_issuance.parquet",
+      "rows": 501033,
+      "columns": [
+        "fiscal_year",
+        "visa_class",
+        "country",
+        "issued",
+        "source_file",
+        "ingested_at"
+      ],
+      "is_partitioned": false
+    },
+    {
+      "name": "fact_oews",
+      "rows": 446432,
+      "columns": [
+        "area_code",
+        "soc_code",
+        "tot_emp",
+        "h_mean",
+        "a_mean",
+        "h_median",
+        "a_median",
+        "h_pct10",
+        "h_pct25",
+        "h_pct75",
+        "h_pct90",
+        "a_pct10",
+        "a_pct25",
+        "a_pct75",
+        "a_pct90",
+        "source_file",
+        "ingested_at",
+        "ref_year"
+      ],
+      "is_partitioned": true
+    },
+    {
+      "name": "fact_oews.parquet",
+      "rows": 446432,
+      "columns": [
+        "area_code",
+        "soc_code",
+        "tot_emp",
+        "h_mean",
+        "a_mean",
+        "h_median",
+        "a_median",
+        "h_pct10",
+        "h_pct25",
+        "h_pct75",
+        "h_pct90",
+        "a_pct10",
+        "a_pct25",
+        "a_pct75",
+        "a_pct90",
+        "source_file",
+        "ingested_at",
+        "ref_year",
+        "source_tag",
+        "fallback_reason"
+      ],
+      "is_partitioned": false
+    },
+    {
+      "name": "fact_perm",
+      "rows": 1675051,
+      "columns": [
+        "case_number",
+        "case_status",
+        "received_date",
+        "decision_date",
+        "employer_id",
+        "employer_name",
+        "soc_code",
+        "soc_code_raw",
+        "area_code",
+        "employer_country",
+        "job_title",
+        "wage_offer_from",
+        "wage_offer_to",
+        "wage_offer_unit",
+        "worksite_city",
+        "worksite_state",
+        "worksite_postal",
+        "is_fulltime",
+        "naics_code",
+        "source_file",
+        "ingested_at",
+        "fiscal_year"
+      ],
+      "is_partitioned": true
+    },
+    {
+      "name": "fact_perm_all.parquet",
+      "rows": 1675051,
+      "columns": [
+        "case_number",
+        "case_status",
+        "received_date",
+        "decision_date",
+        "employer_id",
+        "employer_name",
+        "soc_code",
+        "soc_code_raw",
+        "area_code",
+        "employer_country",
+        "job_title",
+        "wage_offer_from",
+        "wage_offer_to",
+        "wage_offer_unit",
+        "worksite_city",
+        "worksite_state",
+        "worksite_postal",
+        "is_fulltime",
+        "naics_code",
+        "source_file",
+        "ingested_at",
+        "fiscal_year"
+      ],
+      "is_partitioned": false
+    },
+    {
+      "name": "fact_perm_unique_case",
+      "rows": 1668587,
+      "columns": [
+        "case_number",
+        "case_status",
+        "received_date",
+        "decision_date",
+        "employer_id",
+        "employer_name",
+        "soc_code",
+        "soc_code_raw",
+        "area_code",
+        "employer_country",
+        "job_title",
+        "wage_offer_from",
+        "wage_offer_to",
+        "wage_offer_unit",
+        "worksite_city",
+        "worksite_state",
+        "worksite_postal",
+        "is_fulltime",
+        "naics_code",
+        "source_file",
+        "ingested_at",
+        "fiscal_year",
+        "is_crossfy_duplicate"
+      ],
+      "is_partitioned": true
+    },
+    {
+      "name": "fact_processing_times.parquet",
+      "rows": 0,
+      "columns": [
+        "snapshot_date",
+        "snapshot_month",
+        "form",
+        "category",
+        "office",
+        "processing_time_min",
+        "processing_time_max",
+        "unit",
+        "source_file",
+        "ingested_at"
+      ],
+      "is_partitioned": false
+    },
+    {
+      "name": "fact_trac_adjudications.parquet",
+      "rows": 0,
+      "columns": [
+        "fiscal_year",
+        "form",
+        "measure",
+        "value",
+        "source_file",
+        "ingested_at"
+      ],
+      "is_partitioned": false
+    },
+    {
+      "name": "fact_uscis_approvals.parquet",
+      "rows": 1048,
+      "columns": [
+        "fiscal_year",
+        "form",
+        "category",
+        "approvals",
+        "denials",
+        "source_file",
+        "ingested_at"
+      ],
+      "is_partitioned": false
+    },
+    {
+      "name": "fact_visa_applications.parquet",
+      "rows": 36001,
+      "columns": [
+        "fiscal_year",
+        "visa_class",
+        "category",
+        "country",
+        "applications",
+        "refusals",
+        "source_file",
+        "ingested_at"
+      ],
+      "is_partitioned": false
+    },
+    {
+      "name": "fact_visa_issuance.parquet",
+      "rows": 28531,
+      "columns": [
+        "fiscal_year",
+        "category",
+        "country",
+        "issued",
+        "source_file",
+        "ingested_at"
+      ],
+      "is_partitioned": false
+    },
+    {
+      "name": "fact_waiting_list.parquet",
+      "rows": 125,
+      "columns": [
+        "report_year",
+        "category",
+        "country",
+        "count_waiting",
+        "source_file",
+        "ingested_at"
+      ],
+      "is_partitioned": false
+    },
+    {
+      "name": "fact_warn_events.parquet",
+      "rows": 985,
+      "columns": [
+        "state",
+        "notice_date",
+        "employer_name_raw",
+        "city",
+        "employees_affected",
+        "employer_id",
+        "source_file",
+        "ingested_at"
+      ],
+      "is_partitioned": false
+    },
+    {
+      "name": "oews_wages.parquet",
+      "rows": 0,
+      "columns": [
+        "year",
+        "soc_code",
+        "area_code",
+        "area_name",
+        "p10_wage",
+        "p25_wage",
+        "median_wage",
+        "p75_wage",
+        "p90_wage",
+        "mean_wage",
+        "employment_count"
+      ],
+      "is_partitioned": false
+    },
+    {
+      "name": "pd_forecasts.parquet",
+      "rows": 1320,
+      "columns": [
+        "forecast_month",
+        "months_ahead",
+        "chart",
+        "category",
+        "country",
+        "projected_cutoff_date",
+        "confidence_low",
+        "confidence_high",
+        "velocity_days_per_month",
+        "cumulative_advancement_days"
+      ],
+      "is_partitioned": false
+    },
+    {
+      "name": "pd_forecasts_retrograde.parquet",
+      "rows": 1320,
+      "columns": [
+        "forecast_month",
+        "months_ahead",
+        "chart",
+        "category",
+        "country",
+        "projected_cutoff_date",
+        "confidence_low",
+        "confidence_high",
+        "velocity_days_per_month",
+        "cumulative_advancement_days",
+        "retrograde_prob",
+        "expected_setback_days",
+        "risk_adjusted_velocity"
+      ],
+      "is_partitioned": false
+    },
+    {
+      "name": "processing_times_trends.parquet",
+      "rows": 35,
+      "columns": [
+        "fiscal_year",
+        "quarter",
+        "reporting_period",
+        "period_end_date",
+        "form_type",
+        "category",
+        "eb_received",
+        "eb_approved",
+        "eb_denied",
+        "eb_pending",
+        "total_received",
+        "total_approved",
+        "total_denied",
+        "total_pending",
+        "approval_rate",
+        "throughput",
+        "net_intake",
+        "backlog_months",
+        "pending_change",
+        "throughput_change"
+      ],
+      "is_partitioned": false
+    },
+    {
+      "name": "queue_depth_estimates.parquet",
+      "rows": 2382,
+      "columns": [
+        "category",
+        "country",
+        "pd_month",
+        "perm_filings_certified",
+        "eb_category_ratio",
+        "est_category_filings",
+        "est_applicants_with_dependents",
+        "current_cutoff_date",
+        "is_ahead_of_cutoff",
+        "annual_visa_allocation",
+        "velocity_days_per_month",
+        "cumulative_ahead",
+        "est_wait_years",
+        "est_months_to_current",
+        "confidence",
+        "generated_at"
+      ],
+      "is_partitioned": false
+    },
+    {
+      "name": "salary_benchmarks.parquet",
+      "rows": 224047,
+      "columns": [
+        "soc_code",
+        "area_code",
+        "p10",
+        "p25",
+        "median",
+        "p75",
+        "p90"
+      ],
+      "is_partitioned": false
+    },
+    {
+      "name": "soc_demand_metrics.parquet",
+      "rows": 3968,
+      "columns": [
+        "soc_code",
+        "soc_title",
+        "soc_major_title",
+        "window",
+        "dataset",
+        "filings_count",
+        "approvals_count",
+        "approval_rate",
+        "offered_avg",
+        "offered_median",
+        "competitiveness_percentile",
+        "top_employers_json"
+      ],
+      "is_partitioned": false
+    },
+    {
+      "name": "soc_salary_market.parquet",
+      "rows": 18038,
+      "columns": [
+        "soc_code",
+        "visa_type",
+        "fiscal_year",
+        "total_filings",
+        "market_mean",
+        "market_median",
+        "market_p10",
+        "market_p25",
+        "market_p75",
+        "market_p90",
+        "n_employers"
+      ],
+      "is_partitioned": false
+    },
+    {
+      "name": "visa_bulletin.parquet",
+      "rows": 0,
+      "columns": [
+        "year_month",
+        "category",
+        "country",
+        "filing_date",
+        "final_date"
+      ],
+      "is_partitioned": false
+    },
+    {
+      "name": "visa_demand_metrics.parquet",
+      "rows": 569114,
+      "columns": [
+        "fiscal_year",
+        "category",
+        "country",
+        "count_issued",
+        "source"
+      ],
+      "is_partitioned": false
+    },
+    {
+      "name": "worksite_geo_metrics.parquet",
+      "rows": 134799,
+      "columns": [
+        "state",
+        "filings_count",
+        "approvals_count",
+        "offered_median",
+        "distinct_employers",
+        "dataset",
+        "grain",
+        "area_code",
+        "soc_code",
+        "filings_count_soc_area",
+        "offered_median_soc_area",
+        "city",
+        "approval_rate",
+        "competitiveness_ratio"
+      ],
+      "is_partitioned": false
+    }
+  ]
+}

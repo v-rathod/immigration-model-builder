@@ -1,0 +1,466 @@
+{
+  "generated": "2026-04-20T00:51:06Z",
+  "tasks": {
+    "backlog_usage": {
+      "inputs": [
+        "/Users/vrathod1/dev/immigration-model-builder/artifacts/tables/dim_visa_ceiling.parquet",
+        "/Users/vrathod1/dev/immigration-model-builder/artifacts/tables/fact_waiting_list.parquet",
+        "/Users/vrathod1/dev/immigration-model-builder/artifacts/tables/fact_cutoffs_all.parquet"
+      ],
+      "outputs": [
+        "/Users/vrathod1/dev/immigration-model-builder/artifacts/tables/backlog_estimates.parquet"
+      ],
+      "metrics": {
+        "row_count": 8315,
+        "distinct_categories": 6,
+        "distinct_countries": 6,
+        "missing_inputs": []
+      },
+      "begin": "2026-02-23T20:41:10Z",
+      "end": "2026-02-23T20:41:10Z"
+    },
+    "visa_demand_metrics": {
+      "inputs": [
+        "/Users/vrathod1/dev/NorthStar/immigration-model-builder/artifacts/tables/fact_visa_issuance.parquet",
+        "/Users/vrathod1/dev/NorthStar/immigration-model-builder/artifacts/tables/fact_visa_applications.parquet",
+        "/Users/vrathod1/dev/NorthStar/immigration-model-builder/artifacts/tables/fact_niv_issuance.parquet",
+        "/Users/vrathod1/dev/NorthStar/immigration-model-builder/artifacts/tables/fact_iv_post.parquet"
+      ],
+      "outputs": [
+        "/Users/vrathod1/dev/NorthStar/immigration-model-builder/artifacts/tables/visa_demand_metrics.parquet"
+      ],
+      "metrics": {
+        "row_count": 569114,
+        "sources_used": 4,
+        "source_names": [
+          "fact_visa_issuance",
+          "fact_visa_applications",
+          "fact_niv_issuance",
+          "fact_iv_post"
+        ],
+        "distinct_fiscal_years": 30,
+        "distinct_countries": 1272,
+        "distinct_categories": 346
+      },
+      "begin": "2026-04-20T00:51:06Z",
+      "end": "2026-04-20T00:51:06Z"
+    },
+    "employer_risk_features": {
+      "inputs": [
+        "/Users/vrathod1/dev/NorthStar/immigration-model-builder/artifacts/tables/fact_warn_events.parquet",
+        "/Users/vrathod1/dev/NorthStar/immigration-model-builder/artifacts/tables/dim_employer.parquet"
+      ],
+      "outputs": [
+        "/Users/vrathod1/dev/NorthStar/immigration-model-builder/artifacts/tables/employer_risk_features.parquet"
+      ],
+      "metrics": {
+        "warn_rows_raw": 985,
+        "warn_employers": 668,
+        "join_rate": 0.0883,
+        "joined_count": 59,
+        "states": [
+          "CA",
+          "TX"
+        ]
+      },
+      "begin": "2026-03-11T04:16:44Z",
+      "end": "2026-03-11T04:16:44Z"
+    },
+    "trac_adjudications_usage": {
+      "inputs": [
+        "trac_adjudications_raw"
+      ],
+      "outputs": [
+        "fact_trac_adjudications"
+      ],
+      "metrics": {
+        "skip_reason": "folder empty \u2014 no TRAC source files downloaded"
+      },
+      "stub": "2026-02-23T20:48:05Z"
+    },
+    "acs_wages_usage": {
+      "inputs": [
+        "acs_pums_api"
+      ],
+      "outputs": [
+        "fact_acs_wages"
+      ],
+      "metrics": {
+        "skip_reason": "Census API returned HTTP 404 for ACS PUMS wage endpoint"
+      },
+      "stub": "2026-02-23T20:48:05Z"
+    }
+  },
+  "events": [
+    {
+      "ts": "2026-02-23T20:41:10Z",
+      "task": "backlog_usage",
+      "phase": "begin",
+      "inputs": [
+        "/Users/vrathod1/dev/immigration-model-builder/artifacts/tables/dim_visa_ceiling.parquet",
+        "/Users/vrathod1/dev/immigration-model-builder/artifacts/tables/fact_waiting_list.parquet",
+        "/Users/vrathod1/dev/immigration-model-builder/artifacts/tables/fact_cutoffs_all.parquet"
+      ],
+      "outputs": [
+        "/Users/vrathod1/dev/immigration-model-builder/artifacts/tables/backlog_estimates.parquet"
+      ],
+      "metrics": {}
+    },
+    {
+      "ts": "2026-02-23T20:41:10Z",
+      "task": "backlog_usage",
+      "phase": "end",
+      "inputs": [],
+      "outputs": [],
+      "metrics": {
+        "row_count": 8315,
+        "distinct_categories": 6,
+        "distinct_countries": 6,
+        "missing_inputs": []
+      }
+    },
+    {
+      "ts": "2026-02-23T20:41:11Z",
+      "task": "visa_demand_metrics",
+      "phase": "begin",
+      "inputs": [
+        "/Users/vrathod1/dev/immigration-model-builder/artifacts/tables/fact_visa_issuance.parquet",
+        "/Users/vrathod1/dev/immigration-model-builder/artifacts/tables/fact_visa_applications.parquet",
+        "/Users/vrathod1/dev/immigration-model-builder/artifacts/tables/fact_niv_issuance.parquet"
+      ],
+      "outputs": [
+        "/Users/vrathod1/dev/immigration-model-builder/artifacts/tables/visa_demand_metrics.parquet"
+      ],
+      "metrics": {}
+    },
+    {
+      "ts": "2026-02-23T20:41:11Z",
+      "task": "visa_demand_metrics",
+      "phase": "end",
+      "inputs": [],
+      "outputs": [],
+      "metrics": {
+        "row_count": 537735,
+        "sources_used": 3,
+        "source_names": [
+          "fact_visa_issuance",
+          "fact_visa_applications",
+          "fact_niv_issuance"
+        ],
+        "distinct_fiscal_years": 30,
+        "distinct_countries": 1147,
+        "distinct_categories": 192
+      }
+    },
+    {
+      "ts": "2026-02-23T20:41:11Z",
+      "task": "employer_risk_features",
+      "phase": "begin",
+      "inputs": [
+        "/Users/vrathod1/dev/immigration-model-builder/artifacts/tables/fact_warn_events.parquet",
+        "/Users/vrathod1/dev/immigration-model-builder/artifacts/tables/dim_employer.parquet"
+      ],
+      "outputs": [
+        "/Users/vrathod1/dev/immigration-model-builder/artifacts/tables/employer_risk_features.parquet"
+      ],
+      "metrics": {}
+    },
+    {
+      "ts": "2026-02-23T20:41:12Z",
+      "task": "employer_risk_features",
+      "phase": "end",
+      "inputs": [],
+      "outputs": [],
+      "metrics": {
+        "warn_rows_raw": 985,
+        "warn_employers": 668,
+        "join_rate": 0.0404,
+        "joined_count": 27,
+        "states": [
+          "CA",
+          "TX"
+        ]
+      }
+    },
+    {
+      "ts": "2026-02-23T20:41:33Z",
+      "task": "trac_adjudications_usage",
+      "phase": "stub",
+      "inputs": [],
+      "outputs": [
+        "artifacts/tables/fact_trac_adjudications.parquet"
+      ],
+      "metrics": {
+        "skip_reason": "folder empty \u2014 no TRAC source files downloaded; stub parquet (0 rows) created as placeholder"
+      }
+    },
+    {
+      "ts": "2026-02-23T20:41:33Z",
+      "task": "acs_wages_usage",
+      "phase": "stub",
+      "inputs": [],
+      "outputs": [
+        "artifacts/tables/fact_acs_wages.parquet"
+      ],
+      "metrics": {
+        "skip_reason": "Census API returned HTTP 404; stub parquet (0 rows) created as placeholder"
+      }
+    },
+    {
+      "ts": "2026-02-23T20:48:05Z",
+      "task": "trac_adjudications_usage",
+      "phase": "stub",
+      "inputs": [
+        "trac_adjudications_raw"
+      ],
+      "outputs": [
+        "fact_trac_adjudications"
+      ],
+      "metrics": {
+        "skip_reason": "folder empty \u2014 no TRAC source files downloaded"
+      }
+    },
+    {
+      "ts": "2026-02-23T20:48:05Z",
+      "task": "acs_wages_usage",
+      "phase": "stub",
+      "inputs": [
+        "acs_pums_api"
+      ],
+      "outputs": [
+        "fact_acs_wages"
+      ],
+      "metrics": {
+        "skip_reason": "Census API returned HTTP 404 for ACS PUMS wage endpoint"
+      }
+    },
+    {
+      "ts": "2026-02-25T06:32:47Z",
+      "task": "employer_risk_features",
+      "phase": "begin",
+      "inputs": [
+        "/Users/vrathod1/dev/NorthStar/immigration-model-builder/artifacts/tables/fact_warn_events.parquet",
+        "/Users/vrathod1/dev/NorthStar/immigration-model-builder/artifacts/tables/dim_employer.parquet"
+      ],
+      "outputs": [
+        "/Users/vrathod1/dev/NorthStar/immigration-model-builder/artifacts/tables/employer_risk_features.parquet"
+      ],
+      "metrics": {}
+    },
+    {
+      "ts": "2026-02-25T06:32:48Z",
+      "task": "employer_risk_features",
+      "phase": "end",
+      "inputs": [],
+      "outputs": [],
+      "metrics": {
+        "warn_rows_raw": 985,
+        "warn_employers": 668,
+        "join_rate": 0.1737,
+        "joined_count": 116,
+        "states": [
+          "CA",
+          "TX"
+        ]
+      }
+    },
+    {
+      "ts": "2026-02-25T06:32:48Z",
+      "task": "visa_demand_metrics",
+      "phase": "begin",
+      "inputs": [
+        "/Users/vrathod1/dev/NorthStar/immigration-model-builder/artifacts/tables/fact_visa_issuance.parquet",
+        "/Users/vrathod1/dev/NorthStar/immigration-model-builder/artifacts/tables/fact_visa_applications.parquet",
+        "/Users/vrathod1/dev/NorthStar/immigration-model-builder/artifacts/tables/fact_niv_issuance.parquet"
+      ],
+      "outputs": [
+        "/Users/vrathod1/dev/NorthStar/immigration-model-builder/artifacts/tables/visa_demand_metrics.parquet"
+      ],
+      "metrics": {}
+    },
+    {
+      "ts": "2026-02-25T06:32:48Z",
+      "task": "visa_demand_metrics",
+      "phase": "end",
+      "inputs": [],
+      "outputs": [],
+      "metrics": {
+        "row_count": 537735,
+        "sources_used": 3,
+        "source_names": [
+          "fact_visa_issuance",
+          "fact_visa_applications",
+          "fact_niv_issuance"
+        ],
+        "distinct_fiscal_years": 30,
+        "distinct_countries": 1147,
+        "distinct_categories": 192
+      }
+    },
+    {
+      "ts": "2026-02-26T02:53:40Z",
+      "task": "visa_demand_metrics",
+      "phase": "begin",
+      "inputs": [
+        "/Users/vrathod1/dev/NorthStar/immigration-model-builder/artifacts/tables/fact_visa_issuance.parquet",
+        "/Users/vrathod1/dev/NorthStar/immigration-model-builder/artifacts/tables/fact_visa_applications.parquet",
+        "/Users/vrathod1/dev/NorthStar/immigration-model-builder/artifacts/tables/fact_niv_issuance.parquet",
+        "/Users/vrathod1/dev/NorthStar/immigration-model-builder/artifacts/tables/fact_iv_post.parquet"
+      ],
+      "outputs": [
+        "/Users/vrathod1/dev/NorthStar/immigration-model-builder/artifacts/tables/visa_demand_metrics.parquet"
+      ],
+      "metrics": {}
+    },
+    {
+      "ts": "2026-02-26T02:53:40Z",
+      "task": "visa_demand_metrics",
+      "phase": "end",
+      "inputs": [],
+      "outputs": [],
+      "metrics": {
+        "row_count": 568930,
+        "sources_used": 4,
+        "source_names": [
+          "fact_visa_issuance",
+          "fact_visa_applications",
+          "fact_niv_issuance",
+          "fact_iv_post"
+        ],
+        "distinct_fiscal_years": 30,
+        "distinct_countries": 1272,
+        "distinct_categories": 344
+      }
+    },
+    {
+      "ts": "2026-03-02T04:36:23Z",
+      "task": "employer_risk_features",
+      "phase": "begin",
+      "inputs": [
+        "/Users/vrathod1/dev/NorthStar/immigration-model-builder/artifacts/tables/fact_warn_events.parquet",
+        "/Users/vrathod1/dev/NorthStar/immigration-model-builder/artifacts/tables/dim_employer.parquet"
+      ],
+      "outputs": [
+        "/Users/vrathod1/dev/NorthStar/immigration-model-builder/artifacts/tables/employer_risk_features.parquet"
+      ],
+      "metrics": {}
+    },
+    {
+      "ts": "2026-03-02T04:36:23Z",
+      "task": "employer_risk_features",
+      "phase": "end",
+      "inputs": [],
+      "outputs": [],
+      "metrics": {
+        "warn_rows_raw": 985,
+        "warn_employers": 668,
+        "join_rate": 0.0808,
+        "joined_count": 54,
+        "states": [
+          "CA",
+          "TX"
+        ]
+      }
+    },
+    {
+      "ts": "2026-03-11T04:16:44Z",
+      "task": "employer_risk_features",
+      "phase": "begin",
+      "inputs": [
+        "/Users/vrathod1/dev/NorthStar/immigration-model-builder/artifacts/tables/fact_warn_events.parquet",
+        "/Users/vrathod1/dev/NorthStar/immigration-model-builder/artifacts/tables/dim_employer.parquet"
+      ],
+      "outputs": [
+        "/Users/vrathod1/dev/NorthStar/immigration-model-builder/artifacts/tables/employer_risk_features.parquet"
+      ],
+      "metrics": {}
+    },
+    {
+      "ts": "2026-03-11T04:16:44Z",
+      "task": "employer_risk_features",
+      "phase": "end",
+      "inputs": [],
+      "outputs": [],
+      "metrics": {
+        "warn_rows_raw": 985,
+        "warn_employers": 668,
+        "join_rate": 0.0883,
+        "joined_count": 59,
+        "states": [
+          "CA",
+          "TX"
+        ]
+      }
+    },
+    {
+      "ts": "2026-03-11T04:16:45Z",
+      "task": "visa_demand_metrics",
+      "phase": "begin",
+      "inputs": [
+        "/Users/vrathod1/dev/NorthStar/immigration-model-builder/artifacts/tables/fact_visa_issuance.parquet",
+        "/Users/vrathod1/dev/NorthStar/immigration-model-builder/artifacts/tables/fact_visa_applications.parquet",
+        "/Users/vrathod1/dev/NorthStar/immigration-model-builder/artifacts/tables/fact_niv_issuance.parquet",
+        "/Users/vrathod1/dev/NorthStar/immigration-model-builder/artifacts/tables/fact_iv_post.parquet"
+      ],
+      "outputs": [
+        "/Users/vrathod1/dev/NorthStar/immigration-model-builder/artifacts/tables/visa_demand_metrics.parquet"
+      ],
+      "metrics": {}
+    },
+    {
+      "ts": "2026-03-11T04:16:45Z",
+      "task": "visa_demand_metrics",
+      "phase": "end",
+      "inputs": [],
+      "outputs": [],
+      "metrics": {
+        "row_count": 569042,
+        "sources_used": 4,
+        "source_names": [
+          "fact_visa_issuance",
+          "fact_visa_applications",
+          "fact_niv_issuance",
+          "fact_iv_post"
+        ],
+        "distinct_fiscal_years": 30,
+        "distinct_countries": 1272,
+        "distinct_categories": 345
+      }
+    },
+    {
+      "ts": "2026-04-20T00:51:06Z",
+      "task": "visa_demand_metrics",
+      "phase": "begin",
+      "inputs": [
+        "/Users/vrathod1/dev/NorthStar/immigration-model-builder/artifacts/tables/fact_visa_issuance.parquet",
+        "/Users/vrathod1/dev/NorthStar/immigration-model-builder/artifacts/tables/fact_visa_applications.parquet",
+        "/Users/vrathod1/dev/NorthStar/immigration-model-builder/artifacts/tables/fact_niv_issuance.parquet",
+        "/Users/vrathod1/dev/NorthStar/immigration-model-builder/artifacts/tables/fact_iv_post.parquet"
+      ],
+      "outputs": [
+        "/Users/vrathod1/dev/NorthStar/immigration-model-builder/artifacts/tables/visa_demand_metrics.parquet"
+      ],
+      "metrics": {}
+    },
+    {
+      "ts": "2026-04-20T00:51:06Z",
+      "task": "visa_demand_metrics",
+      "phase": "end",
+      "inputs": [],
+      "outputs": [],
+      "metrics": {
+        "row_count": 569114,
+        "sources_used": 4,
+        "source_names": [
+          "fact_visa_issuance",
+          "fact_visa_applications",
+          "fact_niv_issuance",
+          "fact_iv_post"
+        ],
+        "distinct_fiscal_years": 30,
+        "distinct_countries": 1272,
+        "distinct_categories": 346
+      }
+    }
+  ]
+}

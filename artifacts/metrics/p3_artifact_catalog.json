@@ -1,0 +1,697 @@
+{
+  "generated_at": "2026-02-22T20:53:59.751146+00:00",
+  "total_artifacts": 27,
+  "artifacts": [
+    {
+      "name": "backlog_estimates",
+      "path": "artifacts/tables/backlog_estimates.parquet",
+      "type": "single_file",
+      "schema": {
+        "bulletin_year": "int64",
+        "bulletin_month": "int64",
+        "inflow_estimate_12m": "int64",
+        "advancement_days_12m_avg": "double",
+        "backlog_months_to_clear_est": "double"
+      },
+      "row_count": 8315,
+      "num_columns": 5,
+      "partition_keys": [],
+      "last_updated": "2026-02-22T20:23:24.189606+00:00",
+      "intended_charts": [
+        "Backlog months to clear estimate line chart",
+        "Inflow vs advancement comparison chart"
+      ]
+    },
+    {
+      "name": "category_movement_metrics",
+      "path": "artifacts/tables/category_movement_metrics.parquet",
+      "type": "single_file",
+      "schema": {
+        "bulletin_year": "int64",
+        "bulletin_month": "int64",
+        "chart": "large_string",
+        "category": "large_string",
+        "country": "large_string",
+        "avg_monthly_advancement_days": "double",
+        "median_advancement_days": "double",
+        "volatility_score": "double",
+        "retrogression_events_12m": "double",
+        "next_movement_prediction": "large_string"
+      },
+      "row_count": 8315,
+      "num_columns": 10,
+      "partition_keys": [],
+      "last_updated": "2026-02-22T20:22:50.437629+00:00",
+      "intended_charts": [
+        "Category-level volatility score bar chart",
+        "Retrogression events 12m heatmap",
+        "Next movement prediction indicator"
+      ]
+    },
+    {
+      "name": "dim_area",
+      "path": "artifacts/tables/dim_area.parquet",
+      "type": "single_file",
+      "schema": {
+        "area_code": "large_string",
+        "area_title": "large_string",
+        "area_type": "large_string",
+        "state_abbr": "large_string",
+        "state_fips": "large_string",
+        "cbsa_code": "null",
+        "metro_status": "large_string",
+        "ref_year": "int64",
+        "source_file": "large_string",
+        "ingested_at": "timestamp[us, tz=UTC]"
+      },
+      "row_count": 587,
+      "num_columns": 10,
+      "partition_keys": [],
+      "last_updated": "2026-02-22T20:53:31.331954+00:00",
+      "intended_charts": []
+    },
+    {
+      "name": "dim_country",
+      "path": "artifacts/tables/dim_country.parquet",
+      "type": "single_file",
+      "schema": {
+        "country_name": "large_string",
+        "iso2": "large_string",
+        "iso3": "large_string",
+        "region": "large_string",
+        "source_file": "large_string",
+        "ingested_at": "timestamp[us, tz=UTC]"
+      },
+      "row_count": 249,
+      "num_columns": 6,
+      "partition_keys": [],
+      "last_updated": "2026-02-22T20:52:20.541201+00:00",
+      "intended_charts": []
+    },
+    {
+      "name": "dim_employer",
+      "path": "artifacts/tables/dim_employer.parquet",
+      "type": "single_file",
+      "schema": {
+        "employer_id": "large_string",
+        "employer_name": "large_string",
+        "aliases": "large_string",
+        "domain": "null",
+        "source_files": "large_string",
+        "ingested_at": "timestamp[us, tz=UTC]"
+      },
+      "row_count": 19359,
+      "num_columns": 6,
+      "partition_keys": [],
+      "last_updated": "2026-02-22T20:45:53.011636+00:00",
+      "intended_charts": []
+    },
+    {
+      "name": "dim_soc",
+      "path": "artifacts/tables/dim_soc.parquet",
+      "type": "single_file",
+      "schema": {
+        "soc_code": "large_string",
+        "soc_title": "large_string",
+        "soc_version": "large_string",
+        "soc_major_group": "large_string",
+        "soc_minor_group": "large_string",
+        "soc_broad_group": "large_string",
+        "from_version": "string",
+        "from_code": "string",
+        "mapping_confidence": "large_string",
+        "is_aggregated": "bool",
+        "source_file": "large_string",
+        "ingested_at": "timestamp[us, tz=UTC]"
+      },
+      "row_count": 1396,
+      "num_columns": 12,
+      "partition_keys": [],
+      "last_updated": "2026-02-22T20:52:55.172832+00:00",
+      "intended_charts": []
+    },
+    {
+      "name": "dim_visa_class",
+      "path": "artifacts/tables/dim_visa_class.parquet",
+      "type": "single_file",
+      "schema": {
+        "family_code": "large_string",
+        "family_name": "large_string",
+        "sub_code": "large_string",
+        "sub_name": "large_string",
+        "is_employment": "bool",
+        "is_grouped": "bool",
+        "notes": "large_string",
+        "source_file": "large_string",
+        "ingested_at": "timestamp[us, tz=UTC]"
+      },
+      "row_count": 6,
+      "num_columns": 9,
+      "partition_keys": [],
+      "last_updated": "2026-02-22T20:53:31.375089+00:00",
+      "intended_charts": []
+    },
+    {
+      "name": "employer_features",
+      "path": "artifacts/tables/employer_features.parquet",
+      "type": "single_file",
+      "schema": {
+        "employer_id": "large_string",
+        "employer_name": "large_string",
+        "scope": "large_string",
+        "soc_code": "null",
+        "n_12m": "int64",
+        "n_24m": "int64",
+        "n_36m": "int64",
+        "months_active_24m": "int64",
+        "soc_breadth_24m": "int64",
+        "site_breadth_24m": "int64",
+        "approval_rate_12m": "double",
+        "approval_rate_24m": "double",
+        "approval_rate_36m": "double",
+        "denial_rate_12m": "double",
+        "denial_rate_24m": "double",
+        "denial_rate_36m": "double",
+        "audit_rate_12m": "double",
+        "audit_rate_24m": "double",
+        "audit_rate_36m": "double",
+        "approval_rate_trend_12v12": "double",
+        "outcome_volatility": "double",
+        "wage_ratio_med": "null",
+        "wage_ratio_p75": "null",
+        "windows_used": "large_string",
+        "last_refreshed_at": "timestamp[us, tz=UTC]"
+      },
+      "row_count": 43604,
+      "num_columns": 25,
+      "partition_keys": [],
+      "last_updated": "2026-02-22T20:24:44.246042+00:00",
+      "intended_charts": [
+        "Employer feature distribution histograms",
+        "Approval rate trend scatter"
+      ]
+    },
+    {
+      "name": "employer_friendliness_scores",
+      "path": "artifacts/tables/employer_friendliness_scores.parquet",
+      "type": "single_file",
+      "schema": {
+        "employer_id": "large_string",
+        "employer_name": "large_string",
+        "scope": "large_string",
+        "soc_code": "null",
+        "n_12m": "int64",
+        "n_24m": "int64",
+        "n_36m": "int64",
+        "approval_rate_24m": "double",
+        "denial_rate_24m": "double",
+        "wage_ratio_med": "null",
+        "wage_ratio_p75": "null",
+        "outcome_subscore": "double",
+        "wage_subscore": "double",
+        "sustainability_subscore": "double",
+        "efs": "double",
+        "efs_tier": "large_string",
+        "months_active_24m": "int64",
+        "soc_breadth_24m": "int64",
+        "site_breadth_24m": "int64",
+        "approval_rate_trend_12v12": "double",
+        "outcome_volatility": "double",
+        "last_refreshed_at": "timestamp[us, tz=UTC]"
+      },
+      "row_count": 43604,
+      "num_columns": 22,
+      "partition_keys": [],
+      "last_updated": "2026-02-22T20:26:57.449133+00:00",
+      "intended_charts": [
+        "EFS tier distribution pie chart",
+        "Top N employers by EFS bar chart",
+        "EFS vs approval rate scatter"
+      ]
+    },
+    {
+      "name": "employer_friendliness_scores_ml",
+      "path": "artifacts/tables/employer_friendliness_scores_ml.parquet",
+      "type": "single_file",
+      "schema": {
+        "employer_id": "large_string",
+        "n_cases_36m": "int64",
+        "avg_calibrated_prob": "double",
+        "median_calibrated_prob": "double",
+        "efs_ml": "double",
+        "scope": "large_string",
+        "version": "large_string",
+        "last_refreshed_at": "large_string"
+      },
+      "row_count": 956,
+      "num_columns": 8,
+      "partition_keys": [],
+      "last_updated": "2026-02-22T20:27:27.332067+00:00",
+      "intended_charts": []
+    },
+    {
+      "name": "employer_monthly_metrics",
+      "path": "artifacts/tables/employer_monthly_metrics.parquet",
+      "type": "single_file",
+      "schema": {
+        "employer_id": "large_string",
+        "employer_name": "large_string",
+        "month": "timestamp[us]",
+        "filings": "int64",
+        "approvals": "int64",
+        "denials": "int64",
+        "approval_rate": "double",
+        "denial_rate": "double",
+        "audit_rate_t12": "double",
+        "dataset": "large_string"
+      },
+      "row_count": 74350,
+      "num_columns": 10,
+      "partition_keys": [],
+      "last_updated": "2026-02-22T20:22:58.618500+00:00",
+      "intended_charts": [
+        "Employer approval rate trend line",
+        "Monthly filings/approvals stacked bar",
+        "Employer 36m approval rate scatter"
+      ]
+    },
+    {
+      "name": "employer_scores",
+      "path": "artifacts/tables/employer_scores.parquet",
+      "type": "single_file",
+      "schema": {
+        "employer_name_normalized": "null",
+        "friendliness_score": "null",
+        "approval_component": "null",
+        "volume_component": "null",
+        "wage_component": "null",
+        "diversity_component": "null"
+      },
+      "row_count": 0,
+      "num_columns": 6,
+      "partition_keys": [],
+      "last_updated": "2026-02-21T20:29:26.211691+00:00",
+      "intended_charts": []
+    },
+    {
+      "name": "fact_cutoff_trends",
+      "path": "artifacts/tables/fact_cutoff_trends.parquet",
+      "type": "single_file",
+      "schema": {
+        "bulletin_year": "int64",
+        "bulletin_month": "int64",
+        "chart": "large_string",
+        "category": "large_string",
+        "country": "large_string",
+        "status_flag": "large_string",
+        "cutoff_date": "timestamp[us]",
+        "queue_position_days": "double",
+        "monthly_advancement_days": "double",
+        "velocity_3m": "double",
+        "velocity_6m": "double",
+        "retrogression_flag": "int8",
+        "retrogression_count_cum": "int8",
+        "source_file": "large_string"
+      },
+      "row_count": 8315,
+      "num_columns": 14,
+      "partition_keys": [],
+      "last_updated": "2026-02-22T20:22:45.259456+00:00",
+      "intended_charts": [
+        "Monthly advancement trend line",
+        "Velocity 3m / 6m rolling chart",
+        "Retrogression flag timeline",
+        "Cumulative retrogression count chart"
+      ]
+    },
+    {
+      "name": "fact_cutoffs",
+      "path": "artifacts/tables/fact_cutoffs",
+      "type": "partitioned_directory",
+      "schema": {
+        "chart": "large_string",
+        "category": "large_string",
+        "country": "large_string",
+        "cutoff_date": "timestamp[us]",
+        "status_flag": "large_string",
+        "source_file": "large_string",
+        "page_ref": "large_string",
+        "ingested_at": "timestamp[us, tz=UTC]"
+      },
+      "row_count": 13915,
+      "num_columns": 8,
+      "partition_keys": [
+        "bulletin_year",
+        "bulletin_month"
+      ],
+      "last_updated": "2026-02-22T20:47:07.641834+00:00",
+      "intended_charts": []
+    },
+    {
+      "name": "fact_cutoffs_all",
+      "path": "artifacts/tables/fact_cutoffs_all.parquet",
+      "type": "single_file",
+      "schema": {
+        "chart": "large_string",
+        "category": "large_string",
+        "country": "large_string",
+        "cutoff_date": "timestamp[us]",
+        "status_flag": "large_string",
+        "source_file": "large_string",
+        "page_ref": "large_string",
+        "ingested_at": "timestamp[us, tz=UTC]",
+        "bulletin_year": "int64",
+        "bulletin_month": "int64"
+      },
+      "row_count": 8315,
+      "num_columns": 10,
+      "partition_keys": [],
+      "last_updated": "2026-02-22T17:55:09.696269+00:00",
+      "intended_charts": [
+        "Visa Bulletin timeline heatmap",
+        "Priority date cutoff progression line chart",
+        "Category comparison bar chart"
+      ]
+    },
+    {
+      "name": "fact_lca",
+      "path": "artifacts/tables/fact_lca",
+      "type": "partitioned_directory",
+      "schema": {
+        "case_number": "large_string",
+        "case_status": "large_string",
+        "visa_class": "large_string",
+        "received_date": "large_string",
+        "decision_date": "large_string",
+        "employer_name_raw": "large_string",
+        "employer_id": "large_string",
+        "soc_code": "large_string",
+        "soc_title": "large_string",
+        "job_title": "large_string",
+        "is_fulltime": "bool",
+        "wage_rate_from": "double",
+        "wage_rate_to": "double",
+        "prevailing_wage": "double",
+        "wage_unit": "large_string",
+        "pw_unit": "large_string",
+        "worksite_city": "large_string",
+        "worksite_state": "large_string",
+        "worksite_postal": "large_string",
+        "naics_code": "large_string",
+        "fiscal_year": "int64",
+        "source_file": "large_string",
+        "ingested_at": "timestamp[us, tz=UTC]"
+      },
+      "row_count": 9558695,
+      "num_columns": 23,
+      "partition_keys": [
+        "fiscal_year"
+      ],
+      "last_updated": "2026-02-22T14:38:12.253597+00:00",
+      "intended_charts": []
+    },
+    {
+      "name": "fact_oews",
+      "path": "artifacts/tables/fact_oews",
+      "type": "partitioned_directory",
+      "schema": {
+        "area_code": "large_string",
+        "soc_code": "large_string",
+        "tot_emp": "double",
+        "h_mean": "double",
+        "a_mean": "double",
+        "h_median": "double",
+        "a_median": "double",
+        "h_pct10": "double",
+        "h_pct25": "double",
+        "h_pct75": "double",
+        "h_pct90": "double",
+        "a_pct10": "double",
+        "a_pct25": "double",
+        "a_pct75": "double",
+        "a_pct90": "double",
+        "source_file": "large_string",
+        "ingested_at": "timestamp[us, tz=UTC]"
+      },
+      "row_count": 223216,
+      "num_columns": 17,
+      "partition_keys": [
+        "ref_year"
+      ],
+      "last_updated": "2026-02-22T14:04:12.742234+00:00",
+      "intended_charts": []
+    },
+    {
+      "name": "fact_perm",
+      "path": "artifacts/tables/fact_perm",
+      "type": "partitioned_directory",
+      "schema": {
+        "case_number": "large_string",
+        "case_status": "large_string",
+        "received_date": "timestamp[us]",
+        "decision_date": "timestamp[us]",
+        "employer_id": "large_string",
+        "soc_code": "large_string",
+        "area_code": "large_string",
+        "employer_country": "large_string",
+        "job_title": "large_string",
+        "wage_offer_from": "double",
+        "wage_offer_to": "double",
+        "wage_offer_unit": "large_string",
+        "worksite_city": "large_string",
+        "worksite_state": "large_string",
+        "worksite_postal": "large_string",
+        "is_fulltime": "bool",
+        "source_file": "large_string",
+        "ingested_at": "timestamp[us, tz=UTC]",
+        "fiscal_year": "int64"
+      },
+      "row_count": 1674724,
+      "num_columns": 19,
+      "partition_keys": [
+        "fiscal_year"
+      ],
+      "last_updated": "2026-02-22T16:31:11.051302+00:00",
+      "intended_charts": []
+    },
+    {
+      "name": "fact_perm_all",
+      "path": "artifacts/tables/fact_perm_all.parquet",
+      "type": "single_file",
+      "schema": {
+        "case_number": "large_string",
+        "case_status": "large_string",
+        "received_date": "timestamp[us]",
+        "decision_date": "timestamp[us]",
+        "employer_id": "large_string",
+        "soc_code": "large_string",
+        "area_code": "large_string",
+        "employer_country": "large_string",
+        "job_title": "large_string",
+        "wage_offer_from": "double",
+        "wage_offer_to": "double",
+        "wage_offer_unit": "large_string",
+        "worksite_city": "large_string",
+        "worksite_state": "large_string",
+        "worksite_postal": "large_string",
+        "is_fulltime": "bool",
+        "source_file": "large_string",
+        "ingested_at": "timestamp[us, tz=UTC]",
+        "fiscal_year": "int64"
+      },
+      "row_count": 1674724,
+      "num_columns": 19,
+      "partition_keys": [],
+      "last_updated": "2026-02-22T20:22:20.932181+00:00",
+      "intended_charts": []
+    },
+    {
+      "name": "fact_perm_unique_case",
+      "path": "artifacts/tables/fact_perm_unique_case",
+      "type": "partitioned_directory",
+      "schema": {
+        "case_number": "large_string",
+        "case_status": "large_string",
+        "received_date": "timestamp[us]",
+        "decision_date": "timestamp[us]",
+        "employer_id": "large_string",
+        "soc_code": "null",
+        "area_code": "null",
+        "employer_country": "string",
+        "job_title": "large_string",
+        "wage_offer_from": "double",
+        "wage_offer_to": "double",
+        "wage_offer_unit": "large_string",
+        "worksite_city": "large_string",
+        "worksite_state": "large_string",
+        "worksite_postal": "large_string",
+        "is_fulltime": "bool",
+        "source_file": "large_string",
+        "ingested_at": "timestamp[us, tz=UTC]",
+        "fiscal_year": "int64",
+        "is_crossfy_duplicate": "bool"
+      },
+      "row_count": 1671899,
+      "num_columns": 20,
+      "partition_keys": [
+        "fiscal_year"
+      ],
+      "last_updated": "2026-02-22T17:17:01.737905+00:00",
+      "intended_charts": []
+    },
+    {
+      "name": "oews_wages",
+      "path": "artifacts/tables/oews_wages.parquet",
+      "type": "single_file",
+      "schema": {
+        "year": "null",
+        "soc_code": "null",
+        "area_code": "null",
+        "area_name": "null",
+        "p10_wage": "null",
+        "p25_wage": "null",
+        "median_wage": "null",
+        "p75_wage": "null",
+        "p90_wage": "null",
+        "mean_wage": "null",
+        "employment_count": "null"
+      },
+      "row_count": 0,
+      "num_columns": 11,
+      "partition_keys": [],
+      "last_updated": "2026-02-21T20:11:32.450636+00:00",
+      "intended_charts": []
+    },
+    {
+      "name": "pd_forecasts",
+      "path": "artifacts/tables/pd_forecasts.parquet",
+      "type": "single_file",
+      "schema": {
+        "forecast_month": "null",
+        "category": "null",
+        "country": "null",
+        "predicted_filing_date": "null",
+        "predicted_final_date": "null",
+        "confidence_low": "null",
+        "confidence_high": "null"
+      },
+      "row_count": 0,
+      "num_columns": 7,
+      "partition_keys": [],
+      "last_updated": "2026-02-22T20:26:56.758172+00:00",
+      "intended_charts": []
+    },
+    {
+      "name": "processing_times_trends",
+      "path": "artifacts/tables/processing_times_trends.parquet",
+      "type": "single_file",
+      "schema": {
+        "service_center": "null",
+        "form": "null",
+        "metric_days": "double",
+        "as_of_date": "timestamp[ns]",
+        "percentile": "null",
+        "category": "null"
+      },
+      "row_count": 0,
+      "num_columns": 6,
+      "partition_keys": [],
+      "last_updated": "2026-02-22T20:23:23.568441+00:00",
+      "intended_charts": [
+        "Processing time trend line (if data available)"
+      ]
+    },
+    {
+      "name": "salary_benchmarks",
+      "path": "artifacts/tables/salary_benchmarks.parquet",
+      "type": "single_file",
+      "schema": {
+        "soc_code": "large_string",
+        "area_code": "string",
+        "p10": "double",
+        "p25": "double",
+        "median": "double",
+        "p75": "double",
+        "p90": "double"
+      },
+      "row_count": 224047,
+      "num_columns": 7,
+      "partition_keys": [],
+      "last_updated": "2026-02-22T20:25:20.317690+00:00",
+      "intended_charts": [
+        "SOC percentile salary range chart (box/candlestick)",
+        "ref_year salary trend line",
+        "Wage level distribution bar chart"
+      ]
+    },
+    {
+      "name": "soc_demand_metrics",
+      "path": "artifacts/tables/soc_demand_metrics.parquet",
+      "type": "single_file",
+      "schema": {
+        "soc_code": "large_string",
+        "filings_count": "int64",
+        "approvals_count": "int64",
+        "approval_rate": "double",
+        "offered_avg": "double",
+        "offered_median": "double",
+        "competitiveness_percentile": "double",
+        "top_employers_json": "large_string"
+      },
+      "row_count": 1923,
+      "num_columns": 8,
+      "partition_keys": [],
+      "last_updated": "2026-02-22T20:23:23.057801+00:00",
+      "intended_charts": [
+        "SOC demand ranking table",
+        "Competitiveness percentile bar chart",
+        "Top employer per SOC treemap"
+      ]
+    },
+    {
+      "name": "visa_bulletin",
+      "path": "artifacts/tables/visa_bulletin.parquet",
+      "type": "single_file",
+      "schema": {
+        "year_month": "null",
+        "category": "null",
+        "country": "null",
+        "filing_date": "null",
+        "final_date": "null"
+      },
+      "row_count": 0,
+      "num_columns": 5,
+      "partition_keys": [],
+      "last_updated": "2026-02-21T20:11:32.447286+00:00",
+      "intended_charts": []
+    },
+    {
+      "name": "worksite_geo_metrics",
+      "path": "artifacts/tables/worksite_geo_metrics.parquet",
+      "type": "single_file",
+      "schema": {
+        "state": "large_string",
+        "filings_count": "double",
+        "approvals_count": "int64",
+        "offered_median": "double",
+        "distinct_employers": "int64",
+        "dataset": "large_string",
+        "grain": "large_string",
+        "area_code": "large_string",
+        "soc_code": "large_string",
+        "filings_count_soc_area": "double",
+        "offered_median_soc_area": "double",
+        "competitiveness_ratio": "double"
+      },
+      "row_count": 23094,
+      "num_columns": 12,
+      "partition_keys": [],
+      "last_updated": "2026-02-22T20:23:09.655646+00:00",
+      "intended_charts": [
+        "State-level choropleth map of filings",
+        "SOC\u00d7area competitiveness ratio heatmap",
+        "Wage ratio vs OEWS benchmark scatter"
+      ]
+    }
+  ]
+}

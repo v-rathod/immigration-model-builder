@@ -1,0 +1,414 @@
+{
+  "dim_country": {
+    "exists": true,
+    "rows": 249,
+    "columns_present": [
+      "country_name",
+      "iso2",
+      "iso3",
+      "region",
+      "source_file",
+      "ingested_at"
+    ],
+    "columns_sample": [
+      "country_name",
+      "iso2",
+      "iso3",
+      "region",
+      "source_file",
+      "ingested_at"
+    ],
+    "required_missing": [],
+    "pk_unique": true,
+    "partitions": [],
+    "error": null
+  },
+  "fact_cutoffs": {
+    "exists": true,
+    "rows": 5600,
+    "columns_present": [
+      "chart",
+      "category",
+      "country",
+      "cutoff_date",
+      "status_flag",
+      "source_file",
+      "page_ref",
+      "ingested_at",
+      "bulletin_year",
+      "bulletin_month"
+    ],
+    "columns_sample": [
+      "chart",
+      "category",
+      "country",
+      "cutoff_date",
+      "status_flag",
+      "source_file",
+      "page_ref",
+      "ingested_at",
+      "bulletin_year",
+      "bulletin_month"
+    ],
+    "required_missing": [],
+    "pk_unique": true,
+    "partitions": [
+      {
+        "column": "bulletin_year",
+        "values": [
+          "2015",
+          "2016",
+          "2017",
+          "2018",
+          "2019",
+          "2020",
+          "2021",
+          "2022",
+          "2023",
+          "2024",
+          "2025"
+        ]
+      }
+    ],
+    "error": null
+  },
+  "dim_soc": {
+    "exists": true,
+    "rows": 1396,
+    "columns_present": [
+      "soc_code",
+      "soc_title",
+      "soc_version",
+      "soc_major_group",
+      "soc_minor_group",
+      "soc_broad_group",
+      "from_version",
+      "from_code",
+      "mapping_confidence",
+      "is_aggregated",
+      "source_file",
+      "ingested_at"
+    ],
+    "columns_sample": [
+      "soc_code",
+      "soc_title",
+      "soc_version",
+      "soc_major_group",
+      "soc_minor_group",
+      "soc_broad_group",
+      "from_version",
+      "from_code",
+      "mapping_confidence",
+      "is_aggregated",
+      "source_file",
+      "ingested_at"
+    ],
+    "required_missing": [],
+    "pk_unique": true,
+    "partitions": [],
+    "error": null
+  },
+  "dim_area": {
+    "exists": true,
+    "rows": 587,
+    "columns_present": [
+      "area_code",
+      "area_title",
+      "area_type",
+      "state_abbr",
+      "state_fips",
+      "cbsa_code",
+      "metro_status",
+      "ref_year",
+      "source_file",
+      "ingested_at"
+    ],
+    "columns_sample": [
+      "area_code",
+      "area_title",
+      "area_type",
+      "state_abbr",
+      "state_fips",
+      "cbsa_code",
+      "metro_status",
+      "ref_year",
+      "source_file",
+      "ingested_at"
+    ],
+    "required_missing": [],
+    "pk_unique": true,
+    "partitions": [
+      {
+        "column": "ref_year",
+        "values": [
+          "2023"
+        ]
+      }
+    ],
+    "error": null
+  },
+  "dim_visa_class": {
+    "exists": true,
+    "rows": 6,
+    "columns_present": [
+      "family_code",
+      "family_name",
+      "sub_code",
+      "sub_name",
+      "is_employment",
+      "is_grouped",
+      "notes",
+      "source_file",
+      "ingested_at"
+    ],
+    "columns_sample": [
+      "family_code",
+      "family_name",
+      "sub_code",
+      "sub_name",
+      "is_employment",
+      "is_grouped",
+      "notes",
+      "source_file",
+      "ingested_at"
+    ],
+    "required_missing": [],
+    "pk_unique": true,
+    "partitions": [],
+    "error": null
+  },
+  "dim_employer": {
+    "exists": true,
+    "rows": 19359,
+    "columns_present": [
+      "employer_id",
+      "employer_name",
+      "aliases",
+      "domain",
+      "source_files",
+      "ingested_at"
+    ],
+    "columns_sample": [
+      "employer_id",
+      "employer_name",
+      "aliases",
+      "domain",
+      "source_files",
+      "ingested_at"
+    ],
+    "required_missing": [],
+    "pk_unique": true,
+    "partitions": [],
+    "error": null
+  },
+  "fact_perm": {
+    "exists": true,
+    "rows": 1674724,
+    "columns_present": [
+      "case_number",
+      "case_status",
+      "received_date",
+      "decision_date",
+      "employer_id",
+      "soc_code",
+      "area_code",
+      "employer_country",
+      "job_title",
+      "wage_offer_from",
+      "wage_offer_to",
+      "wage_offer_unit",
+      "worksite_city",
+      "worksite_state",
+      "worksite_postal",
+      "is_fulltime",
+      "source_file",
+      "ingested_at",
+      "fiscal_year"
+    ],
+    "columns_sample": [
+      "case_number",
+      "case_status",
+      "received_date",
+      "decision_date",
+      "employer_id",
+      "soc_code",
+      "area_code",
+      "employer_country",
+      "job_title",
+      "wage_offer_from",
+      "wage_offer_to",
+      "wage_offer_unit",
+      "worksite_city",
+      "worksite_state",
+      "worksite_postal",
+      "is_fulltime",
+      "source_file",
+      "ingested_at",
+      "fiscal_year"
+    ],
+    "required_missing": [],
+    "pk_unique": true,
+    "partitions": [
+      {
+        "column": "fiscal_year",
+        "values": [
+          "2008",
+          "2009",
+          "2010",
+          "2011",
+          "2012",
+          "2013",
+          "2014",
+          "2015",
+          "2016",
+          "2017",
+          "2018",
+          "2019",
+          "2020",
+          "2021",
+          "2022",
+          "2023",
+          "2024",
+          "2025",
+          "2026"
+        ]
+      }
+    ],
+    "error": null
+  },
+  "fact_oews": {
+    "exists": true,
+    "rows": 223216,
+    "columns_present": [
+      "area_code",
+      "soc_code",
+      "tot_emp",
+      "h_mean",
+      "a_mean",
+      "h_median",
+      "a_median",
+      "h_pct10",
+      "h_pct25",
+      "h_pct75",
+      "h_pct90",
+      "a_pct10",
+      "a_pct25",
+      "a_pct75",
+      "a_pct90",
+      "source_file",
+      "ingested_at",
+      "ref_year"
+    ],
+    "columns_sample": [
+      "area_code",
+      "soc_code",
+      "tot_emp",
+      "h_mean",
+      "a_mean",
+      "h_median",
+      "a_median",
+      "h_pct10",
+      "h_pct25",
+      "h_pct75",
+      "h_pct90",
+      "a_pct10",
+      "a_pct25",
+      "a_pct75",
+      "a_pct90",
+      "source_file",
+      "ingested_at",
+      "ref_year"
+    ],
+    "required_missing": [],
+    "pk_unique": true,
+    "partitions": [
+      {
+        "column": "ref_year",
+        "values": [
+          "2023"
+        ]
+      }
+    ],
+    "error": null
+  },
+  "fact_lca": {
+    "exists": true,
+    "rows": 9558695,
+    "columns_present": [
+      "case_number",
+      "case_status",
+      "visa_class",
+      "received_date",
+      "decision_date",
+      "employer_name_raw",
+      "employer_id",
+      "soc_code",
+      "soc_title",
+      "job_title",
+      "is_fulltime",
+      "wage_rate_from",
+      "wage_rate_to",
+      "prevailing_wage",
+      "wage_unit",
+      "pw_unit",
+      "worksite_city",
+      "worksite_state",
+      "worksite_postal",
+      "naics_code",
+      "fiscal_year",
+      "source_file",
+      "ingested_at"
+    ],
+    "columns_sample": [
+      "case_number",
+      "case_status",
+      "visa_class",
+      "received_date",
+      "decision_date",
+      "employer_name_raw",
+      "employer_id",
+      "soc_code",
+      "soc_title",
+      "job_title",
+      "is_fulltime",
+      "wage_rate_from",
+      "wage_rate_to",
+      "prevailing_wage",
+      "wage_unit",
+      "pw_unit",
+      "worksite_city",
+      "worksite_state",
+      "worksite_postal",
+      "naics_code"
+    ],
+    "required_missing": [],
+    "pk_unique": null,
+    "partitions": [
+      {
+        "column": "fiscal_year",
+        "values": [
+          "2008",
+          "2009",
+          "2010",
+          "2011",
+          "2012",
+          "2013",
+          "2014",
+          "2015",
+          "2016",
+          "2017",
+          "2018",
+          "2019",
+          "2020",
+          "2021",
+          "2022",
+          "2023",
+          "2024",
+          "2025",
+          "2026"
+        ]
+      }
+    ],
+    "error": null
+  }
+}

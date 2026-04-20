@@ -1,0 +1,9 @@
+=== salary_benchmarks build 2026-02-22T19:33:20.006594+00:00 ===
+fact_oews rows loaded: 223,216
+FAIL QA: 1 rows where p10 > p25
+FAIL QA: 2 rows where p25 > median
+FAIL QA: 7 rows where median > p75
+FAIL QA: 7 rows where p75 > p90
+FAIL: 17 total percentile ordering violations
+Output rows: 224,047  (area rows: 223,216  national rows: 831)
+Written: /Users/vrathod1/dev/immigration-model-builder/artifacts/tables/salary_benchmarks.parquet

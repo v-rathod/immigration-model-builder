@@ -1,0 +1,42 @@
+=== processing_times_trends build 2026-03-11T04:16:42.311174+00:00 ===
+Found 38 I-485 performance data files
+  SKIP I485_performancedata_2013-mar.csv: cannot determine FY/quarter
+  SKIP I485_performancedata_fy2013-qtr3.csv: no 'Total' row found
+  OK I485_performancedata_fy2014_qtr4.csv: FY2014 Q4 cols=22 eb_start=6 EB recv=33125.0 appr=39138.0 pend=115089.0
+  OK I485_performancedata_fy2014qtr1.csv: FY2014 Q1 cols=22 eb_start=6 EB recv=30568.0 appr=31702.0 pend=117892.0
+  OK I485_performancedata_fy2014qtr2.csv: FY2014 Q2 cols=22 eb_start=6 EB recv=29639.0 appr=30651.0 pend=119178.0
+  OK I485_performancedata_fy2015_qtr2.csv: FY2015 Q2 cols=23 eb_start=7 EB recv=30846.0 appr=26232.0 pend=122812.0
+  OK I485_performancedata_fy2015_qtr3.csv: FY2015 Q3 cols=23 eb_start=7 EB recv=34266.0 appr=38464.0 pend=118481.0
+  OK I485_performancedata_fy2015_qtr4.csv: FY2015 Q4 cols=23 eb_start=7 EB recv=31708.0 appr=31352.0 pend=116941.0
+  OK I485_performancedata_fy2016_qtr1.csv: FY2016 Q1 cols=23 eb_start=7 EB recv=33828.0 appr=24836.0 pend=125161.0
+  OK I485_performancedata_fy2016_qtr2.csv: FY2016 Q2 cols=23 eb_start=7 EB recv=29953.0 appr=29352.0 pend=124587.0
+  OK I485_performancedata_fy2016_qtr3.csv: FY2016 Q3 cols=44 eb_start=7 EB recv=34332.0 appr=35420.0 pend=120828.0
+  OK I485_performancedata_fy2016_qtr4.csv: FY2016 Q4 cols=44 eb_start=7 EB recv=30745.0 appr=20798.0 pend=129424.0
+  OK I485_performancedata_fy2017_qtr1.csv: FY2017 Q1 cols=44 eb_start=7 EB recv=43407.0 appr=33256.0 pend=138219.0
+  OK I485_performancedata_fy2017_qtr2.csv: FY2017 Q2 cols=47 eb_start=7 EB recv=30897.0 appr=27948.0 pend=138347.0
+  OK I485_performancedata_fy2017_qtr3.csv: FY2017 Q3 cols=44 eb_start=7 EB recv=41920.0 appr=29689.0 pend=148547.0
+  OK I485_performancedata_fy2018_qtr1.csv: FY2018 Q1 cols=23 eb_start=7 EB recv=33320.0 appr=30472.0 pend=142577.0
+  OK I485_performancedata_fy2018_qtr2.csv: FY2018 Q2 cols=48 eb_start=7 EB recv=30908.0 appr=28336.0 pend=162675.0
+  OK I485_performancedata_fy2018_qtr3.csv: FY2018 Q3 cols=48 eb_start=7 EB recv=35950.0 appr=34365.0 pend=149179.0
+  OK I485_performancedata_fy2018_qtr4.csv: FY2018 Q4 cols=48 eb_start=7 EB recv=32530.0 appr=16102.0 pend=161023.0
+  OK I485_performancedata_fy2019_qtr1.csv: FY2019 Q1 cols=44 eb_start=7 EB recv=27893.0 appr=33181.0 pend=154616.0
+  OK I485_performancedata_fy2019_qtr2.csv: FY2019 Q2 cols=48 eb_start=7 EB recv=23272.0 appr=27539.0 pend=148390.0
+  OK I485_performancedata_fy2021_qtr4.csv: FY2021 Q4 cols=23 eb_start=7 EB recv=45897.0 appr=86704.0 pend=245490.0
+  OK I485_performancedata_fy2022_qtr1.csv: FY2022 Q1 cols=42 eb_start=7 EB recv=43524.0 appr=33619.0 pend=253068.0
+  OK I485_performancedata_fy2022_qtr2.csv: FY2022 Q2 cols=42 eb_start=7 EB recv=39397.0 appr=30686.0 pend=257564.0
+  OK I485_performancedata_fy2022_qtr3.csv: FY2022 Q3 cols=42 eb_start=7 EB recv=47366.0 appr=57356.0 pend=244570.0
+  OK I485_performancedata_fy2022_qtr4.csv: FY2022 Q4 cols=42 eb_start=7 EB recv=38177.0 appr=82970.0 pend=191190.0
+  OK I485_performancedata_fy2023_qtr1.csv: FY2023 Q1 cols=23 eb_start=7 EB recv=44181.0 appr=49851.0 pend=205065.0
+  OK I485_performancedata_fy2023_qtr2.csv: FY2023 Q2 cols=23 eb_start=7 EB recv=34584.0 appr=33932.0 pend=202006.0
+  OK i485_performancedata_fy2023_q4.csv: FY2023 Q4 cols=22 eb_start=6 EB recv=17858.0 appr=30091.0 pend=171697.0
+  OK i485_performancedata_fy2023_qtr3.csv: FY2023 Q3 cols=22 eb_start=6 EB recv=24580.0 appr=31920.0 pend=189295.0
+  OK i485_performancedata_fy2024_q1.xlsx: FY2024 Q1 cols=22 eb_start=6 EB recv=42780.0 appr=18855.0 pend=193698.0
+  OK i485_performancedata_fy2024_q2.xlsx: FY2024 Q2 cols=22 eb_start=6 EB recv=37760.0 appr=31544.0 pend=198313.0
+  OK i485_performancedata_fy2024_q3.xlsx: FY2024 Q3 cols=22 eb_start=6 EB recv=21588.0 appr=36211.0 pend=184428.0
+  OK i485_performancedata_fy2024_q4.xlsx: FY2024 Q4 cols=22 eb_start=6 EB recv=27686.0 appr=32418.0 pend=173752.0
+  OK i485_performancedata_fy2025_q1.xlsx: FY2025 Q1 cols=22 eb_start=6 EB recv=39680.0 appr=29418.0 pend=181732.0
+  OK i485_performancedata_fy2025_q2.xlsx: FY2025 Q2 cols=22 eb_start=6 EB recv=24066.0 appr=24729.0 pend=179081.0
+  OK i485_performancedata_fy2025_q3.xlsx: FY2025 Q3 cols=22 eb_start=6 EB recv=22622.0 appr=26691.0 pend=173106.0
+  SKIP I485_performancedata_2012-dec.csv: cannot determine FY/quarter
+Output: 35 quarterly records, FY2014-FY2025
+Written: /Users/vrathod1/dev/NorthStar/immigration-model-builder/artifacts/tables/processing_times_trends.parquet

@@ -1,0 +1,16 @@
+=== worksite_geo_metrics build 2026-03-13T16:56:53.802977+00:00 ===
+oews_area rows: 446,432  oews_national soc codes: 0
+PERM: 1,675,051 rows loaded
+PERM: 57 unique (normalised) states
+PERM: wage outlier cap [$5K-$1M]: nulled 52,628 of 1,462,332 wages
+PERM: nulling 818,190 malformed soc_code values
+PERM: city grain rows: 27,400
+LCA: 9,558,695 rows loaded
+LCA: 59 unique (normalised) states
+LCA: wage outlier cap [$5K-$1M]: nulled 84,155 of 9,558,174 wages
+LCA: nulling 699,087 malformed soc_code values
+LCA: city grain rows: 67,141
+competitiveness_ratio filled: 121,246/134,799 (89.9%)
+WARN: 7398 rows with competitiveness_ratio > 2.5
+Output rows: 134,799
+Written: /Users/vrathod1/dev/NorthStar/immigration-model-builder/artifacts/tables/worksite_geo_metrics.parquet

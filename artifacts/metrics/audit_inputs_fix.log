@@ -1,0 +1,8 @@
+
+=== 2026-02-22T16:34:38Z ===
+Run: audit_input_coverage.py
+PERM: 100% (20/20) | LCA: 100% (38/38) | OEWS: 50% (1/2, 2022 not ingested) | Visa_Bulletin: 66.7% (112/168, 2011-2014 PDFs not parseable by current loader)
+Fixes: audit_input_coverage.py rglob exclusion filters added for _backup/_quarantine/.tmp_
+
+=== 2026-02-22T16:34:45Z ===
+audit_input_coverage.py: PERM 100%, LCA 100%, OEWS 50%, Visa_Bulletin 66.7% (2011-2014 PDFs not parseable)

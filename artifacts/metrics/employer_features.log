@@ -1,0 +1,63 @@
+======================================================================
+EMPLOYER FEATURES BUILD
+======================================================================
+
+[A] Loading curated tables
+  fact_perm: 1,675,051 rows
+  dim_employer: 256,411 rows
+  fact_oews: 446,432 rows
+  dim_area: 587 rows
+
+[A2] Loading LCA data (H-1B filings)
+  fact_lca: 9,558,695 rows
+
+[A3] Loading H-1B Employer Hub
+  fact_h1b_employer_hub: 729,865 rows
+
+[B] Preparing PERM data
+  Anchor date: 2025-12-31 (max decision_date)
+  Rows in last 36 months: 370,284
+  SOC code normalised: [7.] → 7 chars for OEWS match
+  PERM wage outlier cap [$5K–$1M]: nulled 403 of 370,101 wages
+
+[C] Building OEWS wage lookup
+  OEWS ref_year: 2024, rows: 223,216
+  OEWS area-level rows: 219,344, national SOC rows: 816
+  Cross-SOC national fallback median: $56,545
+
+[C2] Preparing LCA features by employer
+  LCA wage outlier cap [$5K–$1M]: nulled 4,135 of 1,683,818 wages
+  LCA employer features: 115,229 employers
+
+[C3] Computing H1B Hub retention features by employer
+  H1B Hub name match: 60,773/729,865 (8.3%)
+  H1B Hub features: 19,145 employers
+
+[D] Computing features
+  Processed 5,000/67,694 employers
+  Processed 10,000/67,694 employers
+  Processed 15,000/67,694 employers
+  Processed 20,000/67,694 employers
+  Processed 25,000/67,694 employers
+  Processed 30,000/67,694 employers
+  Processed 35,000/67,694 employers
+  Processed 40,000/67,694 employers
+  Processed 45,000/67,694 employers
+  Processed 50,000/67,694 employers
+  Processed 55,000/67,694 employers
+  Processed 60,000/67,694 employers
+  Processed 65,000/67,694 employers
+  Total feature rows: 70,206 (67,694 employers)
+
+[E] Merging H1B Hub retention features
+  H1B Hub joined: 6,319/70,206 feature rows matched
+
+[F] Writing employer_features.parquet
+  Written: artifacts/tables/employer_features.parquet (70,206 rows)
+
+  Overall rows: 67,694
+  SOC-specific rows: 2,512
+  wage_ratio_med null: 0.2%
+  lca_filings_36m fill: 44.3%
+  h1b_hub fill: 8.9%
+  Warnings: 0

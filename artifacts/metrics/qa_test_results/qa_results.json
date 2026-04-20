@@ -1,0 +1,337 @@
+{
+  "generated_at": "2026-02-23T05:50:12.722466+00:00",
+  "pass_count": 45,
+  "warn_count": 2,
+  "fail_count": 0,
+  "results": [
+    {
+      "gate": "schema",
+      "status": "PASS",
+      "message": "fact_cutoffs_all: all 6 required columns present",
+      "detail": "10 total cols, 8,315 rows",
+      "ts": "2026-02-23T05:50:12.536796+00:00"
+    },
+    {
+      "gate": "schema",
+      "status": "PASS",
+      "message": "fact_cutoff_trends: all 7 required columns present",
+      "detail": "14 total cols, 8,315 rows",
+      "ts": "2026-02-23T05:50:12.538837+00:00"
+    },
+    {
+      "gate": "schema",
+      "status": "PASS",
+      "message": "category_movement_metrics: all 4 required columns present",
+      "detail": "10 total cols, 8,315 rows",
+      "ts": "2026-02-23T05:50:12.540008+00:00"
+    },
+    {
+      "gate": "schema",
+      "status": "PASS",
+      "message": "employer_monthly_metrics: all 5 required columns present",
+      "detail": "10 total cols, 74,350 rows",
+      "ts": "2026-02-23T05:50:12.543783+00:00"
+    },
+    {
+      "gate": "schema",
+      "status": "PASS",
+      "message": "worksite_geo_metrics: all 2 required columns present",
+      "detail": "12 total cols, 19,071 rows",
+      "ts": "2026-02-23T05:50:12.545238+00:00"
+    },
+    {
+      "gate": "schema",
+      "status": "PASS",
+      "message": "salary_benchmarks: all 6 required columns present",
+      "detail": "7 total cols, 224,047 rows",
+      "ts": "2026-02-23T05:50:12.549530+00:00"
+    },
+    {
+      "gate": "schema",
+      "status": "PASS",
+      "message": "soc_demand_metrics: all 3 required columns present",
+      "detail": "8 total cols, 1,923 rows",
+      "ts": "2026-02-23T05:50:12.550945+00:00"
+    },
+    {
+      "gate": "schema",
+      "status": "PASS",
+      "message": "processing_times_trends: all 0 required columns present",
+      "detail": "6 total cols, 0 rows",
+      "ts": "2026-02-23T05:50:12.551961+00:00"
+    },
+    {
+      "gate": "schema",
+      "status": "PASS",
+      "message": "backlog_estimates: all 6 required columns present",
+      "detail": "8 total cols, 8,315 rows",
+      "ts": "2026-02-23T05:50:12.553051+00:00"
+    },
+    {
+      "gate": "schema",
+      "status": "PASS",
+      "message": "employer_features: all 4 required columns present",
+      "detail": "25 total cols, 70,206 rows",
+      "ts": "2026-02-23T05:50:12.559107+00:00"
+    },
+    {
+      "gate": "schema",
+      "status": "PASS",
+      "message": "employer_friendliness_scores: all 4 required columns present",
+      "detail": "22 total cols, 70,206 rows",
+      "ts": "2026-02-23T05:50:12.563810+00:00"
+    },
+    {
+      "gate": "schema",
+      "status": "PASS",
+      "message": "dim_employer: all 1 required columns present",
+      "detail": "6 total cols, 227,076 rows",
+      "ts": "2026-02-23T05:50:12.573933+00:00"
+    },
+    {
+      "gate": "schema",
+      "status": "PASS",
+      "message": "dim_soc: all 1 required columns present",
+      "detail": "12 total cols, 1,396 rows",
+      "ts": "2026-02-23T05:50:12.575582+00:00"
+    },
+    {
+      "gate": "schema",
+      "status": "PASS",
+      "message": "dim_area: all 1 required columns present",
+      "detail": "10 total cols, 587 rows",
+      "ts": "2026-02-23T05:50:12.576825+00:00"
+    },
+    {
+      "gate": "schema",
+      "status": "PASS",
+      "message": "dim_country: all 1 required columns present",
+      "detail": "6 total cols, 249 rows",
+      "ts": "2026-02-23T05:50:12.577903+00:00"
+    },
+    {
+      "gate": "pk_unique",
+      "status": "PASS",
+      "message": "fact_cutoffs_all: PK unique (8,315 rows)",
+      "detail": "",
+      "ts": "2026-02-23T05:50:12.579990+00:00"
+    },
+    {
+      "gate": "pk_unique",
+      "status": "PASS",
+      "message": "salary_benchmarks: percentile ordering OK (5 cols checked)",
+      "detail": "",
+      "ts": "2026-02-23T05:50:12.590226+00:00"
+    },
+    {
+      "gate": "pk_unique",
+      "status": "PASS",
+      "message": "fact_cutoff_trends: PK unique (8,315 rows)",
+      "detail": "",
+      "ts": "2026-02-23T05:50:12.592516+00:00"
+    },
+    {
+      "gate": "ref_integrity",
+      "status": "PASS",
+      "message": "worksite_geo_metrics: soc_code coverage 81.5% (15,364/18,848)",
+      "detail": "",
+      "ts": "2026-02-23T05:50:12.600505+00:00"
+    },
+    {
+      "gate": "ref_integrity",
+      "status": "PASS",
+      "message": "worksite_geo_metrics: area_code coverage 100.0% (18,956/18,956)",
+      "detail": "",
+      "ts": "2026-02-23T05:50:12.602147+00:00"
+    },
+    {
+      "gate": "ref_integrity",
+      "status": "PASS",
+      "message": "salary_benchmarks: soc_code coverage 100.0% (224,047/224,047)",
+      "detail": "",
+      "ts": "2026-02-23T05:50:12.611536+00:00"
+    },
+    {
+      "gate": "ref_integrity",
+      "status": "PASS",
+      "message": "salary_benchmarks: area_code coverage 100.0% (223,216/223,216)",
+      "detail": "",
+      "ts": "2026-02-23T05:50:12.615582+00:00"
+    },
+    {
+      "gate": "ref_integrity",
+      "status": "PASS",
+      "message": "soc_demand_metrics: soc_code coverage 84.6% (1,626/1,923)",
+      "detail": "",
+      "ts": "2026-02-23T05:50:12.620325+00:00"
+    },
+    {
+      "gate": "range",
+      "status": "PASS",
+      "message": "employer_monthly_metrics.approval_rate: all in [0,1] (74,350 non-null)",
+      "detail": "",
+      "ts": "2026-02-23T05:50:12.623856+00:00"
+    },
+    {
+      "gate": "range",
+      "status": "PASS",
+      "message": "employer_monthly_metrics.denial_rate: all in [0,1] (74,350 non-null)",
+      "detail": "",
+      "ts": "2026-02-23T05:50:12.624033+00:00"
+    },
+    {
+      "gate": "range",
+      "status": "PASS",
+      "message": "employer_features.approval_rate_24m: all in [0,1] (56,936 non-null)",
+      "detail": "",
+      "ts": "2026-02-23T05:50:12.629179+00:00"
+    },
+    {
+      "gate": "range",
+      "status": "PASS",
+      "message": "employer_features.denial_rate_24m: all in [0,1] (56,936 non-null)",
+      "detail": "",
+      "ts": "2026-02-23T05:50:12.629657+00:00"
+    },
+    {
+      "gate": "range",
+      "status": "PASS",
+      "message": "soc_demand_metrics.approval_rate: all in [0,1] (1,923 non-null)",
+      "detail": "",
+      "ts": "2026-02-23T05:50:12.635427+00:00"
+    },
+    {
+      "gate": "range",
+      "status": "PASS",
+      "message": "employer_monthly_metrics: no months with approvals > filings",
+      "detail": "",
+      "ts": "2026-02-23T05:50:12.638359+00:00"
+    },
+    {
+      "gate": "range",
+      "status": "PASS",
+      "message": "employer_friendliness_scores.efs: all in [0,100] (14,280 non-null)",
+      "detail": "",
+      "ts": "2026-02-23T05:50:12.644250+00:00"
+    },
+    {
+      "gate": "parity",
+      "status": "PASS",
+      "message": "fact_cutoffs_all: 8,315 rows == expected",
+      "detail": "",
+      "ts": "2026-02-23T05:50:12.644567+00:00"
+    },
+    {
+      "gate": "parity",
+      "status": "WARN",
+      "message": "fact_cutoffs: 280 leaves \u2260 expected 168",
+      "detail": "Run make_presentation_and_snapshot.py to rebuild if needed",
+      "ts": "2026-02-23T05:50:12.683861+00:00"
+    },
+    {
+      "gate": "parity",
+      "status": "PASS",
+      "message": "fact_cutoff_trends (8,315) <= fact_cutoffs_all (8,315) rows",
+      "detail": "",
+      "ts": "2026-02-23T05:50:12.690327+00:00"
+    },
+    {
+      "gate": "parity",
+      "status": "WARN",
+      "message": "PERM/EMM 36m delta 36.1% (EMM counts CERTIFIED only vs all PERM statuses)",
+      "detail": "EMM=380,700 PERM_raw=279,706",
+      "ts": "2026-02-23T05:50:12.704705+00:00"
+    },
+    {
+      "gate": "statistical",
+      "status": "PASS",
+      "message": "fact_cutoff_trends.monthly_advancement_days median 0.0 in [-120,240]",
+      "detail": "",
+      "ts": "2026-02-23T05:50:12.713477+00:00"
+    },
+    {
+      "gate": "statistical",
+      "status": "PASS",
+      "message": "EFS_v1 corr = 0.5882 >= 0.55 threshold",
+      "detail": "",
+      "ts": "2026-02-23T05:50:12.713802+00:00"
+    },
+    {
+      "gate": "statistical",
+      "status": "PASS",
+      "message": "salary_benchmarks: 0.0% null median (within threshold)",
+      "detail": "",
+      "ts": "2026-02-23T05:50:12.717719+00:00"
+    },
+    {
+      "gate": "statistical",
+      "status": "PASS",
+      "message": "backlog_estimates: all 3,134 values in [0,600] months range",
+      "detail": "",
+      "ts": "2026-02-23T05:50:12.718817+00:00"
+    },
+    {
+      "gate": "golden_sample",
+      "status": "PASS",
+      "message": "fact_cutoffs_all: 8,315 rows == golden",
+      "detail": "",
+      "ts": "2026-02-23T05:50:12.719011+00:00"
+    },
+    {
+      "gate": "golden_sample",
+      "status": "PASS",
+      "message": "fact_cutoff_trends: 8,315 rows == golden",
+      "detail": "",
+      "ts": "2026-02-23T05:50:12.719152+00:00"
+    },
+    {
+      "gate": "golden_sample",
+      "status": "PASS",
+      "message": "category_movement_metrics: 8,315 rows == golden",
+      "detail": "",
+      "ts": "2026-02-23T05:50:12.719263+00:00"
+    },
+    {
+      "gate": "golden_sample",
+      "status": "PASS",
+      "message": "employer_monthly_metrics: 74,350 rows == golden",
+      "detail": "",
+      "ts": "2026-02-23T05:50:12.719361+00:00"
+    },
+    {
+      "gate": "golden_sample",
+      "status": "PASS",
+      "message": "backlog_estimates: 8,315 rows == golden",
+      "detail": "",
+      "ts": "2026-02-23T05:50:12.719442+00:00"
+    },
+    {
+      "gate": "golden_sample",
+      "status": "PASS",
+      "message": "dim_employer: 227,076 rows (delta 0.000% within tolerance)",
+      "detail": "",
+      "ts": "2026-02-23T05:50:12.719522+00:00"
+    },
+    {
+      "gate": "golden_sample",
+      "status": "PASS",
+      "message": "dim_soc: 1,396 rows (delta 0.000% within tolerance)",
+      "detail": "",
+      "ts": "2026-02-23T05:50:12.719619+00:00"
+    },
+    {
+      "gate": "golden_sample",
+      "status": "PASS",
+      "message": "dim_area: 587 rows (delta 0.000% within tolerance)",
+      "detail": "",
+      "ts": "2026-02-23T05:50:12.719705+00:00"
+    },
+    {
+      "gate": "golden_sample",
+      "status": "PASS",
+      "message": "dim_country: 249 rows (delta 0.000% within tolerance)",
+      "detail": "",
+      "ts": "2026-02-23T05:50:12.719776+00:00"
+    }
+  ]
+}

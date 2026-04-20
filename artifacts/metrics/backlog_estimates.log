@@ -1,0 +1,5 @@
+=== backlog_estimates build 2026-04-20T00:45:08.117057+00:00 ===
+Loaded fact_cutoff_trends: 8,115 rows
+PERM 12m filings (global proxy): 141,052
+Output rows: 8,115
+Written: /Users/vrathod1/dev/NorthStar/immigration-model-builder/artifacts/tables/backlog_estimates.parquet
