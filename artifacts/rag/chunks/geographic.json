@@ -6,7 +6,7 @@
     "label": "geo_summary",
     "text": "Worksite Geographic Metrics Summary:\nTotal records: 134,799 (multiple geographic grains)\nColumns: state, filings_count, approvals_count, offered_median, distinct_employers, dataset, grain, area_code, soc_code, filings_count_soc_area, offered_median_soc_area, city, approval_rate, competitiveness_ratio\nGrains: state, metro area, county, city\nSource: PERM + LCA filings cross-referenced with OEWS wages\n\nTop 15 states by sponsorship filings:\n  CA: 6,540,571\n  TX: 3,684,166\n  NY: 3,028,126\n  NJ: 2,203,159\n  IL: 1,625,908\n  WA: 1,560,182\n  MA: 1,284,320\n  FL: 1,205,740\n  GA: 1,196,918\n  PA: 1,085,403\n  VA: 1,000,913\n  NC: 962,007\n  MI: 959,894\n  OH: 769,527\n  MD: 576,076",
     "metadata": {},
-    "generated_at": "2026-04-20T00:51:31.755308+00:00"
+    "generated_at": "2026-04-20T04:54:41.497125+00:00"
   },
   {
     "chunk_id": "c412fb29a772",
@@ -15,7 +15,7 @@
     "label": "geo_state_detail",
     "text": "State-Level Sponsorship Summary (all datasets):\n  CA: filings=2,180,209 approvals=1,941,946 employers=80,742 median_wage=$110,694\n  TX: filings=1,228,077 approvals=1,103,075 employers=41,503 median_wage=$87,136\n  NY: filings=1,009,388 approvals=891,529 employers=55,420 median_wage=$97,636\n  NJ: filings=734,393 approvals=662,289 employers=24,350 median_wage=$87,500\n  IL: filings=541,972 approvals=484,220 employers=20,666 median_wage=$83,631\n  WA: filings=520,063 approvals=480,266 employers=11,344 median_wage=$114,462\n  MA: filings=428,109 approvals=379,905 employers=17,758 median_wage=$93,402\n  FL: filings=401,919 approvals=352,987 employers=33,816 median_wage=$69,545\n  GA: filings=398,974 approvals=357,290 employers=15,764 median_wage=$72,686\n  PA: filings=361,805 approvals=325,646 employers=13,880 median_wage=$82,410\n  VA: filings=333,641 approvals=298,223 employers=15,740 median_wage=$86,100\n  NC: filings=320,673 approvals=289,829 employers=11,326 median_wage=$85,791\n  MI: filings=319,965 approvals=283,150 employers=11,249 median_wage=$83,273\n  OH: filings=256,511 approvals=231,314 employers=10,226 median_wage=$76,240\n  MD: filings=192,026 approvals=166,131 employers=11,550 median_wage=$79,286\n  AZ: filings=167,334 approvals=149,945 employers=8,004 median_wage=$83,256\n  MN: filings=155,419 approvals=141,045 employers=6,380 median_wage=$84,083\n  CT: filings=152,842 approvals=138,101 employers=7,328 median_wage=$87,038\n  MO: filings=128,633 approvals=112,669 employers=5,804 median_wage=$74,793\n  CO: filings=120,008 approvals=104,322 employers=7,747 median_wage=$84,900\n  TN: filings=112,516 approvals=98,973 employers=5,762 median_wage=$69,584\n  WI: filings=109,825 approvals=96,892 employers=4,806 median_wage=$65,898\n  IN: filings=108,873 approvals=94,899 employers=5,397 median_wage=$75,011\n  OR: filings=92,165 approvals=82,640 employers=4,318 median_wage=$88,400\n  DC: filings=72,260 approvals=62,911 employers=6,030 median_wage=$81,585",
     "metadata": {},
-    "generated_at": "2026-04-20T00:51:31.757098+00:00"
+    "generated_at": "2026-04-20T04:54:41.499341+00:00"
   },
   {
     "chunk_id": "e7f9112bf2f4",
@@ -24,7 +24,7 @@
     "label": "geo_top_cities",
     "text": "Top 30 Cities by Immigration Sponsorship Filings:\n  NEW YORK, NY: 368,996 filings, median=$85,051, 38,015 employers\n  New York, NY: 221,496 filings, median=$122,480, 24,214 employers\n  HOUSTON, TX: 142,966 filings, median=$74,056, 13,108 employers\n  SAN FRANCISCO, CA: 125,854 filings, median=$105,000, 12,019 employers\n  CHICAGO, IL: 102,122 filings, median=$74,589, 9,968 employers\n  ATLANTA, GA: 96,284 filings, median=$74,100, 6,976 employers\n  SAN JOSE, CA: 94,179 filings, median=$99,778, 6,423 employers\n  San Francisco, CA: 89,483 filings, median=$149,000, 8,965 employers\n  New York, NY: 83,335 filings, median=$125,000, 13,347 employers\n  Seattle, WA: 76,935 filings, median=$137,384, 4,356 employers\n  Austin, TX: 74,645 filings, median=$111,489, 7,315 employers\n  SEATTLE, WA: 74,395 filings, median=$112,000, 4,074 employers\n  SUNNYVALE, CA: 71,617 filings, median=$103,685, 4,281 employers\n  San Jose, CA: 69,338 filings, median=$142,100, 5,515 employers\n  Chicago, IL: 68,819 filings, median=$98,500, 8,223 employers\n  DALLAS, TX: 66,440 filings, median=$72,000, 6,691 employers\n  Sunnyvale, CA: 65,293 filings, median=$152,963, 3,304 employers\n  IRVING, TX: 65,280 filings, median=$74,000, 4,555 employers\n  BOSTON, MA: 62,507 filings, median=$75,650, 5,829 employers\n  Atlanta, GA: 61,131 filings, median=$99,008, 5,878 employers\n  Houston, TX: 60,786 filings, median=$92,092, 8,870 employers\n  AUSTIN, TX: 59,206 filings, median=$82,098, 6,133 employers\n  REDMOND, WA: 58,729 filings, median=$98,638, 2,240 employers\n  MOUNTAIN VIEW, CA: 57,956 filings, median=$120,000, 2,732 employers\n  CHARLOTTE, NC: 57,156 filings, median=$78,538, 4,437 employers\n  Redmond, WA: 53,974 filings, median=$144,132, 1,890 employers\n  SANTA CLARA, CA: 53,383 filings, median=$100,000, 3,822 employers\n  LOS ANGELES, CA: 53,106 filings, median=$69,306, 10,670 employers\n  Dallas, TX: 51,488 filings, median=$98,908, 5,939 employers\n  JERSEY CITY, NJ: 50,571 filings, median=$82,700, 3,755 employers",
     "metadata": {},
-    "generated_at": "2026-04-20T00:51:31.762209+00:00"
+    "generated_at": "2026-04-20T04:54:41.505349+00:00"
   },
   {
     "chunk_id": "02698d5c8cc3",
@@ -33,7 +33,7 @@
     "label": "geo_competitiveness",
     "text": "Geographic Competitiveness Analysis:\n  Competitiveness ratio = filings per employer (higher = more competitive).\n  Overall: mean=1.4, median=1.5, max=2.1\n  Areas with ratio >2.0 indicate intense competition for sponsorship.\n  Areas with ratio <1.0 indicate distributed sponsorship across many employers.",
     "metadata": {},
-    "generated_at": "2026-04-20T00:51:31.763624+00:00"
+    "generated_at": "2026-04-20T04:54:41.506817+00:00"
   },
   {
     "chunk_id": "8f4c4a5838a5",
@@ -42,6 +42,6 @@
     "label": "dim_area_summary",
     "text": "Geographic Area Directory (dim_area):\nTotal areas: 587\nColumns: area_code, area_title, area_type, state_abbr, state_fips, cbsa_code, metro_status, ref_year, source_file, ingested_at\nArea types: {'MSA': 396, 'NONMSA': 136, 'STATE': 51, 'TERRITORY': 3, 'NATIONAL': 1}\nStates represented: 54\n\nSample metro areas: U.S., Alabama, Alaska, Arizona, Arkansas, California, Colorado, Connecticut, Delaware, District of Columbia",
     "metadata": {},
-    "generated_at": "2026-04-20T00:51:39.760516+00:00"
+    "generated_at": "2026-04-20T04:54:49.729683+00:00"
   }
 ]

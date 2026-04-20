@@ -6,7 +6,7 @@
     "label": "processing_summary",
     "text": "USCIS Processing Times Trends:\nTotal records: 35\nColumns: fiscal_year, quarter, reporting_period, period_end_date, form_type, category, eb_received, eb_approved, eb_denied, eb_pending, total_received, total_approved, total_denied, total_pending, approval_rate, throughput, net_intake, backlog_months, pending_change, throughput_change\nCoverage: FY2014\u2013FY2025 quarterly USCIS I-485 performance data\nUse: Track processing speed changes, estimate case timelines.",
     "metadata": {},
-    "generated_at": "2026-04-20T00:51:31.775527+00:00"
+    "generated_at": "2026-04-20T04:54:41.519733+00:00"
   },
   {
     "chunk_id": "d06a39ed9dca",
@@ -15,7 +15,7 @@
     "label": "processing_fy_table",
     "text": "USCIS I-485 Processing Performance \u2014 Detailed Data:\n  fiscal_year | approval_rate | throughput | backlog_months | pending_change\n  ------------------------------------------------------------\n  2014 | 0.95 | 33,526 | 11 | \u2014\n  2014 | 0.95 | 32,262 | 11 | 1,286\n  2014 | 0.96 | 40,860 | 8.45 | -4,089\n  2015 | 0.94 | 27,899 | 13 | 7,723\n  2015 | 0.96 | 40,115 | 8.86 | -4,331\n  2015 | 0.94 | 33,340 | 11 | -1,540\n  2016 | 0.92 | 22,680 | 17 | 8,596\n  2016 | 0.95 | 37,276 | 9.72 | -3,759\n  2016 | 0.95 | 26,258 | 14 | 8,220\n  2016 | 0.94 | 31,080 | 12 | -574\n  2017 | 0.96 | 34,785 | 12 | 8,795\n  2017 | 0.94 | 29,803 | 14 | 128\n  2017 | 0.95 | 31,394 | 14 | 10,200\n  2018 | 0.85 | 19,008 | 25 | 11,844\n  2018 | 0.93 | 32,614 | 13 | -5,970\n  2018 | 0.92 | 30,929 | 16 | 20,098\n  2018 | 0.91 | 37,615 | 12 | -13,496\n  2019 | 0.93 | 29,550 | 15 | -6,226\n  2019 | 0.96 | 34,724 | 13 | -6,407\n  2021 | 0.97 | 88,929 | 8.28 | 97,100\n  2022 | 0.95 | 35,485 | 21 | 7,578\n  2022 | 0.94 | 32,656 | 24 | 4,496\n  2022 | 0.95 | 60,170 | 12 | -12,994\n  2022 | 0.93 | 88,888 | 6.45 | -53,380\n  2023 | 0.94 | 53,296 | 12 | 13,875\n  2023 | 0.91 | 37,460 | 16 | -3,059\n  2023 | 0.90 | 35,596 | 16 | -12,711\n  2023 | 0.87 | 34,539 | 15 | -17,598\n  2024 | 0.88 | 21,376 | 27 | 22,001\n  2024 | 0.91 | 34,644 | 17 | 4,615\n  2024 | 0.92 | 39,275 | 14 | -13,885\n  2024 | 0.87 | 37,218 | 14 | -10,676\n  2025 | 0.89 | 33,061 | 16 | 7,980\n  2025 | 0.86 | 28,848 | 19 | -2,651\n  2025 | 0.89 | 30,104 | 17 | -5,975",
     "metadata": {},
-    "generated_at": "2026-04-20T00:51:31.776416+00:00"
+    "generated_at": "2026-04-20T04:54:41.520921+00:00"
   },
   {
     "chunk_id": "66733ff326c8",
@@ -24,7 +24,7 @@
     "label": "processing_trends",
     "text": "I-485 Processing Trend Analysis:\n  Backlog months: min=6.5, max=27.2, latest=17.3\n  Approval rate: min=84.7%, max=97.5%, latest=88.7%\n  Throughput: min=19,008, max=88,929, latest=30,104",
     "metadata": {},
-    "generated_at": "2026-04-20T00:51:31.776593+00:00"
+    "generated_at": "2026-04-20T04:54:41.521161+00:00"
   },
   {
     "chunk_id": "110c0eb4ab58",
@@ -33,6 +33,6 @@
     "label": "uscis_approvals_summary",
     "text": "USCIS Approval/Denial Statistics (fact_uscis_approvals):\nTotal records: 1,048\nColumns: fiscal_year, form, category, approvals, denials, source_file, ingested_at\nFiscal years: FY1992, FY1993, FY1994, FY1995, FY1996, FY1997, FY1998, FY1999, FY2000, FY2001, FY2002, FY2003, FY2004, FY2005, FY2006, FY2007, FY2008, FY2009, FY2010, FY2011, FY2012, FY2013, FY2014, FY2015, FY2016, FY2017, FY2018, FY2019, FY2020, FY2021, FY2022, FY2023, FY2024, FY2025, FY_UNKNOWN\nForms covered: I526, I765, I485, I526Q, I140, I360\nTotal approvals: 33,526,733, denials: 3,740,739\n\nApprovals by category:\n  TOTAL: 8,133,969\n  Total: 5,978,801\n  C09: 4,228,796\n  ALL: 2,040,140\n  C09P: 1,472,330\n  C085: 1,344,942\n  CLAIMS3 AND ELIS, QUERIED 02/2023, TRK 14045: 1,319,326\n  C03B: 1,299,975\n  C11: 1,140,770\n  A03: 747,330\n  C33: 669,749\n  category    Total\ncategory      NaN\nName: 0, dtype: str: 603,834\n  C08: 572,866\n  A05: 387,102\n  category                                       C086\ncategory    APPLICANT FOR ASYLUM/PENDING ASYLUM APP\nName: 32, dtype: str: 355,756",
     "metadata": {},
-    "generated_at": "2026-04-20T00:51:39.923170+00:00"
+    "generated_at": "2026-04-20T04:54:49.885064+00:00"
   }
 ]

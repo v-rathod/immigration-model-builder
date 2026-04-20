@@ -3586,3 +3586,58 @@ When user refreshes P3 at `localhost:3000/dashboard/visa-bulletin/`:
 - Data pipeline P1→P2→P3 fully operational
 - Frontend ready to display May 2026 on page refresh
 
+
+---
+
+## 2026-04-19 - Milestone 26: Homepage Regression + Test Suite Hardening
+
+### Bug Fixed
+Homepage visa-bulletin-pulse widget showed "Invalid Date" and "+NaN days/month" for all categories (FAD and DFF) after Milestone 25 data import. Priority date check widget also showed "invalid".
+
+### Root Cause
+`append_may2026_bulletin.py` updated `fact_cutoffs_all.parquet` (raw parsed data, 10 columns) then directly copied it to `fact_cutoff_trends.parquet` **without running `make_fact_cutoff_trends.py`**. The computed table requires 6 additional columns:
+
+| Missing Column | UI Impact |
+|---|---|
+| `velocity_3m` | "+NaN days/month" on homepage |
+| `velocity_6m` | NaN velocity calculations |
+| `monthly_advancement_days` | Cannot compute movement |
+| `retrogression_flag` | Retrogression display broken |
+| `retrogression_count_cum` | Cumulative count broken |
+| `queue_position_days` | PD calculations broken |
+
+### Fix Applied
+1. Ran `python3.12 scripts/make_fact_cutoff_trends.py` to rebuild computed table
+2. Re-exported to P3: `fact_cutoff_trends.json` now has all 14 columns
+3. Dev server hot-reloaded, homepage immediately showed correct data
+
+### Prevention: Tests Added
+
+**P2 (immigration-model-builder) - 4 new tests in `tests/p3_metrics/test_fact_cutoff_trends.py`:**
+- `test_fact_cutoff_trends_artifact_has_computed_columns` - CRITICAL: fails if raw table replaces computed
+- `test_fact_cutoff_trends_velocity_3m_is_numeric` - fails if velocity_3m contains non-numeric values
+- `test_fact_cutoff_trends_has_may_2026_or_later` - fails if data is stale
+- `test_fact_cutoff_trends_row_count_reasonable` - fails if count spikes or drops
+
+**P3 (immigration-insights-app) - 3 new tests in `src/__tests__/visa-bulletin-regression.test.ts`:**
+- `CRITICAL: computed velocity columns are present in every row (prevents NaN days/month)` - validates all 6 computed cols
+- `CRITICAL: velocity_3m is numeric (not NaN/undefined) for D-status rows` - prevents "+NaN days/month"
+- `CRITICAL: cutoff_date format is parseable as a date (prevents Invalid Date in UI)` - prevents "Invalid Date"
+
+**`append_may2026_bulletin.py` hardened:** Now automatically calls `make_fact_cutoff_trends.py` after updating `fact_cutoffs_all.parquet`. Will fail visibly if the rebuild fails.
+
+### Test Counts After Fix
+- P2: 659 tests (was 655, +4)
+- P3: 1305 tests passing (was 1302, +3)
+
+### Files Modified
+- `tests/p3_metrics/test_fact_cutoff_trends.py` - Added 4 integration artifact tests
+- `src/__tests__/visa-bulletin-regression.test.ts` - Added 3 CRITICAL schema tests
+- `scripts/append_may2026_bulletin.py` - Auto-rebuild fact_cutoff_trends after update
+- `artifacts/tables/fact_cutoff_trends.parquet` - Rebuilt with computed columns (gitignored)
+- `public/data/dashboards/visa-bulletin/fact_cutoff_trends.json` - Re-exported with 14 columns (gitignored)
+
+### Quality Gates
+- Homepage widgets: visa-bulletin-pulse shows correct cutoff dates and velocity
+- Priority date check: shows valid month predictions
+- All test suites green

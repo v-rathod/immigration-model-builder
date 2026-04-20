@@ -130,5 +130,25 @@ def process_may2026_bulletin():
     print(f"\n✅ Updated {fact_cutoffs_all}")
     print(f"\nNew latest month: {df_combined['bulletin_year'].max()}-{df_combined[df_combined['bulletin_year'] == df_combined['bulletin_year'].max()]['bulletin_month'].max():02d}")
 
+    # CRITICAL: Always rebuild fact_cutoff_trends after updating fact_cutoffs_all.
+    # fact_cutoff_trends is a COMPUTED table (adds velocity_3m, velocity_6m,
+    # monthly_advancement_days, retrogression_flag etc.). If you only update
+    # fact_cutoffs_all without rebuilding fact_cutoff_trends, the P3 frontend
+    # will show "NaN days/month" and "Invalid Date" on the homepage.
+    print("\n  Rebuilding fact_cutoff_trends (computed velocity table)...")
+    import subprocess
+    result = subprocess.run(
+        [sys.executable, "scripts/make_fact_cutoff_trends.py"],
+        capture_output=True, text=True
+    )
+    if result.returncode == 0:
+        print("  ✅ fact_cutoff_trends rebuilt successfully")
+        for line in result.stdout.strip().splitlines()[-5:]:
+            print(f"     {line}")
+    else:
+        print("  ✗ make_fact_cutoff_trends.py FAILED:")
+        print(result.stderr)
+        print("  Run manually: python3.12 scripts/make_fact_cutoff_trends.py")
+
 if __name__ == "__main__":
     process_may2026_bulletin()

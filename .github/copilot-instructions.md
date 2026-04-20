@@ -405,6 +405,8 @@ Discover current test files and counts: `python3 -m pytest tests/ --co -q 2>&1 |
 
 15. **RAG must be rebuilt after any table change**: After rebuilding curated tables, features, or models, run `python3 -m src.export.rag_builder && python3 -m src.export.qa_generator` to regenerate chunks and QA pairs with updated row counts and statistics. The `scripts/test_rag_practical.py` smoke test can detect stale data.
 
+16. **CRITICAL: fact_cutoffs_all vs fact_cutoff_trends — NEVER copy one over the other**: `fact_cutoffs_all.parquet` is raw (10 cols, parsed from PDFs). `fact_cutoff_trends.parquet` is computed (14 cols, adds `velocity_3m`, `velocity_6m`, `monthly_advancement_days`, `retrogression_flag`, `retrogression_count_cum`, `queue_position_days`). If `fact_cutoff_trends` is replaced with raw data, the P3 homepage shows "Invalid Date" and "+NaN days/month" on every widget. **Workflow when adding a new bulletin month**: (1) Update `fact_cutoffs_all` via `append_may2026_bulletin.py` or similar; (2) Rebuild computed table: `python3.12 scripts/make_fact_cutoff_trends.py` — this is now called automatically by the append script; (3) Export to P3 JSON. The test `tests/p3_metrics/test_fact_cutoff_trends.py::test_fact_cutoff_trends_artifact_has_computed_columns` will fail loudly if this is violated.
+
 ---
 
 ## Source Code Architecture

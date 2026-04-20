@@ -23,7 +23,7 @@
         }
       }
     },
-    "generated_at": "2026-04-20T00:51:31.806504+00:00"
+    "generated_at": "2026-04-20T04:54:41.554100+00:00"
   },
   {
     "chunk_id": "fb51a6a2f6fa",
@@ -32,7 +32,7 @@
     "label": "visa_demand_top_countries",
     "text": "Top 25 Countries by Visa Demand:\n  Grand Totals: 780,010,263\n  Totals for Asia: 219,845,605\n  Totals for North America: 143,558,565\n  Mexico: 137,276,727\n  Totals for South America: 105,981,727\n  China - mainland: 85,717,159\n  Totals for Europe: 79,321,407\n  India: 68,993,844\n  Brazil: 55,239,488\n  B-1/B-2 Temporary Visitor for Business and Pleasure: 49,971,781\n  B1/B2 Temporary visitor for business and pleasure: 49,971,781\n  Western Hemisphere Total: 40,389,599\n  Region Total For Asia: 35,711,555\n  Asia Total: 34,989,967\n  Totals for Africa: 27,993,110\n  Grand: 27,452,007\n  Colombia: 26,155,729\n  Region Total For North America: 24,405,599\n  North America Total: 23,507,196\n  TOTAL: 23,209,976\n  Korea, South: 20,311,924\n  Philippines: 19,715,485\n  East Asia and Pacific Total: 19,099,524\n  Argentina: 17,268,406\n  Region Total For South America: 16,562,020",
     "metadata": {},
-    "generated_at": "2026-04-20T00:51:31.813141+00:00"
+    "generated_at": "2026-04-20T04:54:41.561273+00:00"
   },
   {
     "chunk_id": "665e15a32390",
@@ -41,7 +41,7 @@
     "label": "visa_demand_trends",
     "text": "Visa Demand Year-over-Year Trends:\n  FY1988: 392\n  FY1997: 53,364,531\n  FY1998: 52,302,303\n  FY1999: 55,732,302\n  FY2000: 64,274,724\n  FY2001: 68,299,002\n  FY2002: 51,924,933\n  FY2003: 43,934,706\n  FY2004: 45,441,891\n  FY2005: 48,500,559\n  FY2006: 121,929,826\n  FY2007: 125,084,228\n  FY2008: 121,804,990\n  FY2009: 110,500,508\n  FY2010: 113,713,229\n  FY2011: 104,059,821\n  FY2012: 121,576,697\n  FY2013: 157,315,281\n  FY2014: 184,460,264\n  FY2015: 220,028,825\n  FY2016: 134,462,486\n  FY2017: 131,275,390\n  FY2018: 132,049,201\n  FY2019: 135,203,520\n  FY2020: 93,910,571\n  FY2021: 30,011,738\n  FY2022: 57,016,321\n  FY2023: 85,501,316\n  FY2024: 85,280,892\n  FY2025: 645,564\n\nDemand by Category \u00d7 Year (latest 3 years):\n  A1: 18,896 | 18,938 | 0\n  A2: 197,100 | 193,386 | 0\n  A3: 1,360 | 1,768 | 0\n  ADDITIONAL: 62,449 | 0 | 0\n  AM: 244 | 159 | 119\n  AMERASIAN: 7 | 10 | 11\n  B1: 58,572 | 63,088 | 0\n  B1/B2: 11,804,852 | 12,996,012 | 0\n  B2: 16,170 | 24,144 | 0\n  B2A: 11 | 20 | 29\n  B2B: 0 | 0 | 1\n  BBBCC: 3,552,304 | 3,743,530 | 0\n  BBBCV: 89,756 | 79,974 | 0\n  BC1: 15 | 0 | 0\n  BX: 3 | 6 | 2",
     "metadata": {},
-    "generated_at": "2026-04-20T00:51:31.831648+00:00"
+    "generated_at": "2026-04-20T04:54:41.581302+00:00"
   },
   {
     "chunk_id": "f3adadd57a10",
@@ -76,7 +76,7 @@
         }
       }
     },
-    "generated_at": "2026-04-20T00:51:31.843326+00:00"
+    "generated_at": "2026-04-20T04:54:41.593058+00:00"
   },
   {
     "chunk_id": "26b6e692b05d",
@@ -85,7 +85,7 @@
     "label": "iv_post_top_posts",
     "text": "Top 30 Consular Posts by Total IV Issuances:\n  Ciudad Juarez: 548,692\n  Santo Domingo: 354,731\n  Manila: 217,755\n  Ho Chi Minh City: 214,220\n  Guangzhou: 197,649\n  Mumbai: 170,872\n  Islamabad: 117,298\n  Dhaka: 103,534\n  San Salvador: 98,817\n  Kingston: 94,112\n  Havana: 76,369\n  Georgetown: 75,934\n  Bogota: 72,361\n  Kathmandu: 58,500\n  Lagos: 56,113\n  Addis Ababa: 55,604\n  Port-au-Prince: 54,458\n  Guayaquil: 52,575\n  Cairo: 49,579\n  Doha: 49,356\n  Kabul: 48,446\n  Nairobi: 46,143\n  Montreal: 45,406\n  Tegucigalpa: 45,229\n  Lima: 42,818\n  Accra: 41,842\n  Amman: 39,909\n  Ankara: 39,591\n  Djibouti: 39,555\n  Seoul: 39,032",
     "metadata": {},
-    "generated_at": "2026-04-20T00:51:31.845521+00:00"
+    "generated_at": "2026-04-20T04:54:41.595720+00:00"
   },
   {
     "chunk_id": "70b045e2d67a",
@@ -94,7 +94,7 @@
     "label": "iv_post_top_classes",
     "text": "Top 20 Visa Classes by IV Issuances (all posts):\n  IR5: 705,826\n  IR1: 613,606\n  IR2: 347,357\n  FX: 275,335\n  DV: 236,571\n  F4: 224,950\n  CR1: 193,247\n  F2B: 101,590\n  F1: 96,193\n  E3: 89,715\n  F3: 86,903\n  FX1: 77,767\n  F43: 77,551\n  DV1: 73,699\n  SQ3: 69,581\n  FX2: 65,476\n  F41: 64,347\n  F2A: 49,532\n  F42: 45,531\n  F24: 40,688",
     "metadata": {},
-    "generated_at": "2026-04-20T00:51:31.848106+00:00"
+    "generated_at": "2026-04-20T04:54:41.598474+00:00"
   },
   {
     "chunk_id": "673b01364f72",
@@ -103,7 +103,7 @@
     "label": "iv_post_recent_month",
     "text": "IV Issuances for September 2025 \u2014 Top 15 Posts:\n  Ciudad Juarez: 5,485\n  Santo Domingo: 3,651\n  Ho Chi Minh City: 3,055\n  Manila: 2,377\n  Dhaka: 2,086\n  Islamabad: 1,786\n  Mumbai: 1,678\n  Kingston: 1,207\n  Guangzhou: 1,119\n  Nairobi: 1,089\n  Lagos: 898\n  San Salvador: 863\n  Havana: 834\n  Addis Ababa: 818\n  Guayaquil: 738",
     "metadata": {},
-    "generated_at": "2026-04-20T00:51:31.868603+00:00"
+    "generated_at": "2026-04-20T04:54:41.621040+00:00"
   },
   {
     "chunk_id": "fb185fc9f9d3",
@@ -112,7 +112,7 @@
     "label": "niv_issuance_summary",
     "text": "Nonimmigrant Visa (NIV) Issuance Data:\nTotal records: 501,033\nFiscal years: FY1997, FY1998, FY1999, FY2000, FY2001, FY2002, FY2003, FY2004, FY2005, FY2006, FY2007, FY2008, FY2009, FY2010, FY2011, FY2012, FY2013, FY2014, FY2015, FY2016, FY2017, FY2018, FY2019, FY2020, FY2021, FY2022, FY2023, FY2024\nCountries: 220\nVisa classes: 169 (H-1B, L-1, F-1, B-1/B-2, J-1, etc.)\nSource: DOS NIV Statistics PDFs and spreadsheets\nUse: Track nonimmigrant visa demand by country and class, year-over-year trends.",
     "metadata": {},
-    "generated_at": "2026-04-20T00:51:33.918919+00:00"
+    "generated_at": "2026-04-20T04:54:43.740517+00:00"
   },
   {
     "chunk_id": "fc5c524225c9",
@@ -121,7 +121,7 @@
     "label": "niv_top_countries",
     "text": "Top 25 Countries by NIV Issuances (all years):\n  Grand Totals: 524,986,488\n  Totals for Asia: 219,845,605\n  Totals for North America: 143,558,565\n  Totals for South America: 105,981,727\n  Mexico: 103,970,752\n  Totals for Europe: 79,321,407\n  China - mainland: 63,469,737\n  India: 49,449,707\n  Brazil: 42,108,494\n  Totals for Africa: 27,993,110\n  Colombia: 20,248,328\n  Korea, South: 18,739,852\n  Philippines: 14,472,580\n  Argentina: 12,373,809\n  Russia: 11,362,944\n  Israel: 10,924,946\n  China - Taiwan: 10,329,720\n  Venezuela: 8,815,368\n  Great Britain and Northern Ireland: 8,583,172\n  Ecuador: 8,137,610\n  Poland: 6,913,549\n  Japan: 6,602,648\n  Dominican Republic: 6,433,942\n  Peru: 6,293,400\n  Turkey: 6,023,852",
     "metadata": {},
-    "generated_at": "2026-04-20T00:51:33.924451+00:00"
+    "generated_at": "2026-04-20T04:54:43.746655+00:00"
   },
   {
     "chunk_id": "03047a0d8246",
@@ -130,7 +130,7 @@
     "label": "niv_top_classes",
     "text": "Top 20 NIV Visa Classes by Issuances:\n  Grand Total: 584,271,701\n  Total Visas: 519,309,594\n  B-1,2: 295,945,203\n  B-1,2/BCC: 64,456,161\n  B1/B2: 31,257,262\n  F-1: 25,992,867\n  J-1: 20,995,770\n  B-2: 20,876,946\n  C-1/D: 16,620,486\n  H-1B: 10,152,372\n  BBBCC: 9,660,492\n  B-1,2/BCV: 8,396,736\n  H-4: 6,411,795\n  H-2A: 6,249,702\n  A-2: 6,219,162\n  H-2B: 4,788,690\n  L-2: 4,781,325\n  L-1: 4,722,951\n  B-1: 4,692,390\n  J-2: 2,530,395",
     "metadata": {},
-    "generated_at": "2026-04-20T00:51:33.929742+00:00"
+    "generated_at": "2026-04-20T04:54:43.752637+00:00"
   },
   {
     "chunk_id": "282d400cba48",
@@ -139,7 +139,7 @@
     "label": "niv_fy_trends",
     "text": "NIV Issuances by Fiscal Year:\n  FYFY1997: 53,364,531\n  FYFY1998: 52,302,303\n  FYFY1999: 55,732,302\n  FYFY2000: 64,274,724\n  FYFY2001: 68,299,002\n  FYFY2002: 51,924,933\n  FYFY2003: 43,934,706\n  FYFY2004: 45,441,891\n  FYFY2005: 48,500,559\n  FYFY2006: 52,530,570\n  FYFY2007: 57,998,565\n  FYFY2008: 59,427,684\n  FYFY2009: 52,237,638\n  FYFY2010: 57,804,766\n  FYFY2011: 67,571,451\n  FYFY2012: 80,343,810\n  FYFY2013: 82,479,141\n  FYFY2014: 89,392,320\n  FYFY2015: 98,025,705\n  FYFY2016: 93,433,419\n  FYFY2017: 87,137,217\n  FYFY2018: 81,252,234\n  FYFY2019: 78,678,612\n  FYFY2020: 36,118,890\n  FYFY2021: 16,752,498\n  FYFY2022: 27,260,480\n  FYFY2023: 41,753,308\n  FYFY2024: 43,879,744",
     "metadata": {},
-    "generated_at": "2026-04-20T00:51:33.935179+00:00"
+    "generated_at": "2026-04-20T04:54:43.758802+00:00"
   },
   {
     "chunk_id": "dca8e216f1c6",
@@ -148,7 +148,7 @@
     "label": "iv_issuance_by_country",
     "text": "Immigrant Visa Issuances by Country (fact_visa_issuance):\nTotal records: 28,531\nFiscal years: ['FY1988', 'FY2006', 'FY2007', 'FY2008', 'FY2009', 'FY2010', 'FY2011', 'FY2012', 'FY2013', 'FY2014', 'FY2015', 'FY2016', 'FY2017', 'FY2018', 'FY2019', 'FY2020', 'FY2021', 'FY2022', 'FY2023', 'FY2024']\nSource: DOS Visa Annual Reports\nUse: Track immigrant visa issuances by chargeability country and category.\n\nTop 20 countries by IV issuances:\n  Grand Totals: 255,023,775\n  B-1/B-2 Temporary Visitor for Business and Pleasure: 49,971,781\n  B1/B2 Temporary visitor for business and pleasure: 49,971,781\n  Western Hemisphere Total: 40,389,599\n  Region Total For Asia: 35,711,555\n  Asia Total: 34,989,967\n  Mexico: 33,258,291\n  Grand: 27,452,007\n  Region Total For North America: 24,405,599\n  North America Total: 23,507,196\n  TOTAL: 23,209,976\n  China - mainland: 22,247,422\n  India: 19,527,424\n  East Asia and Pacific Total: 19,099,524\n  Region Total For South America: 16,562,020\n  South America Total: 16,439,539\n  Brazil: 13,127,689\n  Region Total For Western Hemisphere: 11,676,522\n  B1/B2/BCC Combination B1/B2 and Border Crossing Card: 11,232,228\n  South and Central Asia Total: 9,887,277",
     "metadata": {},
-    "generated_at": "2026-04-20T00:51:33.938321+00:00"
+    "generated_at": "2026-04-20T04:54:43.762178+00:00"
   },
   {
     "chunk_id": "f62a69d5a343",
@@ -157,6 +157,6 @@
     "label": "visa_applications_summary",
     "text": "Visa Applications by Foreign State of Chargeability (fact_visa_applications):\nTotal records: 36,001\nFiscal years: ['FY2017', 'FY2018', 'FY2019', 'FY2020', 'FY2021', 'FY2022', 'FY2023', 'FY2024', 'FY2025']\nSource: DOS IV Issuances by FSC PDFs\nUse: Track visa applications, refusals, and issuances by country and class.\n\nTop 20 countries by visa applications:\n  Mexico: 47,684\n  Dominican Republic: 29,413\n  Vietnam: 21,047\n  Philippines: 18,783\n  China - mainland born: 17,398\n  India: 16,713\n  Afghanistan: 13,798\n  Cuba: 12,242\n  Bangladesh: 12,218\n  Jamaica: 9,687\n  Pakistan: 9,098\n  El Salvador: 8,574\n  Colombia: 6,029\n  Yemen: 5,999\n  Iran: 5,956\n  Nepal: 5,846\n  Ecuador: 5,427\n  Egypt: 5,249\n  Nigeria: 5,234\n  Guatemala: 5,198\n\nOverall refusal rate: 0.0% (0 of 446,437)",
     "metadata": {},
-    "generated_at": "2026-04-20T00:51:33.941309+00:00"
+    "generated_at": "2026-04-20T04:54:43.765537+00:00"
   }
 ]

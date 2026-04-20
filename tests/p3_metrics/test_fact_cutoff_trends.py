@@ -131,3 +131,80 @@ def test_retrogression_count_cum_accumulates():
     df = df.sort_values("bulletin_month")
     cum = df["retrogression_count_cum"].values
     assert cum[-1] >= 2, f"Expected >=2 cumulative retrogressions, got {cum[-1]}"
+
+
+# ---------------------------------------------------------------------------
+# Integration tests: validate the ACTUAL artifact on disk
+# These guard against schema regressions where the wrong table gets written
+# (e.g. fact_cutoffs_all overwriting fact_cutoff_trends, dropping velocity cols).
+# ---------------------------------------------------------------------------
+
+ARTIFACT_PATH = Path(__file__).resolve().parent.parent.parent / "artifacts" / "tables" / "fact_cutoff_trends.parquet"
+
+# Required computed columns that MUST exist in fact_cutoff_trends but NOT in fact_cutoffs_all.
+# Their absence causes "NaN days/month" and "Invalid Date" on the P3 homepage.
+COMPUTED_COLUMNS = [
+    "velocity_3m",
+    "velocity_6m",
+    "monthly_advancement_days",
+    "retrogression_flag",
+    "retrogression_count_cum",
+    "queue_position_days",
+]
+
+
+@pytest.fixture(scope="module")
+def fact_cutoff_trends_df():
+    if not ARTIFACT_PATH.exists():
+        pytest.skip(f"fact_cutoff_trends.parquet not found at {ARTIFACT_PATH}")
+    return pd.read_parquet(ARTIFACT_PATH)
+
+
+def test_fact_cutoff_trends_artifact_has_computed_columns(fact_cutoff_trends_df):
+    """CRITICAL: Computed velocity columns MUST exist in fact_cutoff_trends.parquet.
+
+    Root cause of Apr 2026 regression: append_may2026_bulletin.py copied
+    fact_cutoffs_all (raw, no velocity) over fact_cutoff_trends (computed),
+    causing the P3 homepage to show 'NaN days/month' and 'Invalid Date'.
+
+    If this test fails: run `python3.12 scripts/make_fact_cutoff_trends.py`
+    """
+    df = fact_cutoff_trends_df
+    missing = [col for col in COMPUTED_COLUMNS if col not in df.columns]
+    assert not missing, (
+        f"fact_cutoff_trends.parquet is missing computed columns: {missing}\n"
+        "This means the raw fact_cutoffs_all was exported instead of the computed table.\n"
+        "Fix: python3.12 scripts/make_fact_cutoff_trends.py"
+    )
+
+
+def test_fact_cutoff_trends_velocity_3m_is_numeric(fact_cutoff_trends_df):
+    """velocity_3m must be numeric - never the string 'NaN' or object type."""
+    df = fact_cutoff_trends_df
+    assert "velocity_3m" in df.columns, "velocity_3m column missing"
+    col = pd.to_numeric(df["velocity_3m"], errors="coerce")
+    # Allow NaN (early rows without enough history), but no coercion failures
+    invalid = df.loc[col.isna() & df["velocity_3m"].notna(), "velocity_3m"]
+    assert len(invalid) == 0, f"velocity_3m has non-numeric non-null values: {invalid.unique()}"
+
+
+def test_fact_cutoff_trends_has_may_2026_or_later(fact_cutoff_trends_df):
+    """fact_cutoff_trends must include at least May 2026 (tracks bulletin freshness).
+
+    Update this lower bound annually when new bulletins are added.
+    """
+    df = fact_cutoff_trends_df
+    latest_year = int(df["bulletin_year"].max())
+    latest_month = int(df.loc[df["bulletin_year"] == latest_year, "bulletin_month"].max())
+    combined = latest_year * 100 + latest_month
+    assert combined >= 202605, (
+        f"fact_cutoff_trends only goes to {latest_year}-{latest_month:02d}; "
+        "expected >= 2026-05. Run append_may2026_bulletin.py then make_fact_cutoff_trends.py."
+    )
+
+
+def test_fact_cutoff_trends_row_count_reasonable(fact_cutoff_trends_df):
+    """Row count sanity: ~55 rows per bulletin month (6 cats x ~7 countries x 2 charts)."""
+    df = fact_cutoff_trends_df
+    assert len(df) >= 8_000, f"Too few rows: {len(df)}. Expected >= 8,000."
+    assert len(df) <= 20_000, f"Too many rows: {len(df)}. Possible duplicate ingestion."

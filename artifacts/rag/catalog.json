@@ -2,7 +2,7 @@
   "program": "NorthStar",
   "project": "Meridian (P2)",
   "description": "Immigration data intelligence platform. Meridian curates U.S. immigration data from DOL, DOS, USCIS, DHS, and BLS into structured tables, engineered features, and predictive models. This catalog describes all available data for answering immigration-related questions.",
-  "generated_at": "2026-04-20T00:51:30.833786+00:00",
+  "generated_at": "2026-04-20T04:54:40.580015+00:00",
   "topics": [
     "pd_forecast",
     "employer",
@@ -440,7 +440,7 @@
     },
     {
       "name": "fact_cutoff_trends.parquet",
-      "rows": 8115,
+      "rows": 8170,
       "columns": [
         "bulletin_year",
         "bulletin_month",
@@ -478,7 +478,7 @@
     },
     {
       "name": "fact_cutoffs_all.parquet",
-      "rows": 8115,
+      "rows": 8170,
       "columns": [
         "chart",
         "category",
