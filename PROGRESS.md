@@ -3713,3 +3713,108 @@ The mock data in test files (`visa-bulletin-pulse.test.tsx`, `quick-check-widget
 - P3: 1318 tests passing (was 1305, +13)
 - Homepage: visa-bulletin-pulse shows valid dates and velocity with real P2 data
 - Regression test: `formatCutoffIso` tested on all 3744 D-rows in live data
+
+---
+
+## 2026-04-21 - Milestone 28: GCC-Competitive Features (EB Inventory + I-140 Demand)
+
+### Objective
+Implement three features identified in competitive analysis vs GreenCardCalculator.com:
+1. **Queue Snapshot ("Cases Ahead of You")** - show users how many I-485 applications are ahead of their priority date
+2. **Transparent Scenario Math** - display visa supply constants and allocation breakdown
+3. **I-140 Latent Demand** - show approved I-140 petitions per category/country as a "hidden queue" indicator
+
+### P2 New Data Parsers
+
+**`scripts/build_fact_eb_inventory.py`** - USCIS I-485 Pending Inventory
+- Parses 20 monthly Excel snapshots from USCIS (2024-2026)
+- Source: `P1/downloads/USCIS_IMMIGRATION/employment_based/{year}/eb_inventory*.xlsx`
+- Output: `artifacts/tables/fact_eb_inventory.parquet` (132,187 rows x 7 cols)
+- Schema: snapshot_date, country (ROW/CHN/IND/MEX/PHL), category (EB1-EB5/EW3/CRW), visa_status, pd_month, pd_year, pending_count
+- Bug fix: changed `"Prior" in hs` to `"Prior Years" in hs` (was matching "Priority" in column headers)
+- Handles "D"->5 (suppressed data), "-"->0, deduplicates on PK, drops UNKNOWN country rows
+
+**`scripts/build_fact_i140_demand.py`** - I-140 Petition Receipt/Status
+- Parses 8 xlsx + 18 csv I-140 files (FY2021-2025)
+- Source: `P1/downloads/USCIS_IMMIGRATION/employment_based/{year}/i140_*.{xlsx,csv}`
+- Output: `artifacts/tables/fact_i140_demand.parquet` (2,544 rows x 8 cols)
+- Schema: report_period, country (ALL/IND/CHN/PHL/BRA/VNM/KOR), category (TOTAL/EB1/EB2/EB3), fiscal_year, received, approved, denied, pending
+
+### P2 Tests
+- `tests/p2_gap_curation/test_eb_inventory_i140.py` - 20 tests (schema, PK uniqueness, value ranges, cross-table RI)
+- All 20 passing
+
+### P3 TypeScript Types
+- `EbInventoryRecord` interface added to `src/types/p2-artifacts.ts`
+- `I140DemandRecord` interface added to `src/types/p2-artifacts.ts`
+
+### P3 Data Loaders
+- `loadEbInventory()` + `computeCasesAhead()` in `src/lib/data/pdi.ts`
+- `loadI140Demand()` + `computeI140LatentDemand()` in `src/lib/data/backlog.ts`
+
+### P3 UI Features
+
+**Feature #1: Queue Snapshot** (visa-bulletin page)
+- Purple card showing "~X pending I-485 applications with priority dates at or before yours"
+- Uses `computeCasesAhead()` to sum all pending_count rows with pd_year/pd_month before user's priority date
+- Includes snapshot date for transparency
+
+**Feature #2: Scenario Math Labels** (visa-bulletin page)
+- `VISA_SUPPLY` constants: EB_TOTAL=140K, PER_COUNTRY_CAP=9800, CATEGORY_BASE
+- Collapsible "Visa Supply Context" section showing per-category and per-country allocation math
+- PredictionCard mode annotation showing velocity or Monte Carlo risk
+
+**Feature #3: I-140 Latent Demand** (backlog page)
+- Rose/pink card showing approved I-140 counts per EB category for selected country
+- Uses `computeI140LatentDemand()` to sum approved/pending across fiscal years
+- Explanation text about the "hidden queue" of approved-but-not-yet-filed I-485s
+
+### P3 Data Sync
+- `fact_eb_inventory.json` (934KB, latest snapshot only) in `public/data/dashboards/visa-bulletin/`
+- `fact_i140_demand.json` (40KB, latest report period only) in `public/data/dashboards/backlog/`
+
+### P3 Tests
+- `src/__tests__/gcc-competitive-features.test.ts` - 19 tests
+- computeCasesAhead: empty inventory, invalid PD, Prior Years inclusion, mid-year PD filtering, country isolation, ROW mapping
+- computeI140LatentDemand: missing combo, fiscal year sums, pending sums, report period, country separation, ROW->ALL mapping
+- Visa Supply Constants: EB total=140K, 7% cap, 28.6% category share, per-country allocation
+- Data loaders: correct fetch URLs
+
+### Files Modified (P2)
+- `scripts/build_fact_eb_inventory.py` (new)
+- `scripts/build_fact_i140_demand.py` (new)
+- `tests/p2_gap_curation/test_eb_inventory_i140.py` (new, 20 tests)
+- `artifacts/tables/fact_eb_inventory.parquet` (new, 132,187 rows)
+- `artifacts/tables/fact_i140_demand.parquet` (new, 2,544 rows)
+
+### Files Modified (P3)
+- `src/types/p2-artifacts.ts` - Added EbInventoryRecord, I140DemandRecord
+- `src/lib/data/pdi.ts` - Added loadEbInventory, computeCasesAhead
+- `src/lib/data/backlog.ts` - Added loadI140Demand, computeI140LatentDemand
+- `src/app/dashboard/visa-bulletin/page.tsx` - Queue Snapshot card, VISA_SUPPLY constants, Visa Supply Context section
+- `src/app/dashboard/backlog/page.tsx` - I-140 Latent Demand card
+- `src/__tests__/gcc-competitive-features.test.ts` (new, 19 tests)
+
+### Quality Gates
+- P2: 20 new tests passing (eb_inventory + i140_demand)
+- P3: 19 new tests passing (gcc-competitive-features)
+- TypeScript: compiles clean (0 new errors)
+- All 3 features render correctly with real P2 data
+
+## 2026-04-20 - Milestone 29: P3 SRS UI Quality Sprint
+
+### Objective
+Fix visual defects and UX issues reported after Milestone 28 deployment.
+
+### Changes in P3 (Compass)
+- **Ring fix**: Switched SRS gauge from 270° to 360° arc. Score 80 = 80% fill, not ~60%
+- **Tooltip fix**: SrsScoreExplainer uses `createPortal` + `position: fixed` - escapes `backdrop-filter` stacking context
+- **Hover metrics**: Key metrics now show floating hover tooltips (industry standard) instead of click-to-expand panel
+- **NaN guards**: formatMonthYear, SubscoreBar, and sub-score defaults hardened
+- **Backlog page**: Hidden from navigation until data pipeline is complete (code preserved)
+- **SrsScoreExplainer**: Added to My Insights page (was only on SRS dashboard)
+
+### Quality Gates
+- P3: 1,499 tests passing (47 files), 26 new tests
+- Ring geometry tests: score 80 = 80% (not 60%), score 50 = 50%, score 100 = 100%
+- TypeScript: compiles clean
