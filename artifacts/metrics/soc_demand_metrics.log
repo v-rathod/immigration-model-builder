@@ -1,8 +1,8 @@
-=== soc_demand_metrics build 2026-03-13T16:56:34.140954+00:00 ===
-PERM: wage outlier cap [$5K-$1M]: nulled 52,628 of 1,462,332 wages
-PERM: 1,675,051 rows, anchor=2025-12-31
+=== soc_demand_metrics build 2026-07-29T18:49:00.117610+00:00 ===
+PERM: wage outlier cap [$5K-$1M]: nulled 52,709 of 1,504,257 wages
+PERM: 1,716,989 rows, anchor=2026-03-31
 LCA: wage outlier cap [$5K-$1M]: nulled 84,155 of 9,558,170 wages
 LCA: 9,558,691 rows, anchor=2025-12-31
-Titles resolved: 3968 / 3968 rows
-Output rows: 3,968
+Titles resolved: 4098 / 4098 rows
+Output rows: 4,098
 Written: /Users/vrathod1/dev/NorthStar/immigration-model-builder/artifacts/tables/soc_demand_metrics.parquet

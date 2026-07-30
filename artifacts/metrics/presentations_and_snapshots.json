@@ -1,11 +1,11 @@
 {
   "fact_cutoffs": {
-    "rows": 8315,
-    "leaves": 280,
+    "rows": 8335,
+    "leaves": 173,
     "years": 16
   },
   "fact_perm": {
-    "total_rows": 1675051,
+    "total_rows": 1716989,
     "files": 19
   },
   "fact_lca": {
@@ -15,6 +15,6 @@
   "fact_oews": {
     "total_rows": 446432
   },
-  "elapsed_seconds": 2.8,
-  "generated_at": "2026-02-25T19:07:57.687249+00:00"
+  "elapsed_seconds": 1.5,
+  "generated_at": "2026-07-29T18:48:18.393753+00:00"
 }

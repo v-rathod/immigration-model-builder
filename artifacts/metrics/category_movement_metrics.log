@@ -1,5 +1,5 @@
-=== category_movement_metrics build 2026-04-20T00:45:03.032410+00:00 ===
-Input rows (all history): 8,115
-After 10-year filter (from 2016-04 onward): 6,555 rows
-Output rows: 6,555
+=== category_movement_metrics build 2026-07-29T18:11:03.151228+00:00 ===
+Input rows (all history): 8,170
+After 10-year filter (from 2016-07 onward): 6,450 rows
+Output rows: 6,450
 Written: /Users/vrathod1/dev/NorthStar/immigration-model-builder/artifacts/tables/category_movement_metrics.parquet

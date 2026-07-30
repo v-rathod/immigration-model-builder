@@ -172,7 +172,7 @@ DEPENDENCY_GRAPH: Dict[str, List[Tuple[str, int, str]]] = {
         ("visa_demand_metrics.parquet",        4, "python3 scripts/make_visa_demand_metrics.py"),
     ],
     "VISA_APPLICATIONS": [
-        ("fact_visa_applications.parquet",     1, "python3 scripts/build_fact_visa_applications.py"),
+        ("fact_visa_applications.parquet",     1, "python3 scripts/build_fact_visa_applications.py --downloads {data_root}/Visa_Statistics --out artifacts/tables/fact_visa_applications.parquet"),
         # Also triggers approval_denial rebuild (multi-source):
         ("approval_denial_trends.parquet",     4, "python3 scripts/build_approval_denial_trends.py"),
     ],
@@ -186,7 +186,7 @@ DEPENDENCY_GRAPH: Dict[str, List[Tuple[str, int, str]]] = {
         ("approval_denial_trends.parquet",     4, "python3 scripts/build_approval_denial_trends.py"),
     ],
     "DHS_ADMISSIONS": [
-        ("fact_dhs_admissions.parquet",        1, "python3 scripts/build_fact_dhs_admissions.py"),
+        ("fact_dhs_admissions.parquet",        1, "python3 scripts/build_fact_dhs_admissions.py --downloads {data_root}/DHS_Yearbook --out artifacts/tables/fact_dhs_admissions.parquet"),
     ],
     "WARN": [
         ("fact_warn_events.parquet",           1, "python3 scripts/build_fact_warn_events.py --downloads {data_root}/WARN --out artifacts/tables/fact_warn_events.parquet"),

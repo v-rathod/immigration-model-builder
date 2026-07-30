@@ -4,54 +4,54 @@
     "source_artifact": "employer_friendliness_scores.parquet",
     "topic": "employer",
     "label": "efs_summary",
-    "text": "Employer Friendliness Score (EFS) Summary:\nTotal employers scored: 70,206\nScore range: 0\u2013100 (higher is better)\nScoring formula: 50% approval rate (Bayesian-shrunk) + 30% wage ratio + 20% sustainability\nTiers: Excellent \u226585, Good \u226570, Moderate \u226550, Below Average \u226530, Poor <30\nTier distribution: {'Unrated': 52370, 'Good': 8615, 'Moderate': 8186, 'Excellent': 452, 'Poor': 343, 'Below Average': 240}\nScore stats: mean=68.5, median=70.2, std=12.2",
+    "text": "Employer Friendliness Score (EFS) Summary:\nTotal employers scored: 73,295\nScore range: 0\u2013100 (higher is better)\nScoring formula: 50% approval rate (Bayesian-shrunk) + 30% wage ratio + 20% sustainability\nTiers: Excellent \u226585, Good \u226570, Moderate \u226550, Below Average \u226530, Poor <30\nTier distribution: {'Unrated': 54537, 'Good': 9123, 'Moderate': 8552, 'Excellent': 510, 'Poor': 353, 'Below Average': 220}\nScore stats: mean=68.6, median=70.3, std=12.1",
     "metadata": {},
-    "generated_at": "2026-04-20T04:54:41.440129+00:00"
+    "generated_at": "2026-07-29T18:54:56.088788+00:00"
   },
   {
     "chunk_id": "1b7db4864d3b",
     "source_artifact": "employer_friendliness_scores.parquet",
     "topic": "employer",
     "label": "efs_top50",
-    "text": "Top 50 Employers by EFS Score:\n  Ernst Young U S: 93.7 (Excellent)\n  Sap America: 93.4 (Excellent)\n  Wal Mart Associates: 92.8 (Excellent)\n  Amazon Com Services: 92.2 (Excellent)\n  Ernst Young U S: 92.2 (Excellent)\n  Bofa Securities: 92.1 (Excellent)\n  Bofa Securities: 92.0 (Excellent)\n  Goldman Sachs: 91.9 (Excellent)\n  Accenture: 91.8 (Excellent)\n  Intuit: 91.7 (Excellent)\n  Ernst Young U S: 91.6 (Excellent)\n  Ernst Young U S: 91.6 (Excellent)\n  Wal Mart Associates: 91.3 (Excellent)\n  Salesforce: 91.3 (Excellent)\n  Ernst Young U S: 91.2 (Excellent)\n  Ernst Young U S: 91.2 (Excellent)\n  Mastercard International Incorporated: 90.8 (Excellent)\n  Goldman Sachs: 90.7 (Excellent)\n  Goldman Sachs: 90.7 (Excellent)\n  Morgan Stanley: 90.6 (Excellent)\n  Regeneron Pharmaceuticals: 90.4 (Excellent)\n  Goldman Sachs: 90.3 (Excellent)\n  Sap America: 90.2 (Excellent)\n  Kforce: 90.1 (Excellent)\n  Presbyterian Healthcare Services: 90.1 (Excellent)\n  Mastercard International Incorporated: 90.0 (Excellent)\n  Jpmorgan Chase: 90.0 (Excellent)\n  Wal Mart Associates: 89.8 (Excellent)\n  Kla: 89.8 (Excellent)\n  Lendingclub Bank National Association: 89.8 (Excellent)\n  Tata Consultancy Services: 89.8 (Excellent)\n  Hewlett Packard Enterprise: 89.6 (Excellent)\n  Barclays Bank Delaware: 89.6 (Excellent)\n  Goldman Sachs Services: 89.6 (Excellent)\n  Nike: 89.6 (Excellent)\n  Blackrock Financial Management: 89.6 (Excellent)\n  Wal Mart Associates: 89.5 (Excellent)\n  Amazon Web Services: 89.5 (Excellent)\n  Citadel Securities Americas Services: 89.5 (Excellent)\n  Salesforce: 89.4 (Excellent)\n  Oracle America: 89.3 (Excellent)\n  Barclays Capital: 89.3 (Excellent)\n  Infosys: 89.3 (Excellent)\n  Barclays Services: 89.2 (Excellent)\n  Deloitte Consulting: 89.2 (Excellent)\n  Mastercard International Incorporated: 89.1 (Excellent)\n  Morgan Stanley: 89.1 (Excellent)\n  Cepheid: 89.1 (Excellent)\n  Raymond James Associates: 89.1 (Excellent)\n  Bofa Securities: 89.1 (Excellent)",
+    "text": "Top 50 Employers by EFS Score:\n  Ernst Young U S: 93.7 (Excellent)\n  Sap America: 93.0 (Excellent)\n  Accenture: 92.4 (Excellent)\n  Ernst Young U S: 92.4 (Excellent)\n  Bofa Securities: 92.2 (Excellent)\n  Bofa Securities: 92.0 (Excellent)\n  Salesforce: 92.0 (Excellent)\n  Ernst Young U S: 91.9 (Excellent)\n  Ernst Young U S: 91.9 (Excellent)\n  Wal Mart Associates: 91.8 (Excellent)\n  Ernst Young U S: 91.7 (Excellent)\n  Mastercard International Incorporated: 91.6 (Excellent)\n  Mastercard International Incorporated: 91.3 (Excellent)\n  Intuit: 91.3 (Excellent)\n  Goldman Sachs: 91.1 (Excellent)\n  Credit Suisse Securities Usa: 91.0 (Excellent)\n  Morgan Stanley: 90.9 (Excellent)\n  Goldman Sachs: 90.7 (Excellent)\n  Wal Mart Associates: 90.6 (Excellent)\n  Hewlett Packard Enterprise: 90.6 (Excellent)\n  Ernst Young U S: 90.5 (Excellent)\n  Cisco Systems: 90.4 (Excellent)\n  Wal Mart Associates: 90.3 (Excellent)\n  Goldman Sachs: 90.2 (Excellent)\n  Sap America: 90.2 (Excellent)\n  Ernst Young U S: 90.2 (Excellent)\n  Goldman Sachs: 90.1 (Excellent)\n  Oracle America: 90.1 (Excellent)\n  Kforce: 90.1 (Excellent)\n  Presbyterian Healthcare Services: 90.1 (Excellent)\n  Deloitte Consulting: 90.0 (Excellent)\n  Kla: 90.0 (Excellent)\n  Blackrock Financial Management: 90.0 (Excellent)\n  Accenture: 89.9 (Excellent)\n  Salesforce: 89.9 (Excellent)\n  Tata Consultancy Services: 89.8 (Excellent)\n  Goldman Sachs Services: 89.8 (Excellent)\n  Citadel Securities Americas Services: 89.7 (Excellent)\n  Mastercard International Incorporated: 89.6 (Excellent)\n  Nike: 89.6 (Excellent)\n  Goldman Sachs Bank Usa: 89.6 (Excellent)\n  Barclays Bank Delaware: 89.5 (Excellent)\n  Google: 89.4 (Excellent)\n  Jpmorgan Chase: 89.4 (Excellent)\n  Barclays Capital: 89.4 (Excellent)\n  Morgan Stanley: 89.3 (Excellent)\n  At T Services: 89.2 (Excellent)\n  Wal Mart Associates: 89.2 (Excellent)\n  Pacific Investment Management: 89.2 (Excellent)\n  Cigna Evernorth Services: 89.2 (Excellent)",
     "metadata": {},
-    "generated_at": "2026-04-20T04:54:41.443899+00:00"
+    "generated_at": "2026-07-29T18:54:56.092635+00:00"
   },
   {
     "chunk_id": "9c08f2e24992",
     "source_artifact": "employer_friendliness_scores.parquet",
     "topic": "employer",
     "label": "efs_bottom30",
-    "text": "Bottom 30 Employers by EFS Score (\u226510 cases):\n  Wendy S Of Colorado Springs: 10.0 (Poor)\n  Cahoc 4: 10.0 (Poor)\n  Arizona Restaurant: 10.0 (Poor)\n  Arizona Restaurant: 10.0 (Poor)\n  Cornerstone Farm: 10.0 (Poor)\n  Cornerstone Farm: 10.0 (Poor)\n  K2 Real Estate Development: 10.0 (Poor)\n  K2 Real Estate Development: 10.0 (Poor)\n  Jimenez Cleaning: 10.0 (Poor)\n  Wen New Mexico: 10.0 (Poor)\n  Wen New Mexico: 10.0 (Poor)\n  Steelfab: 10.0 (Poor)\n  Steelfab: 10.0 (Poor)\n  Elite Home Health Care: 10.0 (Poor)\n  Amazon Dev Center U S: 10.0 (Poor)\n  Frankford Capital: 10.0 (Poor)\n  Frankford Capital: 10.0 (Poor)\n  Chileda Institute: 10.0 (Poor)\n  Alpha Havilah Farms: 10.0 (Poor)\n  Alpha Havilah Farms: 10.0 (Poor)\n  Cleanstar National: 10.0 (Poor)\n  Cleanstar National: 10.0 (Poor)\n  Full Care Of Louisville: 10.0 (Poor)\n  Full Care Of Louisville: 10.0 (Poor)\n  Clarksville Hospitality 2: 10.0 (Poor)\n  Clarksville Hospitality 2: 10.0 (Poor)\n  Penn Street Pizza: 10.0 (Poor)\n  Omnipotent Brands Eso: 10.0 (Poor)\n  Omnipotent Brands Eso: 10.0 (Poor)\n  United Methodist Homes Services: 10.0 (Poor)",
+    "text": "Bottom 30 Employers by EFS Score (\u226510 cases):\n  Wendy S Of Colorado Springs: 10.0 (Poor)\n  Arizona Restaurant: 10.0 (Poor)\n  Arizona Restaurant: 10.0 (Poor)\n  Cdi Services: 10.0 (Poor)\n  Cdi Services: 10.0 (Poor)\n  Cornerstone Farm: 10.0 (Poor)\n  Cornerstone Farm: 10.0 (Poor)\n  K2 Real Estate Development: 10.0 (Poor)\n  K2 Real Estate Development: 10.0 (Poor)\n  Jimenez Cleaning: 10.0 (Poor)\n  Wen New Mexico: 10.0 (Poor)\n  Wen New Mexico: 10.0 (Poor)\n  Steelfab: 10.0 (Poor)\n  Steelfab: 10.0 (Poor)\n  Elite Home Health Care: 10.0 (Poor)\n  Amazon Dev Center U S: 10.0 (Poor)\n  Frankford Capital: 10.0 (Poor)\n  Frankford Capital: 10.0 (Poor)\n  Chileda Institute: 10.0 (Poor)\n  Dougherty County School System: 10.0 (Poor)\n  Verton Solutions: 10.0 (Poor)\n  Verton Solutions: 10.0 (Poor)\n  Ohara Landscapelawn Care: 10.0 (Poor)\n  Ohara Landscapelawn Care: 10.0 (Poor)\n  Alpha Havilah Farms: 10.0 (Poor)\n  Alpha Havilah Farms: 10.0 (Poor)\n  Cleanstar National: 10.0 (Poor)\n  Cleanstar National: 10.0 (Poor)\n  Sapphirus Systems: 10.0 (Poor)\n  North Cape Post Acute Nursing And Rehabilitation: 10.0 (Poor)",
     "metadata": {},
-    "generated_at": "2026-04-20T04:54:41.447174+00:00"
+    "generated_at": "2026-07-29T18:54:56.096058+00:00"
   },
   {
     "chunk_id": "889813d95b48",
     "source_artifact": "dim_employer.parquet",
     "topic": "employer",
     "label": "dim_employer_summary",
-    "text": "Employer Directory (dim_employer):\nTotal employers: 256,411\nColumns: employer_id, employer_name, aliases, domain, source_files, ingested_at\nSource: De-duplicated from PERM, LCA, and H-1B filings\nUse: Canonical employer reference \u2014 employer_id links to all other employer tables.\n  Employers with aliases: 243,134",
+    "text": "Employer Directory (dim_employer):\nTotal employers: 261,193\nColumns: employer_id, employer_name, aliases, domain, source_files, ingested_at\nSource: De-duplicated from PERM, LCA, and H-1B filings\nUse: Canonical employer reference \u2014 employer_id links to all other employer tables.\n  Employers with aliases: 247,841",
     "metadata": {},
-    "generated_at": "2026-04-20T04:54:43.657452+00:00"
+    "generated_at": "2026-07-29T18:54:58.061250+00:00"
   },
   {
     "chunk_id": "f30f4c2cf64c",
     "source_artifact": "employer_features.parquet",
     "topic": "employer",
     "label": "employer_features_summary",
-    "text": "Employer Features Table:\nTotal employers with features: 70,206\nFeature columns: employer_id, employer_name, scope, soc_code, n_12m, n_24m, n_36m, months_active_24m, months_active_36m, soc_breadth_24m, site_breadth_24m, approval_rate_12m, approval_rate_24m, approval_rate_36m, denial_rate_12m, denial_rate_24m, denial_rate_36m, audit_rate_12m, audit_rate_24m, audit_rate_36m, approval_rate_trend_12v12, outcome_volatility, wage_ratio_med, wage_ratio_p75, lca_filings_36m, lca_approval_rate_36m, lca_median_wage, lca_wage_ratio, lca_soc_breadth, lca_to_perm_ratio, windows_used, last_refreshed_at, h1b_hub_total_petitions, h1b_hub_initial_approvals, h1b_hub_continuing_approvals, h1b_hub_retention_ratio, h1b_hub_naics, h1b_hub_years\nWindows: 12-month, 24-month, 36-month rolling from latest PERM data\n  approval_rate_24m: mean=0.90, median=1.00\n  wage_ratio_med: mean=0.94, median=0.93\n  n_24m: mean=5.09, median=1.00",
+    "text": "Employer Features Table:\nTotal employers with features: 73,295\nFeature columns: employer_id, employer_name, scope, soc_code, n_12m, n_24m, n_36m, months_active_24m, months_active_36m, soc_breadth_24m, site_breadth_24m, approval_rate_12m, approval_rate_24m, approval_rate_36m, denial_rate_12m, denial_rate_24m, denial_rate_36m, audit_rate_12m, audit_rate_24m, audit_rate_36m, approval_rate_trend_12v12, outcome_volatility, wage_ratio_med, wage_ratio_p75, lca_filings_36m, lca_approval_rate_36m, lca_median_wage, lca_wage_ratio, lca_soc_breadth, lca_to_perm_ratio, windows_used, last_refreshed_at, h1b_hub_total_petitions, h1b_hub_initial_approvals, h1b_hub_continuing_approvals, h1b_hub_retention_ratio, h1b_hub_naics, h1b_hub_years\nWindows: 12-month, 24-month, 36-month rolling from latest PERM data\n  approval_rate_24m: mean=0.90, median=1.00\n  wage_ratio_med: mean=0.94, median=0.94\n  n_24m: mean=5.20, median=1.00",
     "metadata": {},
-    "generated_at": "2026-04-20T04:54:43.665663+00:00"
+    "generated_at": "2026-07-29T18:54:58.069524+00:00"
   },
   {
     "chunk_id": "b4a7c65b150e",
     "source_artifact": "employer_monthly_metrics.parquet",
     "topic": "employer",
     "label": "employer_monthly_summary",
-    "text": "Employer Monthly Metrics:\nTotal records: 224,114 (91,556 unique employers)\nDate range: 2020-12 to 2025-12\nColumns: employer_id, employer_name, month, filings, approvals, denials, approval_rate, denial_rate, audit_rate_t12, dataset\nUse: Track monthly filing volume, approval/denial/audit rates per employer.\n\nTop 20 employers by total monthly filings:\n  Amazon Com Services: 16,274\n  Microsoft: 14,235\n  Google: 10,383\n  Tata Consultancy Services: 6,365\n  Intel: 6,198\n  Apple: 6,059\n  Oracle America: 3,719\n  Fpl Food: 3,575\n  Amazon Web Services: 3,383\n  Facebook: 3,213\n  Infosys: 2,987\n  Consolidated Catfish Producers: 2,522\n  Cognizant Technology Solutions Us: 2,336\n  Nvidia: 2,302\n  Ernst Young U S: 2,260\n  Walmart Associates: 2,250\n  Management Health Systems, LLC DBA MedPro: 2,219\n  Wayne Farms: 2,109\n  Capgemini America: 2,101\n  Cisco Systems: 2,052",
+    "text": "Employer Monthly Metrics:\nTotal records: 231,930 (94,799 unique employers)\nDate range: 2021-03 to 2026-03\nColumns: employer_id, employer_name, month, filings, approvals, denials, approval_rate, denial_rate, audit_rate_t12, dataset\nUse: Track monthly filing volume, approval/denial/audit rates per employer.\n\nTop 20 employers by total monthly filings:\n  Amazon Com Services: 15,636\n  Microsoft: 14,282\n  Google: 9,840\n  Intel: 6,246\n  Tata Consultancy Services: 6,162\n  Apple: 5,830\n  Oracle America: 3,706\n  Fpl Food: 3,577\n  Amazon Web Services: 3,294\n  Facebook: 3,192\n  Infosys: 2,985\n  Nvidia: 2,748\n  Consolidated Catfish Producers: 2,631\n  Cisco Systems: 2,509\n  Ernst Young U S: 2,473\n  Deloitte Consulting: 2,366\n  Cognizant Technology Solutions Us: 2,336\n  Labor Guys: 2,329\n  Management Health Systems: 2,254\n  Management Health Systems Dba Medpro: 2,175",
     "metadata": {},
-    "generated_at": "2026-04-20T04:54:43.719886+00:00"
+    "generated_at": "2026-07-29T18:54:58.124446+00:00"
   },
   {
     "chunk_id": "1ecf5961f589",
@@ -60,7 +60,7 @@
     "label": "employer_risk_summary",
     "text": "Employer Risk Features (WARN Act linkage):\nTotal employers flagged: 668\nColumns: employer_key, total_warn_events, total_employees_affected, states, employer_name_raw, employer_id, is_warn_flagged\nThese employers had WARN Act layoff events that may affect sponsorship.\n\nTop 20 employers by employees affected in layoffs:\n  Tyson Foods, Inc (Amarillo B-Shift Operations) Updated: 1,761 employees, 1 events\n  Dryer's Grand Ice Cream: 1,321 employees, 2 events\n  Broadcom Inc.: 1,267 employees, 1 events\n  Qualcomm Incorporated: 1,065 employees, 2 events\n  Yellow Corporation: 1,022 employees, 21 events\n  Ojai Valley Inn: 870 employees, 1 events\n  Alvarado Hospital, LLC dba Alvarado Hospital Medical Center: 814 employees, 2 events\n  Activision Blizzard: 788 employees, 6 events\n  Nordstrom: 784 employees, 1 events\n  Tower Semiconductor: 699 employees, 1 events\n  Southern California Pizza Company LLC: 686 employees, 6 events\n  Jabil Inc.: 615 employees, 9 events\n  Walmart: 544 employees, 3 events\n  Ajinomoto Foods North America, Inc.: 538 employees, 1 events\n  California Institute of Technology: 521 employees, 1 events\n  Cisco Systems, Inc.: 511 employees, 3 events\n  Matheson Flight Extenders, Inc.: 510 employees, 4 events\n  USS-UPI, LLC: 474 employees, 1 events\n  Intel Corporation: 471 employees, 7 events\n  Genentech, Inc.: 436 employees, 1 events",
     "metadata": {},
-    "generated_at": "2026-04-20T04:54:43.722730+00:00"
+    "generated_at": "2026-07-29T18:54:58.127322+00:00"
   },
   {
     "chunk_id": "a5efabcf658e",
@@ -69,7 +69,7 @@
     "label": "efs_ml_summary",
     "text": "ML-Based Employer Friendliness Scores:\nTotal employers scored: 1,695\nColumns: employer_id, n_cases_36m, avg_calibrated_prob, median_calibrated_prob, efs_ml, scope, version, last_refreshed_at\nModel: XGBoost classifier calibrated on PERM case outcomes\nScore (efs_ml): 0\u2013100 scale based on calibrated approval probability\n  Score stats: mean=96.1, median=98.1, std=5.4",
     "metadata": {},
-    "generated_at": "2026-04-20T04:54:43.724199+00:00"
+    "generated_at": "2026-07-29T18:54:58.129100+00:00"
   },
   {
     "chunk_id": "772c5cfb98f0",
@@ -81,7 +81,7 @@
       "employer_id": "d35dde19e28ef4470b60562576e4f5cbc41b3298",
       "employer_name": "Infosys"
     },
-    "generated_at": "2026-04-20T04:54:45.675080+00:00"
+    "generated_at": "2026-07-29T18:54:59.890430+00:00"
   },
   {
     "chunk_id": "91a7c7e0cba5",
@@ -93,7 +93,7 @@
       "employer_id": "8cccced9f146d301f40f170ea8640fa3a6e51ee3",
       "employer_name": "Tata Consultancy Services"
     },
-    "generated_at": "2026-04-20T04:54:45.701669+00:00"
+    "generated_at": "2026-07-29T18:54:59.914706+00:00"
   },
   {
     "chunk_id": "d9c1cb53f496",
@@ -105,7 +105,7 @@
       "employer_id": "32d0e427e2b050673c4e4106eb9b681f5987677f",
       "employer_name": "Cognizant Technology Solutions Us"
     },
-    "generated_at": "2026-04-20T04:54:45.727967+00:00"
+    "generated_at": "2026-07-29T18:54:59.938487+00:00"
   },
   {
     "chunk_id": "6a3ba9b43ae2",
@@ -117,7 +117,7 @@
       "employer_id": "64814a3b7fd8444a56ad3641fd3451c6deaf0757",
       "employer_name": "Microsoft"
     },
-    "generated_at": "2026-04-20T04:54:45.754504+00:00"
+    "generated_at": "2026-07-29T18:54:59.962774+00:00"
   },
   {
     "chunk_id": "1599c3988ae5",
@@ -129,7 +129,7 @@
       "employer_id": "07728858518151379e39a691f5b11fc1011a4cdf",
       "employer_name": "Amazon Com Services"
     },
-    "generated_at": "2026-04-20T04:54:45.783512+00:00"
+    "generated_at": "2026-07-29T18:54:59.987800+00:00"
   },
   {
     "chunk_id": "9cec0725ad69",
@@ -141,7 +141,7 @@
       "employer_id": "759730a97e4373f3a0ee12805db065e3a4a649a5",
       "employer_name": "Google"
     },
-    "generated_at": "2026-04-20T04:54:45.811964+00:00"
+    "generated_at": "2026-07-29T18:55:00.012349+00:00"
   },
   {
     "chunk_id": "6713ba73ddb4",
@@ -153,7 +153,7 @@
       "employer_id": "179893adfa1c0dad7d9ef2a71acfc9ca42d54c9a",
       "employer_name": "Deloitte Consulting"
     },
-    "generated_at": "2026-04-20T04:54:45.838537+00:00"
+    "generated_at": "2026-07-29T18:55:00.036699+00:00"
   },
   {
     "chunk_id": "333055d853ed",
@@ -165,7 +165,7 @@
       "employer_id": "c6c99d3813a28beaa9d0c05ede1d373dc299ac05",
       "employer_name": "Ernst Young U S"
     },
-    "generated_at": "2026-04-20T04:54:45.864827+00:00"
+    "generated_at": "2026-07-29T18:55:00.061138+00:00"
   },
   {
     "chunk_id": "96a6673a24dc",
@@ -177,7 +177,7 @@
       "employer_id": "0ffb1a8d79464eb9019d53294517f76bd56dfd7b",
       "employer_name": "Wipro"
     },
-    "generated_at": "2026-04-20T04:54:45.890745+00:00"
+    "generated_at": "2026-07-29T18:55:00.085379+00:00"
   },
   {
     "chunk_id": "f51117e33715",
@@ -189,7 +189,7 @@
       "employer_id": "4ef5847ca93e08d9c2e02129e6826b33d3d6e172",
       "employer_name": "Accenture"
     },
-    "generated_at": "2026-04-20T04:54:45.916643+00:00"
+    "generated_at": "2026-07-29T18:55:00.109532+00:00"
   },
   {
     "chunk_id": "5f2916b5e146",
@@ -201,7 +201,7 @@
       "employer_id": "a2d0610fc67c08c551b2854895aa8573f8ae1074",
       "employer_name": "Capgemini America"
     },
-    "generated_at": "2026-04-20T04:54:45.944356+00:00"
+    "generated_at": "2026-07-29T18:55:00.133661+00:00"
   },
   {
     "chunk_id": "a89fed72223c",
@@ -213,7 +213,7 @@
       "employer_id": "77de75dff15a8b0c035ba440395d53eea7d400b8",
       "employer_name": "Hcl America"
     },
-    "generated_at": "2026-04-20T04:54:45.973313+00:00"
+    "generated_at": "2026-07-29T18:55:00.157886+00:00"
   },
   {
     "chunk_id": "5d650f4429c5",
@@ -225,7 +225,7 @@
       "employer_id": "eecddd10d7bd87d3d765bf65504605117c02ea2e",
       "employer_name": "Intel"
     },
-    "generated_at": "2026-04-20T04:54:46.002821+00:00"
+    "generated_at": "2026-07-29T18:55:00.182292+00:00"
   },
   {
     "chunk_id": "07a9c29d0f55",
@@ -237,7 +237,7 @@
       "employer_id": "d0be2dc421be4fcd0172e5afceea3970e2f3d940",
       "employer_name": "Apple"
     },
-    "generated_at": "2026-04-20T04:54:46.032056+00:00"
+    "generated_at": "2026-07-29T18:55:00.206559+00:00"
   },
   {
     "chunk_id": "df17bdca68df",
@@ -249,7 +249,7 @@
       "employer_id": "22a417ba260e94f849a709d4ae6fca03b918e8d3",
       "employer_name": "Tech Mahindra Americas"
     },
-    "generated_at": "2026-04-20T04:54:46.058581+00:00"
+    "generated_at": "2026-07-29T18:55:00.230900+00:00"
   },
   {
     "chunk_id": "12a258ee17dd",
@@ -261,7 +261,7 @@
       "employer_id": "dce100cf62915bec7de2d2320a029795e830e54d",
       "employer_name": "Ibm India Private"
     },
-    "generated_at": "2026-04-20T04:54:46.088634+00:00"
+    "generated_at": "2026-07-29T18:55:00.257568+00:00"
   },
   {
     "chunk_id": "fe280debc0fa",
@@ -273,7 +273,7 @@
       "employer_id": "d3ac7a4ef1a838b4134f2f6e7f3c0d249d74b674",
       "employer_name": "Ibm"
     },
-    "generated_at": "2026-04-20T04:54:46.114807+00:00"
+    "generated_at": "2026-07-29T18:55:00.285148+00:00"
   },
   {
     "chunk_id": "49219aa7c6c7",
@@ -285,7 +285,7 @@
       "employer_id": "9172968451e641541d7d551c033c790eb5fb6be0",
       "employer_name": "Larsen Toubro Infotech"
     },
-    "generated_at": "2026-04-20T04:54:46.140798+00:00"
+    "generated_at": "2026-07-29T18:55:00.309875+00:00"
   },
   {
     "chunk_id": "fcbf330059b9",
@@ -297,7 +297,7 @@
       "employer_id": "7a0c268b5602f5ad33a25ce2e034ab105a90504c",
       "employer_name": "Jpmorgan Chase"
     },
-    "generated_at": "2026-04-20T04:54:46.167088+00:00"
+    "generated_at": "2026-07-29T18:55:00.334209+00:00"
   },
   {
     "chunk_id": "fe4861e5f097",
@@ -309,7 +309,7 @@
       "employer_id": "1574e60b1ddc143c0e14c8163457436784c8bee4",
       "employer_name": "Wal Mart Associates"
     },
-    "generated_at": "2026-04-20T04:54:46.194690+00:00"
+    "generated_at": "2026-07-29T18:55:00.358723+00:00"
   },
   {
     "chunk_id": "7bfde8fabfb1",
@@ -321,7 +321,7 @@
       "employer_id": "42b52d4d35d1824d83c5a5cf9229be4047f07b9c",
       "employer_name": "Amazon Web Services"
     },
-    "generated_at": "2026-04-20T04:54:46.222906+00:00"
+    "generated_at": "2026-07-29T18:55:00.383709+00:00"
   },
   {
     "chunk_id": "72de4a33d766",
@@ -333,7 +333,7 @@
       "employer_id": "cbe648909034c0624c205fe219d3fbd10052c715",
       "employer_name": "Facebook"
     },
-    "generated_at": "2026-04-20T04:54:46.251712+00:00"
+    "generated_at": "2026-07-29T18:55:00.408471+00:00"
   },
   {
     "chunk_id": "338351b6c7f2",
@@ -345,7 +345,7 @@
       "employer_id": "e982aa616bdb421225ff417485f005643eea9933",
       "employer_name": "Deloitte Touche"
     },
-    "generated_at": "2026-04-20T04:54:46.279452+00:00"
+    "generated_at": "2026-07-29T18:55:00.432910+00:00"
   },
   {
     "chunk_id": "ed969e68d062",
@@ -357,7 +357,7 @@
       "employer_id": "7203541e379d39868bce6250a854302053b430f0",
       "employer_name": "Meta Platforms"
     },
-    "generated_at": "2026-04-20T04:54:46.305715+00:00"
+    "generated_at": "2026-07-29T18:55:00.457435+00:00"
   },
   {
     "chunk_id": "99aef8c4557e",
@@ -369,7 +369,7 @@
       "employer_id": "ea71c3b9bf74d80672298f9f8056ded5113ad95a",
       "employer_name": "Compunnel Software Group"
     },
-    "generated_at": "2026-04-20T04:54:46.331716+00:00"
+    "generated_at": "2026-07-29T18:55:00.482441+00:00"
   },
   {
     "chunk_id": "296d49acbdd3",
@@ -381,7 +381,7 @@
       "employer_id": "10560d0f4ec839aa23b271ef6208322c343b7f2a",
       "employer_name": "Cisco Systems"
     },
-    "generated_at": "2026-04-20T04:54:46.357233+00:00"
+    "generated_at": "2026-07-29T18:55:00.506780+00:00"
   },
   {
     "chunk_id": "62931ad0c6e1",
@@ -393,7 +393,7 @@
       "employer_id": "65d2ba811e8d5bf4034f672c81e39b3672d9be93",
       "employer_name": "Ust Global"
     },
-    "generated_at": "2026-04-20T04:54:46.382855+00:00"
+    "generated_at": "2026-07-29T18:55:00.532073+00:00"
   },
   {
     "chunk_id": "997e9a41bebb",
@@ -405,7 +405,7 @@
       "employer_id": "73638561d9bb63fb17f8416281d21557a819dd68",
       "employer_name": "Oracle America"
     },
-    "generated_at": "2026-04-20T04:54:46.408228+00:00"
+    "generated_at": "2026-07-29T18:55:00.557641+00:00"
   },
   {
     "chunk_id": "97b24a02f328",
@@ -417,7 +417,7 @@
       "employer_id": "d045165a4f85d625b5fe1a113d8182c307f28ea0",
       "employer_name": "Qualcomm Technologies"
     },
-    "generated_at": "2026-04-20T04:54:46.433570+00:00"
+    "generated_at": "2026-07-29T18:55:00.582131+00:00"
   },
   {
     "chunk_id": "261f7dd88efc",
@@ -429,7 +429,7 @@
       "employer_id": "b1335117e279e056d594d30b3f7bc96250006e09",
       "employer_name": "Cognizant Technology Solutions U S"
     },
-    "generated_at": "2026-04-20T04:54:46.459091+00:00"
+    "generated_at": "2026-07-29T18:55:00.607069+00:00"
   },
   {
     "chunk_id": "e28dd9983454",
@@ -441,7 +441,7 @@
       "employer_id": "a478e05b1346f4fc4d9f09501aa2b3e51c1e1f48",
       "employer_name": "Mphasis"
     },
-    "generated_at": "2026-04-20T04:54:46.484580+00:00"
+    "generated_at": "2026-07-29T18:55:00.631188+00:00"
   },
   {
     "chunk_id": "18a0c82abb8a",
@@ -453,7 +453,7 @@
       "employer_id": "0e185dddfae67cedbca67c0c01fd118854c5b916",
       "employer_name": "Goldman Sachs"
     },
-    "generated_at": "2026-04-20T04:54:46.511387+00:00"
+    "generated_at": "2026-07-29T18:55:00.655018+00:00"
   },
   {
     "chunk_id": "003c721519ac",
@@ -465,7 +465,7 @@
       "employer_id": "46aebea837e4bca44d922366844dbb29f3aa6628",
       "employer_name": "Amazon Corporate"
     },
-    "generated_at": "2026-04-20T04:54:46.538664+00:00"
+    "generated_at": "2026-07-29T18:55:00.678989+00:00"
   },
   {
     "chunk_id": "fa35e884e14e",
@@ -477,7 +477,7 @@
       "employer_id": "b198a0de73a6342e197208484599b949e4d02054",
       "employer_name": "Salesforce Com"
     },
-    "generated_at": "2026-04-20T04:54:46.567171+00:00"
+    "generated_at": "2026-07-29T18:55:00.702747+00:00"
   },
   {
     "chunk_id": "ef3fb16bb9e7",
@@ -489,7 +489,7 @@
       "employer_id": "f749e7bf725a19649e701d6aa9a855686f981346",
       "employer_name": "Pricewaterhousecoopers"
     },
-    "generated_at": "2026-04-20T04:54:46.597593+00:00"
+    "generated_at": "2026-07-29T18:55:00.726969+00:00"
   },
   {
     "chunk_id": "67b2d3376e20",
@@ -501,7 +501,7 @@
       "employer_id": "7728240c80b6bfd450849405e8500d6d207783b6",
       "employer_name": "Linkedin"
     },
-    "generated_at": "2026-04-20T04:54:46.626541+00:00"
+    "generated_at": "2026-07-29T18:55:00.751618+00:00"
   },
   {
     "chunk_id": "babf3c36a8ec",
@@ -513,7 +513,7 @@
       "employer_id": "087ea7c7e57fbd812504651c2c8f6341cd125100",
       "employer_name": "L T Technology Services"
     },
-    "generated_at": "2026-04-20T04:54:46.654940+00:00"
+    "generated_at": "2026-07-29T18:55:00.775795+00:00"
   },
   {
     "chunk_id": "7ed44619cf6c",
@@ -525,7 +525,7 @@
       "employer_id": "0b4e4886eb000e604784c76ab089d424b7bc8937",
       "employer_name": "Paypal"
     },
-    "generated_at": "2026-04-20T04:54:46.683359+00:00"
+    "generated_at": "2026-07-29T18:55:00.799718+00:00"
   },
   {
     "chunk_id": "7dfd6fd3934a",
@@ -537,7 +537,7 @@
       "employer_id": "2320cdba70f804787e83e40a425489ce7be57fce",
       "employer_name": "Hexaware Technologies"
     },
-    "generated_at": "2026-04-20T04:54:46.709957+00:00"
+    "generated_at": "2026-07-29T18:55:00.824201+00:00"
   },
   {
     "chunk_id": "902a39957f53",
@@ -549,7 +549,7 @@
       "employer_id": "b7f4192df66a7528c479b680fdc5d7662b5638b0",
       "employer_name": "Cummins"
     },
-    "generated_at": "2026-04-20T04:54:46.736121+00:00"
+    "generated_at": "2026-07-29T18:55:00.848402+00:00"
   },
   {
     "chunk_id": "7d762003126a",
@@ -561,7 +561,7 @@
       "employer_id": "1156dec9075576416129192ea03502f0c545332b",
       "employer_name": "Tesla"
     },
-    "generated_at": "2026-04-20T04:54:46.761692+00:00"
+    "generated_at": "2026-07-29T18:55:00.872422+00:00"
   },
   {
     "chunk_id": "846fde6ecaae",
@@ -573,7 +573,7 @@
       "employer_id": "1ef475e63d65ba64db980d00646a4ccc82a000ca",
       "employer_name": "Pricewaterhousecoopers Advisory Services"
     },
-    "generated_at": "2026-04-20T04:54:46.787313+00:00"
+    "generated_at": "2026-07-29T18:55:00.896330+00:00"
   },
   {
     "chunk_id": "6869d5dcbec2",
@@ -585,7 +585,7 @@
       "employer_id": "273798b0e5f01c6bb01b7e9056bdbf47c0b7d168",
       "employer_name": "Vmware"
     },
-    "generated_at": "2026-04-20T04:54:46.813258+00:00"
+    "generated_at": "2026-07-29T18:55:00.920210+00:00"
   },
   {
     "chunk_id": "9e48d5841891",
@@ -597,7 +597,7 @@
       "employer_id": "cacce1e43ca7dd241df3b78981d817989448a531",
       "employer_name": "Satyam Computer Services"
     },
-    "generated_at": "2026-04-20T04:54:46.838592+00:00"
+    "generated_at": "2026-07-29T18:55:00.944502+00:00"
   },
   {
     "chunk_id": "ce058e03cc69",
@@ -609,7 +609,7 @@
       "employer_id": "05f5439f985187c9f4dc1efd2ce776f4504fcb56",
       "employer_name": "Nvidia"
     },
-    "generated_at": "2026-04-20T04:54:46.863885+00:00"
+    "generated_at": "2026-07-29T18:55:00.968733+00:00"
   },
   {
     "chunk_id": "a6ef9a09732f",
@@ -621,7 +621,7 @@
       "employer_id": "b7f1f022a469f84aabd96562a15795b96011ada6",
       "employer_name": "Igate Technologies"
     },
-    "generated_at": "2026-04-20T04:54:46.889343+00:00"
+    "generated_at": "2026-07-29T18:55:00.992922+00:00"
   },
   {
     "chunk_id": "d7e2745b2d23",
@@ -633,7 +633,7 @@
       "employer_id": "7187734f76fffa23cb672f4e459327876276468a",
       "employer_name": "Kpmg"
     },
-    "generated_at": "2026-04-20T04:54:46.914772+00:00"
+    "generated_at": "2026-07-29T18:55:01.017014+00:00"
   },
   {
     "chunk_id": "8e98aea4e8f3",
@@ -645,7 +645,7 @@
       "employer_id": "c876c282d12f456e0384071b196a2d61b829ecd0",
       "employer_name": "Ebay"
     },
-    "generated_at": "2026-04-20T04:54:46.940033+00:00"
+    "generated_at": "2026-07-29T18:55:01.041308+00:00"
   },
   {
     "chunk_id": "1504e7532dc9",
@@ -657,7 +657,7 @@
       "employer_id": "639916fd0efc0e83a8d862f9f83e0598120b329d",
       "employer_name": "Bank Of America N A"
     },
-    "generated_at": "2026-04-20T04:54:46.965526+00:00"
+    "generated_at": "2026-07-29T18:55:01.065211+00:00"
   },
   {
     "chunk_id": "d0e659f6ffe8",
@@ -669,7 +669,7 @@
       "employer_id": "454f12faba097535929efb6256d02e9312f106a1",
       "employer_name": "Mindtree"
     },
-    "generated_at": "2026-04-20T04:54:46.990895+00:00"
+    "generated_at": "2026-07-29T18:55:01.089010+00:00"
   },
   {
     "chunk_id": "dcfe06dfb5a3",
@@ -681,7 +681,7 @@
       "employer_id": "7b156793088148e7d641a4d0ddeb93fb261c8d12",
       "employer_name": "Kforce"
     },
-    "generated_at": "2026-04-20T04:54:47.016236+00:00"
+    "generated_at": "2026-07-29T18:55:01.113052+00:00"
   },
   {
     "chunk_id": "c0fbb3329a7e",
@@ -693,7 +693,7 @@
       "employer_id": "3a8712d3f35870d5d1e5a593357d7c0b0344b9e4",
       "employer_name": "Capital One Services"
     },
-    "generated_at": "2026-04-20T04:54:47.042831+00:00"
+    "generated_at": "2026-07-29T18:55:01.136638+00:00"
   },
   {
     "chunk_id": "566ecded65bc",
@@ -705,7 +705,7 @@
       "employer_id": "6d228fd1feb1834daab36aa1617846ef1a5c3b8a",
       "employer_name": "Synechron"
     },
-    "generated_at": "2026-04-20T04:54:47.068894+00:00"
+    "generated_at": "2026-07-29T18:55:01.160713+00:00"
   },
   {
     "chunk_id": "4df1b30b347b",
@@ -717,7 +717,7 @@
       "employer_id": "d0e79607d285f6b1db71d0df1ca6d2fe7f309391",
       "employer_name": "Amazon Development Center U S"
     },
-    "generated_at": "2026-04-20T04:54:47.096644+00:00"
+    "generated_at": "2026-07-29T18:55:01.184747+00:00"
   },
   {
     "chunk_id": "a6f05e413058",
@@ -729,7 +729,7 @@
       "employer_id": "50cd366bf5ed75d1aa02f2e15d16b31a5fd650b5",
       "employer_name": "Citibank N A"
     },
-    "generated_at": "2026-04-20T04:54:47.124538+00:00"
+    "generated_at": "2026-07-29T18:55:01.208514+00:00"
   },
   {
     "chunk_id": "be79590c50d3",
@@ -741,7 +741,7 @@
       "employer_id": "ba78d0e4e665702a8015dd5e987af4f3c810bd76",
       "employer_name": "Ntt Data"
     },
-    "generated_at": "2026-04-20T04:54:47.151389+00:00"
+    "generated_at": "2026-07-29T18:55:01.232527+00:00"
   },
   {
     "chunk_id": "5c193726f61d",
@@ -753,7 +753,7 @@
       "employer_id": "ffd45eeb30e22b790375c1e06f2aae41ba7c2e50",
       "employer_name": "Uber Technologies"
     },
-    "generated_at": "2026-04-20T04:54:47.178001+00:00"
+    "generated_at": "2026-07-29T18:55:01.256872+00:00"
   },
   {
     "chunk_id": "e077215ba7b0",
@@ -765,7 +765,7 @@
       "employer_id": "20e20edad014b03343282f629c68e460faa22539",
       "employer_name": "Virtusa"
     },
-    "generated_at": "2026-04-20T04:54:47.203833+00:00"
+    "generated_at": "2026-07-29T18:55:01.280606+00:00"
   },
   {
     "chunk_id": "992b31198e0a",
@@ -777,7 +777,7 @@
       "employer_id": "2bf0af60b194a40a7c5c113202b9e66532da77d1",
       "employer_name": "Fujitsu America"
     },
-    "generated_at": "2026-04-20T04:54:47.230331+00:00"
+    "generated_at": "2026-07-29T18:55:01.304146+00:00"
   },
   {
     "chunk_id": "ca4fae8545c3",
@@ -789,7 +789,7 @@
       "employer_id": "0484228c93d10e44df151ac1b4c02e0681238ca2",
       "employer_name": "Hcl Global Systems"
     },
-    "generated_at": "2026-04-20T04:54:47.259211+00:00"
+    "generated_at": "2026-07-29T18:55:01.327692+00:00"
   },
   {
     "chunk_id": "7653e9d1934f",
@@ -801,7 +801,7 @@
       "employer_id": "c19029c0c35fd62f16f853f1e8542adc6cdc6210",
       "employer_name": "Cgi Technologies And Solutions"
     },
-    "generated_at": "2026-04-20T04:54:47.288095+00:00"
+    "generated_at": "2026-07-29T18:55:01.351552+00:00"
   },
   {
     "chunk_id": "e9a0581a39fe",
@@ -813,7 +813,7 @@
       "employer_id": "b793f7dd3f77b588d23102b71ee68b48b399b627",
       "employer_name": "Patni Americas"
     },
-    "generated_at": "2026-04-20T04:54:47.317475+00:00"
+    "generated_at": "2026-07-29T18:55:01.375507+00:00"
   },
   {
     "chunk_id": "f222e373dd47",
@@ -825,7 +825,7 @@
       "employer_id": "e07919ff7f9a2e912e56ab7ad529430ed3ed126f",
       "employer_name": "Deloitte Tax"
     },
-    "generated_at": "2026-04-20T04:54:47.346361+00:00"
+    "generated_at": "2026-07-29T18:55:01.399788+00:00"
   },
   {
     "chunk_id": "a76891fdfbf5",
@@ -837,7 +837,7 @@
       "employer_id": "2aa3e8fdd73156c333ba3fb5532d9cf379165d48",
       "employer_name": "Emc"
     },
-    "generated_at": "2026-04-20T04:54:47.377822+00:00"
+    "generated_at": "2026-07-29T18:55:01.424716+00:00"
   },
   {
     "chunk_id": "8d63132447e0",
@@ -849,7 +849,7 @@
       "employer_id": "abab6014d5c3aebf1841a7544887ba8dc4e2566b",
       "employer_name": "Htc Global Services"
     },
-    "generated_at": "2026-04-20T04:54:47.406781+00:00"
+    "generated_at": "2026-07-29T18:55:01.449057+00:00"
   },
   {
     "chunk_id": "ddcf76184dc1",
@@ -861,7 +861,7 @@
       "employer_id": "2bb8530511b63a0c151d59eadae559d3b4f9fc74",
       "employer_name": "Intuit"
     },
-    "generated_at": "2026-04-20T04:54:47.437372+00:00"
+    "generated_at": "2026-07-29T18:55:01.473211+00:00"
   },
   {
     "chunk_id": "82c39cf5a8d6",
@@ -873,7 +873,7 @@
       "employer_id": "d77b13fada6308c98491d2981a4e35a08d08af84",
       "employer_name": "Salesforce"
     },
-    "generated_at": "2026-04-20T04:54:47.464923+00:00"
+    "generated_at": "2026-07-29T18:55:01.497667+00:00"
   },
   {
     "chunk_id": "2216c87f523e",
@@ -885,7 +885,7 @@
       "employer_id": "0ebd2f1116b9d4858c8253ef63712cf8e510df83",
       "employer_name": "Randstad Technologies"
     },
-    "generated_at": "2026-04-20T04:54:47.492266+00:00"
+    "generated_at": "2026-07-29T18:55:01.522244+00:00"
   },
   {
     "chunk_id": "5dddb7759225",
@@ -897,7 +897,7 @@
       "employer_id": "a04f7ab1fe6c645d529f722f219d55de352dc234",
       "employer_name": "Syntel"
     },
-    "generated_at": "2026-04-20T04:54:47.518966+00:00"
+    "generated_at": "2026-07-29T18:55:01.547075+00:00"
   },
   {
     "chunk_id": "866b299ffa36",
@@ -909,7 +909,7 @@
       "employer_id": "91dda1b4fe572fcec68dfd44bbaa66e280064a35",
       "employer_name": "Populus Group"
     },
-    "generated_at": "2026-04-20T04:54:47.545291+00:00"
+    "generated_at": "2026-07-29T18:55:01.572523+00:00"
   },
   {
     "chunk_id": "d49bb26ab0c3",
@@ -921,7 +921,7 @@
       "employer_id": "44c2ddd9c80d94e357ea26a82590d6ce2e03e20c",
       "employer_name": "Ltimindtree"
     },
-    "generated_at": "2026-04-20T04:54:47.571097+00:00"
+    "generated_at": "2026-07-29T18:55:01.597422+00:00"
   },
   {
     "chunk_id": "f3e2c07315ed",
@@ -933,7 +933,7 @@
       "employer_id": "e478303fe42c20d1e19fae035a8c529bafb0c890",
       "employer_name": "System Soft Technologies"
     },
-    "generated_at": "2026-04-20T04:54:47.597795+00:00"
+    "generated_at": "2026-07-29T18:55:01.621972+00:00"
   },
   {
     "chunk_id": "43b2666d3fae",
@@ -945,7 +945,7 @@
       "employer_id": "5c869ee090107df458510f09b8bfdf740538b1d5",
       "employer_name": "University Of Michigan"
     },
-    "generated_at": "2026-04-20T04:54:47.623620+00:00"
+    "generated_at": "2026-07-29T18:55:01.646065+00:00"
   },
   {
     "chunk_id": "aa7d6a4bc05d",
@@ -957,7 +957,7 @@
       "employer_id": "10b4ecf21f6ef9b25cd50f2378d4ccb73caafaea",
       "employer_name": "Fidelity Technology Group"
     },
-    "generated_at": "2026-04-20T04:54:47.649405+00:00"
+    "generated_at": "2026-07-29T18:55:01.669922+00:00"
   },
   {
     "chunk_id": "4004025f4034",
@@ -969,7 +969,7 @@
       "employer_id": "22e941a06b50ca306a77e63f6854c7347e6b4411",
       "employer_name": "Micron Technology"
     },
-    "generated_at": "2026-04-20T04:54:47.676563+00:00"
+    "generated_at": "2026-07-29T18:55:01.694761+00:00"
   },
   {
     "chunk_id": "2e2daefda022",
@@ -981,7 +981,7 @@
       "employer_id": "2a0e0f881f1c1057c8a15251c2b0312fc867c337",
       "employer_name": "General Motors"
     },
-    "generated_at": "2026-04-20T04:54:47.704475+00:00"
+    "generated_at": "2026-07-29T18:55:01.718921+00:00"
   },
   {
     "chunk_id": "e03dfea3f434",
@@ -993,7 +993,7 @@
       "employer_id": "fb62d84c0308be6190497af204db6f79fb5f7d68",
       "employer_name": "American Express Travel Related Services"
     },
-    "generated_at": "2026-04-20T04:54:47.734221+00:00"
+    "generated_at": "2026-07-29T18:55:01.743011+00:00"
   },
   {
     "chunk_id": "b4c376c8afdf",
@@ -1005,7 +1005,7 @@
       "employer_id": "e337bf4f4a7fc2d898fbe048e5e970703fc18f49",
       "employer_name": "Comcast Cable Communications"
     },
-    "generated_at": "2026-04-20T04:54:47.763734+00:00"
+    "generated_at": "2026-07-29T18:55:01.767464+00:00"
   },
   {
     "chunk_id": "c34e7a1a8068",
@@ -1017,7 +1017,7 @@
       "employer_id": "15ed0efdae2880ac68de1753e6f3d42ca040d2ef",
       "employer_name": "V Soft Consulting Group"
     },
-    "generated_at": "2026-04-20T04:54:47.792741+00:00"
+    "generated_at": "2026-07-29T18:55:01.792785+00:00"
   },
   {
     "chunk_id": "e9b9ab8ebd90",
@@ -1029,7 +1029,7 @@
       "employer_id": "5b54f8b0ad6c9184113e7f71f80a8cf2b2f30117",
       "employer_name": "Syntel Consulting"
     },
-    "generated_at": "2026-04-20T04:54:47.823192+00:00"
+    "generated_at": "2026-07-29T18:55:01.817166+00:00"
   },
   {
     "chunk_id": "dbb780edbd65",
@@ -1041,7 +1041,7 @@
       "employer_id": "be6f2437d52272b8ddbd1c4837cdc7135b5c0c4f",
       "employer_name": "Marlabs"
     },
-    "generated_at": "2026-04-20T04:54:47.851384+00:00"
+    "generated_at": "2026-07-29T18:55:01.842103+00:00"
   },
   {
     "chunk_id": "5c46d03d7e46",
@@ -1053,7 +1053,7 @@
       "employer_id": "64a0faf1750a7c453e4ba993b1b2ed9b11917fcf",
       "employer_name": "Adobe"
     },
-    "generated_at": "2026-04-20T04:54:47.882302+00:00"
+    "generated_at": "2026-07-29T18:55:01.866202+00:00"
   },
   {
     "chunk_id": "afbf905e180e",
@@ -1065,7 +1065,7 @@
       "employer_id": "5573d9102dd761be86ffbe508c86baa369ff6fc7",
       "employer_name": "Persistent Systems"
     },
-    "generated_at": "2026-04-20T04:54:47.909162+00:00"
+    "generated_at": "2026-07-29T18:55:01.890318+00:00"
   },
   {
     "chunk_id": "180b092b8558",
@@ -1077,7 +1077,7 @@
       "employer_id": "02cf9630207fab31286d09e15c696249bf56cf2d",
       "employer_name": "Barclays Services"
     },
-    "generated_at": "2026-04-20T04:54:47.934386+00:00"
+    "generated_at": "2026-07-29T18:55:01.914395+00:00"
   },
   {
     "chunk_id": "7761efd946f3",
@@ -1089,7 +1089,7 @@
       "employer_id": "1b602c9f6a35582b85cb31bfb0403840a6cc7ad6",
       "employer_name": "The Mathworks"
     },
-    "generated_at": "2026-04-20T04:54:47.963400+00:00"
+    "generated_at": "2026-07-29T18:55:01.938783+00:00"
   },
   {
     "chunk_id": "c5f628a9dda5",
@@ -1101,7 +1101,7 @@
       "employer_id": "02fb16bcc4715b0c4ed8021fcce8ba78d2b2976e",
       "employer_name": "International Business Machines"
     },
-    "generated_at": "2026-04-20T04:54:47.989261+00:00"
+    "generated_at": "2026-07-29T18:55:01.962489+00:00"
   },
   {
     "chunk_id": "1c09adb0d70c",
@@ -1113,7 +1113,7 @@
       "employer_id": "ba8a501d609713a24e7cf3ca96f069702fc75b79",
       "employer_name": "Sap America"
     },
-    "generated_at": "2026-04-20T04:54:48.015508+00:00"
+    "generated_at": "2026-07-29T18:55:01.986639+00:00"
   },
   {
     "chunk_id": "ad7f2af86669",
@@ -1125,7 +1125,7 @@
       "employer_id": "3eb2cb5b005075d5b17d3437b39a21141fbb5c50",
       "employer_name": "Advanced Micro Devices"
     },
-    "generated_at": "2026-04-20T04:54:48.040878+00:00"
+    "generated_at": "2026-07-29T18:55:02.010702+00:00"
   },
   {
     "chunk_id": "7083bf763a21",
@@ -1137,7 +1137,7 @@
       "employer_id": "",
       "employer_name": "Ca"
     },
-    "generated_at": "2026-04-20T04:54:48.063988+00:00"
+    "generated_at": "2026-07-29T18:55:02.032345+00:00"
   },
   {
     "chunk_id": "aa82ded8cf08",
@@ -1149,7 +1149,7 @@
       "employer_id": "c968192cfa3eeca201e68e0bd201b27c4c21b156",
       "employer_name": "Expedia"
     },
-    "generated_at": "2026-04-20T04:54:48.089120+00:00"
+    "generated_at": "2026-07-29T18:55:02.060726+00:00"
   },
   {
     "chunk_id": "31c89826fe05",
@@ -1161,7 +1161,7 @@
       "employer_id": "190eddf4994fe247bf1d6e2a3f732366ebe84d5a",
       "employer_name": "Morgan Stanley Services Group"
     },
-    "generated_at": "2026-04-20T04:54:48.115076+00:00"
+    "generated_at": "2026-07-29T18:55:02.089778+00:00"
   },
   {
     "chunk_id": "da18211035d2",
@@ -1173,7 +1173,7 @@
       "employer_id": "3992469adba37f2ad3363488b30b6c6c5272c676",
       "employer_name": "Servicenow"
     },
-    "generated_at": "2026-04-20T04:54:48.140724+00:00"
+    "generated_at": "2026-07-29T18:55:02.118296+00:00"
   },
   {
     "chunk_id": "4db208e7a977",
@@ -1185,7 +1185,7 @@
       "employer_id": "78a46d3917846d886ef35fe989075cb353f21a1d",
       "employer_name": "Optum Services"
     },
-    "generated_at": "2026-04-20T04:54:48.167177+00:00"
+    "generated_at": "2026-07-29T18:55:02.145899+00:00"
   },
   {
     "chunk_id": "cf69f4c6ad98",
@@ -1197,7 +1197,7 @@
       "employer_id": "99fcb6ec536e0ca0238a11853e62b6f42bcd5eed",
       "employer_name": "Mckinsey United States"
     },
-    "generated_at": "2026-04-20T04:54:48.194098+00:00"
+    "generated_at": "2026-07-29T18:55:02.171193+00:00"
   },
   {
     "chunk_id": "054c0d678340",
@@ -1209,7 +1209,7 @@
       "employer_id": "81ff89a11633a3d5ec75572bda0bc5dae6bfb800",
       "employer_name": "Ford Motor"
     },
-    "generated_at": "2026-04-20T04:54:48.222746+00:00"
+    "generated_at": "2026-07-29T18:55:02.196186+00:00"
   },
   {
     "chunk_id": "058c92656b50",
@@ -1221,7 +1221,7 @@
       "employer_id": "905d7531a7e1a0d181d6e2e9be703473bdb72bc9",
       "employer_name": "T Mobile Usa"
     },
-    "generated_at": "2026-04-20T04:54:48.250084+00:00"
+    "generated_at": "2026-07-29T18:55:02.221414+00:00"
   },
   {
     "chunk_id": "9bf80ecf0c7e",
@@ -1233,7 +1233,7 @@
       "employer_id": "d07bcd783188dd222b03d5117c19878a2d5db3ab",
       "employer_name": "Goldman Sachs Services"
     },
-    "generated_at": "2026-04-20T04:54:48.278703+00:00"
+    "generated_at": "2026-07-29T18:55:02.246835+00:00"
   },
   {
     "chunk_id": "761008922fa2",
@@ -1245,7 +1245,7 @@
       "employer_id": "2499037b84cee9cf49a6663f81b103c57ad968d6",
       "employer_name": "Infosys Technologies"
     },
-    "generated_at": "2026-04-20T04:54:48.308878+00:00"
+    "generated_at": "2026-07-29T18:55:02.270844+00:00"
   },
   {
     "chunk_id": "d45fe7d4108f",
@@ -1257,7 +1257,7 @@
       "employer_id": "8329e30c978b34884350f3c58f055fe83a4ee71f",
       "employer_name": "Atos Syntel"
     },
-    "generated_at": "2026-04-20T04:54:48.338183+00:00"
+    "generated_at": "2026-07-29T18:55:02.295031+00:00"
   },
   {
     "chunk_id": "593e2a653e6d",
@@ -1269,7 +1269,7 @@
       "employer_id": "45b9bba145eca10922a01123075dc0c4c865c8cf",
       "employer_name": "The Boston Consulting Group"
     },
-    "generated_at": "2026-04-20T04:54:48.366287+00:00"
+    "generated_at": "2026-07-29T18:55:02.319471+00:00"
   },
   {
     "chunk_id": "c067598c85ca",
@@ -1281,7 +1281,7 @@
       "employer_id": "d99f0b464805411920f0b06570b66eed45d3fdf0",
       "employer_name": "Blackrock Financial Management"
     },
-    "generated_at": "2026-04-20T04:54:48.394986+00:00"
+    "generated_at": "2026-07-29T18:55:02.343580+00:00"
   },
   {
     "chunk_id": "017d7bcfc0df",
@@ -1293,7 +1293,7 @@
       "employer_id": "a4600097cbcdac9bd06e5b49661e3a7932249a67",
       "employer_name": "Management Health Systems"
     },
-    "generated_at": "2026-04-20T04:54:48.423842+00:00"
+    "generated_at": "2026-07-29T18:55:02.367843+00:00"
   },
   {
     "chunk_id": "e62cf83a9bb5",
@@ -1305,7 +1305,7 @@
       "employer_id": "ca1e87dd56d3e2cad8671ce86991dad9e7ef2448",
       "employer_name": "Mayo Clinic"
     },
-    "generated_at": "2026-04-20T04:54:48.452705+00:00"
+    "generated_at": "2026-07-29T18:55:02.392579+00:00"
   },
   {
     "chunk_id": "755d72334141",
@@ -1317,7 +1317,7 @@
       "employer_id": "449720e3a4f427a9b50505c91b0b84a9edc90c1d",
       "employer_name": "Qualcomm Incorporated"
     },
-    "generated_at": "2026-04-20T04:54:48.480145+00:00"
+    "generated_at": "2026-07-29T18:55:02.417240+00:00"
   },
   {
     "chunk_id": "2b6d6929d5be",
@@ -1329,7 +1329,7 @@
       "employer_id": "319dbfb4af10b66e883d1630fdf89a1c7b36d497",
       "employer_name": "Credit Suisse Securities Usa"
     },
-    "generated_at": "2026-04-20T04:54:48.505345+00:00"
+    "generated_at": "2026-07-29T18:55:02.441442+00:00"
   },
   {
     "chunk_id": "4c779a5b5732",
@@ -1341,7 +1341,7 @@
       "employer_id": "c337ef2beec0f692897d0cdaf2bc03cbbceeffce",
       "employer_name": "Capgemini Financial Services Usa"
     },
-    "generated_at": "2026-04-20T04:54:48.531802+00:00"
+    "generated_at": "2026-07-29T18:55:02.465442+00:00"
   },
   {
     "chunk_id": "ac850135110a",
@@ -1353,7 +1353,7 @@
       "employer_id": "86eecf5334cdde21205a164443414d13ef774a24",
       "employer_name": "Yahoo!"
     },
-    "generated_at": "2026-04-20T04:54:48.558930+00:00"
+    "generated_at": "2026-07-29T18:55:02.489516+00:00"
   },
   {
     "chunk_id": "a80bff7f663f",
@@ -1365,7 +1365,7 @@
       "employer_id": "5b947e69c3effcfd215a1d0a24fefa7af70098e7",
       "employer_name": "Ericsson"
     },
-    "generated_at": "2026-04-20T04:54:48.587864+00:00"
+    "generated_at": "2026-07-29T18:55:02.513360+00:00"
   },
   {
     "chunk_id": "87113056d3ee",
@@ -1377,7 +1377,7 @@
       "employer_id": "9fe6325c05d6ad49b152046fcc2c3b8e62d67faa",
       "employer_name": "Bloomberg L P"
     },
-    "generated_at": "2026-04-20T04:54:48.615674+00:00"
+    "generated_at": "2026-07-29T18:55:02.537363+00:00"
   },
   {
     "chunk_id": "2c6d6818c4b4",
@@ -1389,7 +1389,7 @@
       "employer_id": "003ff30bad6272edeef1f669ff9d6bed287a78c1",
       "employer_name": "Applied Materials"
     },
-    "generated_at": "2026-04-20T04:54:48.640626+00:00"
+    "generated_at": "2026-07-29T18:55:02.561987+00:00"
   },
   {
     "chunk_id": "8f994654bd82",
@@ -1401,7 +1401,7 @@
       "employer_id": "09e81f13c3f29309ccb1dd01763354c91438cd61",
       "employer_name": "Grandison Management"
     },
-    "generated_at": "2026-04-20T04:54:48.666043+00:00"
+    "generated_at": "2026-07-29T18:55:02.586068+00:00"
   },
   {
     "chunk_id": "5579e77bb2a3",
@@ -1413,7 +1413,7 @@
       "employer_id": "2a01497bce7019edc8ee3191a1be16d590744b2f",
       "employer_name": "Morgan Stanley"
     },
-    "generated_at": "2026-04-20T04:54:48.691345+00:00"
+    "generated_at": "2026-07-29T18:55:02.610625+00:00"
   },
   {
     "chunk_id": "06846e29a067",
@@ -1425,7 +1425,7 @@
       "employer_id": "291913738c18e4ab16712464e0be12a138646b8a",
       "employer_name": "Erp Analysts"
     },
-    "generated_at": "2026-04-20T04:54:48.716858+00:00"
+    "generated_at": "2026-07-29T18:55:02.634843+00:00"
   },
   {
     "chunk_id": "fcb441efe8b0",
@@ -1437,7 +1437,7 @@
       "employer_id": "6081f879079e8572cf25393e7b10b095f7b4aef3",
       "employer_name": "Broadcom"
     },
-    "generated_at": "2026-04-20T04:54:48.742733+00:00"
+    "generated_at": "2026-07-29T18:55:02.658979+00:00"
   },
   {
     "chunk_id": "71a86702211d",
@@ -1449,7 +1449,7 @@
       "employer_id": "ceb956f153dacc6391a8a7d839b32e2acb1e5cbe",
       "employer_name": "Avco Consulting"
     },
-    "generated_at": "2026-04-20T04:54:48.768786+00:00"
+    "generated_at": "2026-07-29T18:55:02.683625+00:00"
   },
   {
     "chunk_id": "f7f4da812eeb",
@@ -1461,7 +1461,7 @@
       "employer_id": "31598f29d2f03e2326f00976ccba63251ebeaa20",
       "employer_name": "Citiustech"
     },
-    "generated_at": "2026-04-20T04:54:48.795815+00:00"
+    "generated_at": "2026-07-29T18:55:02.709680+00:00"
   },
   {
     "chunk_id": "2823471ff82a",
@@ -1473,7 +1473,7 @@
       "employer_id": "1d198fa58be30be403ab5b6fef611516c801dc07",
       "employer_name": "U S Bank National Association"
     },
-    "generated_at": "2026-04-20T04:54:48.823164+00:00"
+    "generated_at": "2026-07-29T18:55:02.734212+00:00"
   },
   {
     "chunk_id": "0b1074beb318",
@@ -1485,7 +1485,7 @@
       "employer_id": "ee9696ac1eff0dddc2f6e2450b8db02bdbb985bd",
       "employer_name": "Epam Systems"
     },
-    "generated_at": "2026-04-20T04:54:48.850953+00:00"
+    "generated_at": "2026-07-29T18:55:02.758831+00:00"
   },
   {
     "chunk_id": "254b1b18214c",
@@ -1497,7 +1497,7 @@
       "employer_id": "567b368c59d34af8d60c8aadd541e791792c6d27",
       "employer_name": "Headstrong Services"
     },
-    "generated_at": "2026-04-20T04:54:48.878164+00:00"
+    "generated_at": "2026-07-29T18:55:02.783058+00:00"
   },
   {
     "chunk_id": "60c694b900b8",
@@ -1509,7 +1509,7 @@
       "employer_id": "92255419dc7b5ce8f40b11d923fd295f5a68b8eb",
       "employer_name": "Dallas Independent School District"
     },
-    "generated_at": "2026-04-20T04:54:48.906202+00:00"
+    "generated_at": "2026-07-29T18:55:02.807593+00:00"
   },
   {
     "chunk_id": "870ea0839476",
@@ -1521,7 +1521,7 @@
       "employer_id": "540274ef5be1f00c73c879cd708673520c507abb",
       "employer_name": "People Tech Group"
     },
-    "generated_at": "2026-04-20T04:54:48.932885+00:00"
+    "generated_at": "2026-07-29T18:55:02.831911+00:00"
   },
   {
     "chunk_id": "ad4ab63cb696",
@@ -1533,7 +1533,7 @@
       "employer_id": "2f97f447d5c6c186a22a15d9b4d4cd211838d1fa",
       "employer_name": "Yash Technologies"
     },
-    "generated_at": "2026-04-20T04:54:48.959464+00:00"
+    "generated_at": "2026-07-29T18:55:02.855976+00:00"
   },
   {
     "chunk_id": "001e048d22a5",
@@ -1545,7 +1545,7 @@
       "employer_id": "10c5f115d49eaeb9a199c4be818e2314738a33bf",
       "employer_name": "Csc Covansys"
     },
-    "generated_at": "2026-04-20T04:54:48.984571+00:00"
+    "generated_at": "2026-07-29T18:55:02.879811+00:00"
   },
   {
     "chunk_id": "4fdfa590e019",
@@ -1557,7 +1557,7 @@
       "employer_id": "5d20904f08362b7e865b0ac4b056458671654da7",
       "employer_name": "Bytedance"
     },
-    "generated_at": "2026-04-20T04:54:49.011032+00:00"
+    "generated_at": "2026-07-29T18:55:02.904943+00:00"
   },
   {
     "chunk_id": "60ec13b920df",
@@ -1569,7 +1569,7 @@
       "employer_id": "1f27dd2214f1ea5920f2dda30f463495e8850370",
       "employer_name": "Kpit Infosystems"
     },
-    "generated_at": "2026-04-20T04:54:49.037715+00:00"
+    "generated_at": "2026-07-29T18:55:02.929807+00:00"
   },
   {
     "chunk_id": "99414eda3c47",
@@ -1581,7 +1581,7 @@
       "employer_id": "d5de597fc4613ecbfeb173375b46b0117293fe73",
       "employer_name": "Columbia University"
     },
-    "generated_at": "2026-04-20T04:54:49.065124+00:00"
+    "generated_at": "2026-07-29T18:55:02.954204+00:00"
   },
   {
     "chunk_id": "2a537345fcd4",
@@ -1593,7 +1593,7 @@
       "employer_id": "306b603ff23ce9e31cfcdfe720402bf495889056",
       "employer_name": "Cerner"
     },
-    "generated_at": "2026-04-20T04:54:49.090679+00:00"
+    "generated_at": "2026-07-29T18:55:02.978215+00:00"
   },
   {
     "chunk_id": "833e1d92db60",
@@ -1605,7 +1605,7 @@
       "employer_id": "2e8ee6c2267804e904cc6081146f4777380b8de2",
       "employer_name": "Texas Instruments Incorporated"
     },
-    "generated_at": "2026-04-20T04:54:49.116261+00:00"
+    "generated_at": "2026-07-29T18:55:03.002222+00:00"
   },
   {
     "chunk_id": "b54317f5d90d",
@@ -1617,7 +1617,7 @@
       "employer_id": "38a5e99214e165e485a51b800e8b9131aa967e90",
       "employer_name": "3i Infotech"
     },
-    "generated_at": "2026-04-20T04:54:49.140928+00:00"
+    "generated_at": "2026-07-29T18:55:03.026075+00:00"
   },
   {
     "chunk_id": "72d23bfcd59a",
@@ -1629,7 +1629,7 @@
       "employer_id": "3d2b9cdb1558a040bdaccc1030ff69f4e5446c40",
       "employer_name": "Hewlett Packard Enterprise"
     },
-    "generated_at": "2026-04-20T04:54:49.166857+00:00"
+    "generated_at": "2026-07-29T18:55:03.050179+00:00"
   },
   {
     "chunk_id": "bb28f0921076",
@@ -1641,7 +1641,7 @@
       "employer_id": "c138f8222731302c6518d631efadb852022f07c9",
       "employer_name": "Diaspark"
     },
-    "generated_at": "2026-04-20T04:54:49.192306+00:00"
+    "generated_at": "2026-07-29T18:55:03.075308+00:00"
   },
   {
     "chunk_id": "a07aab51eea8",
@@ -1653,7 +1653,7 @@
       "employer_id": "13c818e3fd5b91b7f3d083bfaea56d5925b5cc58",
       "employer_name": "At T Services"
     },
-    "generated_at": "2026-04-20T04:54:49.217975+00:00"
+    "generated_at": "2026-07-29T18:55:03.099623+00:00"
   },
   {
     "chunk_id": "90fffc9bb97c",
@@ -1665,7 +1665,7 @@
       "employer_id": "ffcaea815c9dfb3f03255e008898315f2a6d6066",
       "employer_name": "Wells Fargo Bank N A"
     },
-    "generated_at": "2026-04-20T04:54:49.243896+00:00"
+    "generated_at": "2026-07-29T18:55:03.124204+00:00"
   },
   {
     "chunk_id": "9729ee3aedbb",
@@ -1677,7 +1677,7 @@
       "employer_id": "a46b49961335153b2bafdee7a6edfe3dcb5fc735",
       "employer_name": "Yale University"
     },
-    "generated_at": "2026-04-20T04:54:49.270032+00:00"
+    "generated_at": "2026-07-29T18:55:03.148421+00:00"
   },
   {
     "chunk_id": "8a81fc7e5c45",
@@ -1689,7 +1689,7 @@
       "employer_id": "e8426ca3f173fa83bdd20404640746afa247f3db",
       "employer_name": "Anthem"
     },
-    "generated_at": "2026-04-20T04:54:49.297605+00:00"
+    "generated_at": "2026-07-29T18:55:03.172691+00:00"
   },
   {
     "chunk_id": "fcfaa6a224d6",
@@ -1701,7 +1701,7 @@
       "employer_id": "530383d5570a19240dbefafb204c0713985124ce",
       "employer_name": "Merrill Lynch"
     },
-    "generated_at": "2026-04-20T04:54:49.325394+00:00"
+    "generated_at": "2026-07-29T18:55:03.196602+00:00"
   },
   {
     "chunk_id": "c87ad0ee6c43",
@@ -1713,7 +1713,7 @@
       "employer_id": "1a3bef0242e9a40a4a393b9aeda18189ec0ac326",
       "employer_name": "Reliable Software Resources"
     },
-    "generated_at": "2026-04-20T04:54:49.353135+00:00"
+    "generated_at": "2026-07-29T18:55:03.220298+00:00"
   },
   {
     "chunk_id": "3af0168e5ece",
@@ -1725,7 +1725,7 @@
       "employer_id": "589064b068725d399c4e91094b2cb9fc89ec6e7a",
       "employer_name": "Birlasoft"
     },
-    "generated_at": "2026-04-20T04:54:49.382645+00:00"
+    "generated_at": "2026-07-29T18:55:03.244640+00:00"
   },
   {
     "chunk_id": "033529ec5fe9",
@@ -1737,7 +1737,7 @@
       "employer_id": "028d80e04dc88074db771d67653ad8b8b6c57bfd",
       "employer_name": "Natsoft"
     },
-    "generated_at": "2026-04-20T04:54:49.410263+00:00"
+    "generated_at": "2026-07-29T18:55:03.268446+00:00"
   },
   {
     "chunk_id": "5add932d6801",
@@ -1749,7 +1749,7 @@
       "employer_id": "9ac981e79d30a51f31ecab244f32ad57c875207b",
       "employer_name": "Mastech A Mastech Holdings"
     },
-    "generated_at": "2026-04-20T04:54:49.436609+00:00"
+    "generated_at": "2026-07-29T18:55:03.292519+00:00"
   },
   {
     "chunk_id": "36d7256c6239",
@@ -1761,7 +1761,7 @@
       "employer_id": "20261daaec23b90421e309e152dd615d30bfb9d5",
       "employer_name": "University Of Pittsburgh"
     },
-    "generated_at": "2026-04-20T04:54:49.463544+00:00"
+    "generated_at": "2026-07-29T18:55:03.316422+00:00"
   },
   {
     "chunk_id": "cf1db5dc6aa9",
@@ -1773,7 +1773,7 @@
       "employer_id": "62c4efd5f25f2374fcfea27ee313d46be563f259",
       "employer_name": "Itech Us"
     },
-    "generated_at": "2026-04-20T04:54:49.491897+00:00"
+    "generated_at": "2026-07-29T18:55:03.341167+00:00"
   },
   {
     "chunk_id": "ef2e28799310",
@@ -1785,7 +1785,7 @@
       "employer_id": "900b55f05efb1e27377637af2def10b15907c7f2",
       "employer_name": "Sapient"
     },
-    "generated_at": "2026-04-20T04:54:49.519714+00:00"
+    "generated_at": "2026-07-29T18:55:03.366131+00:00"
   },
   {
     "chunk_id": "26c70b40eb6d",
@@ -1797,7 +1797,7 @@
       "employer_id": "d5792b2df7ad270ab0aadd0d8c09289078608f4f",
       "employer_name": "Verizon Data Services"
     },
-    "generated_at": "2026-04-20T04:54:49.549388+00:00"
+    "generated_at": "2026-07-29T18:55:03.390756+00:00"
   },
   {
     "chunk_id": "b570c46c1fee",
@@ -1809,7 +1809,7 @@
       "employer_id": "856bccbbfb0d6aaa57b3ae6f492c07cac50c773d",
       "employer_name": "Netapp"
     },
-    "generated_at": "2026-04-20T04:54:49.578579+00:00"
+    "generated_at": "2026-07-29T18:55:03.415135+00:00"
   },
   {
     "chunk_id": "a93cd0a19e7b",
@@ -1821,7 +1821,7 @@
       "employer_id": "2b66691315ea3c2626baf53755009feb85cf43e2",
       "employer_name": "Capgemini U S"
     },
-    "generated_at": "2026-04-20T04:54:49.605756+00:00"
+    "generated_at": "2026-07-29T18:55:03.439214+00:00"
   },
   {
     "chunk_id": "cf4a773cab68",
@@ -1833,7 +1833,7 @@
       "employer_id": "8c804d7d1311b1fa2ceed7ab83bd2d66fd84f326",
       "employer_name": "Palo Alto Networks"
     },
-    "generated_at": "2026-04-20T04:54:49.632629+00:00"
+    "generated_at": "2026-07-29T18:55:03.463133+00:00"
   },
   {
     "chunk_id": "1ed146025de4",
@@ -1845,7 +1845,7 @@
       "employer_id": "cd0ee099d49e4b7a85e58e07708f8b5e178da558",
       "employer_name": "Mastech Digital Technologies"
     },
-    "generated_at": "2026-04-20T04:54:49.661113+00:00"
+    "generated_at": "2026-07-29T18:55:03.487029+00:00"
   },
   {
     "chunk_id": "c19a08f4bd2d",
@@ -1857,7 +1857,7 @@
       "employer_id": "8e9afdd84bd6adb515169266fb14d7a4516d9d4a",
       "employer_name": "Fis Management Services"
     },
-    "generated_at": "2026-04-20T04:54:49.690746+00:00"
+    "generated_at": "2026-07-29T18:55:03.511077+00:00"
   },
   {
     "chunk_id": "275c4246776f",
@@ -1869,7 +1869,7 @@
       "employer_id": "68565e2fd20fbf58a97b13e8f8df8dafb3e8fd8e",
       "employer_name": "Medtronic"
     },
-    "generated_at": "2026-04-20T04:54:49.718230+00:00"
+    "generated_at": "2026-07-29T18:55:03.535256+00:00"
   },
   {
     "chunk_id": "13b68f8fed9a",
@@ -1878,7 +1878,7 @@
     "label": "h1b_hub_summary",
     "text": "H-1B Employer Data Hub (fact_h1b_employer_hub):\nTotal records: 729,865 (317,265 unique employers)\nFiscal years: 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023\n\u26a0\ufe0f STALE DATA \u2014 USCIS discontinued after FY2023. All rows marked is_stale=True.\nKey columns: employer, initial/continuing approvals+denials, NAICS, state, city\nSource: USCIS H-1B Employer Data Hub CSV files\nUse: Historical H-1B petition trends by employer. Good for long-term patterns.",
     "metadata": {},
-    "generated_at": "2026-04-20T04:54:49.792969+00:00"
+    "generated_at": "2026-07-29T18:55:03.605214+00:00"
   },
   {
     "chunk_id": "8235bf39dc58",
@@ -1887,7 +1887,7 @@
     "label": "h1b_hub_top_employers",
     "text": "Top 30 H-1B Employers by Total Petitions (historical FY2009\u2013FY2023):\n  COGNIZANT TECHNOLOGY SOLUTIONS US: 19,035\n  INTEL CORPORATION: 10,640\n  ORACLE AMERICA INC: 8,756\n  DELOITTE & TOUCHE LLP: 7,791\n  IBM CORPORATION: 7,727\n  FACEBOOK INC: 7,106\n  CAPITAL ONE SERVICES LLC: 4,780\n  EBAY INC: 4,545\n  WAL-MART ASSOCIATES INC: 4,343\n  LINKEDIN CORPORATION: 4,310\n  INTUIT INC: 4,307\n  PAYPAL INC: 4,229\n  HCL GLOBAL SYSTEMS INC: 4,199\n  MINDTREE LIMITED: 4,161\n  GOLDMAN SACHS & CO: 4,111\n  SYNTEL INC: 4,077\n  HCL AMERICA INC: 3,782\n  NTT DATA INC: 3,735\n  WAL MART ASSOCIATES INC: 3,642\n  CAPGEMINI FINANCIAL SVCS USA INC: 3,598\n  EMC CORPORATION: 3,552\n  KPMG LLP: 3,522\n  KFORCE INC: 3,517\n  BANK OF AMERICA NA: 3,393\n  PRICEWATERHOUSECOOPERS LLP: 3,294\n  IBM INDIA PRIVATE LIMITED: 3,276\n  CUMMINS INC: 3,212\n  NVIDIA CORPORATION: 3,206\n  GOOGLE INC: 3,200\n  HEXAWARE TECHNOLOGIES INC: 3,178",
     "metadata": {},
-    "generated_at": "2026-04-20T04:54:49.870081+00:00"
+    "generated_at": "2026-07-29T18:55:03.680539+00:00"
   },
   {
     "chunk_id": "b438368db666",
@@ -1896,6 +1896,6 @@
     "label": "h1b_hub_fy_trends",
     "text": "H-1B Petitions by Fiscal Year (Employer Hub data):\n  FY2010: 167,253\n  FY2011: 220,608\n  FY2012: 197,691\n  FY2013: 225,182\n  FY2014: 240,495\n  FY2015: 203,187\n  FY2016: 243,025\n  FY2017: 236,223\n  FY2018: 257,311\n  FY2019: 283,590\n  FY2020: 290,261\n  FY2021: 242,772\n  FY2022: 285,244\n  FY2023: 132,209\n\nAverage approval rate by FY:\n  FY2010: 89.9%\n  FY2011: 91.7%\n  FY2012: 92.4%\n  FY2013: 92.5%\n  FY2014: 92.7%\n  FY2015: 93.1%\n  FY2016: 91.3%\n  FY2017: 90.4%\n  FY2018: 84.5%\n  FY2019: 85.0%\n  FY2020: 91.0%\n  FY2021: 95.8%\n  FY2022: 96.7%\n  FY2023: 95.2%",
     "metadata": {},
-    "generated_at": "2026-04-20T04:54:49.880029+00:00"
+    "generated_at": "2026-07-29T18:55:03.689957+00:00"
   }
 ]

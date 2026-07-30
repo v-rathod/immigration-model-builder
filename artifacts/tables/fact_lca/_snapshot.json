@@ -1,6 +1,6 @@
 {
   "name": "fact_lca",
-  "generated_at": "2026-02-25T19:07:57.667555+00:00",
+  "generated_at": "2026-07-29T18:48:18.376104+00:00",
   "total_rows": 9558695,
   "num_files": 19,
   "partitions": {
@@ -28,97 +28,97 @@
     {
       "file": "fiscal_year=2008/part-0.parquet",
       "rows": 405641,
-      "sha256": "4e9b887dc7407261"
+      "sha256": "10791b5676725164"
     },
     {
       "file": "fiscal_year=2009/part-0.parquet",
       "rows": 348975,
-      "sha256": "82541ffa789d197e"
+      "sha256": "3ec294ea636d827f"
     },
     {
       "file": "fiscal_year=2010/part-0.parquet",
       "rows": 342575,
-      "sha256": "47ba52ec2602d4f6"
+      "sha256": "59cdc1aef3010463"
     },
     {
       "file": "fiscal_year=2011/part-0.parquet",
       "rows": 358857,
-      "sha256": "21b9ab7e57f97a7c"
+      "sha256": "d41424a28aa16115"
     },
     {
       "file": "fiscal_year=2012/part-0.parquet",
       "rows": 415845,
-      "sha256": "0516c1ab1ddc58e9"
+      "sha256": "88a1c27369c17869"
     },
     {
       "file": "fiscal_year=2013/part-0.parquet",
       "rows": 442274,
-      "sha256": "c2607df13a0ff5d1"
+      "sha256": "ca662b63f2443a5e"
     },
     {
       "file": "fiscal_year=2014/part-0.parquet",
       "rows": 519504,
-      "sha256": "9fdae02a4907e7bb"
+      "sha256": "6f592fe9488ec0c9"
     },
     {
       "file": "fiscal_year=2015/part-0.parquet",
       "rows": 618671,
-      "sha256": "3a17d955b0a57b6e"
+      "sha256": "3b1be797cd56558b"
     },
     {
       "file": "fiscal_year=2016/part-0.parquet",
       "rows": 647849,
-      "sha256": "273d9f8e35618fa1"
+      "sha256": "e6249ca802530c1c"
     },
     {
       "file": "fiscal_year=2017/part-0.parquet",
       "rows": 624650,
-      "sha256": "996c97dfef29b806"
+      "sha256": "310722fa0d84071e"
     },
     {
       "file": "fiscal_year=2018/part-0.parquet",
       "rows": 654360,
-      "sha256": "fcfbe00448501dbd"
+      "sha256": "4e28846949839e9f"
     },
     {
       "file": "fiscal_year=2019/part-0.parquet",
       "rows": 664616,
-      "sha256": "60c94703d7b524c4"
+      "sha256": "4b87b2e1b635718c"
     },
     {
       "file": "fiscal_year=2020/part-0.parquet",
       "rows": 577334,
-      "sha256": "f06cca60b49a4569"
+      "sha256": "299a7b64cedeb16f"
     },
     {
       "file": "fiscal_year=2021/part-0.parquet",
       "rows": 528902,
-      "sha256": "38fae9965017e70b"
+      "sha256": "97d64a0d7142bcbd"
     },
     {
       "file": "fiscal_year=2022/part-0.parquet",
       "rows": 626084,
-      "sha256": "594169b60955e799"
+      "sha256": "20e4ca3195c2d24b"
     },
     {
       "file": "fiscal_year=2023/part-0.parquet",
       "rows": 543580,
-      "sha256": "59de56e0cc6bd2c8"
+      "sha256": "1c4820f08886c3eb"
     },
     {
       "file": "fiscal_year=2024/part-0.parquet",
       "rows": 561037,
-      "sha256": "794ee655167c4a58"
+      "sha256": "bd6199347509c977"
     },
     {
       "file": "fiscal_year=2025/part-0.parquet",
       "rows": 594821,
-      "sha256": "8c7000b716f10bf7"
+      "sha256": "20cb1aec5101b7b0"
     },
     {
       "file": "fiscal_year=2026/part-0.parquet",
       "rows": 83120,
-      "sha256": "754abc53523013a7"
+      "sha256": "dfc3d1e5063e08b6"
     }
   ],
   "fiscal_years": "2008\u20132026",

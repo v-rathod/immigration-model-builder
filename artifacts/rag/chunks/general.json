@@ -6,7 +6,7 @@
     "label": "dim_dim_country",
     "text": "dim_country.parquet \u2014 ISO 3166-1 country lookup (249 countries). Columns: country_code, country_name, region, etc.\nRows: 249, Columns: country_name, iso2, iso3, region, source_file, ingested_at",
     "metadata": {},
-    "generated_at": "2026-04-20T04:54:49.890684+00:00"
+    "generated_at": "2026-07-29T18:55:03.701816+00:00"
   },
   {
     "chunk_id": "1fd261d8b0fc",
@@ -15,7 +15,7 @@
     "label": "warn_events_summary",
     "text": "WARN Act Layoff Events Summary:\nTotal events: 985\nColumns: state, notice_date, employer_name_raw, city, employees_affected, employer_id, source_file, ingested_at\nThe WARN Act requires 60-day advance notice of mass layoffs.\nUse: Identify employers with recent layoffs that may affect sponsorship.",
     "metadata": {},
-    "generated_at": "2026-04-20T04:54:49.894740+00:00"
+    "generated_at": "2026-07-29T18:55:03.705515+00:00"
   },
   {
     "chunk_id": "2e72067536f7",
@@ -24,7 +24,7 @@
     "label": "dhs_admissions_summary",
     "text": "DHS Admissions Summary:\nTotal records: 45\nColumns: fiscal_year, class_of_admission, country, admissions, source_file, ingested_at\nCoverage: Historical DHS admission counts (FY1980+)\nUse: Long-term immigration volume trends.\n  FY1980 | REFUGEE | col_1 | 207120\n  FY1981 | REFUGEE | col_1 | 159250\n  FY1982 | REFUGEE | col_1 | 98100\n  FY1983 | REFUGEE | col_1 | 61220\n  FY1984 | REFUGEE | col_1 | 70390\n  FY1985 | REFUGEE | col_1 | 67700\n  FY1986 | REFUGEE | col_1 | 62150\n  FY1987 | REFUGEE | col_1 | 64530\n  FY1988 | REFUGEE | col_1 | 76480\n  FY1989 | REFUGEE | col_1 | 107070\n  FY1990 | REFUGEE | col_1 | 122070\n  FY1991 | REFUGEE | col_1 | 113390\n  FY1992 | REFUGEE | col_1 | 115550\n  FY1993 | REFUGEE | col_1 | 114180\n  FY1994 | REFUGEE | col_1 | 111680\n  FY1995 | REFUGEE | col_1 | 98970\n  FY1996 | REFUGEE | col_1 | 75420\n  FY1997 | REFUGEE | col_1 | 69650\n  FY1998 | REFUGEE | col_1 | 76710\n  FY1999 | REFUGEE | col_1 | 85290\n  FY2000 | REFUGEE | col_1 | 72170\n  FY2001 | REFUGEE | col_1 | 68920\n  FY2002 | REFUGEE | col_1 | 26790\n  FY2003 | REFUGEE | col_1 | 28290\n  FY2004 | REFUGEE | col_1 | 52840\n  FY2005 | REFUGEE | col_1 | 53740\n  FY2006 | REFUGEE | col_1 | 41090\n  FY2007 | REFUGEE | col_1 | 48220\n  FY2008 | REFUGEE | col_1 | 60110\n  FY2009 | REFUGEE | col_1 | 74600\n  FY2010 | REFUGEE | col_1 | 73290\n  FY2011 | REFUGEE | col_1 | 56380\n  FY2012 | REFUGEE | col_1 | 58180\n  FY2013 | REFUGEE | col_1 | 69910\n  FY2014 | REFUGEE | col_1 | 69980\n  FY2015 | REFUGEE | col_1 | 69920\n  FY2016 | REFUGEE | col_1 | 84990\n  FY2017 | REFUGEE | col_1 | 53690\n  FY2018 | REFUGEE | col_1 | 22410\n  FY2019 | REFUGEE | col_1 | 29920\n  FY2020 | REFUGEE | col_1 | 11840\n  FY2021 | REFUGEE | col_1 | 11450\n  FY2022 | REFUGEE | col_1 | 25520\n  FY2023 | REFUGEE | col_1 | 60050\n  FY2024 | REFUGEE | col_1 | 100060",
     "metadata": {},
-    "generated_at": "2026-04-20T04:54:49.897458+00:00"
+    "generated_at": "2026-07-29T18:55:03.707955+00:00"
   },
   {
     "chunk_id": "2865b1dad74f",
@@ -33,6 +33,6 @@
     "label": "immigration_faq",
     "text": "Frequently Asked Questions about U.S. Employment-Based Immigration:\n\nQ: What is PERM labor certification?\nA: PERM (Program Electronic Review Management) is the DOL process where employers prove no qualified U.S. workers are available for a position. It is the first step in most EB-2 and EB-3 green card processes.\n\nQ: What are EB-1, EB-2, and EB-3 categories?\nA: Employment-based preference categories: EB-1 (extraordinary ability, outstanding professors, multinational managers), EB-2 (advanced degree or exceptional ability), EB-3 (skilled workers, professionals, other workers).\n\nQ: What is a priority date?\nA: The date when your employer files the PERM application (or I-140 petition for categories not requiring PERM). It determines your place in the visa queue.\n\nQ: What is retrogression?\nA: When the visa bulletin cutoff date moves backward, meaning previously current applicants can no longer file I-485. Happens when demand exceeds supply.\n\nQ: What is the H-1B visa?\nA: A nonimmigrant visa for specialty occupation workers. Subject to annual cap of 65,000 + 20,000 for U.S. advanced degree holders. Valid for 3 years, extendable.",
     "metadata": {},
-    "generated_at": "2026-04-20T04:54:49.897462+00:00"
+    "generated_at": "2026-07-29T18:55:03.707959+00:00"
   }
 ]

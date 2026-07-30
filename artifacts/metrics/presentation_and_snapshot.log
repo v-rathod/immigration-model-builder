@@ -1,27 +1,24 @@
 ============================================================
 PRESENTATION & SNAPSHOT ARTIFACTS
-Started: 2026-02-25 13:07:54
+Started: 2026-07-29 13:48:16
 ============================================================
 
 ============================================================
 SECTION 1: Visa Bulletin Presentation + Snapshot
 ============================================================
-  Leaves found: 280
-  Building fact_cutoffs_all.parquet …
-  Raw union: 13,915 rows
-  After PK dedupe: 8,315 rows
-  Written: artifacts/tables/fact_cutoffs_all.parquet (8,315 rows)
+  Leaves found: 173
+  fact_cutoffs_all.parquet up-to-date (8,335 rows) – skipping rebuild
   snapshot → artifacts/tables/fact_cutoffs/_snapshot.json
-  PASS: fact_cutoffs presentation 8,315 rows
+  PASS: fact_cutoffs presentation 8,335 rows
 
 ============================================================
 SECTION 2: PERM Presentation + Snapshot
 ============================================================
   Partition files: 19
-  Total rows: 1,675,051
+  Total rows: 1,716,989
   snapshot → artifacts/tables/fact_perm/_snapshot.json
   Building fact_perm_all.parquet (concat of partitions) …
-  Written: artifacts/tables/fact_perm_all.parquet (1,675,051 rows)
+  Written: artifacts/tables/fact_perm_all.parquet (1,716,989 rows)
 
 ============================================================
 SECTION 3: LCA Presentation + Snapshot
@@ -40,6 +37,6 @@ SECTION 4: OEWS Snapshot
 
 ============================================================
 DONE
-Elapsed: 2.8s
+Elapsed: 1.5s
 Summary: artifacts/metrics/presentations_and_snapshots.json
 ============================================================

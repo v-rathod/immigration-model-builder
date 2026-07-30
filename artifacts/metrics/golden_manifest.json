@@ -1,14 +1,14 @@
 {
   "program": "NorthStar",
   "project": "Meridian (P2)",
-  "generated_at": "2026-04-20T00:51:24.358120+00:00",
+  "generated_at": "2026-07-29T19:03:20.050572+00:00",
   "artifact_count": 41,
   "ok_count": 41,
   "missing_count": 0,
   "artifacts": {
     "dim_employer": {
       "status": "ok",
-      "rows": 256411,
+      "rows": 261193,
       "cols": 6,
       "columns": [
         "aliases",
@@ -19,7 +19,7 @@
         "source_files"
       ],
       "dtype_signature": "aliases:str|domain:object|employer_id:str|employer_name:str|ingested_at:datetime64[us, UTC]|source_files:str",
-      "sample_hash": "b942b36b8d3efd4d",
+      "sample_hash": "1b53797a6004cf1e",
       "numeric_bounds": {}
     },
     "dim_soc": {
@@ -41,7 +41,7 @@
         "source_file"
       ],
       "dtype_signature": "from_code:str|from_version:str|ingested_at:datetime64[us, UTC]|is_aggregated:bool|mapping_confidence:str|soc_broad_group:str|soc_code:str|soc_major_group:str|soc_minor_group:str|soc_title:str|soc_version:str|source_file:str",
-      "sample_hash": "5d5000886939631c",
+      "sample_hash": "080fa73b002744ae",
       "numeric_bounds": {}
     },
     "dim_country": {
@@ -57,7 +57,7 @@
         "source_file"
       ],
       "dtype_signature": "country_name:str|ingested_at:datetime64[us, UTC]|iso2:str|iso3:str|region:str|source_file:str",
-      "sample_hash": "12afcca1e7508343",
+      "sample_hash": "ac7d1d3c69173eb9",
       "numeric_bounds": {}
     },
     "dim_area": {
@@ -77,7 +77,7 @@
         "state_fips"
       ],
       "dtype_signature": "area_code:str|area_title:str|area_type:str|cbsa_code:object|ingested_at:datetime64[us, UTC]|metro_status:str|ref_year:int64|source_file:str|state_abbr:str|state_fips:str",
-      "sample_hash": "be476889a78af88f",
+      "sample_hash": "92d2fbd3daad76cd",
       "numeric_bounds": {
         "ref_year": {
           "min": 2023.0,
@@ -101,7 +101,7 @@
         "sub_name"
       ],
       "dtype_signature": "family_code:str|family_name:str|ingested_at:datetime64[us, UTC]|is_employment:bool|is_grouped:bool|notes:str|source_file:str|sub_code:str|sub_name:str",
-      "sample_hash": "f481cb523c34c90b",
+      "sample_hash": "0624f1d2fe6851c9",
       "numeric_bounds": {}
     },
     "dim_visa_ceiling": {
@@ -127,7 +127,7 @@
     },
     "fact_perm_all": {
       "status": "ok",
-      "rows": 1675051,
+      "rows": 1716989,
       "cols": 22,
       "columns": [
         "area_code",
@@ -153,12 +153,12 @@
         "worksite_postal",
         "worksite_state"
       ],
-      "dtype_signature": "area_code:str|case_number:str|case_status:str|decision_date:datetime64[us]|employer_country:str|employer_id:str|employer_name:str|fiscal_year:str|ingested_at:datetime64[us, UTC]|is_fulltime:bool|job_title:str|naics_code:str|received_date:datetime64[us]|soc_code:str|soc_code_raw:str|source_file:str|wage_offer_from:float64|wage_offer_to:float64|wage_offer_unit:str|worksite_city:str|worksite_postal:str|worksite_state:str",
-      "sample_hash": "5f916ad3babc1646",
+      "dtype_signature": "area_code:str|case_number:str|case_status:str|decision_date:datetime64[us]|employer_country:str|employer_id:str|employer_name:str|fiscal_year:str|ingested_at:datetime64[us, UTC]|is_fulltime:bool|job_title:str|naics_code:string|received_date:datetime64[us]|soc_code:str|soc_code_raw:str|source_file:str|wage_offer_from:float64|wage_offer_to:float64|wage_offer_unit:str|worksite_city:str|worksite_postal:str|worksite_state:str",
+      "sample_hash": "9de431e9d2e05470",
       "numeric_bounds": {
         "wage_offer_from": {
           "min": 0.0,
-          "max": 27500000.0
+          "max": 115256074.0
         },
         "wage_offer_to": {
           "min": 0.0,
@@ -168,7 +168,7 @@
     },
     "fact_cutoffs_all": {
       "status": "ok",
-      "rows": 8115,
+      "rows": 8335,
       "cols": 10,
       "columns": [
         "bulletin_month",
@@ -183,7 +183,7 @@
         "status_flag"
       ],
       "dtype_signature": "bulletin_month:int64|bulletin_year:int64|category:str|chart:str|country:str|cutoff_date:datetime64[us]|ingested_at:datetime64[us, UTC]|page_ref:str|source_file:str|status_flag:str",
-      "sample_hash": "753c5084d962da80",
+      "sample_hash": "32a53eb2b4aa4ebe",
       "numeric_bounds": {
         "bulletin_year": {
           "min": 2011.0,
@@ -339,7 +339,7 @@
         "visa_class"
       ],
       "dtype_signature": "applications:int64|category:str|country:str|fiscal_year:str|ingested_at:str|refusals:int64|source_file:str|visa_class:str",
-      "sample_hash": "e821db1b6078c9df",
+      "sample_hash": "6c571faa6b0f6a08",
       "numeric_bounds": {
         "applications": {
           "min": 1.0,
@@ -364,7 +364,7 @@
         "source_file"
       ],
       "dtype_signature": "admissions:int64|class_of_admission:str|country:str|fiscal_year:str|ingested_at:str|source_file:str",
-      "sample_hash": "4e14aff861c67bc9",
+      "sample_hash": "04d89bfe80162493",
       "numeric_bounds": {
         "admissions": {
           "min": 11450.0,
@@ -374,7 +374,7 @@
     },
     "fact_uscis_approvals": {
       "status": "ok",
-      "rows": 1048,
+      "rows": 1120,
       "cols": 7,
       "columns": [
         "approvals",
@@ -386,7 +386,7 @@
         "source_file"
       ],
       "dtype_signature": "approvals:int64|category:str|denials:int64|fiscal_year:str|form:str|ingested_at:str|source_file:str",
-      "sample_hash": "d3298e2c57600da3",
+      "sample_hash": "a9c913f1ee478cdf",
       "numeric_bounds": {
         "approvals": {
           "min": 0.0,
@@ -413,7 +413,7 @@
         "state"
       ],
       "dtype_signature": "city:str|employees_affected:int64|employer_id:object|employer_name_raw:str|ingested_at:str|notice_date:str|source_file:str|state:str",
-      "sample_hash": "8362111825b68d2b",
+      "sample_hash": "a73ebfdd5fa4669b",
       "numeric_bounds": {
         "employees_affected": {
           "min": 1.0,
@@ -448,7 +448,7 @@
     },
     "fact_perm": {
       "status": "ok",
-      "rows": 1675051,
+      "rows": 1716989,
       "cols": 21,
       "columns": [
         "area_code",
@@ -473,12 +473,12 @@
         "worksite_postal",
         "worksite_state"
       ],
-      "dtype_signature": "area_code:str|case_number:str|case_status:str|decision_date:datetime64[us]|employer_country:str|employer_id:str|employer_name:str|ingested_at:datetime64[us, UTC]|is_fulltime:bool|job_title:str|naics_code:str|received_date:datetime64[us]|soc_code:str|soc_code_raw:str|source_file:str|wage_offer_from:float64|wage_offer_to:float64|wage_offer_unit:str|worksite_city:str|worksite_postal:str|worksite_state:str",
-      "sample_hash": "c6b16c579a5464c4",
+      "dtype_signature": "area_code:str|case_number:str|case_status:str|decision_date:datetime64[us]|employer_country:str|employer_id:str|employer_name:str|ingested_at:datetime64[us, UTC]|is_fulltime:bool|job_title:str|naics_code:string|received_date:datetime64[us]|soc_code:str|soc_code_raw:str|source_file:str|wage_offer_from:float64|wage_offer_to:float64|wage_offer_unit:str|worksite_city:str|worksite_postal:str|worksite_state:str",
+      "sample_hash": "8195c74fe619f06e",
       "numeric_bounds": {
         "wage_offer_from": {
           "min": 0.0,
-          "max": 27500000.0
+          "max": 115256074.0
         },
         "wage_offer_to": {
           "min": 0.0,
@@ -488,7 +488,7 @@
     },
     "fact_cutoffs": {
       "status": "ok",
-      "rows": 8170,
+      "rows": 8335,
       "cols": 8,
       "columns": [
         "category",
@@ -501,12 +501,12 @@
         "status_flag"
       ],
       "dtype_signature": "category:str|chart:str|country:str|cutoff_date:datetime64[us]|ingested_at:datetime64[us, UTC]|page_ref:str|source_file:str|status_flag:str",
-      "sample_hash": "8192cd1697277520",
+      "sample_hash": "d89ddb106bdd1bea",
       "numeric_bounds": {}
     },
     "employer_features": {
       "status": "ok",
-      "rows": 70206,
+      "rows": 73295,
       "cols": 38,
       "columns": [
         "approval_rate_12m",
@@ -549,19 +549,19 @@
         "windows_used"
       ],
       "dtype_signature": "approval_rate_12m:float64|approval_rate_24m:float64|approval_rate_36m:float64|approval_rate_trend_12v12:float64|audit_rate_12m:float64|audit_rate_24m:float64|audit_rate_36m:float64|denial_rate_12m:float64|denial_rate_24m:float64|denial_rate_36m:float64|employer_id:str|employer_name:str|h1b_hub_continuing_approvals:float64|h1b_hub_initial_approvals:float64|h1b_hub_naics:str|h1b_hub_retention_ratio:float64|h1b_hub_total_petitions:float64|h1b_hub_years:float64|last_refreshed_at:datetime64[us, UTC]|lca_approval_rate_36m:float64|lca_filings_36m:float64|lca_median_wage:float64|lca_soc_breadth:float64|lca_to_perm_ratio:float64|lca_wage_ratio:float64|months_active_24m:int64|months_active_36m:int64|n_12m:int64|n_24m:int64|n_36m:int64|outcome_volatility:float64|scope:str|site_breadth_24m:int64|soc_breadth_24m:int64|soc_code:str|wage_ratio_med:float64|wage_ratio_p75:float64|windows_used:str",
-      "sample_hash": "d1f35817c673dc45",
+      "sample_hash": "7e22a76445fcf6ec",
       "numeric_bounds": {
         "n_12m": {
           "min": 0.0,
-          "max": 3238.0
+          "max": 3231.0
         },
         "n_24m": {
           "min": 0.0,
-          "max": 4612.0
+          "max": 4168.0
         },
         "n_36m": {
           "min": 1.0,
-          "max": 7259.0
+          "max": 6894.0
         },
         "months_active_24m": {
           "min": 0.0,
@@ -573,11 +573,11 @@
         },
         "soc_breadth_24m": {
           "min": 0.0,
-          "max": 49.0
+          "max": 47.0
         },
         "site_breadth_24m": {
           "min": 0.0,
-          "max": 50.0
+          "max": 54.0
         },
         "approval_rate_12m": {
           "min": 0.0,
@@ -624,11 +624,11 @@
           "max": 0.5773502691896258
         },
         "wage_ratio_med": {
-          "min": 0.14101921096233935,
+          "min": 0.16977628437527634,
           "max": 1.3
         },
         "wage_ratio_p75": {
-          "min": 0.11360892312999482,
+          "min": 0.1422089794812758,
           "max": 1.3
         },
         "lca_filings_36m": {
@@ -653,7 +653,7 @@
         },
         "lca_to_perm_ratio": {
           "min": 0.0,
-          "max": 3869.36
+          "max": 2574.58
         },
         "h1b_hub_total_petitions": {
           "min": 1.0,
@@ -717,7 +717,7 @@
     },
     "employer_monthly_metrics": {
       "status": "ok",
-      "rows": 224114,
+      "rows": 231930,
       "cols": 10,
       "columns": [
         "approval_rate",
@@ -732,7 +732,7 @@
         "month"
       ],
       "dtype_signature": "approval_rate:float64|approvals:int64|audit_rate_t12:float64|dataset:str|denial_rate:float64|denials:int64|employer_id:str|employer_name:str|filings:int64|month:datetime64[us]",
-      "sample_hash": "bafaef9b6b4ceabe",
+      "sample_hash": "a2dbc414b7ddbbdc",
       "numeric_bounds": {
         "filings": {
           "min": 1.0,
@@ -744,7 +744,7 @@
         },
         "denials": {
           "min": 0.0,
-          "max": 259.0
+          "max": 256.0
         },
         "approval_rate": {
           "min": 0.0,
@@ -788,7 +788,7 @@
     },
     "soc_demand_metrics": {
       "status": "ok",
-      "rows": 3968,
+      "rows": 4098,
       "cols": 12,
       "columns": [
         "approval_rate",
@@ -805,7 +805,7 @@
         "window"
       ],
       "dtype_signature": "approval_rate:float64|approvals_count:int64|competitiveness_percentile:float64|dataset:str|filings_count:int64|offered_avg:float64|offered_median:float64|soc_code:str|soc_major_title:str|soc_title:str|top_employers_json:str|window:str",
-      "sample_hash": "c7b06153b29a6679",
+      "sample_hash": "aba3cf20d4a3bbdd",
       "numeric_bounds": {
         "filings_count": {
           "min": 1.0,
@@ -820,15 +820,15 @@
           "max": 1.0
         },
         "offered_avg": {
-          "min": 15080.0,
-          "max": 496494.44444444444
+          "min": 9360.0,
+          "max": 588770.9
         },
         "offered_median": {
-          "min": 15080.0,
-          "max": 525000.0
+          "min": 9360.0,
+          "max": 747396.0
         },
         "competitiveness_percentile": {
-          "min": 0.0014245014245014246,
+          "min": 0.0013422818791946308,
           "max": 1.0
         }
       }
@@ -855,7 +855,7 @@
     },
     "worksite_geo_metrics": {
       "status": "ok",
-      "rows": 134799,
+      "rows": 135685,
       "cols": 14,
       "columns": [
         "approval_rate",
@@ -874,7 +874,7 @@
         "state"
       ],
       "dtype_signature": "approval_rate:float64|approvals_count:int64|area_code:str|city:str|competitiveness_ratio:float64|dataset:str|distinct_employers:int64|filings_count:float64|filings_count_soc_area:float64|grain:str|offered_median:float64|offered_median_soc_area:float64|soc_code:str|state:str",
-      "sample_hash": "739e049caec23c8b",
+      "sample_hash": "2b37ddfc83f4d9ad",
       "numeric_bounds": {
         "filings_count": {
           "min": 1.0,
@@ -912,7 +912,7 @@
     },
     "category_movement_metrics": {
       "status": "ok",
-      "rows": 6555,
+      "rows": 6450,
       "cols": 12,
       "columns": [
         "avg_monthly_advancement_days",
@@ -929,7 +929,7 @@
         "volatility_score"
       ],
       "dtype_signature": "avg_monthly_advancement_days:float64|blended_velocity:float64|bulletin_month:int64|bulletin_year:int64|category:str|chart:str|country:str|median_advancement_days:float64|net_velocity:float64|next_movement_prediction:str|retrogression_events_12m:float64|volatility_score:float64",
-      "sample_hash": "1a66acc4b2f20f83",
+      "sample_hash": "9ddb48e39e48af5e",
       "numeric_bounds": {
         "bulletin_year": {
           "min": 2016.0,
@@ -957,17 +957,17 @@
         },
         "blended_velocity": {
           "min": 0.0,
-          "max": 331.8333333333333
+          "max": 548.0
         },
         "net_velocity": {
           "min": 0.0,
-          "max": 336.8333333333333
+          "max": 548.0
         }
       }
     },
     "backlog_estimates": {
       "status": "ok",
-      "rows": 8115,
+      "rows": 8170,
       "cols": 9,
       "columns": [
         "advancement_days_12m_avg",
@@ -981,7 +981,7 @@
         "inflow_estimate_12m"
       ],
       "dtype_signature": "advancement_days_12m_avg:float64|backlog_months_to_clear_est:float64|blended_velocity:float64|bulletin_month:int64|bulletin_year:int64|category:str|chart:str|country:str|inflow_estimate_12m:int64",
-      "sample_hash": "51df3cd514fae34c",
+      "sample_hash": "4ff1f0ee4ad41a26",
       "numeric_bounds": {
         "bulletin_year": {
           "min": 2011.0,
@@ -992,8 +992,8 @@
           "max": 12.0
         },
         "inflow_estimate_12m": {
-          "min": 141052.0,
-          "max": 141052.0
+          "min": 167303.0,
+          "max": 167303.0
         },
         "advancement_days_12m_avg": {
           "min": -526.2857142857143,
@@ -1011,7 +1011,7 @@
     },
     "fact_cutoff_trends": {
       "status": "ok",
-      "rows": 8115,
+      "rows": 8335,
       "cols": 14,
       "columns": [
         "bulletin_month",
@@ -1062,7 +1062,7 @@
         },
         "retrogression_count_cum": {
           "min": 0.0,
-          "max": 9.0
+          "max": 10.0
         }
       }
     },
@@ -1376,7 +1376,7 @@
     },
     "employer_friendliness_scores": {
       "status": "ok",
-      "rows": 70206,
+      "rows": 73295,
       "cols": 34,
       "columns": [
         "approval_rate_24m",
@@ -1415,19 +1415,19 @@
         "wage_subscore"
       ],
       "dtype_signature": "approval_rate_24m:float64|approval_rate_36m:float64|approval_rate_trend_12v12:float64|denial_rate_24m:float64|denial_rate_36m:float64|efs:float64|efs_tier:str|employer_id:str|employer_name:str|h1b_hub_naics:str|h1b_hub_retention_ratio:float64|h1b_signal_subscore:float64|last_refreshed_at:datetime64[us, UTC]|lca_approval_rate_36m:float64|lca_filings_36m:float64|lca_median_wage:float64|lca_to_perm_ratio:float64|lca_wage_ratio:float64|months_active_24m:int64|months_active_36m:int64|n_12m:int64|n_24m:int64|n_36m:int64|outcome_subscore:float64|outcome_volatility:float64|retention_subscore:float64|scope:str|site_breadth_24m:int64|soc_breadth_24m:int64|soc_code:str|sustainability_subscore:float64|wage_ratio_med:float64|wage_ratio_p75:float64|wage_subscore:float64",
-      "sample_hash": "cdbd8464135610fd",
+      "sample_hash": "3133ee9c8fca5865",
       "numeric_bounds": {
         "n_12m": {
           "min": 0.0,
-          "max": 3238.0
+          "max": 3231.0
         },
         "n_24m": {
           "min": 0.0,
-          "max": 4612.0
+          "max": 4168.0
         },
         "n_36m": {
           "min": 1.0,
-          "max": 7259.0
+          "max": 6894.0
         },
         "approval_rate_24m": {
           "min": 0.0,
@@ -1446,16 +1446,16 @@
           "max": 1.0
         },
         "wage_ratio_med": {
-          "min": 0.14101921096233935,
+          "min": 0.16977628437527634,
           "max": 1.3
         },
         "wage_ratio_p75": {
-          "min": 0.11360892312999482,
+          "min": 0.1422089794812758,
           "max": 1.3
         },
         "outcome_subscore": {
-          "min": 5.12,
-          "max": 99.83
+          "min": 4.77,
+          "max": 99.82
         },
         "wage_subscore": {
           "min": 0.0,
@@ -1463,7 +1463,7 @@
         },
         "sustainability_subscore": {
           "min": 9.71,
-          "max": 82.77
+          "max": 82.78
         },
         "h1b_signal_subscore": {
           "min": 21.0,
@@ -1487,11 +1487,11 @@
         },
         "soc_breadth_24m": {
           "min": 0.0,
-          "max": 49.0
+          "max": 47.0
         },
         "site_breadth_24m": {
           "min": 0.0,
-          "max": 50.0
+          "max": 54.0
         },
         "approval_rate_trend_12v12": {
           "min": -1.0,
@@ -1519,7 +1519,7 @@
         },
         "lca_to_perm_ratio": {
           "min": 0.0,
-          "max": 3869.36
+          "max": 2574.58
         },
         "h1b_hub_retention_ratio": {
           "min": 0.0,
@@ -1564,7 +1564,7 @@
     },
     "pd_forecasts": {
       "status": "ok",
-      "rows": 1320,
+      "rows": 1440,
       "cols": 10,
       "columns": [
         "category",
@@ -1579,7 +1579,7 @@
         "velocity_days_per_month"
       ],
       "dtype_signature": "category:str|chart:str|confidence_high:datetime64[us]|confidence_low:datetime64[us]|country:str|cumulative_advancement_days:float64|forecast_month:str|months_ahead:int64|projected_cutoff_date:datetime64[us]|velocity_days_per_month:float64",
-      "sample_hash": "ec491993bae7e7ff",
+      "sample_hash": "f30f31d75e5ae33a",
       "numeric_bounds": {
         "months_ahead": {
           "min": 1.0,
@@ -1587,7 +1587,7 @@
         },
         "velocity_days_per_month": {
           "min": 0.0,
-          "max": 59.0
+          "max": 60.9
         },
         "cumulative_advancement_days": {
           "min": 0.0,

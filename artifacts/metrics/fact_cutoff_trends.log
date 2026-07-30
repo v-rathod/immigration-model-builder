@@ -1,5 +1,5 @@
-=== fact_cutoff_trends build 2026-04-20T04:39:56.457723+00:00 ===
-Input rows: 8,170
-Output rows: 8,170
+=== fact_cutoff_trends build 2026-07-29T18:11:11.063402+00:00 ===
+Input rows: 8,335
+Output rows: 8,335
 OK: 0 duplicate 5-col PK rows (5-col key used)
 Written: /Users/vrathod1/dev/NorthStar/immigration-model-builder/artifacts/tables/fact_cutoff_trends.parquet

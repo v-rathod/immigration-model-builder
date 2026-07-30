@@ -4,36 +4,36 @@
     "source_artifact": "fact_cutoffs_all.parquet",
     "topic": "visa_bulletin",
     "label": "visa_bulletin_summary",
-    "text": "Visa Bulletin History (fact_cutoffs_all):\nTotal records: 8,170\nColumns: chart, category, country, cutoff_date, status_flag, source_file, page_ref, ingested_at, bulletin_year, bulletin_month\nCoverage: Visa bulletin cutoff dates from 2011 to 2026\nSource: DOS Visa Bulletin PDFs (~180 bulletins parsed)\nUse: Historical cutoff date tracking, retrogression analysis, movement patterns.",
+    "text": "Visa Bulletin History (fact_cutoffs_all):\nTotal records: 8,335\nColumns: chart, category, country, cutoff_date, status_flag, source_file, page_ref, ingested_at, bulletin_year, bulletin_month\nCoverage: Visa bulletin cutoff dates from 2011 to 2026\nSource: DOS Visa Bulletin PDFs (~180 bulletins parsed)\nUse: Historical cutoff date tracking, retrogression analysis, movement patterns.",
     "metadata": {},
-    "generated_at": "2026-04-20T04:54:41.523128+00:00"
+    "generated_at": "2026-07-29T18:54:56.158472+00:00"
   },
   {
     "chunk_id": "106de121d594",
     "source_artifact": "fact_cutoffs_all.parquet",
     "topic": "visa_bulletin",
     "label": "visa_bulletin_latest",
-    "text": "Latest Visa Bulletin Cutoff Dates (per EB category \u00d7 country):\n\n  EB1:\n    CHN: cutoff=Current (bulletin 12)\n    EL SALVADOR GUATEMALA HONDURAS: cutoff=Current (bulletin 12)\n    IND: cutoff=Current (bulletin 12)\n    MEX: cutoff=Current (bulletin 12)\n    PHL: cutoff=Current (bulletin 12)\n    ROW: cutoff=Current (bulletin 12)\n    VIETNAM: cutoff=2017-07-01 (bulletin 12)\n\n  EB2:\n    CHN: cutoff=2008-03-15 (bulletin 12)\n    EL SALVADOR GUATEMALA HONDURAS: cutoff=Current (bulletin 12)\n    IND: cutoff=2008-03-15 (bulletin 12)\n    MEX: cutoff=Current (bulletin 12)\n    PHL: cutoff=Current (bulletin 12)\n    ROW: cutoff=Current (bulletin 12)\n    VIETNAM: cutoff=Current (bulletin 12)\n\n  EB3:\n    CHN: cutoff=2004-09-08 (bulletin 12)\n    EL SALVADOR GUATEMALA HONDURAS: cutoff=2016-07-01 (bulletin 12)\n    IND: cutoff=2002-08-01 (bulletin 12)\n    MEX: cutoff=2006-01-15 (bulletin 12)\n    PHL: cutoff=2006-01-15 (bulletin 12)\n    ROW: cutoff=2006-01-15 (bulletin 12)\n    VIETNAM: cutoff=Current (bulletin 12)\n\n  EB3-Other:\n    CHN: cutoff=2007-01-01 (bulletin 12)\n    EL SALVADOR GUATEMALA HONDURAS: cutoff=Current (bulletin 12)\n    IND: cutoff=2005-07-01 (bulletin 12)\n    MEX: cutoff=2015-09-01 (bulletin 12)\n    PHL: cutoff=2010-01-01 (bulletin 12)\n    ROW: cutoff=2015-09-01 (bulletin 12)\n\n  EB4:\n    CHN: cutoff=Current (bulletin 12)\n    EL SALVADOR GUATEMALA HONDURAS: cutoff=2015-07-15 (bulletin 12)\n    IND: cutoff=Current (bulletin 12)\n    MEX: cutoff=Current (bulletin 12)\n    PHL: cutoff=Current (bulletin 12)\n    ROW: cutoff=Current (bulletin 12)\n    VIETNAM: cutoff=Current (bulletin 12)\n\n  EB5:\n    CHN: cutoff=Current (bulletin 12)\n    EL SALVADOR GUATEMALA HONDURAS: cutoff=Current (bulletin 12)\n    IND: cutoff=Current (bulletin 12)\n    MEX: cutoff=Current (bulletin 12)\n    PHL: cutoff=Current (bulletin 12)\n    ROW: cutoff=Current (bulletin 12)\n    VIETNAM: cutoff=2016-05-01 (bulletin 12)",
+    "text": "Latest Visa Bulletin Cutoff Dates (per EB category \u00d7 country):\n\n  EB1:\n    CHN: cutoff=2016-09-01 (bulletin 12)\n    EL SALVADOR GUATEMALA HONDURAS: cutoff=2017-07-01 (bulletin 12)\n    IND: cutoff=2016-09-01 (bulletin 12)\n    MEX: cutoff=2017-07-01 (bulletin 12)\n    PHL: cutoff=2017-07-01 (bulletin 12)\n    ROW: cutoff=2017-07-01 (bulletin 12)\n    VIETNAM: cutoff=2017-07-01 (bulletin 12)\n\n  EB2:\n    CHN: cutoff=2008-03-15 (bulletin 12)\n    EL SALVADOR GUATEMALA HONDURAS: cutoff=2022-11-01 (bulletin 12)\n    IND: cutoff=2008-03-15 (bulletin 12)\n    MEX: cutoff=2022-11-01 (bulletin 12)\n    PHL: cutoff=2022-11-01 (bulletin 12)\n    ROW: cutoff=2022-11-01 (bulletin 12)\n    VIETNAM: cutoff=Current (bulletin 12)\n\n  EB3:\n    CHN: cutoff=2004-09-08 (bulletin 12)\n    EL SALVADOR GUATEMALA HONDURAS: cutoff=2016-07-01 (bulletin 12)\n    IND: cutoff=2002-08-01 (bulletin 12)\n    MEX: cutoff=2006-01-15 (bulletin 12)\n    PHL: cutoff=2006-01-15 (bulletin 12)\n    ROW: cutoff=2006-01-15 (bulletin 12)\n    VIETNAM: cutoff=Current (bulletin 12)\n\n  EB3-Other:\n    CHN: cutoff=2007-01-01 (bulletin 12)\n    EL SALVADOR GUATEMALA HONDURAS: cutoff=2022-09-08 (bulletin 12)\n    IND: cutoff=2005-07-01 (bulletin 12)\n    MEX: cutoff=2015-09-01 (bulletin 12)\n    PHL: cutoff=2010-01-01 (bulletin 12)\n    ROW: cutoff=2015-09-01 (bulletin 12)\n\n  EB4:\n    CHN: cutoff=2022-06-22 (bulletin 12)\n    EL SALVADOR GUATEMALA HONDURAS: cutoff=2015-07-15 (bulletin 12)\n    IND: cutoff=2022-06-22 (bulletin 12)\n    MEX: cutoff=2015-07-15 (bulletin 12)\n    PHL: cutoff=2022-06-22 (bulletin 12)\n    ROW: cutoff=2022-06-22 (bulletin 12)\n    VIETNAM: cutoff=Current (bulletin 12)\n\n  EB5:\n    CHN: cutoff=2013-12-15 (bulletin 12)\n    EL SALVADOR GUATEMALA HONDURAS: cutoff=Current (bulletin 12)\n    IND: cutoff=2019-11-08 (bulletin 12)\n    MEX: cutoff=2021-07-01 (bulletin 12)\n    PHL: cutoff=Current (bulletin 12)\n    ROW: cutoff=Current (bulletin 12)\n    VIETNAM: cutoff=2016-05-01 (bulletin 12)",
     "metadata": {},
-    "generated_at": "2026-04-20T04:54:41.526634+00:00"
+    "generated_at": "2026-07-29T18:54:56.160389+00:00"
   },
   {
     "chunk_id": "85dddf7fc5df",
     "source_artifact": "fact_cutoffs_all.parquet",
     "topic": "visa_bulletin",
     "label": "visa_bulletin_retrogression",
-    "text": "Retrogression Events Detected: 591 instances\nRetrogression = cutoff date moves backward (bad for applicants).\n\nMost frequent retrogression by category \u00d7 country:\n  EB3 / CHN: 81 retrogressions\n  EB2 / IND: 72 retrogressions\n  EB3 / IND: 52 retrogressions\n  EB2 / CHN: 51 retrogressions\n  EB3 / PHL: 37 retrogressions\n  EB3-Other / IND: 31 retrogressions\n  EB4 / EL SALVADOR GUATEMALA HONDURAS: 29 retrogressions\n  EB3-Other / CHN: 24 retrogressions\n  EB1 / IND: 22 retrogressions\n  EB1 / CHN: 21 retrogressions\n  EB3 / MEX: 21 retrogressions\n  EB3 / ROW: 21 retrogressions\n  EB3-Other / PHL: 15 retrogressions\n  EB5 / IND: 15 retrogressions\n  EB5 / CHN: 12 retrogressions",
+    "text": "Retrogression Events Detected: 574 instances\nRetrogression = cutoff date moves backward (bad for applicants).\n\nMost frequent retrogression by category \u00d7 country:\n  EB3 / CHN: 81 retrogressions\n  EB2 / IND: 70 retrogressions\n  EB3 / IND: 52 retrogressions\n  EB2 / CHN: 48 retrogressions\n  EB3-Other / IND: 31 retrogressions\n  EB4 / EL SALVADOR GUATEMALA HONDURAS: 28 retrogressions\n  EB1 / IND: 26 retrogressions\n  EB3 / PHL: 26 retrogressions\n  EB3-Other / CHN: 24 retrogressions\n  EB5 / IND: 24 retrogressions\n  EB1 / CHN: 21 retrogressions\n  EB4 / MEX: 21 retrogressions\n  EB3 / MEX: 15 retrogressions\n  EB3 / ROW: 15 retrogressions\n  EB5 / CHN: 15 retrogressions",
     "metadata": {},
-    "generated_at": "2026-04-20T04:54:41.529757+00:00"
+    "generated_at": "2026-07-29T18:54:56.163366+00:00"
   },
   {
     "chunk_id": "6fc616008887",
     "source_artifact": "category_movement_metrics.parquet",
     "topic": "visa_bulletin",
     "label": "movement_summary",
-    "text": "Category Movement Metrics Summary:\nTotal records: 6,555\nColumns: bulletin_year, bulletin_month, chart, category, country, avg_monthly_advancement_days, median_advancement_days, volatility_score, retrogression_events_12m, next_movement_prediction, blended_velocity, net_velocity\nCoverage: EB category \u00d7 country movement analysis\nMetrics: monthly advancement, volatility, retrogression frequency\nUse: Compare EB2 vs EB3 movement, assess retrogression risk.",
+    "text": "Category Movement Metrics Summary:\nTotal records: 6,450\nColumns: bulletin_year, bulletin_month, chart, category, country, avg_monthly_advancement_days, median_advancement_days, volatility_score, retrogression_events_12m, next_movement_prediction, blended_velocity, net_velocity\nCoverage: EB category \u00d7 country movement analysis\nMetrics: monthly advancement, volatility, retrogression frequency\nUse: Compare EB2 vs EB3 movement, assess retrogression risk.",
     "metadata": {
-      "rows": 6555,
+      "rows": 6450,
       "columns": 12,
       "column_names": [
         "bulletin_year",
@@ -53,27 +53,27 @@
         "bulletin_year": {
           "min": 2016.0,
           "max": 2026.0,
-          "mean": 2020.67
+          "mean": 2020.83
         },
         "bulletin_month": {
           "min": 1.0,
           "max": 12.0,
-          "mean": 6.37
+          "mean": 6.39
         },
         "avg_monthly_advancement_days": {
           "min": -929.0,
           "max": 6977.0,
-          "mean": 45.75
+          "mean": 49.25
         },
         "median_advancement_days": {
           "min": -3684.0,
           "max": 6977.0,
-          "mean": 81.09
+          "mean": 83.24
         },
         "volatility_score": {
           "min": 0.0,
           "max": 4933.48,
-          "mean": 157.5
+          "mean": 157.56
         },
         "retrogression_events_12m": {
           "min": 0.0,
@@ -82,17 +82,17 @@
         },
         "blended_velocity": {
           "min": 0.0,
-          "max": 331.83,
-          "mean": 25.0
+          "max": 548.0,
+          "mean": 29.32
         },
         "net_velocity": {
           "min": 0.0,
-          "max": 336.83,
-          "mean": 30.54
+          "max": 548.0,
+          "mean": 35.8
         }
       }
     },
-    "generated_at": "2026-04-20T04:54:41.536046+00:00"
+    "generated_at": "2026-07-29T18:54:56.169075+00:00"
   },
   {
     "chunk_id": "26c9a3f9b6c6",
@@ -101,16 +101,16 @@
     "label": "waiting_list_summary",
     "text": "DOS Visa Waiting List (fact_waiting_list):\nTotal records: 125\nSource: DOS Annual Report of Immigrant Visa Applicants\nUse: Track how many people are registered in the visa waiting list by category.\n  EB1 / Worldwide Total: 8,818 (report year 2022)\n  EB2 / Worldwide Total: 43,962 (report year 2022)\n  EB3 / Worldwide Total: 41,838 (report year 2022)\n  EB3-OW / Worldwide Total: 26,729 (report year 2022)\n  EB4 / Worldwide Total: 1,303 (report year 2022)\n  EB5 / Worldwide Total: 45,498 (report year 2022)\n  F1 / Worldwide Total: 282,459 (report year 2022)\n  F2A / Worldwide Total: 383,653 (report year 2022)\n  F2B / Worldwide Total: 411,773 (report year 2022)\n  F3 / Worldwide Total: 617,140 (report year 2022)\n  F4 / Worldwide Total: 2,220,476 (report year 2022)\n  ALL / All Others: 1,013,194 (report year 2023)\n  ALL / Bangladesh: 215,386 (report year 2023)\n  ALL / China - mainland born: 230,626 (report year 2023)\n  ALL / Dominican Republic: 251,271 (report year 2023)\n  ALL / El Salvador: 78,212 (report year 2023)\n  ALL / Haiti: 116,948 (report year 2023)\n  ALL / India: 290,942 (report year 2023)\n  ALL / Mexico: 1,190,444 (report year 2023)\n  ALL / Pakistan: 142,091 (report year 2023)\n  ALL / Philippines: 288,294 (report year 2023)\n  ALL / Vietnam: 216,653 (report year 2023)\n  EB1 / All Others: 4,200 (report year 2023)\n  EB1 / Argentina: 239 (report year 2023)\n  EB1 / Brazil: 840 (report year 2023)\n  EB1 / Canada: 872 (report year 2023)\n  EB1 / China - mainland born: 9,787 (report year 2023)\n  EB1 / Great Britain and Northern Ireland: 434 (report year 2023)\n  EB1 / India: 2,426 (report year 2023)\n  EB1 / Iran: 362 (report year 2023)\n  EB1 / Mexico: 315 (report year 2023)\n  EB1 / Russia: 597 (report year 2023)\n  EB1 / Worldwide Total: 20,582 (report year 2023)\n  EB2 / All Others: 18,161 (report year 2023)\n  EB2 / Brazil: 6,024 (report year 2023)\n  EB2 / China - mainland born: 13,815 (report year 2023)\n  EB2 / India: 28,921 (report year 2023)\n  EB2 / Iran: 3,906 (report year 2023)\n  EB2 / Worldwide Total: 75,567 (report year 2023)\n  EB3 / All Others: 21,886 (report year 2023)\n  EB3 / China - mainland born: 3,553 (report year 2023)\n  EB3 / India: 15,030 (report year 2023)\n  EB3 / Kenya: 4,955 (report year 2023)\n  EB3 / Nigeria: 3,005 (report year 2023)\n  EB3 / Philippines: 29,798 (report year 2023)\n  EB3 / Worldwide Total: 78,207 (report year 2023)\n  EB3-OW / All Others: 17,963 (report year 2023)\n  EB3-OW / Bangladesh: 3,064 (report year 2023)\n  EB3-OW / China - mainland born: 4,467 (report year 2023)\n  EB3-OW / Mexico: 8,173 (report year 2023)\n  EB3-OW / Philippines: 5,892 (report year 2023)\n  EB3-OW / Vietnam: 4,911 (report year 2023)\n  EB3-OW / Worldwide Total: 44,470 (report year 2023)\n  EB4 / All Others: 1,185 (report year 2023)\n  EB4 / Brazil: 76 (report year 2023)\n  EB4 / India: 316 (report year 2023)\n  EB4 / Mexico: 111 (report year 2023)\n  EB4 / Nigeria: 190 (report year 2023)\n  EB4 / Worldwide Total: 1,951 (report year 2023)\n  EB5 / All Others: 2,892 (report year 2023)\n  EB5 / China - mainland born: 33,676 (report year 2023)\n  EB5 / Hong Kong S.A.R.: 575 (report year 2023)\n  EB5 / India: 1,652 (report year 2023)\n  EB5 / Vietnam: 571 (report year 2023)\n  EB5 / Worldwide Total: 39,883 (report year 2023)\n  F1 / All Others: 73,207 (report year 2023)\n  F1 / Colombia: 5,086 (report year 2023)\n  F1 / Cuba: 7,037 (report year 2023)\n  F1 / Dominican Republic: 22,974 (report year 2023)\n  F1 / El Salvador: 9,937 (report year 2023)\n  F1 / Haiti: 13,702 (report year 2023)\n  F1 / Honduras: 4,969 (report year 2023)\n  F1 / Jamaica: 12,656 (report year 2023)\n  F1 / Mexico: 85,950 (report year 2023)\n  F1 / Nigeria: 4,555 (report year 2023)\n  F1 / Philippines: 21,311 (report year 2023)\n  F1 / Worldwide Total: 261,384 (report year 2023)\n  F2A / All Others: 88,362 (report year 2023)\n  F2A / Cuba: 13,848 (report year 2023)\n  F2A / Dominican Republic: 63,595 (report year 2023)\n  F2A / El Salvador: 15,252 (report year 2023)\n  F2A / Ethiopia: 5,914 (report year 2023)\n  F2A / Guatemala: 8,894 (report year 2023)\n  F2A / Haiti: 20,410 (report year 2023)\n  F2A / Honduras: 8,406 (report year 2023)\n  F2A / Mexico: 94,625 (report year 2023)\n  F2A / Philippines: 12,749 (report year 2023)\n  F2A / Vietnam: 5,903 (report year 2023)\n  F2A / Worldwide Total: 337,958 (report year 2023)\n  F2B / All Others: 69,290 (report year 2023)\n  F2B / China - mainland born: 10,750 (report year 2023)\n  F2B / Cuba: 16,516 (report year 2023)\n  F2B / Dominican Republic: 66,011 (report year 2023)\n  F2B / Ecuador: 6,275 (report year 2023)\n  F2B / El Salvador: 15,528 (report year 2023)\n  F2B / Haiti: 20,021 (report year 2023)\n  F2B / Honduras: 5,180 (report year 2023)\n  F2B / Mexico: 117,903 (report year 2023)\n  F2B / Philippines: 40,315 (report year 2023)\n  F2B / Vietnam: 17,875 (report year 2023)\n  F2B / Worldwide Total: 385,664 (report year 2023)\n  F3 / All Others: 161,464 (report year 2023)\n  F3 / China - mainland born: 15,242 (report year 2023)\n  F3 / Cuba: 11,589 (report year 2023)\n  F3 / Dominican Republic: 16,384 (report year 2023)\n  F3 / Haiti: 15,734 (report year 2023)\n  F3 / India: 31,141 (report year 2023)\n  F3 / Mexico: 192,778 (report year 2023)\n  F3 / Nigeria: 11,086 (report year 2023)\n  F3 / Pakistan: 13,897 (report year 2023)\n  F3 / Philippines: 94,236 (report year 2023)\n  F3 / Vietnam: 25,332 (report year 2023)\n  F3 / Worldwide Total: 588,883 (report year 2023)\n  F4 / All Others: 90,695 (report year 2023)\n  F4 / Bangladesh: 198,223 (report year 2023)\n  F4 / China - mainland born: 65,338 (report year 2023)\n  F4 / Dominican Republic: 81,892 (report year 2023)\n  F4 / El Salvador: 27,144 (report year 2023)\n  F4 / Haiti: 46,988 (report year 2023)\n  F4 / India: 48,536 (report year 2023)\n  F4 / Mexico: 10,448 (report year 2023)\n  F4 / Pakistan: 117,048 (report year 2023)\n  F4 / Philippines: 36,141 (report year 2023)\n  F4 / Vietnam: 157,073 (report year 2023)\n  F4 / Worldwide Total: 2,199,512 (report year 2023)",
     "metadata": {},
-    "generated_at": "2026-04-20T04:54:49.887505+00:00"
+    "generated_at": "2026-07-29T18:55:03.697456+00:00"
   },
   {
     "chunk_id": "8a28fd7883ad",
     "source_artifact": "fact_cutoff_trends.parquet",
     "topic": "visa_bulletin",
     "label": "cutoff_trends_summary",
-    "text": "Visa Bulletin Cutoff Trends (fact_cutoff_trends):\nTotal records: 8,170\nColumns: bulletin_year, bulletin_month, chart, category, country, status_flag, cutoff_date, queue_position_days, monthly_advancement_days, velocity_3m, velocity_6m, retrogression_flag, retrogression_count_cum, source_file\nKey metrics: monthly_advancement_days, velocity_3m/6m, retrogression_flag\nUse: Analyze cutoff date movement speed and retrogression patterns.\nTotal retrogression events: 136 of 8,170 months (1.7%)\nAdvancement days: mean=34.5, median=0.0",
+    "text": "Visa Bulletin Cutoff Trends (fact_cutoff_trends):\nTotal records: 8,335\nColumns: bulletin_year, bulletin_month, chart, category, country, status_flag, cutoff_date, queue_position_days, monthly_advancement_days, velocity_3m, velocity_6m, retrogression_flag, retrogression_count_cum, source_file\nKey metrics: monthly_advancement_days, velocity_3m/6m, retrogression_flag\nUse: Analyze cutoff date movement speed and retrogression patterns.\nTotal retrogression events: 139 of 8,335 months (1.7%)\nAdvancement days: mean=33.7, median=0.0",
     "metadata": {},
-    "generated_at": "2026-04-20T04:54:49.889357+00:00"
+    "generated_at": "2026-07-29T18:55:03.700021+00:00"
   },
   {
     "chunk_id": "9bf5712c952d",
@@ -119,7 +119,7 @@
     "label": "dim_dim_visa_class",
     "text": "dim_visa_class.parquet \u2014 EB visa category lookup (EB1\u2013EB5 + Other). Includes preference descriptions.\nRows: 6, Columns: family_code, family_name, sub_code, sub_name, is_employment, is_grouped, notes, source_file, ingested_at",
     "metadata": {},
-    "generated_at": "2026-04-20T04:54:49.892217+00:00"
+    "generated_at": "2026-07-29T18:55:03.703278+00:00"
   },
   {
     "chunk_id": "7dbdd2ad871a",
@@ -128,6 +128,6 @@
     "label": "dim_dim_visa_ceiling",
     "text": "dim_visa_ceiling.parquet \u2014 Annual visa allocation limits by category. Used for backlog context.\nRows: 14, Columns: fiscal_year, category, country, ceiling, source_file, ingested_at",
     "metadata": {},
-    "generated_at": "2026-04-20T04:54:49.893525+00:00"
+    "generated_at": "2026-07-29T18:55:03.704668+00:00"
   }
 ]

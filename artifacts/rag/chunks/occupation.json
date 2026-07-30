@@ -4,9 +4,9 @@
     "source_artifact": "soc_demand_metrics.parquet",
     "topic": "occupation",
     "label": "soc_demand_summary",
-    "text": "SOC Occupation Demand Metrics Summary:\nTotal records: 3,968\nColumns: soc_code, soc_title, soc_major_title, window, dataset, filings_count, approvals_count, approval_rate, offered_avg, offered_median, competitiveness_percentile, top_employers_json\nWindows: 12-month, 24-month, 36-month rolling\nSources: PERM + LCA filing data\nUse: Identify high-demand occupations, filing trends, and approval rates by SOC code.",
+    "text": "SOC Occupation Demand Metrics Summary:\nTotal records: 4,098\nColumns: soc_code, soc_title, soc_major_title, window, dataset, filings_count, approvals_count, approval_rate, offered_avg, offered_median, competitiveness_percentile, top_employers_json\nWindows: 12-month, 24-month, 36-month rolling\nSources: PERM + LCA filing data\nUse: Identify high-demand occupations, filing trends, and approval rates by SOC code.",
     "metadata": {
-      "rows": 3968,
+      "rows": 4098,
       "columns": 12,
       "column_names": [
         "soc_code",
@@ -26,27 +26,27 @@
         "filings_count": {
           "min": 1.0,
           "max": 528051.0,
-          "mean": 1014.33
+          "mean": 996.73
         },
         "approvals_count": {
           "min": 0.0,
           "max": 503299.0,
-          "mean": 902.67
+          "mean": 895.26
         },
         "approval_rate": {
           "min": 0.0,
           "max": 1.0,
-          "mean": 0.71
+          "mean": 0.76
         },
         "offered_avg": {
-          "min": 15080.0,
-          "max": 496494.44,
-          "mean": 83834.79
+          "min": 9360.0,
+          "max": 588770.9,
+          "mean": 84029.01
         },
         "offered_median": {
-          "min": 15080.0,
-          "max": 525000.0,
-          "mean": 79576.42
+          "min": 9360.0,
+          "max": 747396.0,
+          "mean": 80142.4
         },
         "competitiveness_percentile": {
           "min": 0.0,
@@ -55,208 +55,16 @@
         }
       }
     },
-    "generated_at": "2026-04-20T04:54:41.513263+00:00"
+    "generated_at": "2026-07-29T18:54:56.150728+00:00"
   },
   {
     "chunk_id": "da802bf30e9b",
     "source_artifact": "soc_demand_metrics.parquet",
     "topic": "occupation",
     "label": "soc_top30",
-    "text": "Top 30 SOC Codes by Sponsorship Filing Volume:\n  15-1252 (Software Developers): 528,051 filings\n  15-1252 (Software Developers): 350,840 filings\n  15-1252 (Software Developers): 173,573 filings\n  15-1299 (Computer Occupations, All Other): 153,057 filings\n  15-1299 (Computer Occupations, All Other): 106,004 filings\n  15-2051 (Data Scientists): 80,922 filings\n  15-2051 (Data Scientists): 59,682 filings\n  15-1252 (Software Developers): 58,468 filings\n  15-1211 (Computer Systems Analysts): 56,408 filings\n  15-1253 (Software Quality Assurance Analysts and Testers): 53,664 filings\n  15-1252 (Software Developers): 52,661 filings\n  15-1299 (Computer Occupations, All Other): 47,319 filings\n  15-1251 (Computer Programmers): 38,390 filings\n  15-1253 (Software Quality Assurance Analysts and Testers): 37,284 filings\n  11-3021 (Computer and Information Systems Managers): 36,812 filings\n  15-2051 (Data Scientists): 33,018 filings\n  15-1252 (Software Developers): 31,750 filings\n  17-2141 (Mechanical Engineers): 31,114 filings\n  15-1211 (Computer Systems Analysts): 29,915 filings\n  13-2011 (Accountants and Auditors): 28,735 filings\n  17-2112 (Industrial Engineers): 28,531 filings\n  15-1251 (Computer Programmers): 27,281 filings\n  13-2051 (Financial and Investment Analysts): 25,434 filings\n  11-3021 (Computer and Information Systems Managers): 25,156 filings\n  15-2031 (Operations Research Analysts): 24,978 filings\n  17-2072 (Electronics Engineers, Except Computer): 23,210 filings\n  17-2141 (Mechanical Engineers): 21,276 filings\n  17-2071 (Electrical Engineers): 20,584 filings\n  17-2112 (Industrial Engineers): 20,228 filings\n  13-1111 (Management Analysts): 19,946 filings",
+    "text": "Top 30 SOC Codes by Sponsorship Filing Volume:\n  15-1252 (Software Developers): 528,051 filings\n  15-1252 (Software Developers): 350,840 filings\n  15-1252 (Software Developers): 173,573 filings\n  15-1299 (Computer Occupations, All Other): 153,057 filings\n  15-1299 (Computer Occupations, All Other): 106,004 filings\n  15-2051 (Data Scientists): 80,922 filings\n  15-1252 (Software Developers): 68,036 filings\n  15-2051 (Data Scientists): 59,682 filings\n  15-1211 (Computer Systems Analysts): 56,408 filings\n  15-1252 (Software Developers): 56,275 filings\n  15-1253 (Software Quality Assurance Analysts and Testers): 53,664 filings\n  15-1299 (Computer Occupations, All Other): 47,319 filings\n  15-1251 (Computer Programmers): 38,390 filings\n  15-1253 (Software Quality Assurance Analysts and Testers): 37,284 filings\n  11-3021 (Computer and Information Systems Managers): 36,812 filings\n  15-1252 (Software Developers): 33,252 filings\n  15-2051 (Data Scientists): 33,018 filings\n  17-2141 (Mechanical Engineers): 31,114 filings\n  15-1211 (Computer Systems Analysts): 29,915 filings\n  13-2011 (Accountants and Auditors): 28,735 filings\n  17-2112 (Industrial Engineers): 28,531 filings\n  15-1251 (Computer Programmers): 27,281 filings\n  13-2051 (Financial and Investment Analysts): 25,434 filings\n  11-3021 (Computer and Information Systems Managers): 25,156 filings\n  15-2031 (Operations Research Analysts): 24,978 filings\n  17-2072 (Electronics Engineers, Except Computer): 23,210 filings\n  17-2141 (Mechanical Engineers): 21,276 filings\n  17-2071 (Electrical Engineers): 20,584 filings\n  17-2112 (Industrial Engineers): 20,228 filings\n  13-1111 (Management Analysts): 19,946 filings",
     "metadata": {},
-    "generated_at": "2026-04-20T04:54:41.517550+00:00"
-  },
-  {
-    "chunk_id": "a39ec3eb22d3",
-    "source_artifact": "soc_salary_market.parquet",
-    "topic": "occupation",
-    "label": "soc_trend_15-1299_h1b",
-    "text": "Salary Trend for 15-1299 (Computer Occupations, All Other) \u2014 H-1B:\n  FY2021: $86,000 median, 7 filings, 6 employers\n  FY2022: $115,918 median (+34.8% YoY), 7,573 filings, 1,974 employers\n  FY2023: $102,000 median (-12.0% YoY), 43,592 filings, 6,422 employers\n  FY2024: $104,794 median (+2.7% YoY), 56,719 filings, 7,478 employers\n  FY2025: $110,755 median (+5.7% YoY), 47,925 filings, 7,154 employers\n  FY2026: $120,765 median (+9.0% YoY), 6,219 filings, 1,687 employers\n\n  Overall: $86,000 \u2192 $120,765 (+40.4% over 5 years)",
-    "metadata": {
-      "soc_code": "15-1299",
-      "visa_type": "H-1B"
-    },
-    "generated_at": "2026-04-20T04:54:45.265107+00:00"
-  },
-  {
-    "chunk_id": "6483583f207c",
-    "source_artifact": "soc_salary_market.parquet",
-    "topic": "occupation",
-    "label": "soc_trend_17-2071_h1b",
-    "text": "Salary Trend for 17-2071 (Electrical Engineers) \u2014 H-1B:\n  FY2009: $75,000 median, 759 filings, 437 employers\n  FY2010: $78,150 median (+4.2% YoY), 3,380 filings, 1,350 employers\n  FY2011: $77,813 median (-0.4% YoY), 4,811 filings, 1,674 employers\n  FY2012: $78,872 median (+1.4% YoY), 4,581 filings, 1,642 employers\n  FY2013: $80,000 median (+1.4% YoY), 4,336 filings, 1,517 employers\n  FY2014: $82,400 median (+3.0% YoY), 4,965 filings, 1,714 employers\n  FY2015: $81,661 median (-0.9% YoY), 5,093 filings, 1,748 employers\n  FY2016: $83,000 median (+1.6% YoY), 5,154 filings, 1,739 employers\n  FY2017: $82,500 median (-0.6% YoY), 5,510 filings, 1,843 employers\n  FY2018: $87,963 median (+6.6% YoY), 6,856 filings, 2,148 employers\n  FY2019: $89,086 median (+1.3% YoY), 7,325 filings, 2,394 employers\n  FY2020: $93,000 median (+4.4% YoY), 6,602 filings, 2,186 employers\n  FY2021: $100,000 median (+7.5% YoY), 6,803 filings, 2,060 employers\n  FY2022: $106,850 median (+6.8% YoY), 7,081 filings, 1,966 employers\n  FY2023: $111,115 median (+4.0% YoY), 5,829 filings, 1,846 employers\n  FY2024: $113,027 median (+1.7% YoY), 6,069 filings, 1,922 employers\n  FY2025: $120,398 median (+6.5% YoY), 6,980 filings, 2,169 employers\n  FY2026: $134,635 median (+11.8% YoY), 920 filings, 436 employers\n\n  Overall: $75,000 \u2192 $134,635 (+79.5% over 17 years)",
-    "metadata": {
-      "soc_code": "17-2071",
-      "visa_type": "H-1B"
-    },
-    "generated_at": "2026-04-20T04:54:45.266073+00:00"
-  },
-  {
-    "chunk_id": "b52baf8b0af7",
-    "source_artifact": "soc_salary_market.parquet",
-    "topic": "occupation",
-    "label": "soc_trend_13-1111_h1b",
-    "text": "Salary Trend for 13-1111 (Management Analysts) \u2014 H-1B:\n  FY2009: $65,153 median, 923 filings, 553 employers\n  FY2010: $70,000 median (+7.4% YoY), 4,512 filings, 1,749 employers\n  FY2011: $70,000 median (+0.0% YoY), 6,718 filings, 2,316 employers\n  FY2012: $72,238 median (+3.2% YoY), 8,246 filings, 2,364 employers\n  FY2013: $75,000 median (+3.8% YoY), 8,807 filings, 2,330 employers\n  FY2014: $75,000 median (+0.0% YoY), 10,547 filings, 2,596 employers\n  FY2015: $75,000 median (+0.0% YoY), 12,060 filings, 2,864 employers\n  FY2016: $80,000 median (+6.7% YoY), 14,072 filings, 2,715 employers\n  FY2017: $84,200 median (+5.2% YoY), 12,049 filings, 2,663 employers\n  FY2018: $86,600 median (+2.9% YoY), 12,055 filings, 2,720 employers\n  FY2019: $92,000 median (+6.2% YoY), 9,654 filings, 2,446 employers\n  FY2020: $100,300 median (+9.0% YoY), 7,693 filings, 1,907 employers\n  FY2021: $108,500 median (+8.2% YoY), 6,343 filings, 1,798 employers\n  FY2022: $112,625 median (+3.8% YoY), 6,804 filings, 1,966 employers\n  FY2023: $116,259 median (+3.2% YoY), 6,001 filings, 1,711 employers\n  FY2024: $117,616 median (+1.2% YoY), 6,022 filings, 1,924 employers\n  FY2025: $119,795 median (+1.9% YoY), 6,738 filings, 2,257 employers\n  FY2026: $145,000 median (+21.0% YoY), 770 filings, 340 employers\n\n  Overall: $65,153 \u2192 $145,000 (+122.6% over 17 years)",
-    "metadata": {
-      "soc_code": "13-1111",
-      "visa_type": "H-1B"
-    },
-    "generated_at": "2026-04-20T04:54:45.266989+00:00"
-  },
-  {
-    "chunk_id": "8b439771277f",
-    "source_artifact": "soc_salary_market.parquet",
-    "topic": "occupation",
-    "label": "soc_trend_17-2112_h1b",
-    "text": "Salary Trend for 17-2112 (Industrial Engineers) \u2014 H-1B:\n  FY2009: $69,852 median, 460 filings, 351 employers\n  FY2010: $70,000 median (+0.2% YoY), 1,986 filings, 1,098 employers\n  FY2011: $70,970 median (+1.4% YoY), 2,571 filings, 1,281 employers\n  FY2012: $72,198 median (+1.7% YoY), 2,866 filings, 1,313 employers\n  FY2013: $75,754 median (+4.9% YoY), 2,487 filings, 1,202 employers\n  FY2014: $79,035 median (+4.3% YoY), 2,835 filings, 1,223 employers\n  FY2015: $75,900 median (-4.0% YoY), 2,859 filings, 1,419 employers\n  FY2016: $75,000 median (-1.2% YoY), 2,819 filings, 1,423 employers\n  FY2017: $76,856 median (+2.5% YoY), 2,999 filings, 1,451 employers\n  FY2018: $80,000 median (+4.1% YoY), 4,184 filings, 1,820 employers\n  FY2019: $81,400 median (+1.8% YoY), 4,797 filings, 2,043 employers\n  FY2020: $85,920 median (+5.6% YoY), 4,562 filings, 1,838 employers\n  FY2021: $92,893 median (+8.1% YoY), 4,951 filings, 1,938 employers\n  FY2022: $99,800 median (+7.4% YoY), 6,158 filings, 2,210 employers\n  FY2023: $100,000 median (+0.2% YoY), 7,641 filings, 2,443 employers\n  FY2024: $103,657 median (+3.7% YoY), 8,457 filings, 2,594 employers\n  FY2025: $105,706 median (+2.0% YoY), 10,139 filings, 3,078 employers\n  FY2026: $116,584 median (+10.3% YoY), 1,273 filings, 618 employers\n\n  Overall: $69,852 \u2192 $116,584 (+66.9% over 17 years)",
-    "metadata": {
-      "soc_code": "17-2112",
-      "visa_type": "H-1B"
-    },
-    "generated_at": "2026-04-20T04:54:45.267897+00:00"
-  },
-  {
-    "chunk_id": "1a641cb2c02e",
-    "source_artifact": "soc_salary_market.parquet",
-    "topic": "occupation",
-    "label": "soc_trend_15-1221_h1b",
-    "text": "Salary Trend for 15-1221 (Computer and Information Research Scientists) \u2014 H-1B:\n  FY2022: $168,000 median, 506 filings, 219 employers\n  FY2023: $167,951 median (-0.0% YoY), 2,878 filings, 639 employers\n  FY2024: $173,971 median (+3.6% YoY), 2,606 filings, 616 employers\n  FY2025: $182,000 median (+4.6% YoY), 3,845 filings, 775 employers\n  FY2026: $184,094 median (+1.2% YoY), 540 filings, 200 employers\n\n  Overall: $168,000 \u2192 $184,094 (+9.6% over 4 years)",
-    "metadata": {
-      "soc_code": "15-1221",
-      "visa_type": "H-1B"
-    },
-    "generated_at": "2026-04-20T04:54:45.268648+00:00"
-  },
-  {
-    "chunk_id": "56af28866aae",
-    "source_artifact": "soc_salary_market.parquet",
-    "topic": "occupation",
-    "label": "soc_trend_13-2011_h1b",
-    "text": "Salary Trend for 13-2011 (Accountants and Auditors) \u2014 H-1B:\n  FY2009: $52,000 median, 1,398 filings, 1,063 employers\n  FY2010: $54,662 median (+5.1% YoY), 5,128 filings, 2,829 employers\n  FY2011: $54,662 median (+0.0% YoY), 7,073 filings, 3,682 employers\n  FY2012: $55,000 median (+0.6% YoY), 7,704 filings, 3,938 employers\n  FY2013: $55,910 median (+1.7% YoY), 6,947 filings, 3,434 employers\n  FY2014: $56,500 median (+1.1% YoY), 8,618 filings, 3,735 employers\n  FY2015: $57,000 median (+0.9% YoY), 9,913 filings, 4,081 employers\n  FY2016: $58,178 median (+2.1% YoY), 10,241 filings, 4,090 employers\n  FY2017: $59,700 median (+2.6% YoY), 10,630 filings, 4,307 employers\n  FY2018: $65,894 median (+10.4% YoY), 10,146 filings, 4,181 employers\n  FY2019: $68,203 median (+3.5% YoY), 10,191 filings, 3,755 employers\n  FY2020: $75,000 median (+10.0% YoY), 9,078 filings, 2,982 employers\n  FY2021: $77,750 median (+3.7% YoY), 8,204 filings, 2,698 employers\n  FY2022: $85,051 median (+9.4% YoY), 8,983 filings, 2,573 employers\n  FY2023: $88,000 median (+3.5% YoY), 9,191 filings, 2,275 employers\n  FY2024: $90,646 median (+3.0% YoY), 8,869 filings, 2,501 employers\n  FY2025: $94,000 median (+3.7% YoY), 9,692 filings, 2,799 employers\n  FY2026: $106,000 median (+12.8% YoY), 846 filings, 379 employers\n\n  Overall: $52,000 \u2192 $106,000 (+103.8% over 17 years)",
-    "metadata": {
-      "soc_code": "13-2011",
-      "visa_type": "H-1B"
-    },
-    "generated_at": "2026-04-20T04:54:45.269536+00:00"
-  },
-  {
-    "chunk_id": "d65570000cc2",
-    "source_artifact": "soc_salary_market.parquet",
-    "topic": "occupation",
-    "label": "soc_trend_29-1123_h1b",
-    "text": "Salary Trend for 29-1123 (Physical Therapists) \u2014 H-1B:\n  FY2009: $60,320 median, 642 filings, 233 employers\n  FY2010: $60,000 median (-0.5% YoY), 1,218 filings, 462 employers\n  FY2011: $62,400 median (+4.0% YoY), 3,158 filings, 708 employers\n  FY2012: $64,459 median (+3.3% YoY), 3,571 filings, 727 employers\n  FY2013: $64,792 median (+0.5% YoY), 3,034 filings, 660 employers\n  FY2014: $65,270 median (+0.7% YoY), 2,895 filings, 605 employers\n  FY2015: $66,539 median (+1.9% YoY), 3,473 filings, 605 employers\n  FY2016: $68,640 median (+3.2% YoY), 2,931 filings, 650 employers\n  FY2017: $69,410 median (+1.1% YoY), 2,662 filings, 583 employers\n  FY2018: $76,482 median (+10.2% YoY), 2,559 filings, 584 employers\n  FY2019: $79,560 median (+4.0% YoY), 1,799 filings, 627 employers\n  FY2020: $81,000 median (+1.8% YoY), 1,715 filings, 596 employers\n  FY2021: $82,451 median (+1.8% YoY), 1,599 filings, 585 employers\n  FY2022: $79,446 median (-3.6% YoY), 1,620 filings, 549 employers\n  FY2023: $83,200 median (+4.7% YoY), 1,331 filings, 470 employers\n  FY2024: $83,034 median (-0.2% YoY), 1,477 filings, 500 employers\n  FY2025: $81,058 median (-2.4% YoY), 1,952 filings, 519 employers\n  FY2026: $80,683 median (-0.5% YoY), 309 filings, 109 employers\n\n  Overall: $60,320 \u2192 $80,683 (+33.8% over 17 years)",
-    "metadata": {
-      "soc_code": "29-1123",
-      "visa_type": "H-1B"
-    },
-    "generated_at": "2026-04-20T04:54:45.270465+00:00"
-  },
-  {
-    "chunk_id": "74024bd3349c",
-    "source_artifact": "soc_salary_market.parquet",
-    "topic": "occupation",
-    "label": "soc_trend_15-1132_h1b",
-    "text": "Salary Trend for 15-1132 (nan) \u2014 H-1B:\n  FY2011: $85,000 median, 9,273 filings, 3,245 employers\n  FY2012: $85,530 median (+0.6% YoY), 43,427 filings, 8,475 employers\n  FY2013: $87,800 median (+2.7% YoY), 50,298 filings, 9,060 employers\n  FY2014: $88,000 median (+0.2% YoY), 68,564 filings, 10,509 employers\n  FY2015: $87,800 median (-0.2% YoY), 88,897 filings, 11,909 employers\n  FY2016: $86,200 median (-1.8% YoY), 106,970 filings, 12,712 employers\n  FY2017: $91,200 median (+5.8% YoY), 108,454 filings, 13,501 employers\n  FY2018: $93,621 median (+2.7% YoY), 175,496 filings, 15,825 employers\n  FY2019: $96,595 median (+3.2% YoY), 194,260 filings, 16,458 employers\n  FY2020: $105,000 median (+8.7% YoY), 181,219 filings, 15,200 employers\n  FY2021: $110,000 median (+4.8% YoY), 159,922 filings, 14,635 employers\n  FY2022: $111,176 median (+1.1% YoY), 156,283 filings, 14,438 employers\n  FY2023: $150,000 median (+34.9% YoY), 11 filings, 11 employers\n  FY2024: $130,686 median (-12.9% YoY), 8 filings, 5 employers\n  FY2025: $136,350 median (+4.3% YoY), 3 filings, 3 employers\n\n  Overall: $85,000 \u2192 $136,350 (+60.4% over 14 years)",
-    "metadata": {
-      "soc_code": "15-1132",
-      "visa_type": "H-1B"
-    },
-    "generated_at": "2026-04-20T04:54:45.271337+00:00"
-  },
-  {
-    "chunk_id": "e122a6271917",
-    "source_artifact": "soc_salary_market.parquet",
-    "topic": "occupation",
-    "label": "soc_trend_17-2141_h1b",
-    "text": "Salary Trend for 17-2141 (Mechanical Engineers) \u2014 H-1B:\n  FY2009: $67,371 median, 785 filings, 548 employers\n  FY2010: $70,000 median (+3.9% YoY), 3,692 filings, 1,792 employers\n  FY2011: $70,000 median (+0.0% YoY), 5,253 filings, 2,153 employers\n  FY2012: $70,200 median (+0.3% YoY), 5,590 filings, 2,059 employers\n  FY2013: $72,000 median (+2.6% YoY), 5,278 filings, 2,080 employers\n  FY2014: $72,270 median (+0.4% YoY), 6,560 filings, 2,213 employers\n  FY2015: $73,840 median (+2.2% YoY), 7,349 filings, 2,422 employers\n  FY2016: $73,050 median (-1.1% YoY), 8,365 filings, 2,538 employers\n  FY2017: $75,774 median (+3.7% YoY), 8,651 filings, 2,687 employers\n  FY2018: $79,040 median (+4.3% YoY), 9,670 filings, 3,057 employers\n  FY2019: $80,200 median (+1.5% YoY), 10,353 filings, 3,328 employers\n  FY2020: $83,072 median (+3.6% YoY), 9,709 filings, 3,034 employers\n  FY2021: $90,000 median (+8.3% YoY), 9,695 filings, 2,986 employers\n  FY2022: $93,698 median (+4.1% YoY), 10,471 filings, 3,077 employers\n  FY2023: $97,760 median (+4.3% YoY), 8,679 filings, 2,761 employers\n  FY2024: $100,152 median (+2.4% YoY), 9,100 filings, 2,860 employers\n  FY2025: $104,616 median (+4.5% YoY), 10,315 filings, 3,116 employers\n  FY2026: $111,424 median (+6.5% YoY), 1,317 filings, 658 employers\n\n  Overall: $67,371 \u2192 $111,424 (+65.4% over 17 years)",
-    "metadata": {
-      "soc_code": "17-2141",
-      "visa_type": "H-1B"
-    },
-    "generated_at": "2026-04-20T04:54:45.272291+00:00"
-  },
-  {
-    "chunk_id": "08ed05e538c7",
-    "source_artifact": "soc_salary_market.parquet",
-    "topic": "occupation",
-    "label": "soc_trend_17-2061_h1b",
-    "text": "Salary Trend for 17-2061 (Computer Hardware Engineers) \u2014 H-1B:\n  FY2009: $81,453 median, 69 filings, 55 employers\n  FY2010: $85,000 median (+4.4% YoY), 382 filings, 164 employers\n  FY2011: $86,435 median (+1.7% YoY), 501 filings, 192 employers\n  FY2012: $85,000 median (-1.7% YoY), 991 filings, 218 employers\n  FY2013: $98,500 median (+15.9% YoY), 826 filings, 189 employers\n  FY2014: $94,578 median (-4.0% YoY), 977 filings, 214 employers\n  FY2015: $100,000 median (+5.7% YoY), 995 filings, 255 employers\n  FY2016: $101,608 median (+1.6% YoY), 1,162 filings, 243 employers\n  FY2017: $110,000 median (+8.3% YoY), 1,169 filings, 271 employers\n  FY2018: $125,000 median (+13.6% YoY), 1,200 filings, 273 employers\n  FY2019: $128,500 median (+2.8% YoY), 1,352 filings, 291 employers\n  FY2020: $134,424 median (+4.6% YoY), 1,369 filings, 250 employers\n  FY2021: $141,550 median (+5.3% YoY), 1,144 filings, 210 employers\n  FY2022: $153,769 median (+8.6% YoY), 1,421 filings, 226 employers\n  FY2023: $165,000 median (+7.3% YoY), 969 filings, 197 employers\n  FY2024: $166,000 median (+0.6% YoY), 1,105 filings, 200 employers\n  FY2025: $167,772 median (+1.1% YoY), 1,290 filings, 245 employers\n  FY2026: $181,943 median (+8.4% YoY), 176 filings, 64 employers\n\n  Overall: $81,453 \u2192 $181,943 (+123.4% over 17 years)",
-    "metadata": {
-      "soc_code": "17-2061",
-      "visa_type": "H-1B"
-    },
-    "generated_at": "2026-04-20T04:54:45.273264+00:00"
-  },
-  {
-    "chunk_id": "cc69b447651d",
-    "source_artifact": "soc_salary_market.parquet",
-    "topic": "occupation",
-    "label": "soc_trend_29-1127_h1b",
-    "text": "Salary Trend for 29-1127 (Speech-Language Pathologists) \u2014 H-1B:\n  FY2009: $60,000 median, 114 filings, 41 employers\n  FY2010: $60,000 median (+0.0% YoY), 359 filings, 94 employers\n  FY2011: $63,000 median (+5.0% YoY), 446 filings, 134 employers\n  FY2012: $62,000 median (-1.6% YoY), 385 filings, 116 employers\n  FY2013: $63,253 median (+2.0% YoY), 334 filings, 93 employers\n  FY2014: $63,000 median (-0.4% YoY), 423 filings, 99 employers\n  FY2015: $65,000 median (+3.2% YoY), 417 filings, 104 employers\n  FY2016: $64,719 median (-0.4% YoY), 402 filings, 113 employers\n  FY2017: $66,144 median (+2.2% YoY), 347 filings, 94 employers\n  FY2018: $70,720 median (+6.9% YoY), 455 filings, 87 employers\n  FY2019: $73,882 median (+4.5% YoY), 436 filings, 93 employers\n  FY2020: $79,040 median (+7.0% YoY), 342 filings, 83 employers\n  FY2021: $84,261 median (+6.6% YoY), 369 filings, 98 employers\n  FY2022: $83,230 median (-1.2% YoY), 325 filings, 107 employers\n  FY2023: $86,382 median (+3.8% YoY), 292 filings, 90 employers\n  FY2024: $86,174 median (-0.2% YoY), 363 filings, 96 employers\n  FY2025: $91,666 median (+6.4% YoY), 427 filings, 124 employers\n  FY2026: $90,080 median (-1.7% YoY), 62 filings, 20 employers\n\n  Overall: $60,000 \u2192 $90,080 (+50.1% over 17 years)",
-    "metadata": {
-      "soc_code": "29-1127",
-      "visa_type": "H-1B"
-    },
-    "generated_at": "2026-04-20T04:54:45.274165+00:00"
-  },
-  {
-    "chunk_id": "e074af5cc271",
-    "source_artifact": "soc_salary_market.parquet",
-    "topic": "occupation",
-    "label": "soc_trend_15-1211_h1b",
-    "text": "Salary Trend for 15-1211 (Computer Systems Analysts) \u2014 H-1B:\n  FY2012: $90,000 median, 1 filings, 1 employers\n  FY2021: $145,000 median (+61.1% YoY), 2 filings, 1 employers\n  FY2022: $104,781 median (-27.7% YoY), 5,998 filings, 1,086 employers\n  FY2023: $102,731 median (-2.0% YoY), 28,375 filings, 3,793 employers\n  FY2024: $104,125 median (+1.4% YoY), 16,310 filings, 3,447 employers\n  FY2025: $105,100 median (+0.9% YoY), 13,016 filings, 2,952 employers\n  FY2026: $115,000 median (+9.4% YoY), 1,635 filings, 698 employers\n\n  Overall: $90,000 \u2192 $115,000 (+27.8% over 14 years)",
-    "metadata": {
-      "soc_code": "15-1211",
-      "visa_type": "H-1B"
-    },
-    "generated_at": "2026-04-20T04:54:45.274942+00:00"
-  },
-  {
-    "chunk_id": "fe2a35387f54",
-    "source_artifact": "soc_salary_market.parquet",
-    "topic": "occupation",
-    "label": "soc_trend_15-2051_h1b",
-    "text": "Salary Trend for 15-2051 (Data Scientists) \u2014 H-1B:\n  FY2011: $140,000 median, 1 filings, 1 employers\n  FY2021: $150,000 median (+7.1% YoY), 3 filings, 3 employers\n  FY2022: $130,458 median (-13.0% YoY), 2,762 filings, 1,100 employers\n  FY2023: $120,000 median (-8.0% YoY), 19,885 filings, 5,671 employers\n  FY2024: $118,193 median (-1.5% YoY), 23,922 filings, 6,866 employers\n  FY2025: $120,801 median (+2.2% YoY), 31,732 filings, 8,584 employers\n  FY2026: $133,952 median (+10.9% YoY), 4,011 filings, 1,753 employers\n\n  Overall: $140,000 \u2192 $133,952 (-4.3% over 15 years)",
-    "metadata": {
-      "soc_code": "15-2051",
-      "visa_type": "H-1B"
-    },
-    "generated_at": "2026-04-20T04:54:45.275714+00:00"
-  },
-  {
-    "chunk_id": "c2bace12af03",
-    "source_artifact": "soc_salary_market.parquet",
-    "topic": "occupation",
-    "label": "soc_trend_29-1171_h1b",
-    "text": "Salary Trend for 29-1171 (Nurse Practitioners) \u2014 H-1B:\n  FY2013: $85,020 median, 12 filings, 11 employers\n  FY2014: $85,000 median (-0.0% YoY), 65 filings, 52 employers\n  FY2015: $87,422 median (+2.8% YoY), 92 filings, 72 employers\n  FY2016: $90,000 median (+2.9% YoY), 93 filings, 73 employers\n  FY2017: $92,250 median (+2.5% YoY), 126 filings, 64 employers\n  FY2018: $105,000 median (+13.8% YoY), 110 filings, 82 employers\n  FY2019: $100,575 median (-4.2% YoY), 98 filings, 77 employers\n  FY2020: $104,000 median (+3.4% YoY), 60 filings, 50 employers\n  FY2021: $114,067 median (+9.7% YoY), 73 filings, 58 employers\n  FY2022: $115,000 median (+0.8% YoY), 65 filings, 61 employers\n  FY2023: $124,800 median (+8.5% YoY), 63 filings, 53 employers\n  FY2024: $122,200 median (-2.1% YoY), 70 filings, 63 employers\n  FY2025: $129,802 median (+6.2% YoY), 68 filings, 59 employers\n  FY2026: $135,970 median (+4.8% YoY), 14 filings, 11 employers\n\n  Overall: $85,020 \u2192 $135,970 (+59.9% over 13 years)",
-    "metadata": {
-      "soc_code": "29-1171",
-      "visa_type": "H-1B"
-    },
-    "generated_at": "2026-04-20T04:54:45.276562+00:00"
-  },
-  {
-    "chunk_id": "ff45da1d484b",
-    "source_artifact": "soc_salary_market.parquet",
-    "topic": "occupation",
-    "label": "soc_trend_29-1141_h1b",
-    "text": "Salary Trend for 29-1141 (Registered Nurses) \u2014 H-1B:\n  FY2012: $50,523 median, 1 filings, 1 employers\n  FY2013: $64,524 median (+27.7% YoY), 67 filings, 37 employers\n  FY2014: $64,355 median (-0.3% YoY), 284 filings, 119 employers\n  FY2015: $65,003 median (+1.0% YoY), 176 filings, 101 employers\n  FY2016: $64,657 median (-0.5% YoY), 164 filings, 88 employers\n  FY2017: $63,970 median (-1.1% YoY), 194 filings, 78 employers\n  FY2018: $67,974 median (+6.3% YoY), 135 filings, 70 employers\n  FY2019: $68,037 median (+0.1% YoY), 112 filings, 62 employers\n  FY2020: $70,845 median (+4.1% YoY), 90 filings, 58 employers\n  FY2021: $69,451 median (-2.0% YoY), 124 filings, 68 employers\n  FY2022: $74,880 median (+7.8% YoY), 147 filings, 87 employers\n  FY2023: $74,246 median (-0.8% YoY), 310 filings, 111 employers\n  FY2024: $75,046 median (+1.1% YoY), 898 filings, 179 employers\n  FY2025: $80,558 median (+7.3% YoY), 1,529 filings, 281 employers\n  FY2026: $79,186 median (-1.7% YoY), 207 filings, 88 employers\n\n  Overall: $50,523 \u2192 $79,186 (+56.7% over 14 years)",
-    "metadata": {
-      "soc_code": "29-1141",
-      "visa_type": "H-1B"
-    },
-    "generated_at": "2026-04-20T04:54:45.277439+00:00"
-  },
-  {
-    "chunk_id": "298ed3beacfc",
-    "source_artifact": "soc_salary_market.parquet",
-    "topic": "occupation",
-    "label": "soc_trend_15-1241_h1b",
-    "text": "Salary Trend for 15-1241 (Computer Network Architects) \u2014 H-1B:\n  FY2021: $105,000 median, 3 filings, 3 employers\n  FY2022: $120,100 median (+14.4% YoY), 409 filings, 230 employers\n  FY2023: $122,000 median (+1.6% YoY), 1,885 filings, 782 employers\n  FY2024: $129,480 median (+6.1% YoY), 1,815 filings, 759 employers\n  FY2025: $137,676 median (+6.3% YoY), 2,096 filings, 832 employers\n  FY2026: $147,799 median (+7.4% YoY), 347 filings, 205 employers\n\n  Overall: $105,000 \u2192 $147,799 (+40.8% over 5 years)",
-    "metadata": {
-      "soc_code": "15-1241",
-      "visa_type": "H-1B"
-    },
-    "generated_at": "2026-04-20T04:54:45.278199+00:00"
+    "generated_at": "2026-07-29T18:54:56.154291+00:00"
   },
   {
     "chunk_id": "207b248e5317",
@@ -268,7 +76,19 @@
       "soc_code": "13-1161",
       "visa_type": "H-1B"
     },
-    "generated_at": "2026-04-20T04:54:45.279329+00:00"
+    "generated_at": "2026-07-29T18:54:59.503587+00:00"
+  },
+  {
+    "chunk_id": "c2bace12af03",
+    "source_artifact": "soc_salary_market.parquet",
+    "topic": "occupation",
+    "label": "soc_trend_29-1171_h1b",
+    "text": "Salary Trend for 29-1171 (Nurse Practitioners) \u2014 H-1B:\n  FY2013: $85,020 median, 12 filings, 11 employers\n  FY2014: $85,000 median (-0.0% YoY), 65 filings, 52 employers\n  FY2015: $87,422 median (+2.8% YoY), 92 filings, 72 employers\n  FY2016: $90,000 median (+2.9% YoY), 93 filings, 73 employers\n  FY2017: $92,250 median (+2.5% YoY), 126 filings, 64 employers\n  FY2018: $105,000 median (+13.8% YoY), 110 filings, 82 employers\n  FY2019: $100,575 median (-4.2% YoY), 98 filings, 77 employers\n  FY2020: $104,000 median (+3.4% YoY), 60 filings, 50 employers\n  FY2021: $114,067 median (+9.7% YoY), 73 filings, 58 employers\n  FY2022: $115,000 median (+0.8% YoY), 65 filings, 61 employers\n  FY2023: $124,800 median (+8.5% YoY), 63 filings, 53 employers\n  FY2024: $122,200 median (-2.1% YoY), 70 filings, 63 employers\n  FY2025: $129,802 median (+6.2% YoY), 68 filings, 59 employers\n  FY2026: $135,970 median (+4.8% YoY), 14 filings, 11 employers\n\n  Overall: $85,020 \u2192 $135,970 (+59.9% over 13 years)",
+    "metadata": {
+      "soc_code": "29-1171",
+      "visa_type": "H-1B"
+    },
+    "generated_at": "2026-07-29T18:54:59.504597+00:00"
   },
   {
     "chunk_id": "8ab0d59602cb",
@@ -280,7 +100,31 @@
       "soc_code": "11-3021",
       "visa_type": "H-1B"
     },
-    "generated_at": "2026-04-20T04:54:45.280402+00:00"
+    "generated_at": "2026-07-29T18:54:59.505571+00:00"
+  },
+  {
+    "chunk_id": "cc69b447651d",
+    "source_artifact": "soc_salary_market.parquet",
+    "topic": "occupation",
+    "label": "soc_trend_29-1127_h1b",
+    "text": "Salary Trend for 29-1127 (Speech-Language Pathologists) \u2014 H-1B:\n  FY2009: $60,000 median, 114 filings, 41 employers\n  FY2010: $60,000 median (+0.0% YoY), 359 filings, 94 employers\n  FY2011: $63,000 median (+5.0% YoY), 446 filings, 134 employers\n  FY2012: $62,000 median (-1.6% YoY), 385 filings, 116 employers\n  FY2013: $63,253 median (+2.0% YoY), 334 filings, 93 employers\n  FY2014: $63,000 median (-0.4% YoY), 423 filings, 99 employers\n  FY2015: $65,000 median (+3.2% YoY), 417 filings, 104 employers\n  FY2016: $64,719 median (-0.4% YoY), 402 filings, 113 employers\n  FY2017: $66,144 median (+2.2% YoY), 347 filings, 94 employers\n  FY2018: $70,720 median (+6.9% YoY), 455 filings, 87 employers\n  FY2019: $73,882 median (+4.5% YoY), 436 filings, 93 employers\n  FY2020: $79,040 median (+7.0% YoY), 342 filings, 83 employers\n  FY2021: $84,261 median (+6.6% YoY), 369 filings, 98 employers\n  FY2022: $83,230 median (-1.2% YoY), 325 filings, 107 employers\n  FY2023: $86,382 median (+3.8% YoY), 292 filings, 90 employers\n  FY2024: $86,174 median (-0.2% YoY), 363 filings, 96 employers\n  FY2025: $91,666 median (+6.4% YoY), 427 filings, 124 employers\n  FY2026: $90,080 median (-1.7% YoY), 62 filings, 20 employers\n\n  Overall: $60,000 \u2192 $90,080 (+50.1% over 17 years)",
+    "metadata": {
+      "soc_code": "29-1127",
+      "visa_type": "H-1B"
+    },
+    "generated_at": "2026-07-29T18:54:59.506512+00:00"
+  },
+  {
+    "chunk_id": "08ed05e538c7",
+    "source_artifact": "soc_salary_market.parquet",
+    "topic": "occupation",
+    "label": "soc_trend_17-2061_h1b",
+    "text": "Salary Trend for 17-2061 (Computer Hardware Engineers) \u2014 H-1B:\n  FY2009: $81,453 median, 69 filings, 55 employers\n  FY2010: $85,000 median (+4.4% YoY), 382 filings, 164 employers\n  FY2011: $86,435 median (+1.7% YoY), 501 filings, 192 employers\n  FY2012: $85,000 median (-1.7% YoY), 991 filings, 218 employers\n  FY2013: $98,500 median (+15.9% YoY), 826 filings, 189 employers\n  FY2014: $94,578 median (-4.0% YoY), 977 filings, 214 employers\n  FY2015: $100,000 median (+5.7% YoY), 995 filings, 255 employers\n  FY2016: $101,608 median (+1.6% YoY), 1,162 filings, 243 employers\n  FY2017: $110,000 median (+8.3% YoY), 1,169 filings, 271 employers\n  FY2018: $125,000 median (+13.6% YoY), 1,200 filings, 273 employers\n  FY2019: $128,500 median (+2.8% YoY), 1,352 filings, 291 employers\n  FY2020: $134,424 median (+4.6% YoY), 1,369 filings, 250 employers\n  FY2021: $141,550 median (+5.3% YoY), 1,144 filings, 210 employers\n  FY2022: $153,769 median (+8.6% YoY), 1,421 filings, 226 employers\n  FY2023: $165,000 median (+7.3% YoY), 969 filings, 197 employers\n  FY2024: $166,000 median (+0.6% YoY), 1,105 filings, 200 employers\n  FY2025: $167,772 median (+1.1% YoY), 1,290 filings, 245 employers\n  FY2026: $181,943 median (+8.4% YoY), 176 filings, 64 employers\n\n  Overall: $81,453 \u2192 $181,943 (+123.4% over 17 years)",
+    "metadata": {
+      "soc_code": "17-2061",
+      "visa_type": "H-1B"
+    },
+    "generated_at": "2026-07-29T18:54:59.507429+00:00"
   },
   {
     "chunk_id": "94daa8d5aa06",
@@ -292,7 +136,31 @@
       "soc_code": "15-1244",
       "visa_type": "H-1B"
     },
-    "generated_at": "2026-04-20T04:54:45.281213+00:00"
+    "generated_at": "2026-07-29T18:54:59.508174+00:00"
+  },
+  {
+    "chunk_id": "e122a6271917",
+    "source_artifact": "soc_salary_market.parquet",
+    "topic": "occupation",
+    "label": "soc_trend_17-2141_h1b",
+    "text": "Salary Trend for 17-2141 (Mechanical Engineers) \u2014 H-1B:\n  FY2009: $67,371 median, 785 filings, 548 employers\n  FY2010: $70,000 median (+3.9% YoY), 3,692 filings, 1,792 employers\n  FY2011: $70,000 median (+0.0% YoY), 5,253 filings, 2,153 employers\n  FY2012: $70,200 median (+0.3% YoY), 5,590 filings, 2,059 employers\n  FY2013: $72,000 median (+2.6% YoY), 5,278 filings, 2,080 employers\n  FY2014: $72,270 median (+0.4% YoY), 6,560 filings, 2,213 employers\n  FY2015: $73,840 median (+2.2% YoY), 7,349 filings, 2,422 employers\n  FY2016: $73,050 median (-1.1% YoY), 8,365 filings, 2,538 employers\n  FY2017: $75,774 median (+3.7% YoY), 8,651 filings, 2,687 employers\n  FY2018: $79,040 median (+4.3% YoY), 9,670 filings, 3,057 employers\n  FY2019: $80,200 median (+1.5% YoY), 10,353 filings, 3,328 employers\n  FY2020: $83,072 median (+3.6% YoY), 9,709 filings, 3,034 employers\n  FY2021: $90,000 median (+8.3% YoY), 9,695 filings, 2,986 employers\n  FY2022: $93,698 median (+4.1% YoY), 10,471 filings, 3,077 employers\n  FY2023: $97,760 median (+4.3% YoY), 8,679 filings, 2,761 employers\n  FY2024: $100,152 median (+2.4% YoY), 9,100 filings, 2,860 employers\n  FY2025: $104,616 median (+4.5% YoY), 10,315 filings, 3,116 employers\n  FY2026: $111,424 median (+6.5% YoY), 1,317 filings, 658 employers\n\n  Overall: $67,371 \u2192 $111,424 (+65.4% over 17 years)",
+    "metadata": {
+      "soc_code": "17-2141",
+      "visa_type": "H-1B"
+    },
+    "generated_at": "2026-07-29T18:54:59.509124+00:00"
+  },
+  {
+    "chunk_id": "74024bd3349c",
+    "source_artifact": "soc_salary_market.parquet",
+    "topic": "occupation",
+    "label": "soc_trend_15-1132_h1b",
+    "text": "Salary Trend for 15-1132 (nan) \u2014 H-1B:\n  FY2011: $85,000 median, 9,273 filings, 3,245 employers\n  FY2012: $85,530 median (+0.6% YoY), 43,427 filings, 8,475 employers\n  FY2013: $87,800 median (+2.7% YoY), 50,298 filings, 9,060 employers\n  FY2014: $88,000 median (+0.2% YoY), 68,564 filings, 10,509 employers\n  FY2015: $87,800 median (-0.2% YoY), 88,897 filings, 11,909 employers\n  FY2016: $86,200 median (-1.8% YoY), 106,970 filings, 12,712 employers\n  FY2017: $91,200 median (+5.8% YoY), 108,454 filings, 13,501 employers\n  FY2018: $93,621 median (+2.7% YoY), 175,496 filings, 15,825 employers\n  FY2019: $96,595 median (+3.2% YoY), 194,260 filings, 16,458 employers\n  FY2020: $105,000 median (+8.7% YoY), 181,219 filings, 15,200 employers\n  FY2021: $110,000 median (+4.8% YoY), 159,922 filings, 14,635 employers\n  FY2022: $111,176 median (+1.1% YoY), 156,283 filings, 14,438 employers\n  FY2023: $150,000 median (+34.9% YoY), 11 filings, 11 employers\n  FY2024: $130,686 median (-12.9% YoY), 8 filings, 5 employers\n  FY2025: $136,350 median (+4.3% YoY), 3 filings, 3 employers\n\n  Overall: $85,000 \u2192 $136,350 (+60.4% over 14 years)",
+    "metadata": {
+      "soc_code": "15-1132",
+      "visa_type": "H-1B"
+    },
+    "generated_at": "2026-07-29T18:54:59.509979+00:00"
   },
   {
     "chunk_id": "44754a03e746",
@@ -304,7 +172,139 @@
       "soc_code": "15-1252",
       "visa_type": "H-1B"
     },
-    "generated_at": "2026-04-20T04:54:45.281956+00:00"
+    "generated_at": "2026-07-29T18:54:59.510708+00:00"
+  },
+  {
+    "chunk_id": "e074af5cc271",
+    "source_artifact": "soc_salary_market.parquet",
+    "topic": "occupation",
+    "label": "soc_trend_15-1211_h1b",
+    "text": "Salary Trend for 15-1211 (Computer Systems Analysts) \u2014 H-1B:\n  FY2012: $90,000 median, 1 filings, 1 employers\n  FY2021: $145,000 median (+61.1% YoY), 2 filings, 1 employers\n  FY2022: $104,781 median (-27.7% YoY), 5,998 filings, 1,086 employers\n  FY2023: $102,731 median (-2.0% YoY), 28,375 filings, 3,793 employers\n  FY2024: $104,125 median (+1.4% YoY), 16,310 filings, 3,447 employers\n  FY2025: $105,100 median (+0.9% YoY), 13,016 filings, 2,952 employers\n  FY2026: $115,000 median (+9.4% YoY), 1,635 filings, 698 employers\n\n  Overall: $90,000 \u2192 $115,000 (+27.8% over 14 years)",
+    "metadata": {
+      "soc_code": "15-1211",
+      "visa_type": "H-1B"
+    },
+    "generated_at": "2026-07-29T18:54:59.511448+00:00"
+  },
+  {
+    "chunk_id": "6483583f207c",
+    "source_artifact": "soc_salary_market.parquet",
+    "topic": "occupation",
+    "label": "soc_trend_17-2071_h1b",
+    "text": "Salary Trend for 17-2071 (Electrical Engineers) \u2014 H-1B:\n  FY2009: $75,000 median, 759 filings, 437 employers\n  FY2010: $78,150 median (+4.2% YoY), 3,380 filings, 1,350 employers\n  FY2011: $77,813 median (-0.4% YoY), 4,811 filings, 1,674 employers\n  FY2012: $78,872 median (+1.4% YoY), 4,581 filings, 1,642 employers\n  FY2013: $80,000 median (+1.4% YoY), 4,336 filings, 1,517 employers\n  FY2014: $82,400 median (+3.0% YoY), 4,965 filings, 1,714 employers\n  FY2015: $81,661 median (-0.9% YoY), 5,093 filings, 1,748 employers\n  FY2016: $83,000 median (+1.6% YoY), 5,154 filings, 1,739 employers\n  FY2017: $82,500 median (-0.6% YoY), 5,510 filings, 1,843 employers\n  FY2018: $87,963 median (+6.6% YoY), 6,856 filings, 2,148 employers\n  FY2019: $89,086 median (+1.3% YoY), 7,325 filings, 2,394 employers\n  FY2020: $93,000 median (+4.4% YoY), 6,602 filings, 2,186 employers\n  FY2021: $100,000 median (+7.5% YoY), 6,803 filings, 2,060 employers\n  FY2022: $106,850 median (+6.8% YoY), 7,081 filings, 1,966 employers\n  FY2023: $111,115 median (+4.0% YoY), 5,829 filings, 1,846 employers\n  FY2024: $113,027 median (+1.7% YoY), 6,069 filings, 1,922 employers\n  FY2025: $120,398 median (+6.5% YoY), 6,980 filings, 2,169 employers\n  FY2026: $134,635 median (+11.8% YoY), 920 filings, 436 employers\n\n  Overall: $75,000 \u2192 $134,635 (+79.5% over 17 years)",
+    "metadata": {
+      "soc_code": "17-2071",
+      "visa_type": "H-1B"
+    },
+    "generated_at": "2026-07-29T18:54:59.512419+00:00"
+  },
+  {
+    "chunk_id": "56af28866aae",
+    "source_artifact": "soc_salary_market.parquet",
+    "topic": "occupation",
+    "label": "soc_trend_13-2011_h1b",
+    "text": "Salary Trend for 13-2011 (Accountants and Auditors) \u2014 H-1B:\n  FY2009: $52,000 median, 1,398 filings, 1,063 employers\n  FY2010: $54,662 median (+5.1% YoY), 5,128 filings, 2,829 employers\n  FY2011: $54,662 median (+0.0% YoY), 7,073 filings, 3,682 employers\n  FY2012: $55,000 median (+0.6% YoY), 7,704 filings, 3,938 employers\n  FY2013: $55,910 median (+1.7% YoY), 6,947 filings, 3,434 employers\n  FY2014: $56,500 median (+1.1% YoY), 8,618 filings, 3,735 employers\n  FY2015: $57,000 median (+0.9% YoY), 9,913 filings, 4,081 employers\n  FY2016: $58,178 median (+2.1% YoY), 10,241 filings, 4,090 employers\n  FY2017: $59,700 median (+2.6% YoY), 10,630 filings, 4,307 employers\n  FY2018: $65,894 median (+10.4% YoY), 10,146 filings, 4,181 employers\n  FY2019: $68,203 median (+3.5% YoY), 10,191 filings, 3,755 employers\n  FY2020: $75,000 median (+10.0% YoY), 9,078 filings, 2,982 employers\n  FY2021: $77,750 median (+3.7% YoY), 8,204 filings, 2,698 employers\n  FY2022: $85,051 median (+9.4% YoY), 8,983 filings, 2,573 employers\n  FY2023: $88,000 median (+3.5% YoY), 9,191 filings, 2,275 employers\n  FY2024: $90,646 median (+3.0% YoY), 8,869 filings, 2,501 employers\n  FY2025: $94,000 median (+3.7% YoY), 9,692 filings, 2,799 employers\n  FY2026: $106,000 median (+12.8% YoY), 846 filings, 379 employers\n\n  Overall: $52,000 \u2192 $106,000 (+103.8% over 17 years)",
+    "metadata": {
+      "soc_code": "13-2011",
+      "visa_type": "H-1B"
+    },
+    "generated_at": "2026-07-29T18:54:59.513393+00:00"
+  },
+  {
+    "chunk_id": "b52baf8b0af7",
+    "source_artifact": "soc_salary_market.parquet",
+    "topic": "occupation",
+    "label": "soc_trend_13-1111_h1b",
+    "text": "Salary Trend for 13-1111 (Management Analysts) \u2014 H-1B:\n  FY2009: $65,153 median, 923 filings, 553 employers\n  FY2010: $70,000 median (+7.4% YoY), 4,512 filings, 1,749 employers\n  FY2011: $70,000 median (+0.0% YoY), 6,718 filings, 2,316 employers\n  FY2012: $72,238 median (+3.2% YoY), 8,246 filings, 2,364 employers\n  FY2013: $75,000 median (+3.8% YoY), 8,807 filings, 2,330 employers\n  FY2014: $75,000 median (+0.0% YoY), 10,547 filings, 2,596 employers\n  FY2015: $75,000 median (+0.0% YoY), 12,060 filings, 2,864 employers\n  FY2016: $80,000 median (+6.7% YoY), 14,072 filings, 2,715 employers\n  FY2017: $84,200 median (+5.2% YoY), 12,049 filings, 2,663 employers\n  FY2018: $86,600 median (+2.9% YoY), 12,055 filings, 2,720 employers\n  FY2019: $92,000 median (+6.2% YoY), 9,654 filings, 2,446 employers\n  FY2020: $100,300 median (+9.0% YoY), 7,693 filings, 1,907 employers\n  FY2021: $108,500 median (+8.2% YoY), 6,343 filings, 1,798 employers\n  FY2022: $112,625 median (+3.8% YoY), 6,804 filings, 1,966 employers\n  FY2023: $116,259 median (+3.2% YoY), 6,001 filings, 1,711 employers\n  FY2024: $117,616 median (+1.2% YoY), 6,022 filings, 1,924 employers\n  FY2025: $119,795 median (+1.9% YoY), 6,738 filings, 2,257 employers\n  FY2026: $145,000 median (+21.0% YoY), 770 filings, 340 employers\n\n  Overall: $65,153 \u2192 $145,000 (+122.6% over 17 years)",
+    "metadata": {
+      "soc_code": "13-1111",
+      "visa_type": "H-1B"
+    },
+    "generated_at": "2026-07-29T18:54:59.514286+00:00"
+  },
+  {
+    "chunk_id": "1a641cb2c02e",
+    "source_artifact": "soc_salary_market.parquet",
+    "topic": "occupation",
+    "label": "soc_trend_15-1221_h1b",
+    "text": "Salary Trend for 15-1221 (Computer and Information Research Scientists) \u2014 H-1B:\n  FY2022: $168,000 median, 506 filings, 219 employers\n  FY2023: $167,951 median (-0.0% YoY), 2,878 filings, 639 employers\n  FY2024: $173,971 median (+3.6% YoY), 2,606 filings, 616 employers\n  FY2025: $182,000 median (+4.6% YoY), 3,845 filings, 775 employers\n  FY2026: $184,094 median (+1.2% YoY), 540 filings, 200 employers\n\n  Overall: $168,000 \u2192 $184,094 (+9.6% over 4 years)",
+    "metadata": {
+      "soc_code": "15-1221",
+      "visa_type": "H-1B"
+    },
+    "generated_at": "2026-07-29T18:54:59.515015+00:00"
+  },
+  {
+    "chunk_id": "ff45da1d484b",
+    "source_artifact": "soc_salary_market.parquet",
+    "topic": "occupation",
+    "label": "soc_trend_29-1141_h1b",
+    "text": "Salary Trend for 29-1141 (Registered Nurses) \u2014 H-1B:\n  FY2012: $50,523 median, 1 filings, 1 employers\n  FY2013: $64,524 median (+27.7% YoY), 67 filings, 37 employers\n  FY2014: $64,355 median (-0.3% YoY), 284 filings, 119 employers\n  FY2015: $65,003 median (+1.0% YoY), 176 filings, 101 employers\n  FY2016: $64,657 median (-0.5% YoY), 164 filings, 88 employers\n  FY2017: $63,970 median (-1.1% YoY), 194 filings, 78 employers\n  FY2018: $67,974 median (+6.3% YoY), 135 filings, 70 employers\n  FY2019: $68,037 median (+0.1% YoY), 112 filings, 62 employers\n  FY2020: $70,845 median (+4.1% YoY), 90 filings, 58 employers\n  FY2021: $69,451 median (-2.0% YoY), 124 filings, 68 employers\n  FY2022: $74,880 median (+7.8% YoY), 147 filings, 87 employers\n  FY2023: $74,246 median (-0.8% YoY), 310 filings, 111 employers\n  FY2024: $75,046 median (+1.1% YoY), 898 filings, 179 employers\n  FY2025: $80,558 median (+7.3% YoY), 1,529 filings, 281 employers\n  FY2026: $79,186 median (-1.7% YoY), 207 filings, 88 employers\n\n  Overall: $50,523 \u2192 $79,186 (+56.7% over 14 years)",
+    "metadata": {
+      "soc_code": "29-1141",
+      "visa_type": "H-1B"
+    },
+    "generated_at": "2026-07-29T18:54:59.515867+00:00"
+  },
+  {
+    "chunk_id": "8b439771277f",
+    "source_artifact": "soc_salary_market.parquet",
+    "topic": "occupation",
+    "label": "soc_trend_17-2112_h1b",
+    "text": "Salary Trend for 17-2112 (Industrial Engineers) \u2014 H-1B:\n  FY2009: $69,852 median, 460 filings, 351 employers\n  FY2010: $70,000 median (+0.2% YoY), 1,986 filings, 1,098 employers\n  FY2011: $70,970 median (+1.4% YoY), 2,571 filings, 1,281 employers\n  FY2012: $72,198 median (+1.7% YoY), 2,866 filings, 1,313 employers\n  FY2013: $75,754 median (+4.9% YoY), 2,487 filings, 1,202 employers\n  FY2014: $79,035 median (+4.3% YoY), 2,835 filings, 1,223 employers\n  FY2015: $75,900 median (-4.0% YoY), 2,859 filings, 1,419 employers\n  FY2016: $75,000 median (-1.2% YoY), 2,819 filings, 1,423 employers\n  FY2017: $76,856 median (+2.5% YoY), 2,999 filings, 1,451 employers\n  FY2018: $80,000 median (+4.1% YoY), 4,184 filings, 1,820 employers\n  FY2019: $81,400 median (+1.8% YoY), 4,797 filings, 2,043 employers\n  FY2020: $85,920 median (+5.6% YoY), 4,562 filings, 1,838 employers\n  FY2021: $92,893 median (+8.1% YoY), 4,951 filings, 1,938 employers\n  FY2022: $99,800 median (+7.4% YoY), 6,158 filings, 2,210 employers\n  FY2023: $100,000 median (+0.2% YoY), 7,641 filings, 2,443 employers\n  FY2024: $103,657 median (+3.7% YoY), 8,457 filings, 2,594 employers\n  FY2025: $105,706 median (+2.0% YoY), 10,139 filings, 3,078 employers\n  FY2026: $116,584 median (+10.3% YoY), 1,273 filings, 618 employers\n\n  Overall: $69,852 \u2192 $116,584 (+66.9% over 17 years)",
+    "metadata": {
+      "soc_code": "17-2112",
+      "visa_type": "H-1B"
+    },
+    "generated_at": "2026-07-29T18:54:59.516771+00:00"
+  },
+  {
+    "chunk_id": "a39ec3eb22d3",
+    "source_artifact": "soc_salary_market.parquet",
+    "topic": "occupation",
+    "label": "soc_trend_15-1299_h1b",
+    "text": "Salary Trend for 15-1299 (Computer Occupations, All Other) \u2014 H-1B:\n  FY2021: $86,000 median, 7 filings, 6 employers\n  FY2022: $115,918 median (+34.8% YoY), 7,573 filings, 1,974 employers\n  FY2023: $102,000 median (-12.0% YoY), 43,592 filings, 6,422 employers\n  FY2024: $104,794 median (+2.7% YoY), 56,719 filings, 7,478 employers\n  FY2025: $110,755 median (+5.7% YoY), 47,925 filings, 7,154 employers\n  FY2026: $120,765 median (+9.0% YoY), 6,219 filings, 1,687 employers\n\n  Overall: $86,000 \u2192 $120,765 (+40.4% over 5 years)",
+    "metadata": {
+      "soc_code": "15-1299",
+      "visa_type": "H-1B"
+    },
+    "generated_at": "2026-07-29T18:54:59.517489+00:00"
+  },
+  {
+    "chunk_id": "298ed3beacfc",
+    "source_artifact": "soc_salary_market.parquet",
+    "topic": "occupation",
+    "label": "soc_trend_15-1241_h1b",
+    "text": "Salary Trend for 15-1241 (Computer Network Architects) \u2014 H-1B:\n  FY2021: $105,000 median, 3 filings, 3 employers\n  FY2022: $120,100 median (+14.4% YoY), 409 filings, 230 employers\n  FY2023: $122,000 median (+1.6% YoY), 1,885 filings, 782 employers\n  FY2024: $129,480 median (+6.1% YoY), 1,815 filings, 759 employers\n  FY2025: $137,676 median (+6.3% YoY), 2,096 filings, 832 employers\n  FY2026: $147,799 median (+7.4% YoY), 347 filings, 205 employers\n\n  Overall: $105,000 \u2192 $147,799 (+40.8% over 5 years)",
+    "metadata": {
+      "soc_code": "15-1241",
+      "visa_type": "H-1B"
+    },
+    "generated_at": "2026-07-29T18:54:59.518206+00:00"
+  },
+  {
+    "chunk_id": "d65570000cc2",
+    "source_artifact": "soc_salary_market.parquet",
+    "topic": "occupation",
+    "label": "soc_trend_29-1123_h1b",
+    "text": "Salary Trend for 29-1123 (Physical Therapists) \u2014 H-1B:\n  FY2009: $60,320 median, 642 filings, 233 employers\n  FY2010: $60,000 median (-0.5% YoY), 1,218 filings, 462 employers\n  FY2011: $62,400 median (+4.0% YoY), 3,158 filings, 708 employers\n  FY2012: $64,459 median (+3.3% YoY), 3,571 filings, 727 employers\n  FY2013: $64,792 median (+0.5% YoY), 3,034 filings, 660 employers\n  FY2014: $65,270 median (+0.7% YoY), 2,895 filings, 605 employers\n  FY2015: $66,539 median (+1.9% YoY), 3,473 filings, 605 employers\n  FY2016: $68,640 median (+3.2% YoY), 2,931 filings, 650 employers\n  FY2017: $69,410 median (+1.1% YoY), 2,662 filings, 583 employers\n  FY2018: $76,482 median (+10.2% YoY), 2,559 filings, 584 employers\n  FY2019: $79,560 median (+4.0% YoY), 1,799 filings, 627 employers\n  FY2020: $81,000 median (+1.8% YoY), 1,715 filings, 596 employers\n  FY2021: $82,451 median (+1.8% YoY), 1,599 filings, 585 employers\n  FY2022: $79,446 median (-3.6% YoY), 1,620 filings, 549 employers\n  FY2023: $83,200 median (+4.7% YoY), 1,331 filings, 470 employers\n  FY2024: $83,034 median (-0.2% YoY), 1,477 filings, 500 employers\n  FY2025: $81,058 median (-2.4% YoY), 1,952 filings, 519 employers\n  FY2026: $80,683 median (-0.5% YoY), 309 filings, 109 employers\n\n  Overall: $60,320 \u2192 $80,683 (+33.8% over 17 years)",
+    "metadata": {
+      "soc_code": "29-1123",
+      "visa_type": "H-1B"
+    },
+    "generated_at": "2026-07-29T18:54:59.519104+00:00"
+  },
+  {
+    "chunk_id": "fe2a35387f54",
+    "source_artifact": "soc_salary_market.parquet",
+    "topic": "occupation",
+    "label": "soc_trend_15-2051_h1b",
+    "text": "Salary Trend for 15-2051 (Data Scientists) \u2014 H-1B:\n  FY2011: $140,000 median, 1 filings, 1 employers\n  FY2021: $150,000 median (+7.1% YoY), 3 filings, 3 employers\n  FY2022: $130,458 median (-13.0% YoY), 2,762 filings, 1,100 employers\n  FY2023: $120,000 median (-8.0% YoY), 19,885 filings, 5,671 employers\n  FY2024: $118,193 median (-1.5% YoY), 23,922 filings, 6,866 employers\n  FY2025: $120,801 median (+2.2% YoY), 31,732 filings, 8,584 employers\n  FY2026: $133,952 median (+10.9% YoY), 4,011 filings, 1,753 employers\n\n  Overall: $140,000 \u2192 $133,952 (-4.3% over 15 years)",
+    "metadata": {
+      "soc_code": "15-2051",
+      "visa_type": "H-1B"
+    },
+    "generated_at": "2026-07-29T18:54:59.519835+00:00"
   },
   {
     "chunk_id": "3f39be66a9ea",
@@ -316,7 +316,7 @@
       "soc_code": "15-1121",
       "visa_type": "H-1B"
     },
-    "generated_at": "2026-04-20T04:54:45.282814+00:00"
+    "generated_at": "2026-07-29T18:54:59.520775+00:00"
   },
   {
     "chunk_id": "2dd6aa7fa727",
@@ -328,7 +328,7 @@
       "soc_code": "15-1199",
       "visa_type": "H-1B"
     },
-    "generated_at": "2026-04-20T04:54:45.283661+00:00"
+    "generated_at": "2026-07-29T18:54:59.521652+00:00"
   },
   {
     "chunk_id": "cb5a59352e07",
@@ -340,7 +340,7 @@
       "soc_code": "15-1131",
       "visa_type": "H-1B"
     },
-    "generated_at": "2026-04-20T04:54:45.284492+00:00"
+    "generated_at": "2026-07-29T18:54:59.522459+00:00"
   },
   {
     "chunk_id": "4e63b67cca82",
@@ -352,7 +352,7 @@
       "soc_code": "15-1133",
       "visa_type": "H-1B"
     },
-    "generated_at": "2026-04-20T04:54:45.285369+00:00"
+    "generated_at": "2026-07-29T18:54:59.523311+00:00"
   },
   {
     "chunk_id": "e3aaa11f74d8",
@@ -364,7 +364,7 @@
       "soc_code": "30",
       "visa_type": "H-1B"
     },
-    "generated_at": "2026-04-20T04:54:45.286056+00:00"
+    "generated_at": "2026-07-29T18:54:59.523997+00:00"
   },
   {
     "chunk_id": "9d0c18d6291b",
@@ -376,7 +376,7 @@
       "soc_code": "13-2051",
       "visa_type": "H-1B"
     },
-    "generated_at": "2026-04-20T04:54:45.286975+00:00"
+    "generated_at": "2026-07-29T18:54:59.524910+00:00"
   },
   {
     "chunk_id": "d46949f35ec1",
@@ -388,7 +388,7 @@
       "soc_code": "15-2031",
       "visa_type": "H-1B"
     },
-    "generated_at": "2026-04-20T04:54:45.287929+00:00"
+    "generated_at": "2026-07-29T18:54:59.525796+00:00"
   },
   {
     "chunk_id": "f3d82892cb27",
@@ -400,7 +400,7 @@
       "soc_code": "17-2072",
       "visa_type": "H-1B"
     },
-    "generated_at": "2026-04-20T04:54:45.288896+00:00"
+    "generated_at": "2026-07-29T18:54:59.526683+00:00"
   },
   {
     "chunk_id": "458439d0331f",
@@ -412,7 +412,7 @@
       "soc_code": "15-1142",
       "visa_type": "H-1B"
     },
-    "generated_at": "2026-04-20T04:54:45.289831+00:00"
+    "generated_at": "2026-07-29T18:54:59.527534+00:00"
   },
   {
     "chunk_id": "a6d5f467d9b0",
@@ -424,7 +424,7 @@
       "soc_code": "15-2041",
       "visa_type": "H-1B"
     },
-    "generated_at": "2026-04-20T04:54:45.290740+00:00"
+    "generated_at": "2026-07-29T18:54:59.528427+00:00"
   },
   {
     "chunk_id": "272c0edd83c8",
@@ -436,7 +436,7 @@
       "soc_code": "15-1141",
       "visa_type": "H-1B"
     },
-    "generated_at": "2026-04-20T04:54:45.291619+00:00"
+    "generated_at": "2026-07-29T18:54:59.529381+00:00"
   },
   {
     "chunk_id": "9dc49af0c127",
@@ -448,7 +448,7 @@
       "soc_code": "15-1051",
       "visa_type": "H-1B"
     },
-    "generated_at": "2026-04-20T04:54:45.292519+00:00"
+    "generated_at": "2026-07-29T18:54:59.530228+00:00"
   },
   {
     "chunk_id": "ed6c9f02a005",
@@ -460,7 +460,7 @@
       "soc_code": "15-1021",
       "visa_type": "H-1B"
     },
-    "generated_at": "2026-04-20T04:54:45.293402+00:00"
+    "generated_at": "2026-07-29T18:54:59.531030+00:00"
   },
   {
     "chunk_id": "4d6885333e43",
@@ -472,7 +472,7 @@
       "soc_code": "29-1069",
       "visa_type": "H-1B"
     },
-    "generated_at": "2026-04-20T04:54:45.294291+00:00"
+    "generated_at": "2026-07-29T18:54:59.531920+00:00"
   },
   {
     "chunk_id": "df49cc5e7446",
@@ -484,7 +484,7 @@
       "soc_code": "19-1042",
       "visa_type": "H-1B"
     },
-    "generated_at": "2026-04-20T04:54:45.295184+00:00"
+    "generated_at": "2026-07-29T18:54:59.532802+00:00"
   },
   {
     "chunk_id": "d7fff8084f73",
@@ -496,7 +496,7 @@
       "soc_code": "15-1031",
       "visa_type": "H-1B"
     },
-    "generated_at": "2026-04-20T04:54:45.295960+00:00"
+    "generated_at": "2026-07-29T18:54:59.533589+00:00"
   },
   {
     "chunk_id": "b3fe76d40554",
@@ -508,187 +508,7 @@
       "soc_code": "15-1253",
       "visa_type": "H-1B"
     },
-    "generated_at": "2026-04-20T04:54:45.296671+00:00"
-  },
-  {
-    "chunk_id": "81da9dd16810",
-    "source_artifact": "soc_salary_market.parquet",
-    "topic": "occupation",
-    "label": "soc_trend_15-1299_perm",
-    "text": "Salary Trend for 15-1299 (Computer Occupations, All Other) \u2014 PERM:\n  FY2023: $144,200 median, 35 filings, 35 employers\n  FY2024: $121,722 median (-15.6% YoY), 55 filings, 47 employers\n  FY2025: $115,000 median (-5.5% YoY), 41 filings, 36 employers\n  FY2026: $91,000 median (-20.9% YoY), 9 filings, 7 employers\n\n  Overall: $144,200 \u2192 $91,000 (-36.9% over 3 years)",
-    "metadata": {
-      "soc_code": "15-1299",
-      "visa_type": "PERM"
-    },
-    "generated_at": "2026-04-20T04:54:45.301560+00:00"
-  },
-  {
-    "chunk_id": "53b38a1f14d1",
-    "source_artifact": "soc_salary_market.parquet",
-    "topic": "occupation",
-    "label": "soc_trend_17-2071_perm",
-    "text": "Salary Trend for 17-2071 (Electrical Engineers) \u2014 PERM:\n  FY2008: $71,183 median, 600 filings, 328 employers\n  FY2009: $75,000 median (+5.4% YoY), 452 filings, 279 employers\n  FY2010: $76,491 median (+2.0% YoY), 944 filings, 513 employers\n  FY2011: $84,000 median (+9.8% YoY), 702 filings, 415 employers\n  FY2012: $81,432 median (-3.1% YoY), 501 filings, 294 employers\n  FY2013: $85,236 median (+4.7% YoY), 260 filings, 188 employers\n  FY2014: $90,223 median (+5.9% YoY), 692 filings, 388 employers\n  FY2015: $88,317 median (-2.1% YoY), 939 filings, 511 employers\n  FY2016: $91,000 median (+3.0% YoY), 1,267 filings, 624 employers\n  FY2017: $97,178 median (+6.8% YoY), 3 filings, 3 employers\n  FY2018: $84,292 median (-13.3% YoY), 2 filings, 2 employers\n  FY2019: $93,165 median (+10.5% YoY), 895 filings, 473 employers\n  FY2020: $95,407 median (+2.4% YoY), 856 filings, 470 employers\n  FY2021: $97,328 median (+2.0% YoY), 997 filings, 553 employers\n  FY2022: $100,788 median (+3.6% YoY), 817 filings, 460 employers\n  FY2023: $107,156 median (+6.3% YoY), 976 filings, 475 employers\n  FY2024: $115,000 median (+7.3% YoY), 894 filings, 458 employers\n  FY2025: $112,350 median (-2.3% YoY), 698 filings, 413 employers\n  FY2026: $116,085 median (+3.3% YoY), 162 filings, 113 employers\n\n  Overall: $71,183 \u2192 $116,085 (+63.1% over 18 years)",
-    "metadata": {
-      "soc_code": "17-2071",
-      "visa_type": "PERM"
-    },
-    "generated_at": "2026-04-20T04:54:45.302543+00:00"
-  },
-  {
-    "chunk_id": "b88f87b1e26d",
-    "source_artifact": "soc_salary_market.parquet",
-    "topic": "occupation",
-    "label": "soc_trend_13-1111_perm",
-    "text": "Salary Trend for 13-1111 (Management Analysts) \u2014 PERM:\n  FY2008: $68,000 median, 399 filings, 279 employers\n  FY2009: $69,118 median (+1.6% YoY), 298 filings, 236 employers\n  FY2010: $78,062 median (+12.9% YoY), 700 filings, 434 employers\n  FY2011: $85,000 median (+8.9% YoY), 609 filings, 384 employers\n  FY2012: $105,000 median (+23.5% YoY), 665 filings, 398 employers\n  FY2013: $101,046 median (-3.8% YoY), 373 filings, 252 employers\n  FY2014: $102,000 median (+0.9% YoY), 820 filings, 487 employers\n  FY2015: $107,328 median (+5.2% YoY), 881 filings, 479 employers\n  FY2016: $110,068 median (+2.6% YoY), 1,250 filings, 604 employers\n  FY2017: $79,830 median (-27.5% YoY), 3 filings, 3 employers\n  FY2018: $78,062 median (-2.2% YoY), 2 filings, 2 employers\n  FY2019: $106,316 median (+36.2% YoY), 1,081 filings, 521 employers\n  FY2020: $116,000 median (+9.1% YoY), 895 filings, 445 employers\n  FY2021: $125,778 median (+8.4% YoY), 1,064 filings, 496 employers\n  FY2022: $135,000 median (+7.3% YoY), 883 filings, 371 employers\n  FY2023: $123,300 median (-8.7% YoY), 817 filings, 361 employers\n  FY2024: $146,134 median (+18.5% YoY), 790 filings, 323 employers\n  FY2025: $145,689 median (-0.3% YoY), 642 filings, 263 employers\n  FY2026: $133,347 median (-8.5% YoY), 107 filings, 75 employers\n\n  Overall: $68,000 \u2192 $133,347 (+96.1% over 18 years)",
-    "metadata": {
-      "soc_code": "13-1111",
-      "visa_type": "PERM"
-    },
-    "generated_at": "2026-04-20T04:54:45.303500+00:00"
-  },
-  {
-    "chunk_id": "19af4012e7ce",
-    "source_artifact": "soc_salary_market.parquet",
-    "topic": "occupation",
-    "label": "soc_trend_17-2112_perm",
-    "text": "Salary Trend for 17-2112 (Industrial Engineers) \u2014 PERM:\n  FY2008: $66,300 median, 455 filings, 319 employers\n  FY2009: $68,102 median (+2.7% YoY), 310 filings, 241 employers\n  FY2010: $74,024 median (+8.7% YoY), 652 filings, 446 employers\n  FY2011: $79,581 median (+7.5% YoY), 424 filings, 320 employers\n  FY2012: $80,470 median (+1.1% YoY), 568 filings, 389 employers\n  FY2013: $81,582 median (+1.4% YoY), 356 filings, 247 employers\n  FY2014: $84,240 median (+3.3% YoY), 659 filings, 415 employers\n  FY2015: $82,507 median (-2.1% YoY), 632 filings, 433 employers\n  FY2016: $84,448 median (+2.4% YoY), 864 filings, 494 employers\n  FY2018: $80,683 median (-4.5% YoY), 3 filings, 3 employers\n  FY2019: $90,000 median (+11.5% YoY), 694 filings, 443 employers\n  FY2020: $91,800 median (+2.0% YoY), 734 filings, 453 employers\n  FY2021: $92,998 median (+1.3% YoY), 758 filings, 497 employers\n  FY2022: $96,262 median (+3.5% YoY), 689 filings, 438 employers\n  FY2023: $99,133 median (+3.0% YoY), 709 filings, 413 employers\n  FY2024: $103,626 median (+4.5% YoY), 1,254 filings, 602 employers\n  FY2025: $107,000 median (+3.3% YoY), 1,389 filings, 698 employers\n  FY2026: $101,928 median (-4.7% YoY), 294 filings, 206 employers\n\n  Overall: $66,300 \u2192 $101,928 (+53.7% over 18 years)",
-    "metadata": {
-      "soc_code": "17-2112",
-      "visa_type": "PERM"
-    },
-    "generated_at": "2026-04-20T04:54:45.304440+00:00"
-  },
-  {
-    "chunk_id": "0db19bda374f",
-    "source_artifact": "soc_salary_market.parquet",
-    "topic": "occupation",
-    "label": "soc_trend_15-1221_perm",
-    "text": "Salary Trend for 15-1221 (Computer and Information Research Scientists) \u2014 PERM:\n  FY2023: $194,105 median, 2 filings, 2 employers\n  FY2024: $157,021 median (-19.1% YoY), 97 filings, 49 employers\n  FY2025: $160,680 median (+2.3% YoY), 96 filings, 59 employers\n  FY2026: $169,000 median (+5.2% YoY), 18 filings, 14 employers\n\n  Overall: $194,105 \u2192 $169,000 (-12.9% over 3 years)",
-    "metadata": {
-      "soc_code": "15-1221",
-      "visa_type": "PERM"
-    },
-    "generated_at": "2026-04-20T04:54:45.305160+00:00"
-  },
-  {
-    "chunk_id": "41c0a7a1267e",
-    "source_artifact": "soc_salary_market.parquet",
-    "topic": "occupation",
-    "label": "soc_trend_13-2011_perm",
-    "text": "Salary Trend for 13-2011 (Accountants and Auditors) \u2014 PERM:\n  FY2008: $52,100 median, 1,055 filings, 835 employers\n  FY2009: $56,160 median (+7.8% YoY), 676 filings, 470 employers\n  FY2010: $58,032 median (+3.3% YoY), 1,340 filings, 1,088 employers\n  FY2011: $71,220 median (+22.7% YoY), 1,208 filings, 859 employers\n  FY2012: $71,906 median (+1.0% YoY), 1,141 filings, 845 employers\n  FY2013: $74,298 median (+3.3% YoY), 637 filings, 463 employers\n  FY2014: $74,600 median (+0.4% YoY), 1,094 filings, 742 employers\n  FY2015: $74,200 median (-0.5% YoY), 1,420 filings, 998 employers\n  FY2016: $74,464 median (+0.4% YoY), 1,867 filings, 1,275 employers\n  FY2017: $74,714 median (+0.3% YoY), 10 filings, 8 employers\n  FY2018: $55,765 median (-25.4% YoY), 11 filings, 11 employers\n  FY2019: $80,710 median (+44.7% YoY), 1,573 filings, 891 employers\n  FY2020: $81,466 median (+0.9% YoY), 1,608 filings, 914 employers\n  FY2021: $85,000 median (+4.3% YoY), 1,678 filings, 972 employers\n  FY2022: $82,400 median (-3.1% YoY), 1,359 filings, 763 employers\n  FY2023: $87,797 median (+6.5% YoY), 1,423 filings, 771 employers\n  FY2024: $91,583 median (+4.3% YoY), 1,260 filings, 715 employers\n  FY2025: $92,206 median (+0.7% YoY), 1,089 filings, 687 employers\n  FY2026: $90,000 median (-2.4% YoY), 227 filings, 174 employers\n\n  Overall: $52,100 \u2192 $90,000 (+72.7% over 18 years)",
-    "metadata": {
-      "soc_code": "13-2011",
-      "visa_type": "PERM"
-    },
-    "generated_at": "2026-04-20T04:54:45.306172+00:00"
-  },
-  {
-    "chunk_id": "3f1ee144894a",
-    "source_artifact": "soc_salary_market.parquet",
-    "topic": "occupation",
-    "label": "soc_trend_29-1123_perm",
-    "text": "Salary Trend for 29-1123 (Physical Therapists) \u2014 PERM:\n  FY2008: $53,040 median, 3 filings, 3 employers\n  FY2009: $58,829 median (+10.9% YoY), 6 filings, 6 employers\n  FY2011: $78,104 median (+32.8% YoY), 3 filings, 3 employers\n  FY2012: $76,654 median (-1.9% YoY), 6 filings, 6 employers\n  FY2013: $83,626 median (+9.1% YoY), 4 filings, 3 employers\n  FY2014: $58,885 median (-29.6% YoY), 3 filings, 3 employers\n  FY2015: $97,652 median (+65.8% YoY), 2 filings, 2 employers\n  FY2016: $80,236 median (-17.8% YoY), 2 filings, 2 employers\n  FY2019: $67,743 median (-15.6% YoY), 4 filings, 3 employers\n  FY2020: $76,000 median (+12.2% YoY), 1 filings, 1 employers\n  FY2021: $70,117 median (-7.7% YoY), 5 filings, 3 employers\n  FY2022: $73,362 median (+4.6% YoY), 1 filings, 1 employers\n  FY2023: $66,414 median (-9.5% YoY), 1 filings, 1 employers\n\n  Overall: $53,040 \u2192 $66,414 (+25.2% over 15 years)",
-    "metadata": {
-      "soc_code": "29-1123",
-      "visa_type": "PERM"
-    },
-    "generated_at": "2026-04-20T04:54:45.307017+00:00"
-  },
-  {
-    "chunk_id": "d4ea64e6e601",
-    "source_artifact": "soc_salary_market.parquet",
-    "topic": "occupation",
-    "label": "soc_trend_17-2141_perm",
-    "text": "Salary Trend for 17-2141 (Mechanical Engineers) \u2014 PERM:\n  FY2008: $68,141 median, 629 filings, 457 employers\n  FY2009: $70,000 median (+2.7% YoY), 491 filings, 335 employers\n  FY2010: $73,050 median (+4.4% YoY), 968 filings, 655 employers\n  FY2011: $77,792 median (+6.5% YoY), 960 filings, 596 employers\n  FY2012: $79,435 median (+2.1% YoY), 1,010 filings, 580 employers\n  FY2013: $83,491 median (+5.1% YoY), 515 filings, 353 employers\n  FY2014: $82,976 median (-0.6% YoY), 956 filings, 536 employers\n  FY2015: $85,367 median (+2.9% YoY), 1,054 filings, 593 employers\n  FY2016: $85,821 median (+0.5% YoY), 1,571 filings, 755 employers\n  FY2017: $145,600 median (+69.7% YoY), 3 filings, 2 employers\n  FY2018: $71,594 median (-50.8% YoY), 6 filings, 5 employers\n  FY2019: $91,718 median (+28.1% YoY), 1,470 filings, 738 employers\n  FY2020: $92,544 median (+0.9% YoY), 1,257 filings, 667 employers\n  FY2021: $95,867 median (+3.6% YoY), 1,344 filings, 727 employers\n  FY2022: $96,500 median (+0.7% YoY), 1,217 filings, 652 employers\n  FY2023: $101,442 median (+5.1% YoY), 1,327 filings, 660 employers\n  FY2024: $104,021 median (+2.5% YoY), 1,227 filings, 640 employers\n  FY2025: $110,000 median (+5.7% YoY), 1,155 filings, 626 employers\n  FY2026: $111,394 median (+1.3% YoY), 249 filings, 167 employers\n\n  Overall: $68,141 \u2192 $111,394 (+63.5% over 18 years)",
-    "metadata": {
-      "soc_code": "17-2141",
-      "visa_type": "PERM"
-    },
-    "generated_at": "2026-04-20T04:54:45.307920+00:00"
-  },
-  {
-    "chunk_id": "079e8cd48ef1",
-    "source_artifact": "soc_salary_market.parquet",
-    "topic": "occupation",
-    "label": "soc_trend_17-2061_perm",
-    "text": "Salary Trend for 17-2061 (Computer Hardware Engineers) \u2014 PERM:\n  FY2008: $80,371 median, 151 filings, 68 employers\n  FY2009: $86,715 median (+7.9% YoY), 61 filings, 37 employers\n  FY2010: $86,299 median (-0.5% YoY), 213 filings, 95 employers\n  FY2011: $100,184 median (+16.1% YoY), 86 filings, 43 employers\n  FY2012: $102,000 median (+1.8% YoY), 68 filings, 38 employers\n  FY2013: $92,000 median (-9.8% YoY), 107 filings, 26 employers\n  FY2014: $107,474 median (+16.8% YoY), 125 filings, 37 employers\n  FY2015: $100,000 median (-7.0% YoY), 106 filings, 43 employers\n  FY2016: $108,560 median (+8.6% YoY), 134 filings, 33 employers\n  FY2019: $120,869 median (+11.3% YoY), 191 filings, 46 employers\n  FY2020: $125,000 median (+3.4% YoY), 228 filings, 47 employers\n  FY2021: $138,500 median (+10.8% YoY), 366 filings, 56 employers\n  FY2022: $142,000 median (+2.5% YoY), 243 filings, 54 employers\n  FY2023: $151,008 median (+6.3% YoY), 267 filings, 57 employers\n  FY2024: $157,518 median (+4.3% YoY), 184 filings, 47 employers\n  FY2025: $158,000 median (+0.3% YoY), 109 filings, 60 employers\n  FY2026: $189,831 median (+20.1% YoY), 22 filings, 17 employers\n\n  Overall: $80,371 \u2192 $189,831 (+136.2% over 18 years)",
-    "metadata": {
-      "soc_code": "17-2061",
-      "visa_type": "PERM"
-    },
-    "generated_at": "2026-04-20T04:54:45.308890+00:00"
-  },
-  {
-    "chunk_id": "588c0e817609",
-    "source_artifact": "soc_salary_market.parquet",
-    "topic": "occupation",
-    "label": "soc_trend_29-1127_perm",
-    "text": "Salary Trend for 29-1127 (Speech-Language Pathologists) \u2014 PERM:\n  FY2008: $61,984 median, 91 filings, 35 employers\n  FY2009: $58,780 median (-5.2% YoY), 31 filings, 20 employers\n  FY2010: $63,000 median (+7.2% YoY), 78 filings, 40 employers\n  FY2011: $67,330 median (+6.9% YoY), 89 filings, 36 employers\n  FY2012: $71,302 median (+5.9% YoY), 58 filings, 32 employers\n  FY2013: $72,000 median (+1.0% YoY), 27 filings, 15 employers\n  FY2014: $72,904 median (+1.3% YoY), 62 filings, 29 employers\n  FY2015: $70,429 median (-3.4% YoY), 47 filings, 26 employers\n  FY2016: $72,800 median (+3.4% YoY), 65 filings, 30 employers\n  FY2017: $72,436 median (-0.5% YoY), 2 filings, 2 employers\n  FY2018: $82,950 median (+14.5% YoY), 7 filings, 2 employers\n  FY2019: $75,858 median (-8.5% YoY), 41 filings, 18 employers\n  FY2020: $80,122 median (+5.6% YoY), 40 filings, 14 employers\n  FY2021: $76,981 median (-3.9% YoY), 42 filings, 25 employers\n  FY2022: $82,472 median (+7.1% YoY), 30 filings, 15 employers\n  FY2023: $79,500 median (-3.6% YoY), 19 filings, 14 employers\n  FY2024: $86,382 median (+8.7% YoY), 20 filings, 15 employers\n  FY2025: $91,395 median (+5.8% YoY), 25 filings, 13 employers\n  FY2026: $95,368 median (+4.3% YoY), 18 filings, 6 employers\n\n  Overall: $61,984 \u2192 $95,368 (+53.9% over 18 years)",
-    "metadata": {
-      "soc_code": "29-1127",
-      "visa_type": "PERM"
-    },
-    "generated_at": "2026-04-20T04:54:45.309882+00:00"
-  },
-  {
-    "chunk_id": "50664f93c674",
-    "source_artifact": "soc_salary_market.parquet",
-    "topic": "occupation",
-    "label": "soc_trend_15-1211_perm",
-    "text": "Salary Trend for 15-1211 (Computer Systems Analysts) \u2014 PERM:\n  FY2023: $127,504 median, 353 filings, 195 employers\n  FY2024: $130,000 median (+2.0% YoY), 3,672 filings, 1,261 employers\n  FY2025: $127,075 median (-2.2% YoY), 3,800 filings, 1,445 employers\n  FY2026: $131,331 median (+3.3% YoY), 716 filings, 437 employers\n\n  Overall: $127,504 \u2192 $131,331 (+3.0% over 3 years)",
-    "metadata": {
-      "soc_code": "15-1211",
-      "visa_type": "PERM"
-    },
-    "generated_at": "2026-04-20T04:54:45.310564+00:00"
-  },
-  {
-    "chunk_id": "d006e996da76",
-    "source_artifact": "soc_salary_market.parquet",
-    "topic": "occupation",
-    "label": "soc_trend_15-2051_perm",
-    "text": "Salary Trend for 15-2051 (Data Scientists) \u2014 PERM:\n  FY2023: $150,000 median, 220 filings, 117 employers\n  FY2024: $135,000 median (-10.0% YoY), 1,817 filings, 844 employers\n  FY2025: $134,077 median (-0.7% YoY), 2,676 filings, 1,260 employers\n  FY2026: $129,273 median (-3.6% YoY), 633 filings, 404 employers\n\n  Overall: $150,000 \u2192 $129,273 (-13.8% over 3 years)",
-    "metadata": {
-      "soc_code": "15-2051",
-      "visa_type": "PERM"
-    },
-    "generated_at": "2026-04-20T04:54:45.311246+00:00"
-  },
-  {
-    "chunk_id": "1148522fb3b6",
-    "source_artifact": "soc_salary_market.parquet",
-    "topic": "occupation",
-    "label": "soc_trend_29-1171_perm",
-    "text": "Salary Trend for 29-1171 (Nurse Practitioners) \u2014 PERM:\n  FY2015: $76,430 median, 4 filings, 4 employers\n  FY2016: $80,642 median (+5.5% YoY), 1 filings, 1 employers\n  FY2019: $92,602 median (+14.8% YoY), 5 filings, 5 employers\n  FY2020: $111,363 median (+20.3% YoY), 3 filings, 3 employers\n  FY2021: $103,695 median (-6.9% YoY), 4 filings, 4 employers\n  FY2022: $130,000 median (+25.4% YoY), 1 filings, 1 employers\n  FY2024: $117,200 median (-9.8% YoY), 1 filings, 1 employers\n\n  Overall: $76,430 \u2192 $117,200 (+53.3% over 9 years)",
-    "metadata": {
-      "soc_code": "29-1171",
-      "visa_type": "PERM"
-    },
-    "generated_at": "2026-04-20T04:54:45.311978+00:00"
-  },
-  {
-    "chunk_id": "ef5b06e9793a",
-    "source_artifact": "soc_salary_market.parquet",
-    "topic": "occupation",
-    "label": "soc_trend_29-1141_perm",
-    "text": "Salary Trend for 29-1141 (Registered Nurses) \u2014 PERM:\n  FY2015: $77,950 median, 2 filings, 2 employers\n  FY2016: $51,563 median (-33.9% YoY), 10 filings, 6 employers\n  FY2018: $71,136 median (+38.0% YoY), 1 filings, 1 employers\n  FY2020: $48,641 median (-31.6% YoY), 2 filings, 2 employers\n  FY2021: $85,000 median (+74.7% YoY), 3 filings, 3 employers\n  FY2022: $81,500 median (-4.1% YoY), 9 filings, 6 employers\n  FY2023: $81,981 median (+0.6% YoY), 2 filings, 2 employers\n  FY2024: $85,561 median (+4.4% YoY), 2 filings, 2 employers\n  FY2025: $74,818 median (-12.6% YoY), 1 filings, 1 employers\n  FY2026: $110,053 median (+47.1% YoY), 1 filings, 1 employers\n\n  Overall: $77,950 \u2192 $110,053 (+41.2% over 11 years)",
-    "metadata": {
-      "soc_code": "29-1141",
-      "visa_type": "PERM"
-    },
-    "generated_at": "2026-04-20T04:54:45.312757+00:00"
-  },
-  {
-    "chunk_id": "68cab6188b86",
-    "source_artifact": "soc_salary_market.parquet",
-    "topic": "occupation",
-    "label": "soc_trend_15-1241_perm",
-    "text": "Salary Trend for 15-1241 (Computer Network Architects) \u2014 PERM:\n  FY2023: $139,873 median, 13 filings, 12 employers\n  FY2024: $145,288 median (+3.9% YoY), 239 filings, 135 employers\n  FY2025: $139,880 median (-3.7% YoY), 262 filings, 164 employers\n  FY2026: $139,000 median (-0.6% YoY), 45 filings, 42 employers\n\n  Overall: $139,873 \u2192 $139,000 (-0.6% over 3 years)",
-    "metadata": {
-      "soc_code": "15-1241",
-      "visa_type": "PERM"
-    },
-    "generated_at": "2026-04-20T04:54:45.313434+00:00"
+    "generated_at": "2026-07-29T18:54:59.534303+00:00"
   },
   {
     "chunk_id": "85e2dd5b1d84",
@@ -700,7 +520,19 @@
       "soc_code": "13-1161",
       "visa_type": "PERM"
     },
-    "generated_at": "2026-04-20T04:54:45.314264+00:00"
+    "generated_at": "2026-07-29T18:54:59.539441+00:00"
+  },
+  {
+    "chunk_id": "1148522fb3b6",
+    "source_artifact": "soc_salary_market.parquet",
+    "topic": "occupation",
+    "label": "soc_trend_29-1171_perm",
+    "text": "Salary Trend for 29-1171 (Nurse Practitioners) \u2014 PERM:\n  FY2015: $76,430 median, 4 filings, 4 employers\n  FY2016: $80,642 median (+5.5% YoY), 1 filings, 1 employers\n  FY2019: $92,602 median (+14.8% YoY), 5 filings, 5 employers\n  FY2020: $111,363 median (+20.3% YoY), 3 filings, 3 employers\n  FY2021: $103,695 median (-6.9% YoY), 4 filings, 4 employers\n  FY2022: $130,000 median (+25.4% YoY), 1 filings, 1 employers\n  FY2024: $117,200 median (-9.8% YoY), 1 filings, 1 employers\n\n  Overall: $76,430 \u2192 $117,200 (+53.3% over 9 years)",
+    "metadata": {
+      "soc_code": "29-1171",
+      "visa_type": "PERM"
+    },
+    "generated_at": "2026-07-29T18:54:59.540196+00:00"
   },
   {
     "chunk_id": "adc99dbc9428",
@@ -712,7 +544,31 @@
       "soc_code": "11-3021",
       "visa_type": "PERM"
     },
-    "generated_at": "2026-04-20T04:54:45.315157+00:00"
+    "generated_at": "2026-07-29T18:54:59.541110+00:00"
+  },
+  {
+    "chunk_id": "588c0e817609",
+    "source_artifact": "soc_salary_market.parquet",
+    "topic": "occupation",
+    "label": "soc_trend_29-1127_perm",
+    "text": "Salary Trend for 29-1127 (Speech-Language Pathologists) \u2014 PERM:\n  FY2008: $61,984 median, 91 filings, 35 employers\n  FY2009: $58,780 median (-5.2% YoY), 31 filings, 20 employers\n  FY2010: $63,000 median (+7.2% YoY), 78 filings, 40 employers\n  FY2011: $67,330 median (+6.9% YoY), 89 filings, 36 employers\n  FY2012: $71,302 median (+5.9% YoY), 58 filings, 32 employers\n  FY2013: $72,000 median (+1.0% YoY), 27 filings, 15 employers\n  FY2014: $72,904 median (+1.3% YoY), 62 filings, 29 employers\n  FY2015: $70,429 median (-3.4% YoY), 47 filings, 26 employers\n  FY2016: $72,800 median (+3.4% YoY), 65 filings, 30 employers\n  FY2017: $72,436 median (-0.5% YoY), 2 filings, 2 employers\n  FY2018: $82,950 median (+14.5% YoY), 7 filings, 2 employers\n  FY2019: $75,858 median (-8.5% YoY), 41 filings, 18 employers\n  FY2020: $80,122 median (+5.6% YoY), 40 filings, 14 employers\n  FY2021: $76,981 median (-3.9% YoY), 42 filings, 25 employers\n  FY2022: $82,472 median (+7.1% YoY), 30 filings, 15 employers\n  FY2023: $79,500 median (-3.6% YoY), 19 filings, 14 employers\n  FY2024: $86,382 median (+8.7% YoY), 20 filings, 15 employers\n  FY2025: $91,395 median (+5.8% YoY), 25 filings, 13 employers\n  FY2026: $95,368 median (+4.3% YoY), 18 filings, 6 employers\n\n  Overall: $61,984 \u2192 $95,368 (+53.9% over 18 years)",
+    "metadata": {
+      "soc_code": "29-1127",
+      "visa_type": "PERM"
+    },
+    "generated_at": "2026-07-29T18:54:59.542021+00:00"
+  },
+  {
+    "chunk_id": "079e8cd48ef1",
+    "source_artifact": "soc_salary_market.parquet",
+    "topic": "occupation",
+    "label": "soc_trend_17-2061_perm",
+    "text": "Salary Trend for 17-2061 (Computer Hardware Engineers) \u2014 PERM:\n  FY2008: $80,371 median, 151 filings, 68 employers\n  FY2009: $86,715 median (+7.9% YoY), 61 filings, 37 employers\n  FY2010: $86,299 median (-0.5% YoY), 213 filings, 95 employers\n  FY2011: $100,184 median (+16.1% YoY), 86 filings, 43 employers\n  FY2012: $102,000 median (+1.8% YoY), 68 filings, 38 employers\n  FY2013: $92,000 median (-9.8% YoY), 107 filings, 26 employers\n  FY2014: $107,474 median (+16.8% YoY), 125 filings, 37 employers\n  FY2015: $100,000 median (-7.0% YoY), 106 filings, 43 employers\n  FY2016: $108,560 median (+8.6% YoY), 134 filings, 33 employers\n  FY2019: $120,869 median (+11.3% YoY), 191 filings, 46 employers\n  FY2020: $125,000 median (+3.4% YoY), 228 filings, 47 employers\n  FY2021: $138,500 median (+10.8% YoY), 366 filings, 56 employers\n  FY2022: $142,000 median (+2.5% YoY), 243 filings, 54 employers\n  FY2023: $151,008 median (+6.3% YoY), 267 filings, 57 employers\n  FY2024: $157,518 median (+4.3% YoY), 184 filings, 47 employers\n  FY2025: $158,000 median (+0.3% YoY), 109 filings, 60 employers\n  FY2026: $189,831 median (+20.1% YoY), 22 filings, 17 employers\n\n  Overall: $80,371 \u2192 $189,831 (+136.2% over 18 years)",
+    "metadata": {
+      "soc_code": "17-2061",
+      "visa_type": "PERM"
+    },
+    "generated_at": "2026-07-29T18:54:59.542899+00:00"
   },
   {
     "chunk_id": "375ae51867f3",
@@ -724,7 +580,19 @@
       "soc_code": "15-1244",
       "visa_type": "PERM"
     },
-    "generated_at": "2026-04-20T04:54:45.315833+00:00"
+    "generated_at": "2026-07-29T18:54:59.543586+00:00"
+  },
+  {
+    "chunk_id": "d4ea64e6e601",
+    "source_artifact": "soc_salary_market.parquet",
+    "topic": "occupation",
+    "label": "soc_trend_17-2141_perm",
+    "text": "Salary Trend for 17-2141 (Mechanical Engineers) \u2014 PERM:\n  FY2008: $68,141 median, 629 filings, 457 employers\n  FY2009: $70,000 median (+2.7% YoY), 491 filings, 335 employers\n  FY2010: $73,050 median (+4.4% YoY), 968 filings, 655 employers\n  FY2011: $77,792 median (+6.5% YoY), 960 filings, 596 employers\n  FY2012: $79,435 median (+2.1% YoY), 1,010 filings, 580 employers\n  FY2013: $83,491 median (+5.1% YoY), 515 filings, 353 employers\n  FY2014: $82,976 median (-0.6% YoY), 956 filings, 536 employers\n  FY2015: $85,367 median (+2.9% YoY), 1,054 filings, 593 employers\n  FY2016: $85,821 median (+0.5% YoY), 1,571 filings, 755 employers\n  FY2017: $145,600 median (+69.7% YoY), 3 filings, 2 employers\n  FY2018: $71,594 median (-50.8% YoY), 6 filings, 5 employers\n  FY2019: $91,718 median (+28.1% YoY), 1,470 filings, 738 employers\n  FY2020: $92,544 median (+0.9% YoY), 1,257 filings, 667 employers\n  FY2021: $95,867 median (+3.6% YoY), 1,344 filings, 727 employers\n  FY2022: $96,500 median (+0.7% YoY), 1,217 filings, 652 employers\n  FY2023: $101,442 median (+5.1% YoY), 1,327 filings, 660 employers\n  FY2024: $104,021 median (+2.5% YoY), 1,227 filings, 640 employers\n  FY2025: $110,000 median (+5.7% YoY), 1,155 filings, 626 employers\n  FY2026: $111,394 median (+1.3% YoY), 249 filings, 167 employers\n\n  Overall: $68,141 \u2192 $111,394 (+63.5% over 18 years)",
+    "metadata": {
+      "soc_code": "17-2141",
+      "visa_type": "PERM"
+    },
+    "generated_at": "2026-07-29T18:54:59.544498+00:00"
   },
   {
     "chunk_id": "7a900b8ee560",
@@ -736,7 +604,139 @@
       "soc_code": "15-1252",
       "visa_type": "PERM"
     },
-    "generated_at": "2026-04-20T04:54:45.316508+00:00"
+    "generated_at": "2026-07-29T18:54:59.545194+00:00"
+  },
+  {
+    "chunk_id": "50664f93c674",
+    "source_artifact": "soc_salary_market.parquet",
+    "topic": "occupation",
+    "label": "soc_trend_15-1211_perm",
+    "text": "Salary Trend for 15-1211 (Computer Systems Analysts) \u2014 PERM:\n  FY2023: $127,504 median, 353 filings, 195 employers\n  FY2024: $130,000 median (+2.0% YoY), 3,672 filings, 1,261 employers\n  FY2025: $127,075 median (-2.2% YoY), 3,800 filings, 1,445 employers\n  FY2026: $131,331 median (+3.3% YoY), 716 filings, 437 employers\n\n  Overall: $127,504 \u2192 $131,331 (+3.0% over 3 years)",
+    "metadata": {
+      "soc_code": "15-1211",
+      "visa_type": "PERM"
+    },
+    "generated_at": "2026-07-29T18:54:59.545981+00:00"
+  },
+  {
+    "chunk_id": "53b38a1f14d1",
+    "source_artifact": "soc_salary_market.parquet",
+    "topic": "occupation",
+    "label": "soc_trend_17-2071_perm",
+    "text": "Salary Trend for 17-2071 (Electrical Engineers) \u2014 PERM:\n  FY2008: $71,183 median, 600 filings, 328 employers\n  FY2009: $75,000 median (+5.4% YoY), 452 filings, 279 employers\n  FY2010: $76,491 median (+2.0% YoY), 944 filings, 513 employers\n  FY2011: $84,000 median (+9.8% YoY), 702 filings, 415 employers\n  FY2012: $81,432 median (-3.1% YoY), 501 filings, 294 employers\n  FY2013: $85,236 median (+4.7% YoY), 260 filings, 188 employers\n  FY2014: $90,223 median (+5.9% YoY), 692 filings, 388 employers\n  FY2015: $88,317 median (-2.1% YoY), 939 filings, 511 employers\n  FY2016: $91,000 median (+3.0% YoY), 1,267 filings, 624 employers\n  FY2017: $97,178 median (+6.8% YoY), 3 filings, 3 employers\n  FY2018: $84,292 median (-13.3% YoY), 2 filings, 2 employers\n  FY2019: $93,165 median (+10.5% YoY), 895 filings, 473 employers\n  FY2020: $95,407 median (+2.4% YoY), 856 filings, 470 employers\n  FY2021: $97,328 median (+2.0% YoY), 997 filings, 553 employers\n  FY2022: $100,788 median (+3.6% YoY), 817 filings, 460 employers\n  FY2023: $107,156 median (+6.3% YoY), 976 filings, 475 employers\n  FY2024: $115,000 median (+7.3% YoY), 894 filings, 458 employers\n  FY2025: $112,350 median (-2.3% YoY), 698 filings, 413 employers\n  FY2026: $116,085 median (+3.3% YoY), 162 filings, 113 employers\n\n  Overall: $71,183 \u2192 $116,085 (+63.1% over 18 years)",
+    "metadata": {
+      "soc_code": "17-2071",
+      "visa_type": "PERM"
+    },
+    "generated_at": "2026-07-29T18:54:59.546925+00:00"
+  },
+  {
+    "chunk_id": "41c0a7a1267e",
+    "source_artifact": "soc_salary_market.parquet",
+    "topic": "occupation",
+    "label": "soc_trend_13-2011_perm",
+    "text": "Salary Trend for 13-2011 (Accountants and Auditors) \u2014 PERM:\n  FY2008: $52,100 median, 1,055 filings, 835 employers\n  FY2009: $56,160 median (+7.8% YoY), 676 filings, 470 employers\n  FY2010: $58,032 median (+3.3% YoY), 1,340 filings, 1,088 employers\n  FY2011: $71,220 median (+22.7% YoY), 1,208 filings, 859 employers\n  FY2012: $71,906 median (+1.0% YoY), 1,141 filings, 845 employers\n  FY2013: $74,298 median (+3.3% YoY), 637 filings, 463 employers\n  FY2014: $74,600 median (+0.4% YoY), 1,094 filings, 742 employers\n  FY2015: $74,200 median (-0.5% YoY), 1,420 filings, 998 employers\n  FY2016: $74,464 median (+0.4% YoY), 1,867 filings, 1,275 employers\n  FY2017: $74,714 median (+0.3% YoY), 10 filings, 8 employers\n  FY2018: $55,765 median (-25.4% YoY), 11 filings, 11 employers\n  FY2019: $80,710 median (+44.7% YoY), 1,573 filings, 891 employers\n  FY2020: $81,466 median (+0.9% YoY), 1,608 filings, 914 employers\n  FY2021: $85,000 median (+4.3% YoY), 1,678 filings, 972 employers\n  FY2022: $82,400 median (-3.1% YoY), 1,359 filings, 763 employers\n  FY2023: $87,797 median (+6.5% YoY), 1,423 filings, 771 employers\n  FY2024: $91,583 median (+4.3% YoY), 1,260 filings, 715 employers\n  FY2025: $92,206 median (+0.7% YoY), 1,089 filings, 687 employers\n  FY2026: $90,000 median (-2.4% YoY), 227 filings, 174 employers\n\n  Overall: $52,100 \u2192 $90,000 (+72.7% over 18 years)",
+    "metadata": {
+      "soc_code": "13-2011",
+      "visa_type": "PERM"
+    },
+    "generated_at": "2026-07-29T18:54:59.547839+00:00"
+  },
+  {
+    "chunk_id": "b88f87b1e26d",
+    "source_artifact": "soc_salary_market.parquet",
+    "topic": "occupation",
+    "label": "soc_trend_13-1111_perm",
+    "text": "Salary Trend for 13-1111 (Management Analysts) \u2014 PERM:\n  FY2008: $68,000 median, 399 filings, 279 employers\n  FY2009: $69,118 median (+1.6% YoY), 298 filings, 236 employers\n  FY2010: $78,062 median (+12.9% YoY), 700 filings, 434 employers\n  FY2011: $85,000 median (+8.9% YoY), 609 filings, 384 employers\n  FY2012: $105,000 median (+23.5% YoY), 665 filings, 398 employers\n  FY2013: $101,046 median (-3.8% YoY), 373 filings, 252 employers\n  FY2014: $102,000 median (+0.9% YoY), 820 filings, 487 employers\n  FY2015: $107,328 median (+5.2% YoY), 881 filings, 479 employers\n  FY2016: $110,068 median (+2.6% YoY), 1,250 filings, 604 employers\n  FY2017: $79,830 median (-27.5% YoY), 3 filings, 3 employers\n  FY2018: $78,062 median (-2.2% YoY), 2 filings, 2 employers\n  FY2019: $106,316 median (+36.2% YoY), 1,081 filings, 521 employers\n  FY2020: $116,000 median (+9.1% YoY), 895 filings, 445 employers\n  FY2021: $125,778 median (+8.4% YoY), 1,064 filings, 496 employers\n  FY2022: $135,000 median (+7.3% YoY), 883 filings, 371 employers\n  FY2023: $123,300 median (-8.7% YoY), 817 filings, 361 employers\n  FY2024: $146,134 median (+18.5% YoY), 790 filings, 323 employers\n  FY2025: $145,689 median (-0.3% YoY), 642 filings, 263 employers\n  FY2026: $133,347 median (-8.5% YoY), 107 filings, 75 employers\n\n  Overall: $68,000 \u2192 $133,347 (+96.1% over 18 years)",
+    "metadata": {
+      "soc_code": "13-1111",
+      "visa_type": "PERM"
+    },
+    "generated_at": "2026-07-29T18:54:59.548743+00:00"
+  },
+  {
+    "chunk_id": "0db19bda374f",
+    "source_artifact": "soc_salary_market.parquet",
+    "topic": "occupation",
+    "label": "soc_trend_15-1221_perm",
+    "text": "Salary Trend for 15-1221 (Computer and Information Research Scientists) \u2014 PERM:\n  FY2023: $194,105 median, 2 filings, 2 employers\n  FY2024: $157,021 median (-19.1% YoY), 97 filings, 49 employers\n  FY2025: $160,680 median (+2.3% YoY), 96 filings, 59 employers\n  FY2026: $169,000 median (+5.2% YoY), 18 filings, 14 employers\n\n  Overall: $194,105 \u2192 $169,000 (-12.9% over 3 years)",
+    "metadata": {
+      "soc_code": "15-1221",
+      "visa_type": "PERM"
+    },
+    "generated_at": "2026-07-29T18:54:59.549437+00:00"
+  },
+  {
+    "chunk_id": "ef5b06e9793a",
+    "source_artifact": "soc_salary_market.parquet",
+    "topic": "occupation",
+    "label": "soc_trend_29-1141_perm",
+    "text": "Salary Trend for 29-1141 (Registered Nurses) \u2014 PERM:\n  FY2015: $77,950 median, 2 filings, 2 employers\n  FY2016: $51,563 median (-33.9% YoY), 10 filings, 6 employers\n  FY2018: $71,136 median (+38.0% YoY), 1 filings, 1 employers\n  FY2020: $48,641 median (-31.6% YoY), 2 filings, 2 employers\n  FY2021: $85,000 median (+74.7% YoY), 3 filings, 3 employers\n  FY2022: $81,500 median (-4.1% YoY), 9 filings, 6 employers\n  FY2023: $81,981 median (+0.6% YoY), 2 filings, 2 employers\n  FY2024: $85,561 median (+4.4% YoY), 2 filings, 2 employers\n  FY2025: $74,818 median (-12.6% YoY), 1 filings, 1 employers\n  FY2026: $110,053 median (+47.1% YoY), 1 filings, 1 employers\n\n  Overall: $77,950 \u2192 $110,053 (+41.2% over 11 years)",
+    "metadata": {
+      "soc_code": "29-1141",
+      "visa_type": "PERM"
+    },
+    "generated_at": "2026-07-29T18:54:59.550209+00:00"
+  },
+  {
+    "chunk_id": "19af4012e7ce",
+    "source_artifact": "soc_salary_market.parquet",
+    "topic": "occupation",
+    "label": "soc_trend_17-2112_perm",
+    "text": "Salary Trend for 17-2112 (Industrial Engineers) \u2014 PERM:\n  FY2008: $66,300 median, 455 filings, 319 employers\n  FY2009: $68,102 median (+2.7% YoY), 310 filings, 241 employers\n  FY2010: $74,024 median (+8.7% YoY), 652 filings, 446 employers\n  FY2011: $79,581 median (+7.5% YoY), 424 filings, 320 employers\n  FY2012: $80,470 median (+1.1% YoY), 568 filings, 389 employers\n  FY2013: $81,582 median (+1.4% YoY), 356 filings, 247 employers\n  FY2014: $84,240 median (+3.3% YoY), 659 filings, 415 employers\n  FY2015: $82,507 median (-2.1% YoY), 632 filings, 433 employers\n  FY2016: $84,448 median (+2.4% YoY), 864 filings, 494 employers\n  FY2018: $80,683 median (-4.5% YoY), 3 filings, 3 employers\n  FY2019: $90,000 median (+11.5% YoY), 694 filings, 443 employers\n  FY2020: $91,800 median (+2.0% YoY), 734 filings, 453 employers\n  FY2021: $92,998 median (+1.3% YoY), 758 filings, 497 employers\n  FY2022: $96,262 median (+3.5% YoY), 689 filings, 438 employers\n  FY2023: $99,133 median (+3.0% YoY), 709 filings, 413 employers\n  FY2024: $103,626 median (+4.5% YoY), 1,254 filings, 602 employers\n  FY2025: $107,000 median (+3.3% YoY), 1,389 filings, 698 employers\n  FY2026: $101,928 median (-4.7% YoY), 294 filings, 206 employers\n\n  Overall: $66,300 \u2192 $101,928 (+53.7% over 18 years)",
+    "metadata": {
+      "soc_code": "17-2112",
+      "visa_type": "PERM"
+    },
+    "generated_at": "2026-07-29T18:54:59.551089+00:00"
+  },
+  {
+    "chunk_id": "81da9dd16810",
+    "source_artifact": "soc_salary_market.parquet",
+    "topic": "occupation",
+    "label": "soc_trend_15-1299_perm",
+    "text": "Salary Trend for 15-1299 (Computer Occupations, All Other) \u2014 PERM:\n  FY2023: $144,200 median, 35 filings, 35 employers\n  FY2024: $121,722 median (-15.6% YoY), 55 filings, 47 employers\n  FY2025: $115,000 median (-5.5% YoY), 41 filings, 36 employers\n  FY2026: $91,000 median (-20.9% YoY), 9 filings, 7 employers\n\n  Overall: $144,200 \u2192 $91,000 (-36.9% over 3 years)",
+    "metadata": {
+      "soc_code": "15-1299",
+      "visa_type": "PERM"
+    },
+    "generated_at": "2026-07-29T18:54:59.551781+00:00"
+  },
+  {
+    "chunk_id": "68cab6188b86",
+    "source_artifact": "soc_salary_market.parquet",
+    "topic": "occupation",
+    "label": "soc_trend_15-1241_perm",
+    "text": "Salary Trend for 15-1241 (Computer Network Architects) \u2014 PERM:\n  FY2023: $139,873 median, 13 filings, 12 employers\n  FY2024: $145,288 median (+3.9% YoY), 239 filings, 135 employers\n  FY2025: $139,880 median (-3.7% YoY), 262 filings, 164 employers\n  FY2026: $139,000 median (-0.6% YoY), 45 filings, 42 employers\n\n  Overall: $139,873 \u2192 $139,000 (-0.6% over 3 years)",
+    "metadata": {
+      "soc_code": "15-1241",
+      "visa_type": "PERM"
+    },
+    "generated_at": "2026-07-29T18:54:59.552469+00:00"
+  },
+  {
+    "chunk_id": "3f1ee144894a",
+    "source_artifact": "soc_salary_market.parquet",
+    "topic": "occupation",
+    "label": "soc_trend_29-1123_perm",
+    "text": "Salary Trend for 29-1123 (Physical Therapists) \u2014 PERM:\n  FY2008: $53,040 median, 3 filings, 3 employers\n  FY2009: $58,829 median (+10.9% YoY), 6 filings, 6 employers\n  FY2011: $78,104 median (+32.8% YoY), 3 filings, 3 employers\n  FY2012: $76,654 median (-1.9% YoY), 6 filings, 6 employers\n  FY2013: $83,626 median (+9.1% YoY), 4 filings, 3 employers\n  FY2014: $58,885 median (-29.6% YoY), 3 filings, 3 employers\n  FY2015: $97,652 median (+65.8% YoY), 2 filings, 2 employers\n  FY2016: $80,236 median (-17.8% YoY), 2 filings, 2 employers\n  FY2019: $67,743 median (-15.6% YoY), 4 filings, 3 employers\n  FY2020: $76,000 median (+12.2% YoY), 1 filings, 1 employers\n  FY2021: $70,117 median (-7.7% YoY), 5 filings, 3 employers\n  FY2022: $73,362 median (+4.6% YoY), 1 filings, 1 employers\n  FY2023: $66,414 median (-9.5% YoY), 1 filings, 1 employers\n\n  Overall: $53,040 \u2192 $66,414 (+25.2% over 15 years)",
+    "metadata": {
+      "soc_code": "29-1123",
+      "visa_type": "PERM"
+    },
+    "generated_at": "2026-07-29T18:54:59.553293+00:00"
+  },
+  {
+    "chunk_id": "d006e996da76",
+    "source_artifact": "soc_salary_market.parquet",
+    "topic": "occupation",
+    "label": "soc_trend_15-2051_perm",
+    "text": "Salary Trend for 15-2051 (Data Scientists) \u2014 PERM:\n  FY2023: $150,000 median, 220 filings, 117 employers\n  FY2024: $135,000 median (-10.0% YoY), 1,817 filings, 844 employers\n  FY2025: $134,077 median (-0.7% YoY), 2,676 filings, 1,260 employers\n  FY2026: $129,273 median (-3.6% YoY), 633 filings, 404 employers\n\n  Overall: $150,000 \u2192 $129,273 (-13.8% over 3 years)",
+    "metadata": {
+      "soc_code": "15-2051",
+      "visa_type": "PERM"
+    },
+    "generated_at": "2026-07-29T18:54:59.554060+00:00"
   },
   {
     "chunk_id": "f69a96a32f70",
@@ -748,7 +748,7 @@
       "soc_code": "17-2072",
       "visa_type": "PERM"
     },
-    "generated_at": "2026-04-20T04:54:45.317437+00:00"
+    "generated_at": "2026-07-29T18:54:59.555024+00:00"
   },
   {
     "chunk_id": "3dc2ffc46345",
@@ -760,7 +760,7 @@
       "soc_code": "15-2041",
       "visa_type": "PERM"
     },
-    "generated_at": "2026-04-20T04:54:45.318402+00:00"
+    "generated_at": "2026-07-29T18:54:59.555928+00:00"
   },
   {
     "chunk_id": "1df407f8a21f",
@@ -772,7 +772,7 @@
       "soc_code": "51-3022",
       "visa_type": "PERM"
     },
-    "generated_at": "2026-04-20T04:54:45.319367+00:00"
+    "generated_at": "2026-07-29T18:54:59.556834+00:00"
   },
   {
     "chunk_id": "bacedca7dfce",
@@ -784,7 +784,7 @@
       "soc_code": "13-2051",
       "visa_type": "PERM"
     },
-    "generated_at": "2026-04-20T04:54:45.320310+00:00"
+    "generated_at": "2026-07-29T18:54:59.557714+00:00"
   },
   {
     "chunk_id": "a215ef9a3261",
@@ -796,7 +796,7 @@
       "soc_code": "11-2021",
       "visa_type": "PERM"
     },
-    "generated_at": "2026-04-20T04:54:45.321245+00:00"
+    "generated_at": "2026-07-29T18:54:59.558609+00:00"
   },
   {
     "chunk_id": "63db8800bef6",
@@ -808,7 +808,7 @@
       "soc_code": "35-2014",
       "visa_type": "PERM"
     },
-    "generated_at": "2026-04-20T04:54:45.322189+00:00"
+    "generated_at": "2026-07-29T18:54:59.559511+00:00"
   },
   {
     "chunk_id": "142c931ecd9e",
@@ -820,7 +820,7 @@
       "soc_code": "17-2051",
       "visa_type": "PERM"
     },
-    "generated_at": "2026-04-20T04:54:45.323158+00:00"
+    "generated_at": "2026-07-29T18:54:59.560411+00:00"
   },
   {
     "chunk_id": "7cafc78f03ae",
@@ -832,7 +832,7 @@
       "soc_code": "41-9031",
       "visa_type": "PERM"
     },
-    "generated_at": "2026-04-20T04:54:45.324047+00:00"
+    "generated_at": "2026-07-29T18:54:59.561291+00:00"
   },
   {
     "chunk_id": "d9caf82edaa8",
@@ -844,7 +844,7 @@
       "soc_code": "37-3011",
       "visa_type": "PERM"
     },
-    "generated_at": "2026-04-20T04:54:45.324944+00:00"
+    "generated_at": "2026-07-29T18:54:59.562230+00:00"
   },
   {
     "chunk_id": "3de068a80dbf",
@@ -856,7 +856,7 @@
       "soc_code": "15-2031",
       "visa_type": "PERM"
     },
-    "generated_at": "2026-04-20T04:54:45.325897+00:00"
+    "generated_at": "2026-07-29T18:54:59.563164+00:00"
   },
   {
     "chunk_id": "ab96faeef874",
@@ -868,7 +868,7 @@
       "soc_code": "11-3031",
       "visa_type": "PERM"
     },
-    "generated_at": "2026-04-20T04:54:45.326805+00:00"
+    "generated_at": "2026-07-29T18:54:59.564046+00:00"
   },
   {
     "chunk_id": "7bb8154e9c1e",
@@ -880,7 +880,7 @@
       "soc_code": "11-9041",
       "visa_type": "PERM"
     },
-    "generated_at": "2026-04-20T04:54:45.327681+00:00"
+    "generated_at": "2026-07-29T18:54:59.564929+00:00"
   },
   {
     "chunk_id": "8133a3769b4a",
@@ -892,7 +892,7 @@
       "soc_code": "17-2131",
       "visa_type": "PERM"
     },
-    "generated_at": "2026-04-20T04:54:45.328554+00:00"
+    "generated_at": "2026-07-29T18:54:59.565806+00:00"
   },
   {
     "chunk_id": "782e8f8916f4",
@@ -904,7 +904,7 @@
       "soc_code": "53-3032",
       "visa_type": "PERM"
     },
-    "generated_at": "2026-04-20T04:54:45.329437+00:00"
+    "generated_at": "2026-07-29T18:54:59.566671+00:00"
   },
   {
     "chunk_id": "482aeca78e10",
@@ -916,7 +916,7 @@
       "soc_code": "25-1011",
       "visa_type": "PERM"
     },
-    "generated_at": "2026-04-20T04:54:45.330306+00:00"
+    "generated_at": "2026-07-29T18:54:59.567554+00:00"
   },
   {
     "chunk_id": "5108160b2c72",
@@ -928,7 +928,7 @@
       "soc_code": "35-1011",
       "visa_type": "PERM"
     },
-    "generated_at": "2026-04-20T04:54:45.331197+00:00"
+    "generated_at": "2026-07-29T18:54:59.568453+00:00"
   },
   {
     "chunk_id": "78721a267251",
@@ -940,7 +940,7 @@
       "soc_code": "13-1082",
       "visa_type": "PERM"
     },
-    "generated_at": "2026-04-20T04:54:45.331881+00:00"
+    "generated_at": "2026-07-29T18:54:59.569141+00:00"
   },
   {
     "chunk_id": "600e2eaed709",
@@ -952,7 +952,7 @@
       "soc_code": "53-7064",
       "visa_type": "PERM"
     },
-    "generated_at": "2026-04-20T04:54:45.332739+00:00"
+    "generated_at": "2026-07-29T18:54:59.570013+00:00"
   },
   {
     "chunk_id": "36821945cedc",
@@ -964,7 +964,7 @@
       "soc_code": "51-9198",
       "visa_type": "PERM"
     },
-    "generated_at": "2026-04-20T04:54:45.333621+00:00"
+    "generated_at": "2026-07-29T18:54:59.571009+00:00"
   },
   {
     "chunk_id": "4a100322bbac",
@@ -976,7 +976,7 @@
       "soc_code": "11-1021",
       "visa_type": "PERM"
     },
-    "generated_at": "2026-04-20T04:54:45.334524+00:00"
+    "generated_at": "2026-07-29T18:54:59.571932+00:00"
   },
   {
     "chunk_id": "a0000b68e101",
@@ -985,7 +985,7 @@
     "label": "soc_salary_top_growth_fy2026",
     "text": "Top 20 H-1B SOC Codes by Salary Growth FY2025\u2192FY2026:\n  27-1012 (Craft Artists): +407.5% ($37,440 \u2192 $190,000), 1 filings\n  17-2075 (nan): +184.4% ($87,776 \u2192 $249,600), 1 filings\n  25-3041 (Tutors): +147.6% ($42,000 \u2192 $104,000), 1 filings\n  41-9099 (Sales and Related Workers, All Other): +125.0% ($48,880 \u2192 $110,000), 3 filings\n  29-1241 (Ophthalmologists, Except Pediatric): +124.2% ($223,000 \u2192 $500,000), 2 filings\n  27-4014 (Sound Engineering Technicians): +105.6% ($67,059 \u2192 $137,856), 2 filings\n  11-9039 (Education Administrators, All Other): +104.1% ($65,781 \u2192 $134,280), 4 filings\n  27-1027 (Set and Exhibit Designers): +77.7% ($70,000 \u2192 $124,388), 1 filings\n  17-3027 (Mechanical Engineering Technologists and Technicians): +75.5% ($65,520 \u2192 $115,000), 5 filings\n  11-9051 (Food Service Managers): +72.1% ($71,256 \u2192 $122,622), 4 filings\n  27-3023 (News Analysts, Reporters, and Journalists): +69.1% ($65,627 \u2192 $111,000), 7 filings\n  13-2053 (Insurance Underwriters): +58.3% ($90,000 \u2192 $142,490), 2 filings\n  33-3021 (Detectives and Criminal Investigators): +56.8% ($71,053 \u2192 $111,405), 3 filings\n  27-3043 (Writers and Authors): +55.4% ($82,020 \u2192 $127,500), 4 filings\n  29-2091 (Orthotists and Prosthetists): +55.3% ($64,376 \u2192 $100,000), 5 filings\n  41-4012 (Sales Representatives, Wholesale and Manufacturing, Except Technical and Scientific Products): +49.5% ($67,738 \u2192 $101,294), 6 filings\n  13-1022 (nan): +49.3% ($66,978 \u2192 $100,000), 5 filings\n  21-1019 (Counselors, All Other): +46.9% ($53,080 \u2192 $78,000), 1 filings\n  49-1011 (First-Line Supervisors of Mechanics, Installers, and Repairers): +45.7% ($71,375 \u2192 $104,000), 1 filings\n  13-2052 (Personal Financial Advisors): +37.8% ($84,000 \u2192 $115,750), 6 filings",
     "metadata": {},
-    "generated_at": "2026-04-20T04:54:45.338573+00:00"
+    "generated_at": "2026-07-29T18:54:59.574616+00:00"
   },
   {
     "chunk_id": "cb7d1a6e004f",
@@ -994,7 +994,7 @@
     "label": "soc_salary_bottom_growth_fy2026",
     "text": "Bottom 20 H-1B SOC Codes by Salary Change FY2025\u2192FY2026:\n  29-1242 (Orthopedic Surgeons, Except Pediatric): -63.4% ($449,000 \u2192 $164,456)\n  19-4043 (Geological Technicians, Except Hydrologic Technicians): -45.2% ($76,675 \u2192 $42,000)\n  29-1023 (Orthodontists): -36.3% ($300,000 \u2192 $191,183)\n  13-2071 (Credit Counselors): -31.9% ($62,400 \u2192 $42,500)\n  25-3021 (Self-Enrichment Teachers): -27.6% ($67,330 \u2192 $48,744)\n  41-3011 (Advertising Sales Agents): -27.5% ($58,375 \u2192 $42,307)\n  29-1151 (Nurse Anesthetists): -26.1% ($203,840 \u2192 $150,654)\n  11-9179 (Personal Service Managers, All Other): -25.5% ($62,040 \u2192 $46,197)\n  21-1029 (Social Workers, All Other): -25.4% ($65,000 \u2192 $48,471)\n  43-6011 (Executive Secretaries and Executive Administrative Assistants): -24.9% ($84,864 \u2192 $63,773)\n  51-1011 (First-Line Supervisors of Production and Operating Workers): -24.0% ($75,275 \u2192 $57,200)\n  19-2099 (Physical Scientists, All Other): -23.5% ($82,139 \u2192 $62,838)\n  23-1022 (Arbitrators, Mediators, and Conciliators): -23.5% ($185,175 \u2192 $141,688)\n  29-1214 (Emergency Medicine Physicians): -21.8% ($332,800 \u2192 $260,095)\n  15-1218 (nan): -21.1% ($91,638 \u2192 $72,293)\n  11-9072 (Entertainment and Recreation Managers, Except Gambling): -20.9% ($60,000 \u2192 $47,443)\n  25-1082 (Library Science Teachers, Postsecondary): -20.4% ($91,088 \u2192 $72,500)\n  43-9111 (Statistical Assistants): -20.2% ($78,067 \u2192 $62,296)\n  25-1126 (Philosophy and Religion Teachers, Postsecondary): -20.0% ($80,000 \u2192 $64,000)\n  51-4041 (Machinists): -19.0% ($55,000 \u2192 $44,554)",
     "metadata": {},
-    "generated_at": "2026-04-20T04:54:45.339337+00:00"
+    "generated_at": "2026-07-29T18:54:59.575309+00:00"
   },
   {
     "chunk_id": "d2fcd94d84e5",
@@ -1003,6 +1003,6 @@
     "label": "dim_soc_summary",
     "text": "SOC Code Directory (dim_soc):\nTotal SOC codes: 1,801\nColumns: soc_code, soc_title, soc_version, soc_major_group, soc_minor_group, soc_broad_group, from_version, from_code, mapping_confidence, is_aggregated, source_file, ingested_at\nVersions: {'2018': 1396, '2010': 405}\n\nTop 10 SOC major groups:\n  51: 188 codes\n  29: 137 codes\n  15: 129 codes\n  25: 121 codes\n  43: 112 codes\n  47: 108 codes\n  11: 104 codes\n  53: 104 codes\n  19: 103 codes\n  17: 94 codes\n\nCommon immigration-sponsored SOC codes:\n  15-1252: Software Developers\n  15-1211: Computer Systems Analysts\n  15-1299: Computer Occupations, All Other\n  17-2061: Computer Hardware Engineers\n  15-2051: Data Scientists\n  11-3021: Computer and Information Systems Managers\n  29-1141: Registered Nurses\n  13-1111: Management Analysts\n  13-2011: Accountants and Auditors",
     "metadata": {},
-    "generated_at": "2026-04-20T04:54:49.727450+00:00"
+    "generated_at": "2026-07-29T18:55:03.542913+00:00"
   }
 ]

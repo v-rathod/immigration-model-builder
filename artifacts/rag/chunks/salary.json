@@ -45,7 +45,7 @@
         }
       }
     },
-    "generated_at": "2026-04-20T04:54:41.471167+00:00"
+    "generated_at": "2026-07-29T18:54:56.118304+00:00"
   },
   {
     "chunk_id": "9f253fde6025",
@@ -54,7 +54,7 @@
     "label": "salary_top30_soc",
     "text": "Top 30 Highest-Paying Occupations (national median):\n  29-1212 (Cardiologists): median=$219,270\n  29-1213 (Dermatologists): median=$213,180\n  29-1229 (Physicians, All Other): median=$210,360, P75=$211,380\n  29-1241 (Ophthalmologists, Except Pediatric): median=$206,510, P75=$206,510\n  29-1217 (Neurologists): median=$201,840, P75=$203,840\n  29-1211 (Anesthesiologists): median=$189,550, P75=$209,195\n  29-1221 (Pediatricians, General): median=$183,280, P75=$211,460\n  29-1223 (Psychiatrists): median=$180,420, P75=$208,080\n  29-1151 (Nurse Anesthetists): median=$179,790, P75=$205,180\n  29-1215 (Family Medicine Physicians): median=$174,650, P75=$217,170\n  29-1023 (Orthodontists): median=$172,090, P75=$179,370\n  29-1222 (Physicians, Pathologists): median=$168,490, P75=$168,490\n  11-1011 (Chief Executives): median=$165,320, P75=$212,180\n  29-1218 (Obstetricians and Gynecologists): median=$161,710, P75=$200,020\n  29-1021 (Dentists, General): median=$161,300, P75=$216,840\n  11-9041 (Architectural and Engineering Managers): median=$158,450, P75=$177,840\n  29-1242 (Orthopedic Surgeons, Except Pediatric): median=$152,280, P75=$159,500\n  53-2011 (Airline Pilots, Copilots, and Flight Engineers): median=$138,920, P75=$151,170\n  17-2199 (Engineers, All Other): median=$136,990, P75=$171,930\n  11-3031 (Financial Managers): median=$134,080, P75=$171,110\n  17-2061 (Computer Hardware Engineers): median=$132,930, P75=$157,560\n  19-2012 (Physicists): median=$132,930, P75=$157,080\n  11-3021 (Computer and Information Systems Managers): median=$132,840, P75=$169,670\n  29-1081 (Podiatrists): median=$132,270, P75=$197,760\n  29-1051 (Pharmacists): median=$131,880, P75=$139,930\n  17-2011 (Aerospace Engineers): median=$130,870, P75=$163,220\n  17-2161 (Nuclear Engineers): median=$129,460, P75=$139,090\n  15-1241 (Computer Network Architects): median=$125,980, P75=$155,910\n  19-3039 (Psychologists, All Other): median=$125,550, P75=$143,270\n  29-1224 (Radiologists): median=$125,100, P75=$136,790",
     "metadata": {},
-    "generated_at": "2026-04-20T04:54:41.483680+00:00"
+    "generated_at": "2026-07-29T18:54:56.125079+00:00"
   },
   {
     "chunk_id": "1acb7c1a47d6",
@@ -63,7 +63,7 @@
     "label": "salary_tech_socs",
     "text": "Salary Benchmarks for Common Immigration-Sponsored Tech Roles:\n  11-3021 (Computer & IS Managers): median=$132,840, P10=$80,140, P90=$207,460\n  15-1211 (Computer Systems Analysts): median=$102,560, P10=$63,980, P90=$167,130\n  15-1221 (Computer & Info Research Scientists): median=$102,250, P10=$54,920, P90=$146,900\n  15-1232 (Computer User Support): median=$48,200, P10=$30,000, P90=$75,720\n  15-1241 (Computer Network Architects): median=$125,980, P10=$74,880, P90=$180,280\n  15-1244 (Network & Systems Administrators): median=$82,270, P10=$50,650, P90=$130,080\n  15-1252 (Software Developers): median=$102,730, P10=$61,520, P90=$169,070\n  15-1299 (Computer Occupations, All Other): median=$96,620, P10=$54,150, P90=$132,930\n  15-2051 (Data Scientists): median=$100,560, P10=$54,690, P90=$145,250\n  17-2061 (Computer Hardware Engineers): median=$132,930, P10=$81,890, P90=$181,670",
     "metadata": {},
-    "generated_at": "2026-04-20T04:54:41.484166+00:00"
+    "generated_at": "2026-07-29T18:54:56.125477+00:00"
   },
   {
     "chunk_id": "a497862cdbfb",
@@ -72,7 +72,7 @@
     "label": "salary_distribution",
     "text": "Salary Distribution Across All SOC \u00d7 Area Combinations:\n  Total records: 224,047\n  Min median salary: $15,080\n  25th percentile: $38,720\n  Overall median: $51,020\n  75th percentile: $73,695\n  Max median salary: $237,940\n  Wage ratio interpretation: ratio \u22651.0 means offered wage \u2265 prevailing median.\n  Employers with wage ratio \u22651.3 (P75+) tend to have higher EFS scores.",
     "metadata": {},
-    "generated_at": "2026-04-20T04:54:41.489143+00:00"
+    "generated_at": "2026-07-29T18:54:56.130197+00:00"
   },
   {
     "chunk_id": "c9644cd26533",
@@ -81,7 +81,7 @@
     "label": "oews_data_summary",
     "text": "OEWS Wage Data (fact_oews):\nTotal records: 446,432 (SOC \u00d7 area combinations)\nSOC codes: 831\nGeographic areas: 587\nReference years: 2023, 2024\nKey wage columns: a_mean, a_median, a_pct10\u2013a_pct90 (annual), h_* (hourly)\nSource: BLS Occupational Employment and Wage Statistics\nUse: Prevailing wage lookups, wage benchmarking for immigration cases.",
     "metadata": {},
-    "generated_at": "2026-04-20T04:54:43.827741+00:00"
+    "generated_at": "2026-07-29T18:54:58.184632+00:00"
   },
   {
     "chunk_id": "1c2ccb1c72b0",
@@ -90,7 +90,7 @@
     "label": "oews_top_paying",
     "text": "Top 25 Highest-Paying SOC Codes (OEWS national median):\n  29-1222: $229,620/year\n  29-1222: $229,620/year\n  29-1215: $217,170/year\n  29-1215: $217,170/year\n  29-1249: $216,840/year\n  29-1249: $216,840/year\n  29-1241: $206,510/year\n  29-1241: $206,510/year\n  29-1218: $200,020/year\n  29-1218: $200,020/year\n  29-1221: $183,280/year\n  29-1221: $183,280/year\n  29-1023: $183,200/year\n  29-1023: $183,200/year\n  29-1223: $180,420/year\n  29-1223: $180,420/year\n  29-1151: $179,790/year\n  29-1151: $179,790/year\n  11-1011: $165,320/year\n  11-1011: $165,320/year\n  29-1021: $161,300/year\n  29-1021: $161,300/year\n  29-1242: $159,500/year\n  29-1242: $159,500/year\n  11-9041: $158,450/year",
     "metadata": {},
-    "generated_at": "2026-04-20T04:54:43.836002+00:00"
+    "generated_at": "2026-07-29T18:54:58.190946+00:00"
   },
   {
     "chunk_id": "762f42f76b72",
@@ -102,7 +102,7 @@
       "n_employers": 491875,
       "n_socs": 1444
     },
-    "generated_at": "2026-04-20T04:54:43.999377+00:00"
+    "generated_at": "2026-07-29T18:54:58.341233+00:00"
   },
   {
     "chunk_id": "7a10554d6c0a",
@@ -114,7 +114,7 @@
       "fiscal_year": 2025,
       "visa_type": "H-1B"
     },
-    "generated_at": "2026-04-20T04:54:44.073009+00:00"
+    "generated_at": "2026-07-29T18:54:58.412749+00:00"
   },
   {
     "chunk_id": "69254dae602c",
@@ -126,7 +126,7 @@
       "fiscal_year": 2025,
       "visa_type": "H-1B"
     },
-    "generated_at": "2026-04-20T04:54:44.073774+00:00"
+    "generated_at": "2026-07-29T18:54:58.413556+00:00"
   },
   {
     "chunk_id": "2a5e826c008d",
@@ -138,7 +138,7 @@
       "fiscal_year": 2026,
       "visa_type": "H-1B"
     },
-    "generated_at": "2026-04-20T04:54:44.117925+00:00"
+    "generated_at": "2026-07-29T18:54:58.456965+00:00"
   },
   {
     "chunk_id": "e7fd3aea8abe",
@@ -150,7 +150,7 @@
       "fiscal_year": 2026,
       "visa_type": "H-1B"
     },
-    "generated_at": "2026-04-20T04:54:44.118638+00:00"
+    "generated_at": "2026-07-29T18:54:58.457662+00:00"
   },
   {
     "chunk_id": "67ae80306d2c",
@@ -162,7 +162,7 @@
       "fiscal_year": 2024,
       "visa_type": "H-1B"
     },
-    "generated_at": "2026-04-20T04:54:44.171166+00:00"
+    "generated_at": "2026-07-29T18:54:58.509014+00:00"
   },
   {
     "chunk_id": "4181d3b0f054",
@@ -174,7 +174,7 @@
       "fiscal_year": 2025,
       "visa_type": "H-1B"
     },
-    "generated_at": "2026-04-20T04:54:44.226752+00:00"
+    "generated_at": "2026-07-29T18:54:58.562443+00:00"
   },
   {
     "chunk_id": "ff16a60f6d50",
@@ -186,7 +186,7 @@
       "fiscal_year": 2026,
       "visa_type": "H-1B"
     },
-    "generated_at": "2026-04-20T04:54:44.267079+00:00"
+    "generated_at": "2026-07-29T18:54:58.600625+00:00"
   },
   {
     "chunk_id": "fb97d22f4e3d",
@@ -195,7 +195,7 @@
     "label": "salary_top_employers_alltime",
     "text": "Top 50 Employers by Total Salary Profile Filings (all years, all visa types):\n  Infosys: 235,039\n  Tata Consultancy Services: 176,192\n  Cognizant Technology Solutions Us: 150,887\n  Microsoft: 137,773\n  Amazon Com Services: 115,013\n  Google: 112,619\n  Deloitte Consulting: 103,945\n  Ernst Young U S: 100,424\n  Wipro: 80,045\n  Accenture: 77,367\n  Capgemini America: 66,798\n  Hcl America: 61,059\n  Intel: 52,172\n  Apple: 50,658\n  Tech Mahindra Americas: 49,613\n  Ibm India Private: 43,052\n  Ibm: 41,591\n  Larsen Toubro Infotech: 35,450\n  Jpmorgan Chase: 33,943\n  Wal Mart Associates: 29,179\n  Amazon Web Services: 29,143\n  Facebook: 28,492\n  Deloitte Touche: 26,333\n  Meta Platforms: 24,125\n  Compunnel Software Group: 23,737\n  Cisco Systems: 23,521\n  Ust Global: 23,162\n  Oracle America: 22,613\n  Qualcomm Technologies: 22,314\n  Cognizant Technology Solutions U S: 20,905\n  Mphasis: 20,895\n  Goldman Sachs: 18,511\n  Amazon Corporate: 16,659\n  Salesforce Com: 15,312\n  Pricewaterhousecoopers: 14,893\n  Linkedin: 14,385\n  L T Technology Services: 14,314\n  Paypal: 14,287\n  Hexaware Technologies: 13,968\n  Cummins: 13,829\n  Tesla: 13,698\n  Pricewaterhousecoopers Advisory Services: 13,658\n  Vmware: 13,520\n  Satyam Computer Services: 13,147\n  Nvidia: 13,067\n  Igate Technologies: 13,046\n  Kpmg: 12,942\n  Ebay: 12,935\n  Bank Of America N A: 12,192\n  Mindtree: 11,832",
     "metadata": {},
-    "generated_at": "2026-04-20T04:54:44.527664+00:00"
+    "generated_at": "2026-07-29T18:54:58.846505+00:00"
   },
   {
     "chunk_id": "db1bf5170147",
@@ -204,7 +204,7 @@
     "label": "salary_yearly_summary",
     "text": "Employer Salary Yearly Trends:\nTotal records: 1,432,611 (employer \u00d7 fiscal_year aggregates)\nColumns: employer_id, visa_type, fiscal_year, total_filings, mean_salary, median_salary, employer_name, n_soc_codes\nUse: Track how employer wages change year-over-year. Identify employers with rising or declining salary trends.",
     "metadata": {},
-    "generated_at": "2026-04-20T04:54:44.556552+00:00"
+    "generated_at": "2026-07-29T18:54:58.873623+00:00"
   },
   {
     "chunk_id": "a1fd7f8ef378",
@@ -213,7 +213,7 @@
     "label": "salary_yearly_biggest_raises",
     "text": "Largest Year-over-Year Salary Increases (employer \u00d7 year):\n  National Cooperative Business Association Clusa International FY2020: +$899,737 ($81,299 \u2192 $981,036)\n  Kmr FY2009: +$897,360 ($38,640 \u2192 $936,000)\n  Jab Holding FY2018: +$882,250 ($110,000 \u2192 $992,250)\n  Sensient Technologies FY2020: +$873,492 ($55,764 \u2192 $929,256)\n  College Of Business Technology FY2009: +$873,288 ($36,712 \u2192 $910,000)\n  Florida Medical Specialists FY2010: +$855,000 ($55,000 \u2192 $910,000)\n  Aero Tech FY2021: +$848,400 ($150,000 \u2192 $998,400)\n  Viscofan Usa FY2025: +$846,228 ($85,284 \u2192 $931,512)\n  Diamond Innovations FY2014: +$845,000 ($75,000 \u2192 $920,000)\n  Folio Photonics FY2025: +$845,000 ($79,000 \u2192 $924,000)\n  Dart Industries FY2020: +$844,610 ($55,390 \u2192 $900,000)\n  Predictronics FY2025: +$844,330 ($74,942 \u2192 $919,272)\n  Work Editorial FY2017: +$830,300 ($105,700 \u2192 $936,000)\n  Smartadvocate FY2013: +$829,610 ($68,000 \u2192 $897,610)\n  Droisys FY2026: +$803,712 ($96,840 \u2192 $900,552)\n  United Canvas Sling FY2025: +$796,718 ($19,282 \u2192 $816,000)\n  Oc Law Group FY2025: +$786,104 ($55,300 \u2192 $841,404)\n  Magical Nails FY2024: +$781,200 ($30,000 \u2192 $811,200)\n  Para Engineers FY2025: +$769,831 ($67,829 \u2192 $837,660)\n  Cloudaspirers FY2025: +$769,212 ($87,360 \u2192 $856,572)",
     "metadata": {},
-    "generated_at": "2026-04-20T04:54:45.244620+00:00"
+    "generated_at": "2026-07-29T18:54:59.486581+00:00"
   },
   {
     "chunk_id": "26cc2d849ebc",
@@ -222,7 +222,7 @@
     "label": "soc_salary_market_summary",
     "text": "SOC Salary Market Benchmarks:\nTotal records: 18,038 (SOC \u00d7 visa_type \u00d7 fiscal_year)\nColumns: soc_code, visa_type, fiscal_year, total_filings, market_mean, market_median, market_p10, market_p25, market_p75, market_p90, n_employers\nUse: Market-level salary stats per occupation. Compare individual employer offers against market median for the same SOC code.",
     "metadata": {},
-    "generated_at": "2026-04-20T04:54:45.246571+00:00"
+    "generated_at": "2026-07-29T18:54:59.488212+00:00"
   },
   {
     "chunk_id": "5f555325fc27",
@@ -233,15 +233,15 @@
     "metadata": {
       "fiscal_year": 2026
     },
-    "generated_at": "2026-04-20T04:54:45.247941+00:00"
+    "generated_at": "2026-07-29T18:54:59.489489+00:00"
   },
   {
     "chunk_id": "16528fd8eaef",
     "source_artifact": "fact_bls_ces.parquet",
     "topic": "salary",
     "label": "bls_ces_summary",
-    "text": "BLS Current Employment Statistics (fact_bls_ces):\nTotal records: 54\nColumns: series_id, series_title, year, period, period_name, value, is_preliminary, snapshot_date, source_file, ingested_at\nSource: BLS CES API (employment levels, nonfarm payroll)\nUse: Macro employment trends for immigration context.\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 157032.0 (January 2024)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 157238.0 (February 2024)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 157466.0 (March 2024)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 157530.0 (April 2024)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 157608.0 (May 2024)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 157695.0 (June 2024)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 157748.0 (July 2024)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 157757.0 (August 2024)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 157912.0 (September 2024)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 157945.0 (October 2024)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 158079.0 (November 2024)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 158316.0 (December 2024)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 158268.0 (January 2025)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 158310.0 (February 2025)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 158377.0 (March 2025)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 158485.0 (April 2025)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 158498.0 (May 2025)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 158478.0 (June 2025)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 158542.0 (July 2025)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 158472.0 (August 2025)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 158548.0 (September 2025)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 158408.0 (October 2025)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 158449.0 (November 2025)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 158432.0 (December 2025)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 158592.0 (January 2026)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 158459.0 (February 2026)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 158637.0 (March 2026)\n  CES0500000003: 34.47 (January 2024)\n  CES0500000003: 34.52 (February 2024)\n  CES0500000003: 34.65 (March 2024)\n  CES0500000003: 34.76 (April 2024)\n  CES0500000003: 34.89 (May 2024)\n  CES0500000003: 35.01 (June 2024)\n  CES0500000003: 35.08 (July 2024)\n  CES0500000003: 35.22 (August 2024)\n  CES0500000003: 35.34 (September 2024)\n  CES0500000003: 35.46 (October 2024)\n  CES0500000003: 35.6 (November 2024)\n  CES0500000003: 35.69 (December 2024)\n  CES0500000003: 35.84 (January 2025)\n  CES0500000003: 35.94 (February 2025)\n  CES0500000003: 36.11 (March 2025)\n  CES0500000003: 36.12 (April 2025)\n  CES0500000003: 36.28 (May 2025)\n  CES0500000003: 36.36 (June 2025)\n  CES0500000003: 36.47 (July 2025)\n  CES0500000003: 36.62 (August 2025)\n  CES0500000003: 36.7 (September 2025)\n  CES0500000003: 36.85 (October 2025)\n  CES0500000003: 37.0 (November 2025)\n  CES0500000003: 37.02 (December 2025)\n  CES0500000003: 37.15 (January 2026)\n  CES0500000003: 37.29 (February 2026)\n  CES0500000003: 37.38 (March 2026)",
+    "text": "BLS Current Employment Statistics (fact_bls_ces):\nTotal records: 60\nColumns: series_id, series_title, year, period, period_name, value, is_preliminary, snapshot_date, source_file, ingested_at\nSource: BLS CES API (employment levels, nonfarm payroll)\nUse: Macro employment trends for immigration context.\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 157032.0 (January 2024)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 157238.0 (February 2024)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 157466.0 (March 2024)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 157530.0 (April 2024)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 157608.0 (May 2024)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 157695.0 (June 2024)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 157748.0 (July 2024)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 157757.0 (August 2024)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 157912.0 (September 2024)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 157945.0 (October 2024)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 158079.0 (November 2024)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 158316.0 (December 2024)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 158268.0 (January 2025)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 158310.0 (February 2025)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 158377.0 (March 2025)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 158485.0 (April 2025)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 158498.0 (May 2025)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 158478.0 (June 2025)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 158542.0 (July 2025)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 158472.0 (August 2025)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 158548.0 (September 2025)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 158408.0 (October 2025)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 158449.0 (November 2025)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 158432.0 (December 2025)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 158592.0 (January 2026)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 158436.0 (February 2026)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 158650.0 (March 2026)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 158798.0 (April 2026)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 158927.0 (May 2026)\n  Total Nonfarm Employment (Seasonally Adjusted, Thousands): 158984.0 (June 2026)\n  CES0500000003: 34.47 (January 2024)\n  CES0500000003: 34.52 (February 2024)\n  CES0500000003: 34.65 (March 2024)\n  CES0500000003: 34.76 (April 2024)\n  CES0500000003: 34.89 (May 2024)\n  CES0500000003: 35.01 (June 2024)\n  CES0500000003: 35.08 (July 2024)\n  CES0500000003: 35.22 (August 2024)\n  CES0500000003: 35.34 (September 2024)\n  CES0500000003: 35.46 (October 2024)\n  CES0500000003: 35.6 (November 2024)\n  CES0500000003: 35.69 (December 2024)\n  CES0500000003: 35.84 (January 2025)\n  CES0500000003: 35.94 (February 2025)\n  CES0500000003: 36.11 (March 2025)\n  CES0500000003: 36.12 (April 2025)\n  CES0500000003: 36.28 (May 2025)\n  CES0500000003: 36.36 (June 2025)\n  CES0500000003: 36.47 (July 2025)\n  CES0500000003: 36.62 (August 2025)\n  CES0500000003: 36.7 (September 2025)\n  CES0500000003: 36.85 (October 2025)\n  CES0500000003: 37.0 (November 2025)\n  CES0500000003: 37.02 (December 2025)\n  CES0500000003: 37.15 (January 2026)\n  CES0500000003: 37.27 (February 2026)\n  CES0500000003: 37.35 (March 2026)\n  CES0500000003: 37.41 (April 2026)\n  CES0500000003: 37.51 (May 2026)\n  CES0500000003: 37.64 (June 2026)",
     "metadata": {},
-    "generated_at": "2026-04-20T04:54:49.883202+00:00"
+    "generated_at": "2026-07-29T18:55:03.693426+00:00"
   }
 ]

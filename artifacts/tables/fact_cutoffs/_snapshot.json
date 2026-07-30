@@ -1,0 +1,1051 @@
+{
+  "name": "fact_cutoffs",
+  "generated_at": "2026-07-29T18:48:17.055997+00:00",
+  "total_rows": 8335,
+  "num_files": 173,
+  "partitions": {
+    "bulletin_year=2011/bulletin_month=07": 30,
+    "bulletin_year=2011/bulletin_month=08": 25,
+    "bulletin_year=2011/bulletin_month=09": 25,
+    "bulletin_year=2011/bulletin_month=10": 30,
+    "bulletin_year=2011/bulletin_month=11": 25,
+    "bulletin_year=2011/bulletin_month=12": 25,
+    "bulletin_year=2012/bulletin_month=01": 25,
+    "bulletin_year=2012/bulletin_month=02": 25,
+    "bulletin_year=2012/bulletin_month=03": 25,
+    "bulletin_year=2012/bulletin_month=04": 25,
+    "bulletin_year=2012/bulletin_month=05": 25,
+    "bulletin_year=2012/bulletin_month=06": 25,
+    "bulletin_year=2012/bulletin_month=07": 25,
+    "bulletin_year=2012/bulletin_month=08": 25,
+    "bulletin_year=2012/bulletin_month=09": 25,
+    "bulletin_year=2012/bulletin_month=11": 25,
+    "bulletin_year=2012/bulletin_month=12": 25,
+    "bulletin_year=2013/bulletin_month=01": 25,
+    "bulletin_year=2013/bulletin_month=02": 25,
+    "bulletin_year=2013/bulletin_month=03": 25,
+    "bulletin_year=2013/bulletin_month=04": 25,
+    "bulletin_year=2013/bulletin_month=05": 25,
+    "bulletin_year=2013/bulletin_month=06": 25,
+    "bulletin_year=2013/bulletin_month=07": 25,
+    "bulletin_year=2013/bulletin_month=08": 25,
+    "bulletin_year=2013/bulletin_month=09": 25,
+    "bulletin_year=2013/bulletin_month=10": 25,
+    "bulletin_year=2013/bulletin_month=11": 25,
+    "bulletin_year=2013/bulletin_month=12": 25,
+    "bulletin_year=2014/bulletin_month=01": 25,
+    "bulletin_year=2014/bulletin_month=02": 25,
+    "bulletin_year=2014/bulletin_month=03": 25,
+    "bulletin_year=2014/bulletin_month=04": 25,
+    "bulletin_year=2014/bulletin_month=05": 25,
+    "bulletin_year=2014/bulletin_month=06": 25,
+    "bulletin_year=2014/bulletin_month=07": 25,
+    "bulletin_year=2014/bulletin_month=08": 25,
+    "bulletin_year=2014/bulletin_month=09": 25,
+    "bulletin_year=2014/bulletin_month=10": 25,
+    "bulletin_year=2014/bulletin_month=11": 25,
+    "bulletin_year=2014/bulletin_month=12": 25,
+    "bulletin_year=2015/bulletin_month=01": 25,
+    "bulletin_year=2015/bulletin_month=02": 25,
+    "bulletin_year=2015/bulletin_month=03": 25,
+    "bulletin_year=2015/bulletin_month=04": 25,
+    "bulletin_year=2015/bulletin_month=05": 25,
+    "bulletin_year=2015/bulletin_month=06": 25,
+    "bulletin_year=2015/bulletin_month=07": 25,
+    "bulletin_year=2015/bulletin_month=08": 25,
+    "bulletin_year=2015/bulletin_month=09": 25,
+    "bulletin_year=2015/bulletin_month=10": 50,
+    "bulletin_year=2015/bulletin_month=11": 50,
+    "bulletin_year=2015/bulletin_month=12": 50,
+    "bulletin_year=2016/bulletin_month=01": 50,
+    "bulletin_year=2016/bulletin_month=02": 50,
+    "bulletin_year=2016/bulletin_month=03": 50,
+    "bulletin_year=2016/bulletin_month=04": 50,
+    "bulletin_year=2016/bulletin_month=05": 55,
+    "bulletin_year=2016/bulletin_month=06": 55,
+    "bulletin_year=2016/bulletin_month=07": 55,
+    "bulletin_year=2016/bulletin_month=08": 55,
+    "bulletin_year=2016/bulletin_month=09": 55,
+    "bulletin_year=2016/bulletin_month=10": 55,
+    "bulletin_year=2016/bulletin_month=11": 55,
+    "bulletin_year=2016/bulletin_month=12": 55,
+    "bulletin_year=2017/bulletin_month=01": 55,
+    "bulletin_year=2017/bulletin_month=03": 55,
+    "bulletin_year=2017/bulletin_month=04": 55,
+    "bulletin_year=2017/bulletin_month=05": 55,
+    "bulletin_year=2017/bulletin_month=06": 55,
+    "bulletin_year=2017/bulletin_month=07": 55,
+    "bulletin_year=2017/bulletin_month=08": 55,
+    "bulletin_year=2017/bulletin_month=09": 55,
+    "bulletin_year=2017/bulletin_month=10": 60,
+    "bulletin_year=2017/bulletin_month=11": 60,
+    "bulletin_year=2017/bulletin_month=12": 60,
+    "bulletin_year=2018/bulletin_month=01": 60,
+    "bulletin_year=2018/bulletin_month=02": 60,
+    "bulletin_year=2018/bulletin_month=03": 60,
+    "bulletin_year=2018/bulletin_month=04": 60,
+    "bulletin_year=2018/bulletin_month=05": 65,
+    "bulletin_year=2018/bulletin_month=06": 65,
+    "bulletin_year=2018/bulletin_month=07": 65,
+    "bulletin_year=2018/bulletin_month=09": 65,
+    "bulletin_year=2018/bulletin_month=10": 65,
+    "bulletin_year=2018/bulletin_month=11": 65,
+    "bulletin_year=2018/bulletin_month=12": 65,
+    "bulletin_year=2019/bulletin_month=01": 65,
+    "bulletin_year=2019/bulletin_month=02": 65,
+    "bulletin_year=2019/bulletin_month=03": 65,
+    "bulletin_year=2019/bulletin_month=04": 65,
+    "bulletin_year=2019/bulletin_month=05": 65,
+    "bulletin_year=2019/bulletin_month=06": 65,
+    "bulletin_year=2019/bulletin_month=07": 65,
+    "bulletin_year=2019/bulletin_month=08": 65,
+    "bulletin_year=2019/bulletin_month=09": 65,
+    "bulletin_year=2019/bulletin_month=10": 65,
+    "bulletin_year=2019/bulletin_month=11": 65,
+    "bulletin_year=2019/bulletin_month=12": 65,
+    "bulletin_year=2020/bulletin_month=01": 65,
+    "bulletin_year=2020/bulletin_month=02": 65,
+    "bulletin_year=2020/bulletin_month=03": 65,
+    "bulletin_year=2020/bulletin_month=04": 65,
+    "bulletin_year=2020/bulletin_month=05": 65,
+    "bulletin_year=2020/bulletin_month=06": 65,
+    "bulletin_year=2020/bulletin_month=07": 65,
+    "bulletin_year=2020/bulletin_month=08": 65,
+    "bulletin_year=2020/bulletin_month=11": 65,
+    "bulletin_year=2020/bulletin_month=12": 65,
+    "bulletin_year=2021/bulletin_month=01": 65,
+    "bulletin_year=2021/bulletin_month=02": 65,
+    "bulletin_year=2021/bulletin_month=03": 65,
+    "bulletin_year=2021/bulletin_month=04": 65,
+    "bulletin_year=2021/bulletin_month=05": 65,
+    "bulletin_year=2021/bulletin_month=06": 65,
+    "bulletin_year=2021/bulletin_month=07": 65,
+    "bulletin_year=2021/bulletin_month=08": 65,
+    "bulletin_year=2021/bulletin_month=09": 65,
+    "bulletin_year=2021/bulletin_month=10": 60,
+    "bulletin_year=2021/bulletin_month=11": 60,
+    "bulletin_year=2021/bulletin_month=12": 60,
+    "bulletin_year=2022/bulletin_month=01": 60,
+    "bulletin_year=2022/bulletin_month=02": 60,
+    "bulletin_year=2022/bulletin_month=03": 60,
+    "bulletin_year=2022/bulletin_month=05": 60,
+    "bulletin_year=2022/bulletin_month=06": 60,
+    "bulletin_year=2022/bulletin_month=07": 60,
+    "bulletin_year=2022/bulletin_month=08": 60,
+    "bulletin_year=2022/bulletin_month=09": 60,
+    "bulletin_year=2022/bulletin_month=12": 60,
+    "bulletin_year=2023/bulletin_month=01": 60,
+    "bulletin_year=2023/bulletin_month=02": 60,
+    "bulletin_year=2023/bulletin_month=03": 60,
+    "bulletin_year=2023/bulletin_month=04": 50,
+    "bulletin_year=2023/bulletin_month=05": 50,
+    "bulletin_year=2023/bulletin_month=06": 50,
+    "bulletin_year=2023/bulletin_month=07": 50,
+    "bulletin_year=2023/bulletin_month=08": 50,
+    "bulletin_year=2023/bulletin_month=09": 50,
+    "bulletin_year=2023/bulletin_month=11": 50,
+    "bulletin_year=2023/bulletin_month=12": 50,
+    "bulletin_year=2024/bulletin_month=01": 50,
+    "bulletin_year=2024/bulletin_month=02": 50,
+    "bulletin_year=2024/bulletin_month=03": 50,
+    "bulletin_year=2024/bulletin_month=04": 50,
+    "bulletin_year=2024/bulletin_month=05": 50,
+    "bulletin_year=2024/bulletin_month=06": 50,
+    "bulletin_year=2024/bulletin_month=07": 50,
+    "bulletin_year=2024/bulletin_month=08": 50,
+    "bulletin_year=2024/bulletin_month=09": 50,
+    "bulletin_year=2024/bulletin_month=10": 50,
+    "bulletin_year=2024/bulletin_month=11": 50,
+    "bulletin_year=2024/bulletin_month=12": 50,
+    "bulletin_year=2025/bulletin_month=01": 50,
+    "bulletin_year=2025/bulletin_month=02": 50,
+    "bulletin_year=2025/bulletin_month=03": 50,
+    "bulletin_year=2025/bulletin_month=04": 50,
+    "bulletin_year=2025/bulletin_month=05": 50,
+    "bulletin_year=2025/bulletin_month=06": 50,
+    "bulletin_year=2025/bulletin_month=07": 50,
+    "bulletin_year=2025/bulletin_month=08": 50,
+    "bulletin_year=2025/bulletin_month=09": 50,
+    "bulletin_year=2025/bulletin_month=10": 55,
+    "bulletin_year=2025/bulletin_month=11": 55,
+    "bulletin_year=2025/bulletin_month=12": 55,
+    "bulletin_year=2026/bulletin_month=01": 55,
+    "bulletin_year=2026/bulletin_month=02": 55,
+    "bulletin_year=2026/bulletin_month=03": 55,
+    "bulletin_year=2026/bulletin_month=04": 55,
+    "bulletin_year=2026/bulletin_month=05": 55,
+    "bulletin_year=2026/bulletin_month=06": 55,
+    "bulletin_year=2026/bulletin_month=07": 55,
+    "bulletin_year=2026/bulletin_month=08": 55
+  },
+  "files": [
+    {
+      "file": "bulletin_year=2011/bulletin_month=07/data.parquet",
+      "rows": 30,
+      "sha256": "7e7a04e6a19065bf"
+    },
+    {
+      "file": "bulletin_year=2011/bulletin_month=08/data.parquet",
+      "rows": 25,
+      "sha256": "75f4fddda6bb354c"
+    },
+    {
+      "file": "bulletin_year=2011/bulletin_month=09/data.parquet",
+      "rows": 25,
+      "sha256": "5dbeb42af19e291a"
+    },
+    {
+      "file": "bulletin_year=2011/bulletin_month=10/data.parquet",
+      "rows": 30,
+      "sha256": "a15193004ba080ef"
+    },
+    {
+      "file": "bulletin_year=2011/bulletin_month=11/data.parquet",
+      "rows": 25,
+      "sha256": "13b773ed67baf2ab"
+    },
+    {
+      "file": "bulletin_year=2011/bulletin_month=12/data.parquet",
+      "rows": 25,
+      "sha256": "56a4adadfebfff65"
+    },
+    {
+      "file": "bulletin_year=2012/bulletin_month=01/data.parquet",
+      "rows": 25,
+      "sha256": "fe0d7f7f648d3be5"
+    },
+    {
+      "file": "bulletin_year=2012/bulletin_month=02/data.parquet",
+      "rows": 25,
+      "sha256": "1d74bc9c2b2f40fd"
+    },
+    {
+      "file": "bulletin_year=2012/bulletin_month=03/data.parquet",
+      "rows": 25,
+      "sha256": "de9df15d4ecd53f0"
+    },
+    {
+      "file": "bulletin_year=2012/bulletin_month=04/data.parquet",
+      "rows": 25,
+      "sha256": "cfab6c72ae3cc33a"
+    },
+    {
+      "file": "bulletin_year=2012/bulletin_month=05/data.parquet",
+      "rows": 25,
+      "sha256": "d1e26add1c6a702c"
+    },
+    {
+      "file": "bulletin_year=2012/bulletin_month=06/data.parquet",
+      "rows": 25,
+      "sha256": "c85e1895182e343c"
+    },
+    {
+      "file": "bulletin_year=2012/bulletin_month=07/data.parquet",
+      "rows": 25,
+      "sha256": "003b3170164c11cd"
+    },
+    {
+      "file": "bulletin_year=2012/bulletin_month=08/data.parquet",
+      "rows": 25,
+      "sha256": "66e529806ded8f7a"
+    },
+    {
+      "file": "bulletin_year=2012/bulletin_month=09/data.parquet",
+      "rows": 25,
+      "sha256": "bdd4cc26868af30f"
+    },
+    {
+      "file": "bulletin_year=2012/bulletin_month=11/data.parquet",
+      "rows": 25,
+      "sha256": "3400af5bb96e53cf"
+    },
+    {
+      "file": "bulletin_year=2012/bulletin_month=12/data.parquet",
+      "rows": 25,
+      "sha256": "d7ba6083ecac7b61"
+    },
+    {
+      "file": "bulletin_year=2013/bulletin_month=01/data.parquet",
+      "rows": 25,
+      "sha256": "5b019c8fc106724e"
+    },
+    {
+      "file": "bulletin_year=2013/bulletin_month=02/data.parquet",
+      "rows": 25,
+      "sha256": "393f33456827015c"
+    },
+    {
+      "file": "bulletin_year=2013/bulletin_month=03/data.parquet",
+      "rows": 25,
+      "sha256": "10b34d8e7ae1c40d"
+    },
+    {
+      "file": "bulletin_year=2013/bulletin_month=04/data.parquet",
+      "rows": 25,
+      "sha256": "08922cb4ef47fad7"
+    },
+    {
+      "file": "bulletin_year=2013/bulletin_month=05/data.parquet",
+      "rows": 25,
+      "sha256": "09566abc6d7ff221"
+    },
+    {
+      "file": "bulletin_year=2013/bulletin_month=06/data.parquet",
+      "rows": 25,
+      "sha256": "0de69de796c2f7b1"
+    },
+    {
+      "file": "bulletin_year=2013/bulletin_month=07/data.parquet",
+      "rows": 25,
+      "sha256": "44aed4576dcd49ce"
+    },
+    {
+      "file": "bulletin_year=2013/bulletin_month=08/data.parquet",
+      "rows": 25,
+      "sha256": "208a0117c1aeb8d9"
+    },
+    {
+      "file": "bulletin_year=2013/bulletin_month=09/data.parquet",
+      "rows": 25,
+      "sha256": "dfdce6c619d11a80"
+    },
+    {
+      "file": "bulletin_year=2013/bulletin_month=10/data.parquet",
+      "rows": 25,
+      "sha256": "14ba7899d4b1dd61"
+    },
+    {
+      "file": "bulletin_year=2013/bulletin_month=11/data.parquet",
+      "rows": 25,
+      "sha256": "13ec3112b2b4d4ae"
+    },
+    {
+      "file": "bulletin_year=2013/bulletin_month=12/data.parquet",
+      "rows": 25,
+      "sha256": "1a56763c5e4716a5"
+    },
+    {
+      "file": "bulletin_year=2014/bulletin_month=01/data.parquet",
+      "rows": 25,
+      "sha256": "e86a76954769e3c7"
+    },
+    {
+      "file": "bulletin_year=2014/bulletin_month=02/data.parquet",
+      "rows": 25,
+      "sha256": "dd1e1b55a0954792"
+    },
+    {
+      "file": "bulletin_year=2014/bulletin_month=03/data.parquet",
+      "rows": 25,
+      "sha256": "cbaacf57c1f28ba5"
+    },
+    {
+      "file": "bulletin_year=2014/bulletin_month=04/data.parquet",
+      "rows": 25,
+      "sha256": "c791407960c39b73"
+    },
+    {
+      "file": "bulletin_year=2014/bulletin_month=05/data.parquet",
+      "rows": 25,
+      "sha256": "973991ef7c78f00f"
+    },
+    {
+      "file": "bulletin_year=2014/bulletin_month=06/data.parquet",
+      "rows": 25,
+      "sha256": "262a41d9de0e1e0b"
+    },
+    {
+      "file": "bulletin_year=2014/bulletin_month=07/data.parquet",
+      "rows": 25,
+      "sha256": "7635913cd8b90ab8"
+    },
+    {
+      "file": "bulletin_year=2014/bulletin_month=08/data.parquet",
+      "rows": 25,
+      "sha256": "948fecfc3cf639d2"
+    },
+    {
+      "file": "bulletin_year=2014/bulletin_month=09/data.parquet",
+      "rows": 25,
+      "sha256": "d636a76764bfe010"
+    },
+    {
+      "file": "bulletin_year=2014/bulletin_month=10/data.parquet",
+      "rows": 25,
+      "sha256": "ac20f50306b0b3e8"
+    },
+    {
+      "file": "bulletin_year=2014/bulletin_month=11/data.parquet",
+      "rows": 25,
+      "sha256": "9b9253ae4abb0d9f"
+    },
+    {
+      "file": "bulletin_year=2014/bulletin_month=12/data.parquet",
+      "rows": 25,
+      "sha256": "2dcff8fa6d55cfae"
+    },
+    {
+      "file": "bulletin_year=2015/bulletin_month=01/data.parquet",
+      "rows": 25,
+      "sha256": "17c5aab5aa9622e5"
+    },
+    {
+      "file": "bulletin_year=2015/bulletin_month=02/data.parquet",
+      "rows": 25,
+      "sha256": "f66e9d036b7eed65"
+    },
+    {
+      "file": "bulletin_year=2015/bulletin_month=03/data.parquet",
+      "rows": 25,
+      "sha256": "cf1f72dc3ce3350d"
+    },
+    {
+      "file": "bulletin_year=2015/bulletin_month=04/data.parquet",
+      "rows": 25,
+      "sha256": "dcb75d89038edf15"
+    },
+    {
+      "file": "bulletin_year=2015/bulletin_month=05/data.parquet",
+      "rows": 25,
+      "sha256": "e99d0302b3a1bede"
+    },
+    {
+      "file": "bulletin_year=2015/bulletin_month=06/data.parquet",
+      "rows": 25,
+      "sha256": "64183591a85b5c72"
+    },
+    {
+      "file": "bulletin_year=2015/bulletin_month=07/data.parquet",
+      "rows": 25,
+      "sha256": "6e3d82374d0ff4c2"
+    },
+    {
+      "file": "bulletin_year=2015/bulletin_month=08/data.parquet",
+      "rows": 25,
+      "sha256": "d420f7c9e47d0af9"
+    },
+    {
+      "file": "bulletin_year=2015/bulletin_month=09/data.parquet",
+      "rows": 25,
+      "sha256": "c07ada06aaa9823b"
+    },
+    {
+      "file": "bulletin_year=2015/bulletin_month=10/data.parquet",
+      "rows": 50,
+      "sha256": "24f70e3705bf2924"
+    },
+    {
+      "file": "bulletin_year=2015/bulletin_month=11/data.parquet",
+      "rows": 50,
+      "sha256": "afd23321f9b88f32"
+    },
+    {
+      "file": "bulletin_year=2015/bulletin_month=12/data.parquet",
+      "rows": 50,
+      "sha256": "56ec6c711ddca649"
+    },
+    {
+      "file": "bulletin_year=2016/bulletin_month=01/data.parquet",
+      "rows": 50,
+      "sha256": "ec4a984792284b82"
+    },
+    {
+      "file": "bulletin_year=2016/bulletin_month=02/data.parquet",
+      "rows": 50,
+      "sha256": "6e7f253daf386a8c"
+    },
+    {
+      "file": "bulletin_year=2016/bulletin_month=03/data.parquet",
+      "rows": 50,
+      "sha256": "a990f0bdbb48b190"
+    },
+    {
+      "file": "bulletin_year=2016/bulletin_month=04/data.parquet",
+      "rows": 50,
+      "sha256": "8ef0b02e48f8fbe8"
+    },
+    {
+      "file": "bulletin_year=2016/bulletin_month=05/data.parquet",
+      "rows": 55,
+      "sha256": "05645af1b99076fb"
+    },
+    {
+      "file": "bulletin_year=2016/bulletin_month=06/data.parquet",
+      "rows": 55,
+      "sha256": "db800e5c144a06cc"
+    },
+    {
+      "file": "bulletin_year=2016/bulletin_month=07/data.parquet",
+      "rows": 55,
+      "sha256": "a25c8ab50107d372"
+    },
+    {
+      "file": "bulletin_year=2016/bulletin_month=08/data.parquet",
+      "rows": 55,
+      "sha256": "50c1c6e069f8e021"
+    },
+    {
+      "file": "bulletin_year=2016/bulletin_month=09/data.parquet",
+      "rows": 55,
+      "sha256": "1cb10ab53734192e"
+    },
+    {
+      "file": "bulletin_year=2016/bulletin_month=10/data.parquet",
+      "rows": 55,
+      "sha256": "a55ee675e0595c90"
+    },
+    {
+      "file": "bulletin_year=2016/bulletin_month=11/data.parquet",
+      "rows": 55,
+      "sha256": "07ddb9c44384765f"
+    },
+    {
+      "file": "bulletin_year=2016/bulletin_month=12/data.parquet",
+      "rows": 55,
+      "sha256": "0c8af3b035c5878c"
+    },
+    {
+      "file": "bulletin_year=2017/bulletin_month=01/data.parquet",
+      "rows": 55,
+      "sha256": "52f2dc930f0f82f2"
+    },
+    {
+      "file": "bulletin_year=2017/bulletin_month=03/data.parquet",
+      "rows": 55,
+      "sha256": "c8a17193498f9f6b"
+    },
+    {
+      "file": "bulletin_year=2017/bulletin_month=04/data.parquet",
+      "rows": 55,
+      "sha256": "8874e043479e59a5"
+    },
+    {
+      "file": "bulletin_year=2017/bulletin_month=05/data.parquet",
+      "rows": 55,
+      "sha256": "8a2d9b5943d8475c"
+    },
+    {
+      "file": "bulletin_year=2017/bulletin_month=06/data.parquet",
+      "rows": 55,
+      "sha256": "0f5d564b4a778673"
+    },
+    {
+      "file": "bulletin_year=2017/bulletin_month=07/data.parquet",
+      "rows": 55,
+      "sha256": "6016bf6a5cfa5813"
+    },
+    {
+      "file": "bulletin_year=2017/bulletin_month=08/data.parquet",
+      "rows": 55,
+      "sha256": "ea594525ca74c795"
+    },
+    {
+      "file": "bulletin_year=2017/bulletin_month=09/data.parquet",
+      "rows": 55,
+      "sha256": "e1403e4f935d4cc1"
+    },
+    {
+      "file": "bulletin_year=2017/bulletin_month=10/data.parquet",
+      "rows": 60,
+      "sha256": "099c42e4b73dbc03"
+    },
+    {
+      "file": "bulletin_year=2017/bulletin_month=11/data.parquet",
+      "rows": 60,
+      "sha256": "67d32377a877d5db"
+    },
+    {
+      "file": "bulletin_year=2017/bulletin_month=12/data.parquet",
+      "rows": 60,
+      "sha256": "88e8284c2a3eab08"
+    },
+    {
+      "file": "bulletin_year=2018/bulletin_month=01/data.parquet",
+      "rows": 60,
+      "sha256": "51acd9a2640ff5da"
+    },
+    {
+      "file": "bulletin_year=2018/bulletin_month=02/data.parquet",
+      "rows": 60,
+      "sha256": "3534f8d6b5b019b5"
+    },
+    {
+      "file": "bulletin_year=2018/bulletin_month=03/data.parquet",
+      "rows": 60,
+      "sha256": "fe0209981799c2a7"
+    },
+    {
+      "file": "bulletin_year=2018/bulletin_month=04/data.parquet",
+      "rows": 60,
+      "sha256": "90d30f8f99ad169f"
+    },
+    {
+      "file": "bulletin_year=2018/bulletin_month=05/data.parquet",
+      "rows": 65,
+      "sha256": "c08b2e9c291926c7"
+    },
+    {
+      "file": "bulletin_year=2018/bulletin_month=06/data.parquet",
+      "rows": 65,
+      "sha256": "2923657de1dc475c"
+    },
+    {
+      "file": "bulletin_year=2018/bulletin_month=07/data.parquet",
+      "rows": 65,
+      "sha256": "bd4ae1b65ec6ef7b"
+    },
+    {
+      "file": "bulletin_year=2018/bulletin_month=09/data.parquet",
+      "rows": 65,
+      "sha256": "3b80b7526403b849"
+    },
+    {
+      "file": "bulletin_year=2018/bulletin_month=10/data.parquet",
+      "rows": 65,
+      "sha256": "3e1479a8fd77c09e"
+    },
+    {
+      "file": "bulletin_year=2018/bulletin_month=11/data.parquet",
+      "rows": 65,
+      "sha256": "fc21db1bcea465c8"
+    },
+    {
+      "file": "bulletin_year=2018/bulletin_month=12/data.parquet",
+      "rows": 65,
+      "sha256": "c55d528a64245efa"
+    },
+    {
+      "file": "bulletin_year=2019/bulletin_month=01/data.parquet",
+      "rows": 65,
+      "sha256": "999fd8edd2cf053f"
+    },
+    {
+      "file": "bulletin_year=2019/bulletin_month=02/data.parquet",
+      "rows": 65,
+      "sha256": "979f5225af9fc8c7"
+    },
+    {
+      "file": "bulletin_year=2019/bulletin_month=03/data.parquet",
+      "rows": 65,
+      "sha256": "0a8832af846fb5b0"
+    },
+    {
+      "file": "bulletin_year=2019/bulletin_month=04/data.parquet",
+      "rows": 65,
+      "sha256": "03829d7a74fa791b"
+    },
+    {
+      "file": "bulletin_year=2019/bulletin_month=05/data.parquet",
+      "rows": 65,
+      "sha256": "6eaf1c17fe630e2b"
+    },
+    {
+      "file": "bulletin_year=2019/bulletin_month=06/data.parquet",
+      "rows": 65,
+      "sha256": "3cefc6bd240d00b5"
+    },
+    {
+      "file": "bulletin_year=2019/bulletin_month=07/data.parquet",
+      "rows": 65,
+      "sha256": "6b5822eb0a5a28b9"
+    },
+    {
+      "file": "bulletin_year=2019/bulletin_month=08/data.parquet",
+      "rows": 65,
+      "sha256": "fc34e49ffac8f5b8"
+    },
+    {
+      "file": "bulletin_year=2019/bulletin_month=09/data.parquet",
+      "rows": 65,
+      "sha256": "05b8911bf0d6a806"
+    },
+    {
+      "file": "bulletin_year=2019/bulletin_month=10/data.parquet",
+      "rows": 65,
+      "sha256": "226e12e784e16814"
+    },
+    {
+      "file": "bulletin_year=2019/bulletin_month=11/data.parquet",
+      "rows": 65,
+      "sha256": "ef6e9b09324bdc6c"
+    },
+    {
+      "file": "bulletin_year=2019/bulletin_month=12/data.parquet",
+      "rows": 65,
+      "sha256": "8ceba76fdd43822c"
+    },
+    {
+      "file": "bulletin_year=2020/bulletin_month=01/data.parquet",
+      "rows": 65,
+      "sha256": "2997d174a7e9a5c4"
+    },
+    {
+      "file": "bulletin_year=2020/bulletin_month=02/data.parquet",
+      "rows": 65,
+      "sha256": "d581b7c576acf628"
+    },
+    {
+      "file": "bulletin_year=2020/bulletin_month=03/data.parquet",
+      "rows": 65,
+      "sha256": "2b2bb601075ec3b0"
+    },
+    {
+      "file": "bulletin_year=2020/bulletin_month=04/data.parquet",
+      "rows": 65,
+      "sha256": "ddd9769f221ece81"
+    },
+    {
+      "file": "bulletin_year=2020/bulletin_month=05/data.parquet",
+      "rows": 65,
+      "sha256": "5ff9694e54e8c321"
+    },
+    {
+      "file": "bulletin_year=2020/bulletin_month=06/data.parquet",
+      "rows": 65,
+      "sha256": "48076142d030f69d"
+    },
+    {
+      "file": "bulletin_year=2020/bulletin_month=07/data.parquet",
+      "rows": 65,
+      "sha256": "8b42ec1d8d271b0f"
+    },
+    {
+      "file": "bulletin_year=2020/bulletin_month=08/data.parquet",
+      "rows": 65,
+      "sha256": "6825cf1761ab7faf"
+    },
+    {
+      "file": "bulletin_year=2020/bulletin_month=11/data.parquet",
+      "rows": 65,
+      "sha256": "563d1b66e7bff06f"
+    },
+    {
+      "file": "bulletin_year=2020/bulletin_month=12/data.parquet",
+      "rows": 65,
+      "sha256": "21e135bee8a89fb7"
+    },
+    {
+      "file": "bulletin_year=2021/bulletin_month=01/data.parquet",
+      "rows": 65,
+      "sha256": "f662d3cb29ff12fc"
+    },
+    {
+      "file": "bulletin_year=2021/bulletin_month=02/data.parquet",
+      "rows": 65,
+      "sha256": "dec810f0a6a81f25"
+    },
+    {
+      "file": "bulletin_year=2021/bulletin_month=03/data.parquet",
+      "rows": 65,
+      "sha256": "f3914f69838d9b28"
+    },
+    {
+      "file": "bulletin_year=2021/bulletin_month=04/data.parquet",
+      "rows": 65,
+      "sha256": "3142c834e04611c2"
+    },
+    {
+      "file": "bulletin_year=2021/bulletin_month=05/data.parquet",
+      "rows": 65,
+      "sha256": "da0a832785b9de47"
+    },
+    {
+      "file": "bulletin_year=2021/bulletin_month=06/data.parquet",
+      "rows": 65,
+      "sha256": "6044fb7b8757cd2b"
+    },
+    {
+      "file": "bulletin_year=2021/bulletin_month=07/data.parquet",
+      "rows": 65,
+      "sha256": "599518dddcb3a0e6"
+    },
+    {
+      "file": "bulletin_year=2021/bulletin_month=08/data.parquet",
+      "rows": 65,
+      "sha256": "510bc8641900471d"
+    },
+    {
+      "file": "bulletin_year=2021/bulletin_month=09/data.parquet",
+      "rows": 65,
+      "sha256": "c88a2990c1dc8d7c"
+    },
+    {
+      "file": "bulletin_year=2021/bulletin_month=10/data.parquet",
+      "rows": 60,
+      "sha256": "9dc523c2ee920300"
+    },
+    {
+      "file": "bulletin_year=2021/bulletin_month=11/data.parquet",
+      "rows": 60,
+      "sha256": "3bcb718fe18363b1"
+    },
+    {
+      "file": "bulletin_year=2021/bulletin_month=12/data.parquet",
+      "rows": 60,
+      "sha256": "5cf6d4c34cd96377"
+    },
+    {
+      "file": "bulletin_year=2022/bulletin_month=01/data.parquet",
+      "rows": 60,
+      "sha256": "32f44268eae6fb9a"
+    },
+    {
+      "file": "bulletin_year=2022/bulletin_month=02/data.parquet",
+      "rows": 60,
+      "sha256": "00e0560fc15e4863"
+    },
+    {
+      "file": "bulletin_year=2022/bulletin_month=03/data.parquet",
+      "rows": 60,
+      "sha256": "9531f18b5572ea2b"
+    },
+    {
+      "file": "bulletin_year=2022/bulletin_month=05/data.parquet",
+      "rows": 60,
+      "sha256": "b747522ce07b993c"
+    },
+    {
+      "file": "bulletin_year=2022/bulletin_month=06/data.parquet",
+      "rows": 60,
+      "sha256": "b9b99f28b9181021"
+    },
+    {
+      "file": "bulletin_year=2022/bulletin_month=07/data.parquet",
+      "rows": 60,
+      "sha256": "4f00c3b21642cb15"
+    },
+    {
+      "file": "bulletin_year=2022/bulletin_month=08/data.parquet",
+      "rows": 60,
+      "sha256": "669792eb6462af1c"
+    },
+    {
+      "file": "bulletin_year=2022/bulletin_month=09/data.parquet",
+      "rows": 60,
+      "sha256": "9403d1836fc42436"
+    },
+    {
+      "file": "bulletin_year=2022/bulletin_month=12/data.parquet",
+      "rows": 60,
+      "sha256": "763a2b2c539ff1fb"
+    },
+    {
+      "file": "bulletin_year=2023/bulletin_month=01/data.parquet",
+      "rows": 60,
+      "sha256": "3b00a397c6377a85"
+    },
+    {
+      "file": "bulletin_year=2023/bulletin_month=02/data.parquet",
+      "rows": 60,
+      "sha256": "11d5013e614a7dc1"
+    },
+    {
+      "file": "bulletin_year=2023/bulletin_month=03/data.parquet",
+      "rows": 60,
+      "sha256": "319778ac5c7b18dd"
+    },
+    {
+      "file": "bulletin_year=2023/bulletin_month=04/data.parquet",
+      "rows": 50,
+      "sha256": "8227dd6842994082"
+    },
+    {
+      "file": "bulletin_year=2023/bulletin_month=05/data.parquet",
+      "rows": 50,
+      "sha256": "ed18b3028bc89d83"
+    },
+    {
+      "file": "bulletin_year=2023/bulletin_month=06/data.parquet",
+      "rows": 50,
+      "sha256": "9776ac58a44855d1"
+    },
+    {
+      "file": "bulletin_year=2023/bulletin_month=07/data.parquet",
+      "rows": 50,
+      "sha256": "cff84905733bf488"
+    },
+    {
+      "file": "bulletin_year=2023/bulletin_month=08/data.parquet",
+      "rows": 50,
+      "sha256": "fc406f24f9518f73"
+    },
+    {
+      "file": "bulletin_year=2023/bulletin_month=09/data.parquet",
+      "rows": 50,
+      "sha256": "f56bca707f58b8f3"
+    },
+    {
+      "file": "bulletin_year=2023/bulletin_month=11/data.parquet",
+      "rows": 50,
+      "sha256": "07188631d5ed02a3"
+    },
+    {
+      "file": "bulletin_year=2023/bulletin_month=12/data.parquet",
+      "rows": 50,
+      "sha256": "45eb7bbe7a39b8f0"
+    },
+    {
+      "file": "bulletin_year=2024/bulletin_month=01/data.parquet",
+      "rows": 50,
+      "sha256": "2b1b905e88eadf45"
+    },
+    {
+      "file": "bulletin_year=2024/bulletin_month=02/data.parquet",
+      "rows": 50,
+      "sha256": "a184258d925468d0"
+    },
+    {
+      "file": "bulletin_year=2024/bulletin_month=03/data.parquet",
+      "rows": 50,
+      "sha256": "a8467a9c205bc1ee"
+    },
+    {
+      "file": "bulletin_year=2024/bulletin_month=04/data.parquet",
+      "rows": 50,
+      "sha256": "4053fd07c8781ef5"
+    },
+    {
+      "file": "bulletin_year=2024/bulletin_month=05/data.parquet",
+      "rows": 50,
+      "sha256": "789858aae2da983f"
+    },
+    {
+      "file": "bulletin_year=2024/bulletin_month=06/data.parquet",
+      "rows": 50,
+      "sha256": "a90cdd2dae774971"
+    },
+    {
+      "file": "bulletin_year=2024/bulletin_month=07/data.parquet",
+      "rows": 50,
+      "sha256": "d9eb6bbbf1cb6874"
+    },
+    {
+      "file": "bulletin_year=2024/bulletin_month=08/data.parquet",
+      "rows": 50,
+      "sha256": "5f6b62913b49d811"
+    },
+    {
+      "file": "bulletin_year=2024/bulletin_month=09/data.parquet",
+      "rows": 50,
+      "sha256": "569d8e412a30e8f3"
+    },
+    {
+      "file": "bulletin_year=2024/bulletin_month=10/data.parquet",
+      "rows": 50,
+      "sha256": "696cd1e4b0e89590"
+    },
+    {
+      "file": "bulletin_year=2024/bulletin_month=11/data.parquet",
+      "rows": 50,
+      "sha256": "44635f04fc55817f"
+    },
+    {
+      "file": "bulletin_year=2024/bulletin_month=12/data.parquet",
+      "rows": 50,
+      "sha256": "146bce9a0f17a125"
+    },
+    {
+      "file": "bulletin_year=2025/bulletin_month=01/data.parquet",
+      "rows": 50,
+      "sha256": "53bc911be82e599a"
+    },
+    {
+      "file": "bulletin_year=2025/bulletin_month=02/data.parquet",
+      "rows": 50,
+      "sha256": "f0e6563a8c40f5bc"
+    },
+    {
+      "file": "bulletin_year=2025/bulletin_month=03/data.parquet",
+      "rows": 50,
+      "sha256": "0568df8c39ba478d"
+    },
+    {
+      "file": "bulletin_year=2025/bulletin_month=04/data.parquet",
+      "rows": 50,
+      "sha256": "8b1031a4b19203b4"
+    },
+    {
+      "file": "bulletin_year=2025/bulletin_month=05/data.parquet",
+      "rows": 50,
+      "sha256": "e048ea9b490ea3e8"
+    },
+    {
+      "file": "bulletin_year=2025/bulletin_month=06/data.parquet",
+      "rows": 50,
+      "sha256": "ba9fffc25d284bfa"
+    },
+    {
+      "file": "bulletin_year=2025/bulletin_month=07/data.parquet",
+      "rows": 50,
+      "sha256": "8b542fc881f36ff8"
+    },
+    {
+      "file": "bulletin_year=2025/bulletin_month=08/data.parquet",
+      "rows": 50,
+      "sha256": "b2899ee0bbb5df13"
+    },
+    {
+      "file": "bulletin_year=2025/bulletin_month=09/data.parquet",
+      "rows": 50,
+      "sha256": "2ca6815936afddad"
+    },
+    {
+      "file": "bulletin_year=2025/bulletin_month=10/data.parquet",
+      "rows": 55,
+      "sha256": "052f55818ea14d22"
+    },
+    {
+      "file": "bulletin_year=2025/bulletin_month=11/data.parquet",
+      "rows": 55,
+      "sha256": "148d91089da17b77"
+    },
+    {
+      "file": "bulletin_year=2025/bulletin_month=12/data.parquet",
+      "rows": 55,
+      "sha256": "f856286347542afe"
+    },
+    {
+      "file": "bulletin_year=2026/bulletin_month=01/data.parquet",
+      "rows": 55,
+      "sha256": "428db19ddcc1ee26"
+    },
+    {
+      "file": "bulletin_year=2026/bulletin_month=02/data.parquet",
+      "rows": 55,
+      "sha256": "8236fb12ae43cc6f"
+    },
+    {
+      "file": "bulletin_year=2026/bulletin_month=03/data.parquet",
+      "rows": 55,
+      "sha256": "fba734a4ca324694"
+    },
+    {
+      "file": "bulletin_year=2026/bulletin_month=04/data.parquet",
+      "rows": 55,
+      "sha256": "205c40ecc1b01efc"
+    },
+    {
+      "file": "bulletin_year=2026/bulletin_month=05/data.parquet",
+      "rows": 55,
+      "sha256": "a90aa543f7fcd718"
+    },
+    {
+      "file": "bulletin_year=2026/bulletin_month=06/data.parquet",
+      "rows": 55,
+      "sha256": "4d9d55865d4e3f43"
+    },
+    {
+      "file": "bulletin_year=2026/bulletin_month=07/data.parquet",
+      "rows": 55,
+      "sha256": "24182b102c773df1"
+    },
+    {
+      "file": "bulletin_year=2026/bulletin_month=08/data.parquet",
+      "rows": 55,
+      "sha256": "9ab5d22b15f94aec"
+    }
+  ],
+  "presentation_rows": 8335,
+  "years_span": "2011\u20132026",
+  "distinct_years": 16
+}

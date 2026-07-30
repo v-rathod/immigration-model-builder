@@ -2,7 +2,7 @@
   "program": "NorthStar",
   "project": "Meridian (P2)",
   "description": "Immigration data intelligence platform. Meridian curates U.S. immigration data from DOL, DOS, USCIS, DHS, and BLS into structured tables, engineered features, and predictive models. This catalog describes all available data for answering immigration-related questions.",
-  "generated_at": "2026-04-20T04:54:40.580015+00:00",
+  "generated_at": "2026-07-29T18:54:54.719754+00:00",
   "topics": [
     "pd_forecast",
     "employer",
@@ -30,7 +30,7 @@
   "artifacts": [
     {
       "name": "approval_denial_detailed.parquet",
-      "rows": 3248,
+      "rows": 3254,
       "columns": [
         "fiscal_year",
         "employer_country",
@@ -46,7 +46,7 @@
     },
     {
       "name": "approval_denial_trends.parquet",
-      "rows": 62,
+      "rows": 63,
       "columns": [
         "fiscal_year",
         "APPROVED",
@@ -61,7 +61,7 @@
     },
     {
       "name": "backlog_estimates.parquet",
-      "rows": 8115,
+      "rows": 8170,
       "columns": [
         "bulletin_year",
         "bulletin_month",
@@ -77,7 +77,7 @@
     },
     {
       "name": "category_movement_metrics.parquet",
-      "rows": 6555,
+      "rows": 6450,
       "columns": [
         "bulletin_year",
         "bulletin_month",
@@ -126,7 +126,7 @@
     },
     {
       "name": "dim_employer.parquet",
-      "rows": 256411,
+      "rows": 261193,
       "columns": [
         "employer_id",
         "employer_name",
@@ -219,7 +219,7 @@
     },
     {
       "name": "employer_features.parquet",
-      "rows": 70206,
+      "rows": 73295,
       "columns": [
         "employer_id",
         "employer_name",
@@ -264,7 +264,7 @@
     },
     {
       "name": "employer_friendliness_scores.parquet",
-      "rows": 70206,
+      "rows": 73295,
       "columns": [
         "employer_id",
         "employer_name",
@@ -320,7 +320,7 @@
     },
     {
       "name": "employer_monthly_metrics.parquet",
-      "rows": 224114,
+      "rows": 231930,
       "columns": [
         "employer_id",
         "employer_name",
@@ -423,7 +423,7 @@
     },
     {
       "name": "fact_bls_ces.parquet",
-      "rows": 54,
+      "rows": 60,
       "columns": [
         "series_id",
         "series_title",
@@ -440,7 +440,7 @@
     },
     {
       "name": "fact_cutoff_trends.parquet",
-      "rows": 8170,
+      "rows": 8335,
       "columns": [
         "bulletin_year",
         "bulletin_month",
@@ -461,7 +461,7 @@
     },
     {
       "name": "fact_cutoffs",
-      "rows": 8170,
+      "rows": 8335,
       "columns": [
         "chart",
         "category",
@@ -478,7 +478,7 @@
     },
     {
       "name": "fact_cutoffs_all.parquet",
-      "rows": 8170,
+      "rows": 8335,
       "columns": [
         "chart",
         "category",
@@ -507,6 +507,20 @@
       "is_partitioned": false
     },
     {
+      "name": "fact_eb_inventory.parquet",
+      "rows": 132187,
+      "columns": [
+        "snapshot_date",
+        "country",
+        "category",
+        "visa_status",
+        "pd_month",
+        "pd_year",
+        "pending_count"
+      ],
+      "is_partitioned": false
+    },
+    {
       "name": "fact_h1b_employer_hub.parquet",
       "rows": 729865,
       "columns": [
@@ -527,6 +541,21 @@
         "data_weight",
         "source_file",
         "ingested_at"
+      ],
+      "is_partitioned": false
+    },
+    {
+      "name": "fact_i140_demand.parquet",
+      "rows": 2544,
+      "columns": [
+        "report_period",
+        "country",
+        "category",
+        "fiscal_year",
+        "received",
+        "approved",
+        "denied",
+        "pending"
       ],
       "is_partitioned": false
     },
@@ -643,7 +672,7 @@
     },
     {
       "name": "fact_perm",
-      "rows": 1675051,
+      "rows": 1716989,
       "columns": [
         "case_number",
         "case_status",
@@ -672,7 +701,7 @@
     },
     {
       "name": "fact_perm_all.parquet",
-      "rows": 1675051,
+      "rows": 1716989,
       "columns": [
         "case_number",
         "case_status",
@@ -701,7 +730,7 @@
     },
     {
       "name": "fact_perm_unique_case",
-      "rows": 1668587,
+      "rows": 1710532,
       "columns": [
         "case_number",
         "case_status",
@@ -761,7 +790,7 @@
     },
     {
       "name": "fact_uscis_approvals.parquet",
-      "rows": 1048,
+      "rows": 1120,
       "columns": [
         "fiscal_year",
         "form",
@@ -849,7 +878,7 @@
     },
     {
       "name": "pd_forecasts.parquet",
-      "rows": 1320,
+      "rows": 1440,
       "columns": [
         "forecast_month",
         "months_ahead",
@@ -866,7 +895,7 @@
     },
     {
       "name": "pd_forecasts_retrograde.parquet",
-      "rows": 1320,
+      "rows": 1440,
       "columns": [
         "forecast_month",
         "months_ahead",
@@ -913,7 +942,7 @@
     },
     {
       "name": "queue_depth_estimates.parquet",
-      "rows": 2382,
+      "rows": 2409,
       "columns": [
         "category",
         "country",
@@ -950,7 +979,7 @@
     },
     {
       "name": "soc_demand_metrics.parquet",
-      "rows": 3968,
+      "rows": 4098,
       "columns": [
         "soc_code",
         "soc_title",
@@ -1011,7 +1040,7 @@
     },
     {
       "name": "worksite_geo_metrics.parquet",
-      "rows": 134799,
+      "rows": 135685,
       "columns": [
         "state",
         "filings_count",

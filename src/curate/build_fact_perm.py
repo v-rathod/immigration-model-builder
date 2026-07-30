@@ -228,11 +228,32 @@ def find_perm_files(data_root: Path, max_files: int = None, min_fy: int = None) 
             continue
         
         # Find Excel files (both old PERM_FY*.xlsx and new PERM_Disclosure_*.xlsx)
+        fy_files = []
         for pattern in ["PERM_Disclosure_Data_*.xlsx", "PERM_FY*.xlsx", "PERM_*.xlsx"]:
             for excel_file in fy_dir.glob(pattern):
                 # Avoid duplicates
-                if (fy, excel_file) not in files:
-                    files.append((fy, excel_file))
+                if excel_file not in fy_files:
+                    fy_files.append(excel_file)
+
+        # DOL PERM disclosure files are cumulative year-to-date: a later quarter
+        # (e.g. FY2026 Q2) already contains all earlier-quarter rows (Q1). Loading
+        # both would double-count cases. Keep only files at the latest quarter for
+        # this FY, while preserving multiple same-quarter form variants
+        # (e.g. FY2024_Q4 + New_Form_FY2024_Q4, which are complementary).
+        quarters = [
+            int(m.group(1))
+            for f in fy_files
+            if (m := re.search(r'_Q(\d)', f.name))
+        ]
+        if quarters:
+            max_q = max(quarters)
+            fy_files = [
+                f for f in fy_files
+                if (m := re.search(r'_Q(\d)', f.name)) is None or int(m.group(1)) == max_q
+            ]
+
+        for excel_file in fy_files:
+            files.append((fy, excel_file))
     
     # Sort by FY descending (apply limit if specified)
     files = sorted(files, key=lambda x: x[0], reverse=True)
@@ -535,7 +556,9 @@ def build_fact_perm(
                 'worksite_state': safe_col('worksite_state'),
                 'worksite_postal': safe_col('worksite_postal').astype(str),
                 'is_fulltime':    safe_col('is_fulltime').astype(str).str.strip().str.upper() == 'Y',
-                'naics_code':     safe_col('naics_code'),
+                # Normalize to nullable string so numeric-parsed NAICS (e.g. 31199.0)
+                # match the string-typed partitions and survive cross-partition concat.
+                'naics_code':     safe_col('naics_code').astype('string').str.replace(r'\.0$', '', regex=True),
                 # *** Key fix: force fiscal_year from directory, not from received_date ***
                 'fiscal_year':    fy,
                 'source_file':    f"PERM/PERM/FY{fy}/{file_path.name}",
